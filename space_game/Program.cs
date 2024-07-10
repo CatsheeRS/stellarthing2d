@@ -2,4 +2,4 @@
 using System;
 using frambos.core;
 
-MainLoop engine = new();
+MainLoop engine = new(args);
