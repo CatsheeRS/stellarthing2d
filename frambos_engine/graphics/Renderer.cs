@@ -10,9 +10,10 @@ public static class Renderer {
     /// <summary>
     /// starts opengl
     /// </summary>
-    public static void setup()
+    public static void setup(GL gl)
     {
         Frambos.log("setting up opengl");
-        gl.ClearColor(0.1f, 0.5f, 0.9f, 1f);
+        Renderer.gl = gl;
+        gl.Viewport(0, 0, 1280, 720);
     }
 }

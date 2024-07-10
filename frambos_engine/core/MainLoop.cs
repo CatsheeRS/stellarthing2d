@@ -3,6 +3,7 @@ using frambos.graphics;
 using frambos.util;
 using Silk.NET.GLFW;
 using Silk.NET.Input;
+using Silk.NET.OpenGL;
 
 namespace frambos.core;
 
@@ -62,7 +63,7 @@ public static class MainLoop {
         double delta = 0;
         
         // non-window loading :D
-        load();
+        load(GL.GetApi(glfw.Context));
 
         // main loop :)
         while (!glfw.WindowShouldClose(window)) {
@@ -79,9 +80,10 @@ public static class MainLoop {
         glfw.Terminate();
     }
 
-    static void load()
+    static void load(GL gl)
     {
         Frambos.log("loading");
+        Renderer.setup(gl);
     }
 
     static void update(double delta)
@@ -95,7 +97,7 @@ public static class MainLoop {
         glfw.PollEvents();
     }
 
-    static void opengl_error(ErrorCode error, string description)
+    static void opengl_error(Silk.NET.GLFW.ErrorCode error, string description)
     {
         Frambos.log("OPENGL ERROR: ", description);
     }
