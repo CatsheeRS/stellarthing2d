@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space_game", "space_game\space_game.csproj", "{F1671D27-628D-4268-ADAC-458DB466AD5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frambos_engine", "frambos_engine\frambos_engine.csproj", "{FF8D0F39-C455-484E-A103-A036A169969E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1671D27-628D-4268-ADAC-458DB466AD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1671D27-628D-4268-ADAC-458DB466AD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1671D27-628D-4268-ADAC-458DB466AD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1671D27-628D-4268-ADAC-458DB466AD5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF8D0F39-C455-484E-A103-A036A169969E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8D0F39-C455-484E-A103-A036A169969E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8D0F39-C455-484E-A103-A036A169969E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8D0F39-C455-484E-A103-A036A169969E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
