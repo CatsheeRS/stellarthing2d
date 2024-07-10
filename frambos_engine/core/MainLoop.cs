@@ -1,24 +1,21 @@
 ﻿using System;
 using frambos.graphics;
+using frambos.util;
+using Silk.NET.GLFW;
 using Silk.NET.Input;
-using Silk.NET.Maths;
-using Silk.NET.Windowing;
 
 namespace frambos.core;
 
 /// <summary>
 /// handles communication between the renderer and silk.net/the OS
 /// </summary>
-public class MainLoop {
-    /// <summary>
-    /// the silk.net object representing the window
-    /// </summary>
-    public static IWindow window { get; set; }
+public static class MainLoop {
+    internal static Glfw glfw { get; set; }
 
     /// <summary>
     /// startups the engine
     /// </summary>
-    public MainLoop(string[] args)
+    public static void setup(string[] args)
     {
         // unrequested help command
         Console.WriteLine("Options:");
@@ -39,17 +36,67 @@ public class MainLoop {
         Frambos.log("game finished running");
     }
 
-    void setup_window()
+    static unsafe void setup_window()
     {
-        WindowOptions options = WindowOptions.Default with
-        {
-            Size = new Vector2D<int>(800, 600),
-            Title = "Space Game",
-        };
-        window = Window.Create(options);
-        window.Load += Renderer.on_load;
-        window.Update += Renderer.on_update;
-        window.Render += Renderer.on_render;
-        window.Run();
+        glfw = Glfw.GetApi();
+        glfw.SetErrorCallback(opengl_error);
+        glfw.Init();
+
+        // figure out fullscreen
+        Vector2 resolution;
+        Monitor* mtr = glfw.GetPrimaryMonitor();
+        VideoMode* mode = glfw.GetVideoMode(mtr);   
+        resolution = new Vector2(mode->Height, mode->Width);
+
+        // make the window
+        WindowHandle* window = glfw.CreateWindow((int)resolution.x, (int)resolution.y, "Space Game™", mtr, null);
+        if (window == null) {
+            Frambos.log("critical error: window or context creation failed");
+            glfw.Terminate();
+            return;
+        }
+        glfw.MakeContextCurrent(window);
+
+        // setup delta time
+        double prev_time = glfw.GetTime();
+        double delta = 0;
+        
+        // non-window loading :D
+        load();
+
+        // main loop :)
+        while (!glfw.WindowShouldClose(window)) {
+            double cur_time = glfw.GetTime();
+            delta = cur_time - prev_time;
+            prev_time = cur_time;
+
+            update(delta);
+            render(window);
+        }
+
+        // close stuff
+        glfw.DestroyWindow(window);
+        glfw.Terminate();
+    }
+
+    static void load()
+    {
+        Frambos.log("loading");
+    }
+
+    static void update(double delta)
+    {
+        Frambos.log("updating, delta = ", delta);
+    }
+
+    static unsafe void render(WindowHandle* window)
+    {
+        glfw.SwapBuffers(window);
+        glfw.PollEvents();
+    }
+
+    static void opengl_error(ErrorCode error, string description)
+    {
+        Frambos.log("OPENGL ERROR: ", description);
     }
 }
