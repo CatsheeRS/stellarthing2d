@@ -1,4 +1,5 @@
 using System;
+using frambos.core;
 
 namespace frambos;
 
@@ -35,5 +36,16 @@ public static class Frambos
         r = true;
         #endif
         return r;
+    }
+
+    /// <summary>
+    /// loads an asset (only works with internal files in the assets folder); just a shortened version of AssetManager.load<T>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static T load<T>(string path) where T : IAsset, new()
+    {
+        return AssetManager.load<T>(path);
     }
 }
