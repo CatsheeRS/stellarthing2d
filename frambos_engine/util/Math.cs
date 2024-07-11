@@ -6,6 +6,7 @@ namespace frambos.util;
 public struct Vector2(double x, double y) {
     public double x { get; set; } = x;
     public double y { get; set; } = y;
+    public static Vector2 zero { get => new(0, 0); }
 }
 
 /// <summary>

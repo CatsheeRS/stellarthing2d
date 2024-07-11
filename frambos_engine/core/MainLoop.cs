@@ -1,4 +1,5 @@
 ﻿using System;
+using frambos.graphics;
 using Silk.NET.SDL;
 
 namespace frambos.core;
@@ -9,7 +10,7 @@ namespace frambos.core;
 public static unsafe class MainLoop {
     internal static Sdl sdl { get; set; }
     internal static Window* window { get; set; }
-    internal static Renderer* render { get; set; }
+    internal static Silk.NET.SDL.Renderer* render { get; set; }
 
     /// <summary>
     /// startups the engine
@@ -76,7 +77,11 @@ public static unsafe class MainLoop {
             // rendering (:
             Frambos.log("rendering");
             sdl.RenderClear(render);
-            // rendering goes here lmao
+            // TODO: add ecs fuckery to put events here or something so the game can do stuff here
+            Frambos.log("starting loading file");
+            var hehe = AssetManager.load<Texture>("ben.png");
+            Frambos.log("starting drawing texture");
+            graphics.Renderer.draw_texture(hehe, new util.Vector2(69, 69), new util.Vector2(420, 69), 69, new util.Vector2(420/2, 69/2), true, true, 0.69);
             sdl.RenderPresent(render);
         }
 
