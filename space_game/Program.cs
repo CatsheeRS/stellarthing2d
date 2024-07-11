@@ -7,5 +7,5 @@ using frambos.core;
 MainLoop.setup(args, () => {
     Frambos.log("starting");
 
-    AssetManager.respath = Path.GetFullPath("assets/");
+    AssetManager.respath = Path.GetFullPath("assets");
 });

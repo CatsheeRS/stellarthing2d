@@ -32,4 +32,15 @@ public static class AssetManager {
             return can_i_get_a_t;
         }
     }
+
+    /// <summary>
+    /// frees all assets, called at the end of the game
+    /// </summary>
+    internal static void dispose_all()
+    {
+        foreach (var asset in assets) {
+            Frambos.log("freeing ", asset.Key);
+            asset.Value.dispose();
+        }
+    }
 }

@@ -55,6 +55,12 @@ public static unsafe class MainLoop {
 
         double prev_time = sdl.GetTicks64() / 1000d;
         double delta = 0;
+
+        // now the game starts loading its crap :)
+        // it's important to note that only now that the assets would work
+        start_game.Invoke();
+
+        // here we would start ecs, as assets work now
         
         // main loop :D
         bool quit = false;
@@ -81,9 +87,11 @@ public static unsafe class MainLoop {
             Frambos.log("starting loading file");
             var hehe = AssetManager.load<Texture>("ben.png");
             Frambos.log("starting drawing texture");
-            graphics.Renderer.draw_texture(hehe, new util.Vector2(69, 69), new util.Vector2(420, 69), 69, new util.Vector2(420/2, 69/2), true, true, 0.69);
+            graphics.Renderer.draw_texture(hehe, new util.Vector2(420, 250), new util.Vector2(420, 200), 69, new util.Vector2(420 / 2, 69 / 2), true, true);
             sdl.RenderPresent(render);
         }
+
+        AssetManager.dispose_all();
 
         sdl.DestroyRenderer(render);
         sdl.DestroyWindow(window);

@@ -24,21 +24,21 @@ public interface IAsset {
 /// </summary>
 public class Texture : IAsset {
     internal unsafe Silk.NET.SDL.Texture* sdl_texture { get; set; }
+    internal unsafe Surface* sdl_surface { get; set; }
     public Vector2 size { get; private set; }
 
     public unsafe IAsset load(string path)
     {
-        ImageResult res = ImageResult.FromMemory(File.ReadAllBytes(path), ColorComponents.RedGreenBlueAlpha);
+        ImageResult res = ImageResult.FromMemory(File.ReadAllBytes(path), ColorComponents.Default);
         
-        Surface* surf;
         fixed (byte* byte_ptr = res.Data) {
             void* data = byte_ptr;
-            surf = MainLoop.sdl.CreateRGBSurfaceFrom(data, res.Width, res.Height, 24, res.Width * 3,
+            sdl_surface = MainLoop.sdl.CreateRGBSurfaceFrom(data, res.Width, res.Height, 24, res.Width * 3,
                 0x000000FF, 0x0000FF00, 0x00FF0000, 0x00000000);
         }
 
-        sdl_texture = MainLoop.sdl.CreateTextureFromSurface(MainLoop.render, surf);
-        MainLoop.sdl.FreeSurface(surf);
+        sdl_texture = MainLoop.sdl.CreateTextureFromSurface(MainLoop.render, sdl_surface);
+        MainLoop.sdl.FreeSurface(sdl_surface);
         return new Texture { sdl_texture = sdl_texture, size = new Vector2(res.Width, res.Height) };
     }
 
