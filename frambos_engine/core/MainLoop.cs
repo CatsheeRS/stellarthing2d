@@ -14,7 +14,7 @@ public static unsafe class MainLoop {
     /// <summary>
     /// startups the engine
     /// </summary>
-    public static unsafe void setup(string[] args)
+    public static unsafe void setup(string[] args, Action start_game)
     {
         // unrequested help command
         Console.WriteLine("Options:");
@@ -41,7 +41,7 @@ public static unsafe class MainLoop {
             Frambos.log("SDL ERROR: ", new string((char*)sdl.GetError()));
             return;
         }
-        sdl.SetWindowFullscreen(window, 0);
+        sdl.SetWindowFullscreen(window, (uint)WindowFlags.FullscreenDesktop);
 
         render = sdl.CreateRenderer(window, -1, 0);
         if (render == null) {
@@ -61,6 +61,7 @@ public static unsafe class MainLoop {
         while (!quit) {
             while (sdl.PollEvent(ref e) != 0) {
                 if (e.Type == (uint)EventType.Quit) {
+                    Frambos.log("close request");
                     quit = true;
                     break;
                 }
