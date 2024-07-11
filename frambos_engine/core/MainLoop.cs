@@ -1,22 +1,20 @@
 ﻿using System;
-using frambos.graphics;
-using frambos.util;
-using Silk.NET.GLFW;
-using Silk.NET.Input;
-using Silk.NET.OpenGL;
+using Silk.NET.SDL;
 
 namespace frambos.core;
 
 /// <summary>
 /// handles communication between the renderer and silk.net/the OS
 /// </summary>
-public static class MainLoop {
-    internal static Glfw glfw { get; set; }
+public static unsafe class MainLoop {
+    internal static Sdl sdl { get; set; }
+    internal static Window* window { get; set; }
+    internal static Renderer* render { get; set; }
 
     /// <summary>
     /// startups the engine
     /// </summary>
-    public static void setup(string[] args)
+    public static unsafe void setup(string[] args)
     {
         // unrequested help command
         Console.WriteLine("Options:");
@@ -30,75 +28,61 @@ public static class MainLoop {
         }
 
         Frambos.log("starting up engine");
-        Frambos.log("setting up window");
 
-        setup_window();
-
-        Frambos.log("game finished running");
-    }
-
-    static unsafe void setup_window()
-    {
-        glfw = Glfw.GetApi();
-        glfw.SetErrorCallback(opengl_error);
-        glfw.Init();
-
-        // figure out fullscreen
-        Vector2 resolution;
-        Monitor* mtr = glfw.GetPrimaryMonitor();
-        VideoMode* mode = glfw.GetVideoMode(mtr);   
-        resolution = new Vector2(mode->Height, mode->Width);
-
-        // make the window
-        WindowHandle* window = glfw.CreateWindow((int)resolution.x, (int)resolution.y, "Space Game™", mtr, null);
-        if (window == null) {
-            Frambos.log("critical error: window or context creation failed");
-            glfw.Terminate();
+        // setup sdl
+        sdl = Sdl.GetApi();
+        if (sdl.Init(Sdl.InitVideo) < 0) {
+            Frambos.log("SDL ERROR: ", new string((char*)sdl.GetError()));
             return;
         }
-        glfw.MakeContextCurrent(window);
 
-        // setup delta time
-        double prev_time = glfw.GetTime();
+        Window* window = sdl.CreateWindow("Space Game", 0, 0, 1280, 720, 0);
+        if (window == null) {
+            Frambos.log("SDL ERROR: ", new string((char*)sdl.GetError()));
+            return;
+        }
+        sdl.SetWindowFullscreen(window, 0);
+
+        render = sdl.CreateRenderer(window, -1, 0);
+        if (render == null) {
+            Frambos.log("SDL ERROR: ", new string((char*)sdl.GetError()));
+            return;
+        }
+
+        sdl.SetRenderDrawColor(render, 0, 0, 0, 1);
+        Frambos.log("done setting up window");
+
+        double prev_time = sdl.GetTicks64() / 1000d;
         double delta = 0;
         
-        // non-window loading :D
-        load(GL.GetApi(glfw.Context));
+        // main loop :D
+        bool quit = false;
+        Event e = new();
+        while (!quit) {
+            while (sdl.PollEvent(ref e) != 0) {
+                if (e.Type == (uint)EventType.Quit) {
+                    quit = true;
+                    break;
+                }
+            }
 
-        // main loop :)
-        while (!glfw.WindowShouldClose(window)) {
-            double cur_time = glfw.GetTime();
+            double cur_time = sdl.GetTicks64() / 1000d;
             delta = cur_time - prev_time;
             prev_time = cur_time;
 
-            update(delta);
-            render(window);
+            Frambos.log($"updating, delta time = {delta:F10}");
+
+            // rendering (:
+            Frambos.log("rendering");
+            sdl.RenderClear(render);
+            // rendering goes here lmao
+            sdl.RenderPresent(render);
         }
 
-        // close stuff
-        glfw.DestroyWindow(window);
-        glfw.Terminate();
-    }
+        sdl.DestroyRenderer(render);
+        sdl.DestroyWindow(window);
+        sdl.Quit();
 
-    static void load(GL gl)
-    {
-        Frambos.log("loading");
-        Renderer.setup(gl);
-    }
-
-    static void update(double delta)
-    {
-        Frambos.log("updating, delta = ", delta);
-    }
-
-    static unsafe void render(WindowHandle* window)
-    {
-        glfw.SwapBuffers(window);
-        glfw.PollEvents();
-    }
-
-    static void opengl_error(Silk.NET.GLFW.ErrorCode error, string description)
-    {
-        Frambos.log("OPENGL ERROR: ", description);
+        Frambos.log("game finished running");
     }
 }
