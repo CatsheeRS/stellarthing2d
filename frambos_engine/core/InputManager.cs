@@ -38,6 +38,7 @@ public static class InputManager {
             }
         }
         else if (e.Type == (uint)EventType.Keyup) {
+            Frambos.log("g");
             keys[k] = false;
             currently_released.Add(k);
         }
@@ -46,7 +47,7 @@ public static class InputManager {
     internal static void handle_keyboard_but_every_frame()
     {
         lol++;
-        if (lol == 2) {
+        if (lol == 1) {
             lol = 0;
             just_pressed.Clear();
             currently_released.Clear();
@@ -56,7 +57,11 @@ public static class InputManager {
     /// <summary>
     /// if true, the key is currently being held down
     /// </summary>
-    public static bool is_key_pressed(Key k) => keys[k];
+    public static bool is_key_pressed(Key k)
+    {
+        if (!keys.TryGetValue(k, out bool value)) return false;
+        return value;
+    }
 
     /// <summary>
     /// if true, the key was just pressed

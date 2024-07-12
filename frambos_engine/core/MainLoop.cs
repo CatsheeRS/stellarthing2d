@@ -61,7 +61,6 @@ public static unsafe class MainLoop {
         int resw = 0;
         int resh = 0;
         sdl.GetWindowSize(window, ref resw, ref resh);
-        Frambos.log(resh);
         // a lot of Ds so it recognizes that it is indeed float fuckery
         graphics.Renderer.scale_factor = resh / 720d;
         graphics.Renderer.center_offset = (resw - (1280d * (resh / 720d))) / 2d;
@@ -103,11 +102,6 @@ public static unsafe class MainLoop {
             // jgjjfgd
             InputManager.handle_keyboard_but_every_frame();
             EcsManager.update_everything(delta);
-
-            // test =)
-            Frambos.log("is pressed", InputManager.is_key_pressed(Key.semicolon));
-            Frambos.log("is just pressed", InputManager.is_key_just_pressed(Key.semicolon));
-            Frambos.log("is released", InputManager.is_key_released(Key.semicolon));
 
             // rendering (:
             sdl.RenderClear(render);

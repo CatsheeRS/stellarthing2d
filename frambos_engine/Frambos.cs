@@ -15,9 +15,9 @@ public static class Frambos
     /// </summary>
     public static void log(params object[] val)
     {
-        if (!is_debug() || !verbose_mode) {
+        /*if (!is_debug() && !verbose_mode) {
             return;
-        }
+        }*/
         
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.Write($"[{DateTime.Now}] ");
