@@ -17,7 +17,7 @@ public static class InputManager {
     internal static void handle_new_event(Event e)
     {
         // is it a keyboard thing??????
-        if (e.Type == (uint)EventType.Keydown || e.Type == (uint)EventType.Keydown) {
+        if (e.Type == (uint)EventType.Keydown || e.Type == (uint)EventType.Keyup) {
             handle_keyboard(e);
         }
     }
@@ -38,7 +38,6 @@ public static class InputManager {
             }
         }
         else if (e.Type == (uint)EventType.Keyup) {
-            Frambos.log("g");
             keys[k] = false;
             currently_released.Add(k);
         }

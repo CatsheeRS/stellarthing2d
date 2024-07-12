@@ -22,7 +22,7 @@ public class Player : ISystem
     public void update(Entity entity, double delta)
     {
         if (InputManager.is_key_pressed(Key.space)) {
-            entity.get_comp<Transform>().rotation += 25 * delta;
+            entity.get_comp<Transform>().rotation += 100 * delta;
         }
     }
 
