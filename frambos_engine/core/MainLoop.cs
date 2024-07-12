@@ -82,13 +82,32 @@ public static unsafe class MainLoop {
                     quit = true;
                     break;
                 }
+                else {
+                    InputManager.handle_new_event(e);
+                }
             }
 
             double cur_time = sdl.GetTicks64() / 1000d;
             delta = cur_time - prev_time;
             prev_time = cur_time;
 
+            // mouse stuff
+            /*int* x = (int*)0;
+            int* y = (int*)0;
+            sdl.GetMouseState(x, y);
+            if (true) {}
+            // if you have a screen with a resolution lower than 1280x720 it deserves to be broken
+            InputManager.mouse_pos = new util.Vector2(
+                *x / graphics.Renderer.scale_factor, *y / graphics.Renderer.scale_factor);*/
+            
+            // jgjjfgd
+            InputManager.handle_keyboard_but_every_frame();
             EcsManager.update_everything(delta);
+
+            // test =)
+            Frambos.log("is pressed", InputManager.is_key_pressed(Key.semicolon));
+            Frambos.log("is just pressed", InputManager.is_key_just_pressed(Key.semicolon));
+            Frambos.log("is released", InputManager.is_key_released(Key.semicolon));
 
             // rendering (:
             sdl.RenderClear(render);

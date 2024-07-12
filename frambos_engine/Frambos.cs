@@ -11,10 +11,14 @@ public static class Frambos
     public static bool verbose_mode { get; internal set; } = false;
 
     /// <summary>
-    /// similar to console.writeline but with time and a simple stack trace. disabled on release builds unless a console flag is added. helpful for debugging.
+    /// similar to console.writeline but with time and stuff. disabled on release builds unless a console flag is added. helpful for debugging.
     /// </summary>
     public static void log(params object[] val)
     {
+        if (!is_debug() || !verbose_mode) {
+            return;
+        }
+        
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.Write($"[{DateTime.Now}] ");
         Console.ResetColor();
