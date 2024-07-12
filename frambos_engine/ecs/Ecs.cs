@@ -5,7 +5,12 @@ namespace frambos.ecs;
 /// <summary>
 /// the C in ECS
 /// </summary>
-public interface IComponent {}
+public interface IComponent {
+    /// <summary>
+    /// gets a unique string representing the component for highly efficient lookup
+    /// </summary>
+    string get_key();
+}
 
 /// <summary>
 /// used for attaching systems to entities
@@ -38,12 +43,13 @@ public class Entity {
     /// </summary>
     public T get_comp<T>() where T : IComponent, new()
     {
-        if (components.TryGetValue(nameof(T), out object value)) {
+        T m = new();
+        if (components.TryGetValue(m.get_key(), out object value)) {
             return (T)value;
         }
         else {
-            components.Add(nameof(T), new T());
-            return (T)components[nameof(T)];
+            components.Add(m.get_key(), m);
+            return (T)components[m.get_key()];
         }
     }
 

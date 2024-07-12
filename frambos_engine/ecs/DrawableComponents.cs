@@ -28,6 +28,8 @@ public class Transform : IComponent
     /// if true, the entity will be rendered
     /// </summary>
     public bool visible { get; set; } = true;
+
+    public string get_key() => "transform";
 }
 
 /// <summary>
@@ -40,4 +42,6 @@ public class SpriteTexture : IComponent
     #nullable disable
     public bool flip_x { get; set; } = false;
     public bool flip_y { get; set; } = false;
+
+    public string get_key() => "sprite_texture";
 }
