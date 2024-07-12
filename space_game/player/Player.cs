@@ -5,26 +5,35 @@ using frambos.core;
 
 namespace spacegame.player;
 
+public class PlayerComponent : IComponent
+{
+    public int speed { get; set; } = 200;
+    public Vector2 MyProperty { get; set; }
+
+    public string get_key() => "player";
+}
+
 /// <summary>
 /// used for drawing textures
 /// </summary>
 public class Player : ISystem
 {
-    public void create(Entity entity)
+    public void create(Entity e)
     {
-        entity.add_system<Sprite>();
-        entity.get_comp<SpriteTexture>().texture = Frambos.load<Texture>("ben.png");
-        entity.get_comp<Transform>().size = new Vector2(128, 128);
-        entity.get_comp<Transform>().center = new Vector2(64, 64);
-        entity.get_comp<Transform>().position = new Vector3(450, 250, 0);
+        e.add_system<Sprite>();
+        e.get_comp<SpriteTexture>().texture = Frambos.load<Texture>("placeholder/player.png");
+        e.get_comp<Transform>().size = new Vector2(64, 64);
+        e.get_comp<Transform>().center = new Vector2(32, 32);
+        e.get_comp<Transform>().position = new Vector2(450, 250);
     }
 
-    public void update(Entity entity, double delta)
+    public void update(Entity e, double delta)
     {
+        FrambosMath.look_at(); // later
         if (InputManager.is_key_pressed(Key.space)) {
-            entity.get_comp<Transform>().rotation += 100 * delta;
+            e.get_comp<Transform>().rotation += 100 * delta;
         }
     }
 
-    public void draw(Entity entity) {}
+    public void draw(Entity e) {}
 }

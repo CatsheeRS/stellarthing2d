@@ -11,7 +11,7 @@ public class Transform : IComponent
     /// <summary>
     /// 0, 0 is the top left corner, x is horizontal, y is vertical, z is used for the layer system
     /// </summary>
-    public Vector3 position { get; set; } = Vector3.zero;
+    public Vector2 position { get; set; } = Vector2.zero;
     /// <summary>
     /// size in pixels
     /// </summary>

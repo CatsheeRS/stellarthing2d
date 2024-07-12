@@ -22,7 +22,7 @@ public class Sprite : ISystem
         }
 
         Renderer.draw_texture(
-            spr.texture, new Vector2(tf.position.x, tf.position.y), tf.size, tf.rotation,
+            spr.texture, tf.position, tf.size, tf.rotation,
             tf.center, spr.flip_x, spr.flip_y
         );
     }
