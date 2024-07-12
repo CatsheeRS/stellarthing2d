@@ -57,6 +57,15 @@ public static unsafe class MainLoop {
         double prev_time = sdl.GetTicks64() / 1000d;
         double delta = 0;
 
+        // scale crap :D
+        int resw = 0;
+        int resh = 0;
+        sdl.GetWindowSize(window, ref resw, ref resh);
+        Frambos.log(resh);
+        // a lot of Ds so it recognizes that it is indeed float fuckery
+        graphics.Renderer.scale_factor = resh / 720d;
+        graphics.Renderer.center_offset = (resw - (1280d * (resh / 720d))) / 2d;
+
         // now the game starts loading its crap :)
         // it's important to note that only now that the assets would work
         // ecs is loaded immediately after that
