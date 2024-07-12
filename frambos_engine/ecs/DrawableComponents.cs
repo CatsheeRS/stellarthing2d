@@ -6,58 +6,38 @@ namespace frambos.ecs;
 /// <summary>
 /// basic component for all things visible
 /// </summary>
-public struct Transform : IComponent
+public class Transform : IComponent
 {
     /// <summary>
     /// 0, 0 is the top left corner, x is horizontal, y is vertical, z is used for the layer system
     /// </summary>
-    public Vector3 position { get; set; }
+    public Vector3 position { get; set; } = Vector3.zero;
     /// <summary>
     /// size in pixels
     /// </summary>
-    public Vector2 size { get; set; }
+    public Vector2 size { get; set; } = Vector2.zero;
     /// <summary>
     /// rotation in degrees
     /// </summary>
-    public double rotation { get; set; }
+    public double rotation { get; set; } = 0;
     /// <summary>
     /// used for rotation, divide size by half to make it the center
     /// </summary>
-    public Vector2 center { get; set; }
+    public Vector2 center { get; set; } = Vector2.zero;
     /// <summary>
     /// if true, the entity will be rendered
     /// </summary>
-    public bool visible { get; set; }
-
-    public IComponent new_with_defaults()
-    {
-        return new Transform {
-            position = Vector3.zero,
-            size = Vector2.zero,
-            rotation = 0,
-            center = Vector2.zero,
-            visible = true
-        };
-    }
+    public bool visible { get; set; } = true;
 }
 
 /// <summary>
 /// component used with the Sprite system
 /// </summary>
-public struct SpriteTexture : IComponent
+public class SpriteTexture : IComponent
 {
     #nullable enable
-    public Texture? texture { get; set; }
+    public Texture? texture { get; set; } = null;
     #nullable disable
-    public bool flip_x { get; set; }
-    public bool flip_y { get; set; }
-
-    public IComponent new_with_defaults()
-    {
-        return new SpriteTexture {
-            texture = null,
-            flip_x = false,
-            flip_y = false
-        };
-    }
+    public bool flip_x { get; set; } = false;
+    public bool flip_y { get; set; } = false;
 }

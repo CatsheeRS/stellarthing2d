@@ -1,4 +1,5 @@
 ﻿using System;
+using frambos.ecs;
 using frambos.graphics;
 using Silk.NET.SDL;
 
@@ -58,9 +59,9 @@ public static unsafe class MainLoop {
 
         // now the game starts loading its crap :)
         // it's important to note that only now that the assets would work
+        // ecs is loaded immediately after that
+        Frambos.log("game can now start");
         start_game.Invoke();
-
-        // here we would start ecs, as assets work now
         
         // main loop :D
         bool quit = false;
@@ -78,16 +79,11 @@ public static unsafe class MainLoop {
             delta = cur_time - prev_time;
             prev_time = cur_time;
 
-            Frambos.log($"updating, delta time = {delta:F10}");
+            EcsManager.update_everything(delta);
 
             // rendering (:
-            Frambos.log("rendering");
             sdl.RenderClear(render);
-            // TODO: add ecs fuckery to put events here or something so the game can do stuff here
-            Frambos.log("starting loading file");
-            var hehe = AssetManager.load<Texture>("ben.png");
-            Frambos.log("starting drawing texture");
-            graphics.Renderer.draw_texture(hehe, new util.Vector2(420, 250), new util.Vector2(420, 200), 69, new util.Vector2(420 / 2, 69 / 2), true, true);
+            EcsManager.render_everything();
             sdl.RenderPresent(render);
         }
 

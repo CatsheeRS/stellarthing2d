@@ -7,7 +7,7 @@ namespace frambos.ecs;
 /// <summary>
 /// used for drawing textures
 /// </summary>
-class Sprite : ISystem
+public class Sprite : ISystem
 {
     public void create(Entity entity) {}
     public void update(Entity entity, double delta) {}
