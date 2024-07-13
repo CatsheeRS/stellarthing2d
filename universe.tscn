@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cybga7m7m7f1e"]
+
+[ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="1_m233f"]
+[ext_resource type="Texture2D" uid="uid://bta3ryht1ni7x" path="res://assets/placeholder/jonathan.png" id="2_rqn1t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhu5m"]
+radius = 32.0
+
+[node name="universe" type="Node2D"]
+
+[node name="spas" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.533333)
+position = Vector2(955, 540)
+scale = Vector2(1.0375, 1.07407)
+texture = ExtResource("1_m233f")
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(960, 540)
+motion_mode = 1
+metadata/_edit_group_ = true
+
+[node name="collision" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_hhu5m")
+
+[node name="sprite" type="Sprite2D" parent="player"]
+texture = ExtResource("2_rqn1t")
