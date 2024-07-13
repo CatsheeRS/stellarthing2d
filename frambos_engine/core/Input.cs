@@ -4,7 +4,7 @@ using Silk.NET.SDL;
 
 namespace frambos.core;
 
-public static class InputManager {
+public static class Input {
     /// <summary>
     /// the mouse position using the engine's coordinate system (for example the bottom right would always be 1280x720 no matter the resolution)
     /// </summary>

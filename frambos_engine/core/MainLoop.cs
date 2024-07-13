@@ -82,7 +82,7 @@ public static unsafe class MainLoop {
                     break;
                 }
                 else {
-                    InputManager.handle_new_event(e);
+                    Input.handle_new_event(e);
                 }
             }
 
@@ -100,7 +100,7 @@ public static unsafe class MainLoop {
                 *x / graphics.Renderer.scale_factor, *y / graphics.Renderer.scale_factor);*/
             
             // jgjjfgd
-            InputManager.handle_keyboard_but_every_frame();
+            Input.handle_keyboard_but_every_frame();
             EcsManager.update_everything(delta);
 
             // rendering (:
