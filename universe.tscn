@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=7 format=3 uid="uid://cybga7m7m7f1e"]
 
 [ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="1_m233f"]
 [ext_resource type="Script" path="res://src/player/Player.cs" id="2_kf10a"]
 [ext_resource type="Texture2D" uid="uid://bta3ryht1ni7x" path="res://assets/placeholder/jonathan.png" id="2_rqn1t"]
+[ext_resource type="Texture2D" uid="uid://ck4c83kxjhktk" path="res://assets/placeholder/test_block1.png" id="4_x1w3g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhu5m"]
 radius = 32.0
@@ -18,19 +19,21 @@ position = Vector2(955, 540)
 scale = Vector2(1.0375, 1.07407)
 texture = ExtResource("1_m233f")
 
-[node name="player" type="CharacterBody2D" parent="."]
+[node name="player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("Preview", "PointingRaycast")]
 position = Vector2(960, 540)
 motion_mode = 1
 script = ExtResource("2_kf10a")
 Speed = 500
 RunningThingy = 1.5
+Preview = NodePath("preview")
+PointingRaycast = NodePath("raycast")
 metadata/_edit_group_ = true
-
-[node name="collision" type="CollisionShape2D" parent="player"]
-shape = SubResource("CircleShape2D_hhu5m")
 
 [node name="sprite" type="Sprite2D" parent="player"]
 texture = ExtResource("2_rqn1t")
+
+[node name="collision" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_hhu5m")
 
 [node name="camera_2d" type="Camera2D" parent="player"]
 zoom = Vector2(1.5, 1.5)
@@ -42,6 +45,14 @@ drag_top_margin = 0.15
 drag_right_margin = 0.15
 drag_bottom_margin = 0.15
 editor_draw_drag_margin = true
+
+[node name="preview" type="Sprite2D" parent="player"]
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(80, 0)
+texture = ExtResource("4_x1w3g")
+
+[node name="raycast" type="RayCast2D" parent="player"]
+target_position = Vector2(80, 0)
 
 [node name="hud" type="CanvasLayer" parent="."]
 
