@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://4dl88msjd1lb"]
+
+[ext_resource type="Script" path="res://src/player/Player.cs" id="1_w417x"]
+[ext_resource type="Texture2D" uid="uid://cu1ukt0ykufkf" path="res://assets/people/player.png" id="2_2tn6t"]
+[ext_resource type="Texture2D" uid="uid://ck4c83kxjhktk" path="res://assets/placeholder/test_block1.png" id="3_ikepl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhu5m"]
+radius = 26.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vhjlu"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("Preview", "PointingRaycast", "Username")]
+motion_mode = 1
+script = ExtResource("1_w417x")
+Speed = 500
+RunningThingy = 1.5
+Preview = NodePath("preview")
+PointingRaycast = NodePath("raycast")
+Username = NodePath("funni_username_thing/label")
+metadata/_edit_group_ = true
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hhu5m")
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_2tn6t")
+
+[node name="camera_2d" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.15
+drag_top_margin = 0.15
+drag_right_margin = 0.15
+drag_bottom_margin = 0.15
+editor_draw_drag_margin = true
+
+[node name="preview" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(80, 0)
+texture = ExtResource("3_ikepl")
+
+[node name="raycast" type="RayCast2D" parent="."]
+target_position = Vector2(80, 0)
+
+[node name="funni_username_thing" type="CanvasLayer" parent="."]
+
+[node name="label" type="Label" parent="funni_username_thing"]
+custom_minimum_size = Vector2(256, 32)
+offset_left = -128.0
+offset_top = 32.0
+offset_right = 128.0
+offset_bottom = 55.0
+text = "sick player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="multiplayer_synchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vhjlu")

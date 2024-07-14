@@ -1,11 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=9 format=3 uid="uid://cybga7m7m7f1e"]
 
-[ext_resource type="Script" path="res://src/player/Player.cs" id="2_kf10a"]
-[ext_resource type="Texture2D" uid="uid://cu1ukt0ykufkf" path="res://assets/people/player.png" id="3_pejxo"]
-[ext_resource type="Texture2D" uid="uid://ck4c83kxjhktk" path="res://assets/placeholder/test_block1.png" id="4_x1w3g"]
 [ext_resource type="Texture2D" uid="uid://bucdcbdfymwil" path="res://assets/spaceship/future_wall_sides.png" id="5_nj2h6"]
 [ext_resource type="Texture2D" uid="uid://dmlnman33vna7" path="res://assets/spaceship/future_wall.png" id="5_nufli"]
 [ext_resource type="Texture2D" uid="uid://d152eaiixr1be" path="res://assets/spaceship/future_floor.png" id="6_aysxx"]
+[ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_m3pq8"]
 [ext_resource type="Texture2D" uid="uid://bvrhhu20i1u50" path="res://assets/spaceship/future_wall_left.png" id="6_u6fsq"]
 [ext_resource type="Texture2D" uid="uid://c57bjnn4cmjmu" path="res://assets/spaceship/future_wall_right.png" id="8_yo38i"]
 
@@ -15,10 +13,13 @@ font_size = 32
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ee0qx"]
 size = Vector2(64, 64)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hhu5m"]
-radius = 26.0
-
 [node name="universe" type="Node2D"]
+
+[node name="color_rect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
 
 [node name="hud" type="CanvasLayer" parent="."]
 layer = 128
@@ -438,37 +439,5 @@ offset_bottom = 682.0
 texture = ExtResource("6_aysxx")
 stretch_mode = 1
 
-[node name="player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("Preview", "PointingRaycast")]
-position = Vector2(662, 586)
-motion_mode = 1
-script = ExtResource("2_kf10a")
-Speed = 500
-RunningThingy = 1.5
-Preview = NodePath("preview")
-PointingRaycast = NodePath("raycast")
-metadata/_edit_group_ = true
-
-[node name="collision" type="CollisionShape2D" parent="player"]
-shape = SubResource("CircleShape2D_hhu5m")
-
-[node name="sprite" type="Sprite2D" parent="player"]
-texture = ExtResource("3_pejxo")
-
-[node name="camera_2d" type="Camera2D" parent="player"]
-zoom = Vector2(1.5, 1.5)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.15
-drag_top_margin = 0.15
-drag_right_margin = 0.15
-drag_bottom_margin = 0.15
-editor_draw_drag_margin = true
-
-[node name="preview" type="Sprite2D" parent="player"]
-modulate = Color(1, 1, 1, 0.498039)
-position = Vector2(80, 0)
-texture = ExtResource("4_x1w3g")
-
-[node name="raycast" type="RayCast2D" parent="player"]
-target_position = Vector2(80, 0)
+[node name="player" parent="." instance=ExtResource("6_m3pq8")]
+position = Vector2(678, 561)

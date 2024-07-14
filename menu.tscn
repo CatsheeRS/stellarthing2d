@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ri4gi43at4ll"]
+[gd_scene load_steps=7 format=3 uid="uid://ri4gi43at4ll"]
 
 [ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="1_8yx0i"]
 [ext_resource type="Script" path="res://src/multiplayer/MultiplayerController.cs" id="2_ypmur"]
+[ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="3_7jglg"]
+[ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://universe.tscn" id="4_ejl46"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7eb3n"]
 font_size = 48
@@ -102,6 +104,12 @@ horizontal_alignment = 1
 script = ExtResource("2_ypmur")
 Port = 8910
 Address = "127.0.0.1"
+PlayerScene = ExtResource("3_7jglg")
+UniverseScene = ExtResource("4_ejl46")
+
+[node name="multiplayer_spawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
 
 [connection signal="pressed" from="color_rect/v_box_container/stuff/host" to="controller" method="OnHost"]
 [connection signal="pressed" from="color_rect/v_box_container/stuff/join" to="controller" method="OnJoin"]
