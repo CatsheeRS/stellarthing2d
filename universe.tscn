@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=6 format=3 uid="uid://cybga7m7m7f1e"]
 
 [ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="1_m233f"]
+[ext_resource type="Script" path="res://src/player/Player.cs" id="2_kf10a"]
 [ext_resource type="Texture2D" uid="uid://bta3ryht1ni7x" path="res://assets/placeholder/jonathan.png" id="2_rqn1t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhu5m"]
 radius = 32.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
+font_size = 32
 
 [node name="universe" type="Node2D"]
 
@@ -17,6 +21,9 @@ texture = ExtResource("1_m233f")
 [node name="player" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
 motion_mode = 1
+script = ExtResource("2_kf10a")
+Speed = 500
+RunningThingy = 1.5
 metadata/_edit_group_ = true
 
 [node name="collision" type="CollisionShape2D" parent="player"]
@@ -24,3 +31,25 @@ shape = SubResource("CircleShape2D_hhu5m")
 
 [node name="sprite" type="Sprite2D" parent="player"]
 texture = ExtResource("2_rqn1t")
+
+[node name="camera_2d" type="Camera2D" parent="player"]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.15
+drag_top_margin = 0.15
+drag_right_margin = 0.15
+drag_bottom_margin = 0.15
+editor_draw_drag_margin = true
+
+[node name="hud" type="CanvasLayer" parent="."]
+
+[node name="label" type="Label" parent="hud"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "space game™ v0.2.0
+wasd to move
+mouse controls direction
+ctrl to run"
+label_settings = SubResource("LabelSettings_dtk2u")
