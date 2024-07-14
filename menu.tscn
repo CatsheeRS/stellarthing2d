@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=3 uid="uid://ri4gi43at4ll"]
+
+[ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="1_8yx0i"]
+[ext_resource type="Script" path="res://src/multiplayer/MultiplayerController.cs" id="2_ypmur"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7eb3n"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_ywtdp"]
+font_size = 24
+
+[node name="multiplayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="spas" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_8yx0i")
+
+[node name="color_rect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0, 0, 0, 0.596078)
+
+[node name="v_box_container" type="VBoxContainer" parent="color_rect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="label" type="Label" parent="color_rect/v_box_container"]
+layout_mode = 2
+text = "Untitled Space Game™"
+label_settings = SubResource("LabelSettings_7eb3n")
+horizontal_alignment = 1
+
+[node name="button" type="Button" parent="color_rect/v_box_container"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "play singleplayer"
+
+[node name="h_separator" type="HSeparator" parent="color_rect/v_box_container"]
+layout_mode = 2
+
+[node name="label2" type="Label" parent="color_rect/v_box_container"]
+layout_mode = 2
+text = "multiplyaer crap"
+label_settings = SubResource("LabelSettings_ywtdp")
+horizontal_alignment = 1
+
+[node name="username" type="LineEdit" parent="color_rect/v_box_container"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+placeholder_text = "put your epic username here"
+alignment = 1
+
+[node name="stuff" type="HBoxContainer" parent="color_rect/v_box_container"]
+layout_mode = 2
+
+[node name="host" type="Button" parent="color_rect/v_box_container/stuff"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "host srver"
+
+[node name="join" type="Button" parent="color_rect/v_box_container/stuff"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "join serve"
+
+[node name="start" type="Button" parent="color_rect/v_box_container/stuff"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "starrt multiplya"
+
+[node name="h_separator2" type="HSeparator" parent="color_rect/v_box_container"]
+layout_mode = 2
+
+[node name="label3" type="Label" parent="color_rect/v_box_container"]
+layout_mode = 2
+text = "version v0.2.0"
+horizontal_alignment = 1
+
+[node name="label4" type="Label" parent="color_rect/v_box_container"]
+layout_mode = 2
+text = "by hellory4n heroin hillary clinton greetingsjonath4n"
+horizontal_alignment = 1
+
+[node name="controller" type="Node" parent="."]
+script = ExtResource("2_ypmur")
+Port = 8910
+Address = "127.0.0.1"
+
+[connection signal="pressed" from="color_rect/v_box_container/stuff/host" to="controller" method="OnHost"]
+[connection signal="pressed" from="color_rect/v_box_container/stuff/join" to="controller" method="OnJoin"]
+[connection signal="pressed" from="color_rect/v_box_container/stuff/start" to="controller" method="OnStart"]
