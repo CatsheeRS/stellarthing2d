@@ -7,6 +7,7 @@
 size = Vector2(64, 64)
 
 [node name="block" type="RigidBody2D"]
+position = Vector2(32, 32)
 mass = 50.0
 script = ExtResource("1_b203f")
 BlockName = "Test Block 1"
