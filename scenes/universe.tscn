@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cybga7m7m7f1e"]
 
-[ext_resource type="Texture2D" uid="uid://bucdcbdfymwil" path="res://assets/spaceship/future_wall_sides.png" id="5_nj2h6"]
-[ext_resource type="Texture2D" uid="uid://dmlnman33vna7" path="res://assets/spaceship/future_wall.png" id="5_nufli"]
-[ext_resource type="Texture2D" uid="uid://d152eaiixr1be" path="res://assets/spaceship/future_floor.png" id="6_aysxx"]
-[ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_m3pq8"]
-[ext_resource type="Texture2D" uid="uid://bvrhhu20i1u50" path="res://assets/spaceship/future_wall_left.png" id="6_u6fsq"]
-[ext_resource type="Texture2D" uid="uid://c57bjnn4cmjmu" path="res://assets/spaceship/future_wall_right.png" id="8_yo38i"]
+[ext_resource type="Texture2D" uid="uid://dmlnman33vna7" path="res://assets/spaceship/future_wall.png" id="1_n4k0b"]
+[ext_resource type="Texture2D" uid="uid://bucdcbdfymwil" path="res://assets/spaceship/future_wall_sides.png" id="2_ycf4u"]
+[ext_resource type="Texture2D" uid="uid://bvrhhu20i1u50" path="res://assets/spaceship/future_wall_left.png" id="3_f162f"]
+[ext_resource type="Texture2D" uid="uid://c57bjnn4cmjmu" path="res://assets/spaceship/future_wall_right.png" id="4_ueh0l"]
+[ext_resource type="Texture2D" uid="uid://d152eaiixr1be" path="res://assets/spaceship/future_floor.png" id="5_uq7nl"]
+[ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_lgyhl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
 font_size = 32
@@ -59,7 +59,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d26"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d25" type="StaticBody2D" parent="walls"]
 position = Vector2(1199, 714)
@@ -69,7 +69,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d25"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 266)
@@ -79,7 +79,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d"]
-texture = ExtResource("5_nj2h6")
+texture = ExtResource("2_ycf4u")
 
 [node name="static_body_2d27" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 330)
@@ -89,7 +89,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d27"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d28" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 394)
@@ -99,7 +99,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d28"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d29" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 458)
@@ -109,7 +109,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d29"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d30" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 522)
@@ -119,7 +119,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d30"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d31" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 586)
@@ -129,7 +129,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d31"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d32" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 650)
@@ -139,7 +139,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d32"]
-texture = ExtResource("6_u6fsq")
+texture = ExtResource("3_f162f")
 
 [node name="static_body_2d2" type="StaticBody2D" parent="walls"]
 position = Vector2(559, 266)
@@ -149,7 +149,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d2"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d3" type="StaticBody2D" parent="walls"]
 position = Vector2(623, 266)
@@ -159,7 +159,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d3"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d4" type="StaticBody2D" parent="walls"]
 position = Vector2(687, 266)
@@ -169,7 +169,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d4"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d5" type="StaticBody2D" parent="walls"]
 position = Vector2(751, 266)
@@ -179,7 +179,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d5"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d6" type="StaticBody2D" parent="walls"]
 position = Vector2(815, 266)
@@ -189,7 +189,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d6"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d7" type="StaticBody2D" parent="walls"]
 position = Vector2(879, 266)
@@ -199,7 +199,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d7"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d8" type="StaticBody2D" parent="walls"]
 position = Vector2(943, 266)
@@ -209,7 +209,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d8"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d9" type="StaticBody2D" parent="walls"]
 position = Vector2(1007, 266)
@@ -219,7 +219,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d9"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d10" type="StaticBody2D" parent="walls"]
 position = Vector2(1071, 266)
@@ -229,7 +229,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d10"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d11" type="StaticBody2D" parent="walls"]
 position = Vector2(1135, 266)
@@ -239,7 +239,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d11"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d12" type="StaticBody2D" parent="walls"]
 position = Vector2(1199, 266)
@@ -249,7 +249,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d12"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d13" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 266)
@@ -259,7 +259,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d13"]
-texture = ExtResource("5_nj2h6")
+texture = ExtResource("2_ycf4u")
 
 [node name="static_body_2d33" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 330)
@@ -269,7 +269,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d33"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d34" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 394)
@@ -279,7 +279,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d34"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d35" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 458)
@@ -289,7 +289,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d35"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d36" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 522)
@@ -299,7 +299,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d36"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d37" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 586)
@@ -309,7 +309,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d37"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d38" type="StaticBody2D" parent="walls"]
 position = Vector2(1263, 650)
@@ -319,7 +319,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d38"]
-texture = ExtResource("8_yo38i")
+texture = ExtResource("4_ueh0l")
 
 [node name="static_body_2d14" type="StaticBody2D" parent="walls"]
 position = Vector2(495, 714)
@@ -329,7 +329,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d14"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d15" type="StaticBody2D" parent="walls"]
 position = Vector2(559, 714)
@@ -339,7 +339,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d15"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d16" type="StaticBody2D" parent="walls"]
 position = Vector2(623, 714)
@@ -349,7 +349,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d16"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d17" type="StaticBody2D" parent="walls"]
 position = Vector2(687, 714)
@@ -359,7 +359,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d17"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d18" type="StaticBody2D" parent="walls"]
 position = Vector2(751, 714)
@@ -369,7 +369,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d18"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d19" type="StaticBody2D" parent="walls"]
 position = Vector2(815, 714)
@@ -379,7 +379,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d19"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d20" type="StaticBody2D" parent="walls"]
 position = Vector2(879, 714)
@@ -389,7 +389,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d20"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d21" type="StaticBody2D" parent="walls"]
 position = Vector2(943, 714)
@@ -399,7 +399,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d21"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d22" type="StaticBody2D" parent="walls"]
 position = Vector2(1007, 714)
@@ -409,7 +409,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d22"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d23" type="StaticBody2D" parent="walls"]
 position = Vector2(1071, 714)
@@ -419,7 +419,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d23"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="static_body_2d24" type="StaticBody2D" parent="walls"]
 position = Vector2(1135, 714)
@@ -429,15 +429,15 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_ee0qx")
 
 [node name="sprite_2d" type="Sprite2D" parent="walls/static_body_2d24"]
-texture = ExtResource("5_nufli")
+texture = ExtResource("1_n4k0b")
 
 [node name="floor" type="TextureRect" parent="."]
 offset_left = 527.0
 offset_top = 298.0
 offset_right = 1231.0
 offset_bottom = 682.0
-texture = ExtResource("6_aysxx")
+texture = ExtResource("5_uq7nl")
 stretch_mode = 1
 
-[node name="player" parent="." instance=ExtResource("6_m3pq8")]
+[node name="player" parent="." instance=ExtResource("6_lgyhl")]
 position = Vector2(678, 561)
