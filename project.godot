@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="space_game"
-config/version="0.2.0"
+config/name="stellarthing"
+config/version="0.3.0"
 config/tags=PackedStringArray("stupidly_large")
 run/main_scene="res://scenes/universe.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="stellarthing"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -26,7 +28,7 @@ window/stretch/mode="canvas_items"
 
 [dotnet]
 
-project/assembly_name="space_game"
+project/assembly_name="stellarthing"
 
 [editor]
 

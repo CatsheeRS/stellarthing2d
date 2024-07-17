@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace spacegame;
+namespace stellarthing;
 
 public partial class Player : CharacterBody2D {
 	[Export]

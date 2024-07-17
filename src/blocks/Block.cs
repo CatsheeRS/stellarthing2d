@@ -1,6 +1,6 @@
 using Godot;
 
-namespace spacegame;
+namespace stellarthing;
 
 [GlobalClass]
 public partial class Block : RigidBody2D

@@ -18,15 +18,40 @@ color = Color(0.0213404, 0.000183105, 0.046875, 1)
 [node name="hud" type="CanvasLayer" parent="."]
 layer = 128
 
-[node name="label" type="Label" parent="hud"]
+[node name="control" type="Control" parent="hud"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
-offset_bottom = 23.0
-text = "space game™ v0.2.0
+offset_bottom = 40.0
+theme = ExtResource("2_dk8th")
+
+[node name="label" type="Label" parent="hud/control"]
+offset_right = 294.0
+offset_bottom = 273.0
+text = "stellarthing™ v0.3.0
 wasd to move
 ctrl to run
 by hellory4n
-art by livia"
+art by livia
+music by alex343xd"
 label_settings = SubResource("LabelSettings_dtk2u")
+
+[node name="button" type="Button" parent="hud/control"]
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -96.0
+offset_right = 150.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "test button :D"
 
 [node name="cpu_particles_2d" type="CPUParticles2D" parent="."]
 position = Vector2(960, 540)
@@ -47,29 +72,3 @@ scale_amount_max = 2.0
 [node name="player" parent="." instance=ExtResource("6_lgyhl")]
 position = Vector2(678, 561)
 Speed = 400
-
-[node name="canvas_layer" type="CanvasLayer" parent="."]
-
-[node name="control" type="Control" parent="canvas_layer"]
-custom_minimum_size = Vector2(1920, 1080)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-theme = ExtResource("2_dk8th")
-
-[node name="button" type="Button" parent="canvas_layer/control"]
-custom_minimum_size = Vector2(300, 80)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -84.0
-offset_top = -37.0
-offset_right = 84.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "test button :D"
