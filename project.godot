@@ -19,6 +19,8 @@ config/custom_user_dir_name="stellarthing"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://assets/ui/stellarthing.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
