@@ -1,0 +1,201 @@
+[gd_scene load_steps=11 format=3 uid="uid://bpnbhydtygtoh"]
+
+[ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
+[ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="2_2aa06"]
+[ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="3_eyjth"]
+[ext_resource type="Texture2D" uid="uid://b43cak0h1chph" path="res://assets/ui/stellarthing.png" id="4_8roun"]
+[ext_resource type="Script" path="res://src/ui/main_menu/quit.gd" id="5_8cdi6"]
+[ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="5_q4qf0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l4pqa"]
+shader = ExtResource("3_eyjth")
+shader_parameter/lod = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb0rx"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c174b"]
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 0.627451)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y6q4n"]
+font_size = 30
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
+[node name="menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6vfyk")
+
+[node name="texture_rect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.419608)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2aa06")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="cpu_particles_2d" type="CPUParticles2D" parent="."]
+position = Vector2(960, 540)
+amount = 10000
+lifetime = 20.0
+randomness = 1.0
+direction = Vector2(250, 250)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 125.0
+angular_velocity_max = 289.66
+angle_min = -91.0
+angle_max = 720.0
+scale_amount_min = 0.5
+scale_amount_max = 6.0
+
+[node name="center_container" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panel" type="PanelContainer" parent="center_container"]
+material = SubResource("ShaderMaterial_l4pqa")
+custom_minimum_size = Vector2(950, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mb0rx")
+
+[node name="v_box_container" type="VBoxContainer" parent="center_container/panel"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="h_separator4" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="h_separator5" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="h_separator6" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="texture_rect" type="TextureRect" parent="center_container/panel/v_box_container"]
+layout_mode = 2
+texture = ExtResource("4_8roun")
+stretch_mode = 5
+
+[node name="h_separator" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="button" type="Button" parent="center_container/panel/v_box_container"]
+custom_minimum_size = Vector2(700, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Universes"
+
+[node name="h_box_container" type="HBoxContainer" parent="center_container/panel/v_box_container"]
+custom_minimum_size = Vector2(700, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="button2" type="Button" parent="center_container/panel/v_box_container/h_box_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+
+[node name="button3" type="OptionButton" parent="center_container/panel/v_box_container/h_box_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("5_q4qf0")
+theme_override_font_sizes/font_size = 30
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "there's only english"
+popup/item_1/id = 1
+
+[node name="button3" type="Button" parent="center_container/panel/v_box_container"]
+custom_minimum_size = Vector2(700, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit"
+script = ExtResource("5_8cdi6")
+
+[node name="h_separator2" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="h_separator3" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="h_separator7" type="HSeparator" parent="center_container/panel/v_box_container"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="very_cool_outline" type="Panel" parent="center_container"]
+custom_minimum_size = Vector2(950, 679)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c174b")
+metadata/_edit_lock_ = true
+
+[node name="label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -33.0
+offset_right = 40.0
+offset_bottom = -32.0
+grow_vertical = 0
+text = "Made by hellory4n, alex343xd, livia"
+label_settings = SubResource("LabelSettings_y6q4n")
+
+[node name="label3" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 73)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 41.0
+grow_horizontal = 2
+text = "this will show images of the game in the future"
+label_settings = SubResource("LabelSettings_y6q4n")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -33.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_vertical = 0
+text = "Stellarthing v0.3.0 Beta"
+label_settings = SubResource("LabelSettings_y6q4n")
+horizontal_alignment = 2

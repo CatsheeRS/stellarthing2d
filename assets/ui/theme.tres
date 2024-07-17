@@ -1,7 +1,10 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://ddvtxxrgtlywg"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://ddvtxxrgtlywg"]
 
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="1_l67od"]
 [ext_resource type="FontFile" uid="uid://d04hl88080efg" path="res://assets/ui/RedHatText-Medium.ttf" id="2_6dook"]
+[ext_resource type="Texture2D" uid="uid://dwafty446uei5" path="res://assets/ui/icons/arrow_drop_down.png" id="2_jvdvc"]
+[ext_resource type="Texture2D" uid="uid://b23isrlv8t36m" path="res://assets/ui/icons/radio_button_checked.png" id="3_m1rgl"]
+[ext_resource type="Texture2D" uid="uid://bahvndj4jwqfl" path="res://assets/ui/icons/radio_button_unchecked.png" id="4_ayl8s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24ht4"]
 bg_color = Color(0.0223236, 0.0245817, 0.0429688, 1)
@@ -21,8 +24,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.188324, 0.306603, 0.945312, 1)
-border_blend = true
+border_color = Color(0.449219, 0.535278, 1, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -64,7 +66,24 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 shadow_color = Color(1, 1, 1, 0.6)
-shadow_size = 4
+shadow_size = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngarf"]
+bg_color = Color(0.301961, 0.639216, 1, 0.364706)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewsq1"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htyei"]
+bg_color = Color(0, 0, 0, 0.54902)
 
 [resource]
 default_font = ExtResource("2_6dook")
@@ -80,9 +99,20 @@ Button/colors/icon_hover_color = Color(1, 1, 1, 1)
 Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
 Button/colors/icon_normal_color = Color(1, 1, 1, 1)
 Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 30
 Button/fonts/font = ExtResource("1_l67od")
 Button/styles/disabled = SubResource("StyleBoxFlat_24ht4")
 Button/styles/focus = SubResource("StyleBoxFlat_gurds")
 Button/styles/hover = SubResource("StyleBoxFlat_evxeh")
 Button/styles/normal = SubResource("StyleBoxFlat_qexxy")
 Button/styles/pressed = SubResource("StyleBoxFlat_wcl5y")
+OptionButton/constants/arrow_margin = 12
+OptionButton/font_sizes/font_size = 30
+OptionButton/icons/arrow = ExtResource("2_jvdvc")
+PopupMenu/constants/v_separation = 8
+PopupMenu/font_sizes/font_size = 30
+PopupMenu/icons/radio_checked = ExtResource("3_m1rgl")
+PopupMenu/icons/radio_unchecked = ExtResource("4_ayl8s")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_ngarf")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_ewsq1")
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_htyei")
