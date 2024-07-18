@@ -14,6 +14,9 @@ public partial class Player : CharacterBody2D {
 	public Sprite2D Preview { get; set; }
 	[Export]
 	public RayCast2D PointingRaycast { get; set; }
+	[Export]
+	public Control PauseThingLmao { get; set; }
+
 	readonly PackedScene lol = GD.Load<PackedScene>("res://blocks/test_block1.tscn");
 	// true = right, false = left
 	// not talking about politics
@@ -21,6 +24,12 @@ public partial class Player : CharacterBody2D {
 
     public override void _PhysicsProcess(double delta)
 	{
+		// pausing :D
+		if (Input.IsActionJustPressed("pause")) {
+			PauseThingLmao.Visible = true;
+			GetTree().Paused = true;
+		}
+
 		// movement
 		float run = Input.IsActionPressed("run") ? (float)RunningThingy : 1.0f;
 		Vector2 dir = Input.GetVector("move_left", "move_right", "move_up", "move_down");

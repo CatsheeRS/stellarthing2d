@@ -217,6 +217,7 @@ label_settings = SubResource("LabelSettings_y6q4n")
 horizontal_alignment = 2
 
 [node name="universes" type="PanelContainer" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_l4pqa")
 custom_minimum_size = Vector2(950, 0)
 layout_mode = 1
