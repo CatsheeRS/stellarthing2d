@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpnbhydtygtoh"]
+[gd_scene load_steps=19 format=3 uid="uid://bpnbhydtygtoh"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
 [ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="2_2aa06"]
@@ -8,6 +8,10 @@
 [ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="5_ir4u7"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="5_q4qf0"]
 [ext_resource type="Script" path="res://src/ui/main_menu/hide_universes.gd" id="8_ixil3"]
+[ext_resource type="Script" path="res://src/ui/main_menu/ListUniverses.cs" id="8_nanrg"]
+[ext_resource type="Script" path="res://src/ui/main_menu/NewUniverse.cs" id="9_gij6s"]
+[ext_resource type="Script" path="res://src/ui/main_menu/OpenUniverse.cs" id="10_jawib"]
+[ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://scenes/universe.tscn" id="10_rhtp5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4pqa"]
 shader = ExtResource("3_eyjth")
@@ -18,10 +22,10 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c174b"]
 draw_center = false
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_color = Color(1, 1, 1, 0.627451)
 
 [sub_resource type="LabelSettings" id="LabelSettings_y6q4n"]
@@ -89,7 +93,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_mb0rx")
 
 [node name="v_box_container" type="VBoxContainer" parent="center_container/panel_container"]
 layout_mode = 2
-theme_override_constants/separation = 24
+theme_override_constants/separation = 16
 
 [node name="h_separator4" type="HSeparator" parent="center_container/panel_container/v_box_container"]
 modulate = Color(1, 1, 1, 0)
@@ -124,6 +128,7 @@ g = NodePath("../../../../universes")
 custom_minimum_size = Vector2(700, 80)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="button2" type="Button" parent="center_container/panel_container/v_box_container/h_box_container"]
@@ -164,7 +169,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="very_cool_outline" type="Panel" parent="center_container"]
-custom_minimum_size = Vector2(950, 679)
+custom_minimum_size = Vector2(950, 599)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_c174b")
@@ -231,10 +236,13 @@ alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="item_list" type="ItemList" parent="universes/h_box_container/v_box_container2"]
+[node name="item_list" type="ItemList" parent="universes/h_box_container/v_box_container2" node_paths=PackedStringArray("FuckingButton", "OtherFuckingButton")]
 custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("8_nanrg")
+FuckingButton = NodePath("../h_box_container/button3")
+OtherFuckingButton = NodePath("../h_box_container/button4")
 
 [node name="h_box_container" type="HBoxContainer" parent="universes/h_box_container/v_box_container2"]
 custom_minimum_size = Vector2(700, 0)
@@ -258,12 +266,16 @@ size_flags_horizontal = 3
 disabled = true
 text = "Remove"
 
-[node name="button4" type="Button" parent="universes/h_box_container/v_box_container2/h_box_container"]
+[node name="button4" type="Button" parent="universes/h_box_container/v_box_container2/h_box_container" node_paths=PackedStringArray("G", "Lol")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "Play"
+script = ExtResource("10_jawib")
+G = NodePath("../../item_list")
+UniverseScene = ExtResource("10_rhtp5")
+Lol = NodePath("../../../../..")
 
 [node name="h_separator" type="HSeparator" parent="universes/h_box_container/v_box_container2"]
 modulate = Color(1, 1, 1, 0)
@@ -299,8 +311,14 @@ placeholder_text = "New Universe"
 alignment = 1
 clear_button_enabled = true
 
-[node name="button3" type="Button" parent="universes/h_box_container/v_box_container"]
+[node name="button3" type="Button" parent="universes/h_box_container/v_box_container" node_paths=PackedStringArray("UniverseName", "Lol")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Create Universe"
+script = ExtResource("9_gij6s")
+UniverseName = NodePath("../h_box_container2/line_edit")
+UniverseScene = ExtResource("10_rhtp5")
+Lol = NodePath("../../../..")
+
+[connection signal="item_selected" from="universes/h_box_container/v_box_container2/item_list" to="universes/h_box_container/v_box_container2/item_list" method="Hdgfhsdjtdu5ujtdghs"]

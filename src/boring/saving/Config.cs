@@ -61,7 +61,7 @@ public class Config<T> where T : IConfigData, new() {
 
     static string FigureOutTheFuckingPath(string originalPath)
     {
-        string m = "user://" + originalPath.Replace("%universe", $"home/{Stellarthing.CurrentUniverse}");
+        string m = "user://" + originalPath.Replace("%universe", $"universes/{Stellarthing.CurrentUniverse}");
         DirAccess.MakeDirRecursiveAbsolute(m.GetBaseDir());
         return m;
     }

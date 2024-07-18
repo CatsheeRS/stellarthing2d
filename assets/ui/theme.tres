@@ -72,6 +72,10 @@ shadow_size = 15
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rpi3v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_plu3s"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfpp8"]
 bg_color = Color(0.45098, 0.533333, 1, 0.537255)
@@ -160,6 +164,9 @@ ItemList/styles/focus = SubResource("StyleBoxEmpty_rpi3v")
 ItemList/styles/panel = SubResource("StyleBoxEmpty_plu3s")
 ItemList/styles/selected = SubResource("StyleBoxFlat_bfpp8")
 ItemList/styles/selected_focus = SubResource("StyleBoxFlat_03m0m")
+LineEdit/colors/clear_button_color = Color(1, 1, 1, 1)
+LineEdit/colors/font_color = Color(1, 1, 1, 1)
+LineEdit/colors/selection_color = Color(1, 1, 1, 0.521569)
 LineEdit/icons/clear = ExtResource("2_npnw7")
 LineEdit/styles/focus = SubResource("StyleBoxFlat_7iqwb")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_7apqc")
