@@ -11,6 +11,12 @@ public partial class ListUniverses : ItemList {
 
     public override void _Ready()
     {
+		Fuck();
+    }
+
+	public void Fuck()
+	{
+		Clear();
 		DirAccess.MakeDirRecursiveAbsolute("user://universes/");
         using var dir = DirAccess.Open("user://universes");
 		dir.IncludeHidden = true;
@@ -22,7 +28,7 @@ public partial class ListUniverses : ItemList {
             AddItem(filename);
             filename = dir.GetNext();
         }
-    }
+	}
 
 	void Hdgfhsdjtdu5ujtdghs(int idx)
 	{

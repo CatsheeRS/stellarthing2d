@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bpnbhydtygtoh"]
+[gd_scene load_steps=20 format=3 uid="uid://bpnbhydtygtoh"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
 [ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="2_2aa06"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://src/ui/main_menu/NewUniverse.cs" id="9_gij6s"]
 [ext_resource type="Script" path="res://src/ui/main_menu/OpenUniverse.cs" id="10_jawib"]
 [ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://scenes/universe.tscn" id="10_rhtp5"]
+[ext_resource type="Script" path="res://src/ui/main_menu/DeleteUniverses.cs" id="13_m6pfs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4pqa"]
 shader = ExtResource("3_eyjth")
@@ -260,12 +261,14 @@ text = "Back"
 script = ExtResource("8_ixil3")
 g = NodePath("../../../..")
 
-[node name="button3" type="Button" parent="universes/h_box_container/v_box_container2/h_box_container"]
+[node name="button3" type="Button" parent="universes/h_box_container/v_box_container2/h_box_container" node_paths=PackedStringArray("g")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "Remove"
+script = ExtResource("5_ir4u7")
+g = NodePath("../../../../../confirm")
 
 [node name="button4" type="Button" parent="universes/h_box_container/v_box_container2/h_box_container" node_paths=PackedStringArray("G", "Lol")]
 custom_minimum_size = Vector2(0, 80)
@@ -321,5 +324,63 @@ script = ExtResource("9_gij6s")
 UniverseName = NodePath("../h_box_container2/line_edit")
 UniverseScene = ExtResource("10_rhtp5")
 Lol = NodePath("../../../..")
+
+[node name="confirm" type="PanelContainer" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_l4pqa")
+custom_minimum_size = Vector2(950, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mb0rx")
+
+[node name="v_box_container" type="VBoxContainer" parent="confirm"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="label" type="Label" parent="confirm/v_box_container"]
+layout_mode = 2
+text = "Are you sure?"
+label_settings = SubResource("LabelSettings_1bx5e")
+horizontal_alignment = 1
+
+[node name="label2" type="Label" parent="confirm/v_box_container"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+text = "Universes can't be restored!"
+label_settings = SubResource("LabelSettings_amgdh")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="h_box_container" type="HBoxContainer" parent="confirm/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="button4" type="Button" parent="confirm/v_box_container/h_box_container" node_paths=PackedStringArray("g")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+script = ExtResource("8_ixil3")
+g = NodePath("../../..")
+
+[node name="button3" type="Button" parent="confirm/v_box_container/h_box_container" node_paths=PackedStringArray("Iwasinthemiddlegroundlookingtofindthefountainofinfinitemirror", "Treefallingnoonewouldhear", "Shadowofnobodythere", "Murdersofmurdererslivinginfearofit")]
+modulate = Color(0.929412, 0.0862745, 0.0156863, 1)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remove"
+script = ExtResource("13_m6pfs")
+Iwasinthemiddlegroundlookingtofindthefountainofinfinitemirror = NodePath("../../../../universes/h_box_container/v_box_container2/item_list")
+Treefallingnoonewouldhear = NodePath("../../../../universes/h_box_container/v_box_container2/h_box_container/button3")
+Shadowofnobodythere = NodePath("../../../../universes/h_box_container/v_box_container2/h_box_container/button4")
+Murdersofmurdererslivinginfearofit = NodePath("../../..")
 
 [connection signal="item_selected" from="universes/h_box_container/v_box_container2/item_list" to="universes/h_box_container/v_box_container2/item_list" method="Hdgfhsdjtdu5ujtdghs"]
