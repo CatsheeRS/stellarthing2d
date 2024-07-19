@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=16 format=3 uid="uid://cybga7m7m7f1e"]
 
+[ext_resource type="Texture2D" uid="uid://vy4vypi4ag53" path="res://assets/ui/build.png" id="2_dfuvk"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_dk8th"]
-[ext_resource type="Texture2D" uid="uid://c2nq83f0ilqmu" path="res://assets/placeholder/hammer.png" id="2_pb10x"]
+[ext_resource type="Script" path="res://src/ui/hud/show_spaceship_editor.gd" id="3_6ludb"]
 [ext_resource type="PackedScene" uid="uid://do8kycdgys0rd" path="res://scenes/spaceship_editor.tscn" id="3_gujph"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="3_jaxad"]
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="4_lepqn"]
@@ -10,6 +11,56 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
 font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qgnh"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.192157, 0.25098, 0.32549, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3h88"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.192157, 0.25098, 0.32549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crh56"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0715942, 0.198556, 0.359375, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ic3b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v50yp"]
 shader = ExtResource("3_jaxad")
@@ -59,16 +110,30 @@ mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="button" type="Button" parent="hud/control/margin_container"]
+[node name="h_box_container" type="HBoxContainer" parent="hud/control/margin_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="button" type="Button" parent="hud/control/margin_container/h_box_container" node_paths=PackedStringArray("gfhgdfhf")]
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 tooltip_text = "Spaceship Editor"
-icon = ExtResource("2_pb10x")
-flat = true
-vertical_icon_alignment = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3qgnh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e3h88")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_crh56")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3ic3b")
+icon = ExtResource("2_dfuvk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_6ludb")
+gfhgdfhf = NodePath("../../../spaceship_editor")
 
 [node name="spaceship_editor" parent="hud/control" instance=ExtResource("3_gujph")]
+process_mode = 2
+visible = false
 layout_mode = 1
 
 [node name="cpu_particles_2d" type="CPUParticles2D" parent="."]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://do8kycdgys0rd"]
+[gd_scene load_steps=8 format=3 uid="uid://do8kycdgys0rd"]
 
 [ext_resource type="Texture2D" uid="uid://cwflkg31dgov5" path="res://assets/ui/builder_bg.png" id="1_7hmkh"]
-[ext_resource type="Script" path="res://src/ui/hud/SpaceshipEditorEditor.cs" id="1_7ofuj"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_y6bc2"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="3_4hv85"]
 [ext_resource type="Script" path="res://src/ui/hud/SpaceshipEditorCamera.cs" id="3_nqsvq"]
+[ext_resource type="Script" path="res://src/ui/hud/close_universe_editor.gd" id="5_vaces"]
+[ext_resource type="Texture2D" uid="uid://bsibkrhfl2gpq" path="res://assets/ui/green_square.png" id="7_xo72d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kjmh7"]
 font = ExtResource("3_4hv85")
@@ -18,13 +19,11 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="sub_viewport" type="SubViewport" parent="." node_paths=PackedStringArray("MyProperty")]
+[node name="sub_viewport" type="SubViewport" parent="."]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
-script = ExtResource("1_7ofuj")
-MyProperty = NodePath("camera_2d")
 
 [node name="color_rect" type="ColorRect" parent="sub_viewport"]
 modulate = Color(1, 1, 1, 0.898039)
@@ -56,11 +55,12 @@ offset_top = 96.0
 offset_right = 412.0
 offset_bottom = 160.0
 theme = ExtResource("1_y6bc2")
-text = "Left click to follow cursor
-Right click to place/remove blocks
+text = "WASD to move
+Left click to place
+Right click to remove
 Scroll to zoom"
 
-[node name="button" type="Button" parent="sub_viewport/canvas_layer"]
+[node name="button" type="Button" parent="sub_viewport/canvas_layer" node_paths=PackedStringArray("gfhgdfhf")]
 custom_minimum_size = Vector2(300, 80)
 anchors_preset = 2
 anchor_top = 1.0
@@ -72,6 +72,8 @@ offset_bottom = -32.0
 grow_vertical = 0
 theme = ExtResource("1_y6bc2")
 text = "Cancel"
+script = ExtResource("5_vaces")
+gfhgdfhf = NodePath("../../..")
 
 [node name="button2" type="Button" parent="sub_viewport/canvas_layer"]
 custom_minimum_size = Vector2(300, 80)
@@ -86,9 +88,15 @@ grow_vertical = 0
 theme = ExtResource("1_y6bc2")
 text = "Save"
 
-[node name="camera_2d" type="Camera2D" parent="sub_viewport"]
-position = Vector2(961, 541)
+[node name="camera_2d" type="Camera2D" parent="sub_viewport" node_paths=PackedStringArray("MyProperty")]
+position = Vector2(960, 540)
 zoom = Vector2(5, 5)
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 script = ExtResource("3_nqsvq")
+MyProperty = NodePath("funni_preview")
+
+[node name="funni_preview" type="Sprite2D" parent="sub_viewport/camera_2d"]
+modulate = Color(1, 1, 1, 0.498039)
+texture = ExtResource("7_xo72d")
+centered = false
