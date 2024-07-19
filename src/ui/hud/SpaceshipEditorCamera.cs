@@ -8,7 +8,7 @@ public partial class SpaceshipEditorCamera : Camera2D
 {
 	[Export]
 	public Sprite2D MyProperty { get; set; }
-	Dictionary<Vector2, TextureRect> funniCrap = [];
+	public Dictionary<Vector2, TextureRect> funniCrap { get; set; } = [];
 
     public override void _Input(InputEvent @event)
     {
