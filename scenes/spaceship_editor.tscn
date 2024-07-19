@@ -1,0 +1,91 @@
+[gd_scene load_steps=6 format=3 uid="uid://do8kycdgys0rd"]
+
+[ext_resource type="Texture2D" uid="uid://cwflkg31dgov5" path="res://assets/ui/builder_bg.png" id="1_7hmkh"]
+[ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_y6bc2"]
+[ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="3_4hv85"]
+[ext_resource type="Script" path="res://src/ui/hud/SpaceshipEditorCamera.cs" id="3_nqsvq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kjmh7"]
+font = ExtResource("3_4hv85")
+font_size = 48
+
+[node name="sub_viewport_container" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="sub_viewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 3
+
+[node name="color_rect" type="ColorRect" parent="sub_viewport"]
+modulate = Color(1, 1, 1, 0.898039)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="builder_bg" type="Sprite2D" parent="sub_viewport"]
+texture = ExtResource("1_7hmkh")
+centered = false
+
+[node name="canvas_layer" type="CanvasLayer" parent="sub_viewport"]
+
+[node name="label" type="Label" parent="sub_viewport/canvas_layer"]
+anchors_preset = -1
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 412.0
+offset_bottom = 96.0
+theme = ExtResource("1_y6bc2")
+text = "Spaceship Editor"
+label_settings = SubResource("LabelSettings_kjmh7")
+
+[node name="label2" type="Label" parent="sub_viewport/canvas_layer"]
+offset_left = 32.0
+offset_top = 96.0
+offset_right = 412.0
+offset_bottom = 160.0
+theme = ExtResource("1_y6bc2")
+text = "Click to follow cursor
+Scroll to zoom"
+
+[node name="button" type="Button" parent="sub_viewport/canvas_layer"]
+custom_minimum_size = Vector2(300, 80)
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -112.0
+offset_right = 332.0
+offset_bottom = -32.0
+grow_vertical = 0
+theme = ExtResource("1_y6bc2")
+text = "Cancel"
+
+[node name="button2" type="Button" parent="sub_viewport/canvas_layer"]
+custom_minimum_size = Vector2(300, 80)
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 364.0
+offset_top = -112.0
+offset_right = 664.0
+offset_bottom = -32.0
+grow_vertical = 0
+theme = ExtResource("1_y6bc2")
+text = "Save"
+
+[node name="camera_2d" type="Camera2D" parent="sub_viewport"]
+position = Vector2(960, 540)
+zoom = Vector2(5, 5)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+script = ExtResource("3_nqsvq")

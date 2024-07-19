@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=11 format=3 uid="uid://cybga7m7m7f1e"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_dk8th"]
+[ext_resource type="Texture2D" uid="uid://c2nq83f0ilqmu" path="res://assets/placeholder/hammer.png" id="2_pb10x"]
+[ext_resource type="PackedScene" uid="uid://do8kycdgys0rd" path="res://scenes/spaceship_editor.tscn" id="3_gujph"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="3_jaxad"]
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="4_lepqn"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="5_qfm5u"]
@@ -34,6 +36,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 theme = ExtResource("2_dk8th")
 
 [node name="label" type="Label" parent="hud/control"]
@@ -44,6 +47,29 @@ text = "wasd to move
 ctrl to run
 esc to pause"
 label_settings = SubResource("LabelSettings_dtk2u")
+
+[node name="margin_container" type="MarginContainer" parent="hud/control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="button" type="Button" parent="hud/control/margin_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+tooltip_text = "Spaceship Editor"
+icon = ExtResource("2_pb10x")
+flat = true
+vertical_icon_alignment = 2
+
+[node name="spaceship_editor" parent="hud/control" instance=ExtResource("3_gujph")]
+layout_mode = 1
 
 [node name="cpu_particles_2d" type="CPUParticles2D" parent="."]
 position = Vector2(960, 540)
@@ -112,3 +138,15 @@ size_flags_horizontal = 0
 text = "Quit to Main Menu"
 script = ExtResource("5_qfm5u")
 gggg = NodePath("../../../../..")
+
+[node name="sub_viewport_container" parent="." instance=ExtResource("3_gujph")]
+offset_left = 176.0
+offset_top = 174.0
+offset_right = 176.0
+offset_bottom = 174.0
+
+[node name="sub_viewport_container2" parent="." instance=ExtResource("3_gujph")]
+offset_left = 611.0
+offset_top = 609.0
+offset_right = 611.0
+offset_bottom = 609.0
