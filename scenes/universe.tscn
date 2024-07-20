@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=17 format=3 uid="uid://cybga7m7m7f1e"]
 
 [ext_resource type="Texture2D" uid="uid://vy4vypi4ag53" path="res://assets/ui/build.png" id="2_dfuvk"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_dk8th"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="4_lepqn"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="5_qfm5u"]
 [ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_lgyhl"]
+[ext_resource type="PackedScene" uid="uid://cg83e0ctsdb11" path="res://scenes/spaceships/cylinder.tscn" id="8_wjrdr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
 font_size = 32
@@ -152,11 +153,6 @@ angle_max = 720.0
 scale_amount_min = 0.5
 scale_amount_max = 2.0
 
-[node name="player" parent="." node_paths=PackedStringArray("PauseThingLmao") instance=ExtResource("6_lgyhl")]
-position = Vector2(678, 561)
-Speed = 400
-PauseThingLmao = NodePath("../pause/universes")
-
 [node name="pause" type="CanvasLayer" parent="."]
 process_mode = 2
 layer = 128
@@ -203,3 +199,11 @@ size_flags_horizontal = 0
 text = "Quit to Main Menu"
 script = ExtResource("5_qfm5u")
 gggg = NodePath("../../../../..")
+
+[node name="cylinder" parent="." instance=ExtResource("8_wjrdr")]
+position = Vector2(898, 542)
+
+[node name="player" parent="cylinder" node_paths=PackedStringArray("PauseThingLmao") instance=ExtResource("6_lgyhl")]
+position = Vector2(38, 13)
+Speed = 400
+PauseThingLmao = NodePath("../../pause/universes")

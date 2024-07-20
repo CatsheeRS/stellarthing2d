@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c57bjnn4cmjmu"
-path="res://.godot/imported/future_wall_right.png-402a209c89d336e94e2ab6e5354a9f3f.ctex"
+uid="uid://nlx20il8l03h"
+path="res://.godot/imported/cylinder.png-86aa6df2f9aa02a489b14a916c6299e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/spaceship/future_wall_right.png"
-dest_files=["res://.godot/imported/future_wall_right.png-402a209c89d336e94e2ab6e5354a9f3f.ctex"]
+source_file="res://assets/spaceship/cylinder.png"
+dest_files=["res://.godot/imported/cylinder.png-86aa6df2f9aa02a489b14a916c6299e6.ctex"]
 
 [params]
 
