@@ -13,7 +13,7 @@ public partial class OpenUniverse : Button {
 
     public override void _Pressed()
     {
-        G.GetItemText(G.GetSelectedItems()[0]);
+        Stellarthing.CurrentUniverse = G.GetItemText(G.GetSelectedItems()[0]);
 		GetTree().Root.AddChild(UniverseScene.Instantiate());
 		Lol.QueueFree();
     }

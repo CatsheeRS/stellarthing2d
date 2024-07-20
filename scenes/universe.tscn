@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=19 format=3 uid="uid://cybga7m7m7f1e"]
 
+[ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_0rd3e"]
 [ext_resource type="Texture2D" uid="uid://vy4vypi4ag53" path="res://assets/ui/build.png" id="2_dfuvk"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_dk8th"]
 [ext_resource type="Script" path="res://src/ui/hud/show_spaceship_editor.gd" id="3_6ludb"]
@@ -12,6 +13,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
 font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_se1t8"]
+font_size = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qgnh"]
 content_margin_left = 16.0
@@ -92,7 +96,7 @@ offset_bottom = 40.0
 mouse_filter = 2
 theme = ExtResource("2_dk8th")
 
-[node name="label" type="Label" parent="hud/control"]
+[node name="tutorials" type="Label" parent="hud/control"]
 layout_mode = 0
 offset_right = 204.0
 offset_bottom = 135.0
@@ -100,6 +104,28 @@ text = "wasd to move
 ctrl to run
 esc to pause"
 label_settings = SubResource("LabelSettings_dtk2u")
+
+[node name="v_box_container" type="VBoxContainer" parent="hud/control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="moneys" type="Label" parent="hud/control/v_box_container"]
+layout_mode = 2
+text = "2371-02-15 12:00"
+label_settings = SubResource("LabelSettings_se1t8")
+horizontal_alignment = 2
+script = ExtResource("2_0rd3e")
+
+[node name="timer" type="Timer" parent="hud/control/v_box_container/moneys"]
+wait_time = 12.5
+autostart = true
 
 [node name="margin_container" type="MarginContainer" parent="hud/control"]
 layout_mode = 1
@@ -225,3 +251,5 @@ position = Vector2(898, 542)
 position = Vector2(38, 13)
 Speed = 400
 PauseThingLmao = NodePath("../../pause/universes")
+
+[connection signal="timeout" from="hud/control/v_box_container/moneys/timer" to="hud/control/v_box_container/moneys" method="HourThing"]
