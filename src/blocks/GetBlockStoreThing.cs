@@ -7,6 +7,7 @@ public static class GetBlockStoreThing {
         {"chair", new() {
             Scene = "res://blocks/chair.tscn",
             Name = "Chair",
+            Description = "Useful for sitting.",
             Image = "res://assets/blocks/chair.png",
             Iron = 1
         }}

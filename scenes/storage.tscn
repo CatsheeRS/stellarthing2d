@@ -310,6 +310,7 @@ size_flags_vertical = 3
 
 [node name="v_box_container" type="VBoxContainer" parent="margin_container/v_box_container/h_box_container2/v_box_container/decoration"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 32
 script = ExtResource("6_wghp4")
 Sceeneehee = ExtResource("7_w2h0h")

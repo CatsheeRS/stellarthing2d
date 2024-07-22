@@ -11,6 +11,7 @@ public class Inventory : IConfigData {
 public class Item {
     public string Scene { get; set; } = "";
     public string Name { get; set; } = "";
+    public string Description { get; set; } = "";
     public string Image { get; set; } = "";
     public uint Amount { get; set; } = 0;
     public int Oxygen { get; set; } = 0;
