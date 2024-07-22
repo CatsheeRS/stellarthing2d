@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://src/ui/main_menu/ListUniverses.cs" id="8_nanrg"]
 [ext_resource type="Script" path="res://src/ui/main_menu/NewUniverse.cs" id="9_gij6s"]
 [ext_resource type="Script" path="res://src/ui/main_menu/OpenUniverse.cs" id="10_jawib"]
-[ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://scenes/universe.tscn" id="10_rhtp5"]
+[ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://scenes/universe2d.tscn" id="10_rhtp5"]
 [ext_resource type="Script" path="res://src/ui/main_menu/DeleteUniverses.cs" id="13_m6pfs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1h6hf"]
@@ -211,7 +211,7 @@ offset_top = -33.0
 offset_right = 40.0
 offset_bottom = -32.0
 grow_vertical = 0
-text = "Made by hellory4n, alex343xd, livia"
+text = "Made by hellory4n, alex343xd"
 label_settings = SubResource("LabelSettings_y6q4n")
 
 [node name="label3" type="Label" parent="."]
@@ -233,12 +233,12 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -400.0
-offset_top = -33.0
+offset_left = -365.0
+offset_top = -73.0
 offset_right = -32.0
 offset_bottom = -32.0
 grow_vertical = 0
-text = "Stellarthing v0.4.0 Beta"
+text = "Stellarthing v0.5.0 Beta"
 label_settings = SubResource("LabelSettings_y6q4n")
 horizontal_alignment = 2
 

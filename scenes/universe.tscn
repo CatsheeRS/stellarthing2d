@@ -1,271 +1,62 @@
-[gd_scene load_steps=20 format=3 uid="uid://cybga7m7m7f1e"]
+[gd_scene load_steps=9 format=3 uid="uid://78hvyw2ffjmg"]
 
-[ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_0rd3e"]
-[ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_dk8th"]
-[ext_resource type="Texture2D" uid="uid://p3ynd0hx23gg" path="res://assets/ui/resources.png" id="3_fr616"]
-[ext_resource type="PackedScene" uid="uid://do8kycdgys0rd" path="res://scenes/spaceship_editor.tscn" id="3_gujph"]
-[ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="3_jaxad"]
-[ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="4_lepqn"]
-[ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="4_tc00o"]
-[ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="5_qfm5u"]
-[ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="6_jrrcd"]
-[ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_lgyhl"]
-[ext_resource type="PackedScene" uid="uid://cg83e0ctsdb11" path="res://scenes/spaceships/cylinder.tscn" id="8_wjrdr"]
+[ext_resource type="PackedScene" uid="uid://d4kmkjio7lypn" path="res://assets/people/bob_guy.glb" id="1_m2e07"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
-font_size = 32
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c16i4"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.5, 0.5, 0.5, 1)
+sky_energy_multiplier = 0.0
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.5, 0.5, 0.5, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_se1t8"]
-font_size = 40
+[sub_resource type="Sky" id="Sky_ryih7"]
+sky_material = SubResource("ProceduralSkyMaterial_c16i4")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qgnh"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.192157, 0.25098, 0.32549, 0.6)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="Environment" id="Environment_q5te5"]
+background_mode = 2
+sky = SubResource("Sky_ryih7")
+tonemap_mode = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3h88"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.192157, 0.25098, 0.32549, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hj123"]
+albedo_color = Color(0.0972898, 0.0269623, 0.222656, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crh56"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.0715942, 0.198556, 0.359375, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="BoxMesh" id="BoxMesh_lvnb5"]
+material = SubResource("StandardMaterial3D_hj123")
+size = Vector3(100, 1, 100)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ic3b"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_3lp6x"]
+size = Vector3(100, 1, 100)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v50yp"]
-shader = ExtResource("3_jaxad")
-shader_parameter/lod = 0.5
+[sub_resource type="SphereShape3D" id="SphereShape3D_vmp6v"]
+radius = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpptr"]
-bg_color = Color(1, 1, 1, 1)
+[node name="universe" type="Node3D"]
 
-[node name="universe" type="Node2D"]
-metadata/_edit_vertical_guides_ = [-1107.0]
+[node name="world_environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q5te5")
 
-[node name="color_rect" type="ColorRect" parent="."]
-visible = false
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.0213404, 0.000183105, 0.046875, 1)
+[node name="directional_light_3d" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.653421, -0.378498, 0.655577, 0, 0.866025, 0.5, -0.756995, 0.32671, -0.565879, 0, 0, 0)
+shadow_enabled = true
 
-[node name="hud" type="CanvasLayer" parent="."]
-layer = 128
+[node name="ground" type="StaticBody3D" parent="."]
 
-[node name="control" type="Control" parent="hud"]
-custom_minimum_size = Vector2(1920, 1080)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme = ExtResource("2_dk8th")
+[node name="mesh_instance_3d" type="MeshInstance3D" parent="ground"]
+mesh = SubResource("BoxMesh_lvnb5")
 
-[node name="tutorials" type="Label" parent="hud/control"]
-layout_mode = 0
-offset_right = 204.0
-offset_bottom = 135.0
-text = "wasd to move
-ctrl to run
-esc to pause"
-label_settings = SubResource("LabelSettings_dtk2u")
+[node name="collision_shape_3d" type="CollisionShape3D" parent="ground"]
+shape = SubResource("BoxShape3D_3lp6x")
 
-[node name="v_box_container" type="VBoxContainer" parent="hud/control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_top = 32.0
-offset_right = -32.0
-offset_bottom = 40.0
-grow_horizontal = 0
+[node name="rigid_body_3d" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
-[node name="moneys" type="Label" parent="hud/control/v_box_container"]
-layout_mode = 2
-text = "2371-02-15 12:00"
-label_settings = SubResource("LabelSettings_se1t8")
-horizontal_alignment = 2
-script = ExtResource("2_0rd3e")
+[node name="bob_guy" parent="rigid_body_3d" instance=ExtResource("1_m2e07")]
 
-[node name="timer" type="Timer" parent="hud/control/v_box_container/moneys"]
-wait_time = 12.5
-autostart = true
+[node name="collision_shape_3d" type="CollisionShape3D" parent="rigid_body_3d"]
+shape = SubResource("SphereShape3D_vmp6v")
 
-[node name="margin_container" type="MarginContainer" parent="hud/control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="h_box_container" type="HBoxContainer" parent="hud/control/margin_container"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
-[node name="button" type="Button" parent="hud/control/margin_container/h_box_container" node_paths=PackedStringArray("g")]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-tooltip_text = "Resources & Development"
-theme_override_styles/normal = SubResource("StyleBoxFlat_3qgnh")
-theme_override_styles/hover = SubResource("StyleBoxFlat_e3h88")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_crh56")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3ic3b")
-icon = ExtResource("3_fr616")
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("4_tc00o")
-g = NodePath("../../../storage")
-
-[node name="spaceship_editor" parent="hud/control" instance=ExtResource("3_gujph")]
-process_mode = 2
-visible = false
-layout_mode = 1
-
-[node name="storage" parent="hud/control" instance=ExtResource("6_jrrcd")]
-visible = false
-custom_minimum_size = Vector2(1664, 824)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -832.0
-offset_top = -412.0
-offset_right = 832.0
-offset_bottom = 412.0
-
-[node name="cpu_particles_2d" type="CPUParticles2D" parent="."]
-position = Vector2(960, 540)
-amount = 15000
-lifetime = 25.0
-preprocess = 30.0
-speed_scale = 0.5
-randomness = 1.0
-direction = Vector2(250, 250)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 5.0
-initial_velocity_max = 125.0
-angular_velocity_max = 289.66
-angle_min = -720.0
-angle_max = 720.0
-scale_amount_min = 0.5
-scale_amount_max = 4.0
-
-[node name="universes" type="PanelContainer" parent="."]
-material = SubResource("ShaderMaterial_v50yp")
-custom_minimum_size = Vector2(1920, 1080)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -3598.0
-offset_top = -2729.0
-offset_right = 4280.0
-offset_bottom = 4432.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.999865, 1.00014)
-theme = ExtResource("2_dk8th")
-theme_override_styles/panel = SubResource("StyleBoxFlat_wpptr")
-
-[node name="pause" type="CanvasLayer" parent="."]
-process_mode = 2
-layer = 128
-
-[node name="universes" type="PanelContainer" parent="pause"]
-visible = false
-material = SubResource("ShaderMaterial_v50yp")
-custom_minimum_size = Vector2(950, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_dk8th")
-theme_override_styles/panel = SubResource("StyleBoxFlat_wpptr")
-
-[node name="margin_container" type="MarginContainer" parent="pause/universes"]
-layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-
-[node name="v_box_container" type="VBoxContainer" parent="pause/universes/margin_container"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="button" type="Button" parent="pause/universes/margin_container/v_box_container" node_paths=PackedStringArray("b")]
-custom_minimum_size = Vector2(500, 80)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Back"
-script = ExtResource("4_lepqn")
-b = NodePath("../../..")
-
-[node name="button2" type="Button" parent="pause/universes/margin_container/v_box_container"]
-custom_minimum_size = Vector2(500, 80)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Settings"
-
-[node name="button3" type="Button" parent="pause/universes/margin_container/v_box_container" node_paths=PackedStringArray("gggg")]
-custom_minimum_size = Vector2(500, 80)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Quit to Main Menu"
-script = ExtResource("5_qfm5u")
-gggg = NodePath("../../../../..")
-
-[node name="cylinder" parent="." instance=ExtResource("8_wjrdr")]
-position = Vector2(898, 542)
-
-[node name="player" parent="cylinder" node_paths=PackedStringArray("PauseThingLmao") instance=ExtResource("6_lgyhl")]
-position = Vector2(38, 13)
-Speed = 400
-PauseThingLmao = NodePath("../../pause/universes")
-
-[connection signal="timeout" from="hud/control/v_box_container/moneys/timer" to="hud/control/v_box_container/moneys" method="HourThing"]
+[node name="camera_3d" type="Camera3D" parent="rigid_body_3d"]
+transform = Transform3D(-1, 4.37114e-08, -7.57104e-08, 0, 0.866026, 0.5, 8.74228e-08, 0.5, -0.866026, 0, 8, -12)
+current = true
+fov = 37.8493
+size = 20.0
