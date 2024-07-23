@@ -54,7 +54,6 @@ shape = SubResource("BoxShape3D_3lp6x")
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 script = ExtResource("1_2s2vk")
-Speed = 50
 Model = NodePath("bob_guy")
 metadata/_edit_group_ = true
 

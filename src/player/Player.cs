@@ -5,7 +5,7 @@ namespace stellarthing;
 
 public partial class Player : CharacterBody3D {
 	[Export]
-	public int Speed { get; set; } = 400;
+	public int Speed { get; set; } = 50;
 	[Export]
 	public double RunningThingy { get; set; } = 1.25;
 	[Export]
@@ -48,6 +48,17 @@ public partial class Player : CharacterBody3D {
 
 		if (!dir.IsZeroApprox()) {
 			Model.Basis = Basis.LookingAt(dir);
+		}
+
+		// animate
+		if (!dir.IsZeroApprox() && run < 1.1f) {
+			modelAnimator.Play("walk");
+		}
+		else if (!dir.IsZeroApprox() && run > 1.1f) {
+			modelAnimator.Play("walk", customSpeed: (float)RunningThingy * 1.3f);
+		}
+		else {
+			modelAnimator.Play("idle");
 		}
 	}
 }
