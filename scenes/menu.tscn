@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://src/ui/main_menu/ListUniverses.cs" id="8_nanrg"]
 [ext_resource type="Script" path="res://src/ui/main_menu/NewUniverse.cs" id="9_gij6s"]
 [ext_resource type="Script" path="res://src/ui/main_menu/OpenUniverse.cs" id="10_jawib"]
-[ext_resource type="PackedScene" uid="uid://cybga7m7m7f1e" path="res://scenes/universe2d.tscn" id="10_rhtp5"]
+[ext_resource type="PackedScene" uid="uid://78hvyw2ffjmg" path="res://scenes/universe.tscn" id="11_wmlif"]
 [ext_resource type="Script" path="res://src/ui/main_menu/DeleteUniverses.cs" id="13_m6pfs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1h6hf"]
@@ -303,7 +303,7 @@ disabled = true
 text = "Play"
 script = ExtResource("10_jawib")
 G = NodePath("../../item_list")
-UniverseScene = ExtResource("10_rhtp5")
+UniverseScene = ExtResource("11_wmlif")
 Lol = NodePath("../../../../..")
 
 [node name="h_separator" type="HSeparator" parent="universes/h_box_container/v_box_container2"]
@@ -347,7 +347,7 @@ size_flags_horizontal = 3
 text = "Create Universe"
 script = ExtResource("9_gij6s")
 UniverseName = NodePath("../h_box_container2/line_edit")
-UniverseScene = ExtResource("10_rhtp5")
+UniverseScene = ExtResource("11_wmlif")
 Lol = NodePath("../../../..")
 
 [node name="confirm" type="PanelContainer" parent="."]
