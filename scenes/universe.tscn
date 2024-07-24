@@ -1,11 +1,40 @@
-[gd_scene load_steps=11 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=16 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
+[ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="1_2vaum"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
 [ext_resource type="PackedScene" uid="uid://cm7p5eum4doci" path="res://furniture/soft_chair.tscn" id="3_v0fhx"]
 [ext_resource type="PackedScene" uid="uid://bljftxrlhlne" path="res://furniture/table.tscn" id="4_rqu65"]
 [ext_resource type="PackedScene" uid="uid://cribkddt5yyjs" path="res://furniture/fridge.tscn" id="5_2oxnf"]
-[ext_resource type="PackedScene" uid="uid://c27noyyq2qc5" path="res://assets/spaceship/cylinder.glb" id="6_u3qw8"]
+[ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjlii"]
+shader = ExtResource("1_2vaum")
+shader_parameter/iterations = 20
+shader_parameter/formuparam = 1.0
+shader_parameter/volsteps = 20
+shader_parameter/stepsize = 0.5
+shader_parameter/zoom = 0.025
+shader_parameter/tile = 0.5
+shader_parameter/speed = 0.005
+shader_parameter/brightness = 0.001
+shader_parameter/darkmatter = 0.0
+shader_parameter/distfading = 0.65
+shader_parameter/saturation = 0.75
+shader_parameter/iResolution = Vector2(192, 192)
+shader_parameter/iMouse = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_k6npx"]
+viewport_path = NodePath("sub_viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88l57"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_k6npx")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1i43m"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_88l57")
+size = Vector2(200, 200)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c16i4"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -27,6 +56,20 @@ radius = 1.0
 
 [node name="universe" type="Node3D"]
 
+[node name="sub_viewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(960, 540)
+
+[node name="color_rect" type="ColorRect" parent="sub_viewport"]
+material = SubResource("ShaderMaterial_gjlii")
+custom_minimum_size = Vector2(960, 540)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="mesh_instance_3d" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0, -16.9208, -14.9285)
+mesh = SubResource("PlaneMesh_1i43m")
+
 [node name="world_environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q5te5")
 
@@ -43,6 +86,9 @@ shadow_enabled = true
 shadow_opacity = 0.49
 shadow_blur = 10.0
 
+[node name="cylinder" parent="." instance=ExtResource("6_eb5e2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
 [node name="soft_chair" parent="." instance=ExtResource("3_v0fhx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80287, 0.9, -4.58594)
 
@@ -52,28 +98,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.827, 1, -1.455)
 [node name="fridge" parent="." instance=ExtResource("5_2oxnf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.296, 2.5, -5.58)
 
-[node name="cylinder" parent="." instance=ExtResource("6_u3qw8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="player" type="CharacterBody3D" parent="cylinder" node_paths=PackedStringArray("Model")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0)
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 script = ExtResource("1_2s2vk")
 Speed = 25
 Model = NodePath("bob_guy")
 metadata/_edit_group_ = true
 
-[node name="bob_guy" parent="cylinder/player" instance=ExtResource("2_b8bnt")]
+[node name="bob_guy" parent="player" instance=ExtResource("2_b8bnt")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="collision_shape_3d" type="CollisionShape3D" parent="cylinder/player"]
+[node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
 shape = SubResource("SphereShape3D_vmp6v")
 
-[node name="perspective" type="Camera3D" parent="cylinder/player"]
+[node name="perspective" type="Camera3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 8, 12)
 visible = false
 size = 20.0
 
-[node name="orthographic" type="Camera3D" parent="cylinder/player"]
+[node name="orthographic" type="Camera3D" parent="player"]
 transform = Transform3D(0.939693, 0.17101, -0.296198, 0, 0.866025, 0.5, 0.34202, -0.469846, 0.813798, 0, 75, 0)
 v_offset = -65.0
 projection = 1

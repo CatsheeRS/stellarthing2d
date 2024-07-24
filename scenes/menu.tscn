@@ -1,7 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://bpnbhydtygtoh"]
+[gd_scene load_steps=21 format=3 uid="uid://bpnbhydtygtoh"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
-[ext_resource type="Texture2D" uid="uid://bq5ch2qwr5yod" path="res://assets/placeholder/spas.png" id="2_2aa06"]
+[ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="2_tati1"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="3_eyjth"]
 [ext_resource type="Texture2D" uid="uid://b43cak0h1chph" path="res://assets/ui/stellarthing.png" id="4_8roun"]
 [ext_resource type="Script" path="res://src/ui/main_menu/quit.gd" id="5_8cdi6"]
@@ -14,12 +14,21 @@
 [ext_resource type="PackedScene" uid="uid://78hvyw2ffjmg" path="res://scenes/universe.tscn" id="11_wmlif"]
 [ext_resource type="Script" path="res://src/ui/main_menu/DeleteUniverses.cs" id="13_m6pfs"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1h6hf"]
-shader = ExtResource("3_eyjth")
-shader_parameter/lod = 0.5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jv1vs"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvkxc"]
+shader = ExtResource("2_tati1")
+shader_parameter/iterations = 20
+shader_parameter/formuparam = 1.0
+shader_parameter/volsteps = 20
+shader_parameter/stepsize = 0.5
+shader_parameter/zoom = 0.025
+shader_parameter/tile = 0.5
+shader_parameter/speed = 0.005
+shader_parameter/brightness = 0.001
+shader_parameter/darkmatter = 0.0
+shader_parameter/distfading = 0.65
+shader_parameter/saturation = 0.75
+shader_parameter/iResolution = Vector2(192, 192)
+shader_parameter/iMouse = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4pqa"]
 shader = ExtResource("3_eyjth")
@@ -57,51 +66,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_6vfyk")
 
-[node name="texture_rect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.419608)
+[node name="color_rect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.560784)
+material = SubResource("ShaderMaterial_cvkxc")
+custom_minimum_size = Vector2(960, 540)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_2aa06")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="cpu_particles_2d" type="CPUParticles2D" parent="."]
-position = Vector2(960, 540)
-amount = 15000
-lifetime = 25.0
-preprocess = 30.0
-speed_scale = 0.5
-randomness = 1.0
-direction = Vector2(250, 250)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 5.0
-initial_velocity_max = 125.0
-angular_velocity_max = 289.66
-angle_min = -720.0
-angle_max = 720.0
-scale_amount_min = 0.5
-scale_amount_max = 4.0
-
-[node name="universes2" type="PanelContainer" parent="."]
-material = SubResource("ShaderMaterial_1h6hf")
-custom_minimum_size = Vector2(1920, 1080)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -3598.0
-offset_top = -2729.0
-offset_right = 4280.0
-offset_bottom = 4432.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_6vfyk")
-theme_override_styles/panel = SubResource("StyleBoxFlat_jv1vs")
 
 [node name="center_container" type="CenterContainer" parent="."]
 layout_mode = 1

@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://cylidswewvj04"]
+
+[ext_resource type="PackedScene" uid="uid://b2s6bel6u7yle" path="res://assets/spaceship/basic.glb" id="1_gv7lc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f8ega"]
+size = Vector3(100, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kwpts"]
+size = Vector3(100, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cpgem"]
+size = Vector3(2, 4, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uuwei"]
+size = Vector3(2, 4, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mpfli"]
+size = Vector3(2, 4, 20)
+
+[node name="cylinder" type="StaticBody3D"]
+
+[node name="basic" parent="." instance=ExtResource("1_gv7lc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.11908, 0, -0.896484)
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+shape = SubResource("BoxShape3D_f8ega")
+
+[node name="collision_shape_3d2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 25)
+shape = SubResource("BoxShape3D_kwpts")
+
+[node name="collision_shape_3d4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -27)
+shape = SubResource("BoxShape3D_kwpts")
+
+[node name="collision_shape_3d3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1, -1)
+shape = SubResource("BoxShape3D_cpgem")
+
+[node name="collision_shape_3d5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 1, -1)
+shape = SubResource("BoxShape3D_uuwei")
+
+[node name="collision_shape_3d6" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19189, 1, -15.9949)
+shape = SubResource("BoxShape3D_mpfli")
+
+[node name="collision_shape_3d7" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 14)
+shape = SubResource("BoxShape3D_mpfli")
