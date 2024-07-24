@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="5_qfm5u"]
 [ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="6_jrrcd"]
 [ext_resource type="PackedScene" uid="uid://4dl88msjd1lb" path="res://scenes/player.tscn" id="6_lgyhl"]
-[ext_resource type="PackedScene" uid="uid://cg83e0ctsdb11" path="res://scenes/spaceships/cylinder.tscn" id="8_wjrdr"]
+[ext_resource type="PackedScene" uid="uid://cg83e0ctsdb11" path="res://scenes/spaceships/cylinder2d.tscn" id="8_wjrdr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dtk2u"]
 font_size = 32

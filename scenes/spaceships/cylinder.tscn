@@ -1,96 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://cg83e0ctsdb11"]
+[gd_scene load_steps=3 format=3 uid="uid://cylidswewvj04"]
 
-[ext_resource type="Texture2D" uid="uid://nlx20il8l03h" path="res://assets/spaceship/cylinder.png" id="1_k875p"]
+[ext_resource type="PackedScene" uid="uid://c27noyyq2qc5" path="res://assets/spaceship/cylinder.glb" id="1_dg5nt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tivj6"]
-size = Vector2(7.5, 648.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_vtmed"]
+size = Vector3(50, 50, 66.6406)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xkwqi"]
-size = Vector2(97, 9.35367)
+[node name="cylinder" type="StaticBody3D"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tqw0"]
-size = Vector2(215.05, 9.35367)
+[node name="cylinder" parent="." instance=ExtResource("1_dg5nt")]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvfas"]
-size = Vector2(471, 8)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8bitm"]
-size = Vector2(161, 8)
-
-[node name="cylinder" type="StaticBody2D"]
-
-[node name="collision_shape_2d" type="CollisionShape2D" parent="."]
-position = Vector2(-227.75, 35.75)
-shape = SubResource("RectangleShape2D_tivj6")
-
-[node name="collision_shape_2d2" type="CollisionShape2D" parent="."]
-position = Vector2(228.25, 35.75)
-shape = SubResource("RectangleShape2D_tivj6")
-
-[node name="collision_shape_2d3" type="CollisionShape2D" parent="."]
-position = Vector2(-176, 356)
-shape = SubResource("RectangleShape2D_xkwqi")
-
-[node name="collision_shape_2d4" type="CollisionShape2D" parent="."]
-position = Vector2(176.5, 356)
-shape = SubResource("RectangleShape2D_xkwqi")
-
-[node name="collision_shape_2d5" type="CollisionShape2D" parent="."]
-position = Vector2(180.318, 451.126)
-rotation = 1.09956
-shape = SubResource("RectangleShape2D_5tqw0")
-
-[node name="collision_shape_2d6" type="CollisionShape2D" parent="."]
-position = Vector2(-180.187, 452.33)
-rotation = -1.09956
-shape = SubResource("RectangleShape2D_5tqw0")
-
-[node name="collision_shape_2d7" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 548)
-shape = SubResource("RectangleShape2D_gvfas")
-
-[node name="collision_shape_2d8" type="CollisionShape2D" parent="."]
-position = Vector2(-144, 228)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d9" type="CollisionShape2D" parent="."]
-position = Vector2(144.5, 228)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d10" type="CollisionShape2D" parent="."]
-position = Vector2(144, 100)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d11" type="CollisionShape2D" parent="."]
-position = Vector2(-144, 100)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d12" type="CollisionShape2D" parent="."]
-position = Vector2(-144, -28)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d13" type="CollisionShape2D" parent="."]
-position = Vector2(144, -28)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d14" type="CollisionShape2D" parent="."]
-position = Vector2(144, -156)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d15" type="CollisionShape2D" parent="."]
-position = Vector2(-144, -156)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d16" type="CollisionShape2D" parent="."]
-position = Vector2(-144, -284)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_shape_2d17" type="CollisionShape2D" parent="."]
-position = Vector2(144, -284)
-shape = SubResource("RectangleShape2D_8bitm")
-
-[node name="collision_polygon_2d" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(224, -288, 319, -293, 319, -640, -313, -634, -314, -281, -223, -288, -224, -291, -224, -328, -222, -348, -219, -369, -216, -382, -210, -399, -203, -414, -195, -430, -183, -449, -171, -465, -156, -480, -142, -493, -124, -507, -102, -520, -85, -527, -66, -534, -45, -540, -23, -544, 9, -544, 26, -543, 46, -539, 64, -535, 82, -529, 100, -521, 119, -511, 139, -496, 153, -484, 164, -473, 175, -461, 185, -447, 195, -431, 202, -417, 207, -404, 214, -389, 218, -372, 222, -350, 224, -331, 224, -312)
-
-[node name="cylinder" type="Sprite2D" parent="."]
-texture = ExtResource("1_k875p")
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.1257, 0, -0.0538025)
+shape = SubResource("BoxShape3D_vtmed")

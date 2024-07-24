@@ -134,8 +134,10 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="texture_rect" type="TextureRect" parent="center_container/panel_container/v_box_container"]
+custom_minimum_size = Vector2(0, 148)
 layout_mode = 2
 texture = ExtResource("4_8roun")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="h_separator" type="HSeparator" parent="center_container/panel_container/v_box_container"]
