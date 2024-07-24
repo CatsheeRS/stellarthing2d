@@ -166,7 +166,6 @@ visible = false
 layout_mode = 1
 
 [node name="storage" parent="hud/control" instance=ExtResource("6_jrrcd")]
-visible = false
 custom_minimum_size = Vector2(1664, 824)
 layout_mode = 1
 anchors_preset = 8

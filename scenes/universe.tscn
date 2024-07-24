@@ -47,7 +47,7 @@ shadow_opacity = 0.62
 shadow_blur = 10.0
 
 [node name="orthographic_light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.876307, -0.240877, 0.417211, 0, 0.866024, 0.5, -0.481754, -0.438153, 0.758904, 0, 0, 0)
+transform = Transform3D(0.991216, 0.0661281, -0.114537, 0, 0.866024, 0.5, 0.132256, -0.495607, 0.858418, 0, 0, 0)
 shadow_enabled = true
 shadow_opacity = 0.49
 shadow_blur = 10.0
@@ -64,6 +64,7 @@ shape = SubResource("BoxShape3D_3lp6x")
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 script = ExtResource("1_2s2vk")
+Speed = 25
 Model = NodePath("bob_guy")
 metadata/_edit_group_ = true
 
@@ -79,10 +80,11 @@ visible = false
 size = 20.0
 
 [node name="orthographic" type="Camera3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 10, 17)
+transform = Transform3D(0.939693, 0.17101, -0.296198, 0, 0.866025, 0.5, 0.34202, -0.469846, 0.813798, 0, 40, 0)
+v_offset = -34.0
 projection = 1
 current = true
-size = 20.0
+size = 23.0
 
 [node name="soft_chair" parent="." instance=ExtResource("3_v0fhx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80287, 0.9, -4.58594)
