@@ -1,19 +1,34 @@
-[gd_scene load_steps=13 format=3 uid="uid://cr4p8cv60jhyn"]
+[gd_scene load_steps=26 format=3 uid="uid://cr4p8cv60jhyn"]
 
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_4r0ri"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_1rhh4"]
 [ext_resource type="Script" path="res://src/ui/main_menu/hide_universes.gd" id="3_i73xu"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="4_ufr36"]
-[ext_resource type="Texture2D" uid="uid://brdvfjkd6lm5r" path="res://assets/placeholder/egg.png" id="4_yf68w"]
+[ext_resource type="Texture2D" uid="uid://sxyh1bw0yajj" path="res://assets/ui/icons/resources/oxygen.png" id="5_knaea"]
+[ext_resource type="Texture2D" uid="uid://d05lornm25uak" path="res://assets/ui/icons/resources/rocket_fuel.png" id="6_k3nyv"]
 [ext_resource type="Script" path="res://src/ui/development/ListCrap.cs" id="6_wghp4"]
+[ext_resource type="Texture2D" uid="uid://c5ulaj1xayd5b" path="res://assets/ui/icons/resources/uranium.png" id="7_qbwuu"]
 [ext_resource type="PackedScene" uid="uid://ctrhbn2h8e3x0" path="res://scenes/craft_thing.tscn" id="7_w2h0h"]
+[ext_resource type="Texture2D" uid="uid://cgsa4ptjnqh6q" path="res://assets/ui/icons/resources/gunpowder.png" id="8_3w5bk"]
+[ext_resource type="Texture2D" uid="uid://bnc80jldppqrd" path="res://assets/ui/icons/resources/silicon.png" id="9_fl6it"]
+[ext_resource type="Texture2D" uid="uid://bhjh821u63btv" path="res://assets/ui/icons/resources/iron.png" id="10_f44iy"]
+[ext_resource type="Texture2D" uid="uid://bh022xdse8pd8" path="res://assets/ui/icons/resources/steel.png" id="11_6blpa"]
+[ext_resource type="Texture2D" uid="uid://cfw3so57uyg1t" path="res://assets/ui/icons/resources/titanium.png" id="12_g4ik4"]
+[ext_resource type="Texture2D" uid="uid://csa0txbuwj5a5" path="res://assets/ui/icons/resources/diamond.png" id="13_60brc"]
+[ext_resource type="Texture2D" uid="uid://bbtnccdrufdwo" path="res://assets/ui/icons/resources/ruby.png" id="14_ehyxr"]
+[ext_resource type="Texture2D" uid="uid://ragnkbyxtvri" path="res://assets/ui/icons/resources/emerald.png" id="15_3ajvf"]
+[ext_resource type="Texture2D" uid="uid://cb02t4h2l5dtk" path="res://assets/ui/icons/resources/sapphire.png" id="16_el1r4"]
+[ext_resource type="Texture2D" uid="uid://cibj83gvpspw8" path="res://assets/ui/icons/resources/obsidian.png" id="17_lik84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2o3p"]
 shader = ExtResource("1_4r0ri")
-shader_parameter/lod = 2.0
+shader_parameter/lod = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xj4x"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbw0v"]
+bg_color = Color(0, 0, 0, 0.286275)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_6l7jm"]
 
@@ -42,6 +57,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_1rhh4")
 theme_override_styles/panel = SubResource("StyleBoxFlat_1xj4x")
+
+[node name="not_outline" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bbw0v")
+metadata/_edit_lock_ = true
 
 [node name="margin_container" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -105,32 +126,26 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("5_knaea")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
 layout_mode = 2
 text = "Oxygen: 0"
-
-[node name="h_box_container2" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container2"]
-layout_mode = 2
-texture = ExtResource("4_yf68w")
-
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container2"]
-layout_mode = 2
-text = "Water: 0"
 
 [node name="h_box_container3" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("6_k3nyv")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
 layout_mode = 2
@@ -141,8 +156,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("7_qbwuu")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
 layout_mode = 2
@@ -158,8 +176,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("8_3w5bk")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
 layout_mode = 2
@@ -170,8 +191,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("9_fl6it")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
 layout_mode = 2
@@ -187,8 +211,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("10_f44iy")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
 layout_mode = 2
@@ -199,8 +226,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("11_6blpa")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
 layout_mode = 2
@@ -211,8 +241,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("12_g4ik4")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
 layout_mode = 2
@@ -223,8 +256,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("13_60brc")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
 layout_mode = 2
@@ -235,8 +271,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("14_ehyxr")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
 layout_mode = 2
@@ -247,8 +286,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("15_3ajvf")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
 layout_mode = 2
@@ -259,8 +301,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("16_el1r4")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
 layout_mode = 2
@@ -271,8 +316,11 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("4_yf68w")
+texture = ExtResource("17_lik84")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
 layout_mode = 2
@@ -314,6 +362,16 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 32
 script = ExtResource("6_wghp4")
 Sceeneehee = ExtResource("7_w2h0h")
+Iron = ExtResource("10_f44iy")
+Steel = ExtResource("11_6blpa")
+Titanium = ExtResource("12_g4ik4")
+Diamond = ExtResource("13_60brc")
+Ruby = ExtResource("14_ehyxr")
+Emerald = ExtResource("15_3ajvf")
+Sapphire = ExtResource("16_el1r4")
+Obsidian = ExtResource("17_lik84")
+Gunpowder = ExtResource("8_3w5bk")
+Silicon = ExtResource("9_fl6it")
 
 [node name="h_separator" type="HSeparator" parent="margin_container/v_box_container/h_box_container2/v_box_container/decoration/v_box_container"]
 modulate = Color(1, 1, 1, 0)

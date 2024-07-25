@@ -9,8 +9,26 @@ public partial class ListCrap : VBoxContainer {
 	public PackedScene Sceeneehee { get; set; }
 	[Export]
 	public string Faffery { get; set; } = "decoration";
-	// TODO: don't use placrholdersss
-	readonly Texture2D lolIcon = GD.Load<Texture2D>("res://assets/placeholder/egg.png");
+	[Export]
+	public Texture2D Iron { get; set; }
+	[Export]
+	public Texture2D Steel { get; set; }
+	[Export]
+	public Texture2D Titanium { get; set; }
+	[Export]
+	public Texture2D Diamond { get; set; }
+	[Export]
+	public Texture2D Ruby { get; set; }
+	[Export]
+	public Texture2D Emerald { get; set; }
+	[Export]
+	public Texture2D Sapphire { get; set; }
+	[Export]
+	public Texture2D Obsidian { get; set; }
+	[Export]
+	public Texture2D Gunpowder { get; set; }
+	[Export]
+	public Texture2D Silicon { get; set; }
 
     public override void _Ready()
     {
@@ -27,7 +45,10 @@ public partial class ListCrap : VBoxContainer {
 			// misery
 			if (mm.Value.Iron != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Iron,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Iron.ToString()
@@ -36,7 +57,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Steel != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Steel,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Steel.ToString()
@@ -45,7 +69,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Titanium != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Titanium,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Titanium.ToString()
@@ -54,7 +81,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Diamond != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Diamond,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Diamond.ToString()
@@ -63,7 +93,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Ruby != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Ruby,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Ruby.ToString()
@@ -72,7 +105,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Emerald != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Emerald,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Emerald.ToString()
@@ -81,7 +117,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Sapphire != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Sapphire,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Sapphire.ToString()
@@ -90,7 +129,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Obsidian != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Obsidian,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Obsidian.ToString()
@@ -99,7 +141,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Gunpowder != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Gunpowder,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Gunpowder.ToString()
@@ -108,7 +153,10 @@ public partial class ListCrap : VBoxContainer {
 
 			if (mm.Value.Silicon != 0) {
 				why.AddChild(new TextureRect {
-					Texture = lolIcon
+					Texture = Silicon,
+					ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+					StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+					CustomMinimumSize = new Vector2(48, 48),
 				});
 				why.AddChild(new Label {
 					Text = mm.Value.Silicon.ToString()

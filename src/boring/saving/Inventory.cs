@@ -15,7 +15,6 @@ public class Item {
     public string Image { get; set; } = "";
     public uint Amount { get; set; } = 0;
     public int Oxygen { get; set; } = 0;
-    public int Water { get; set; } = 0;
     public int RocketFuel { get; set; } = 0;
     public int Uranium { get; set; } = 0;
     public int Gunpowder { get; set; } = 0;

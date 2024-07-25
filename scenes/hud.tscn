@@ -1,0 +1,150 @@
+[gd_scene load_steps=11 format=3 uid="uid://b3s6tcudu7eim"]
+
+[ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
+[ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_mq382"]
+[ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="3_0x1c4"]
+[ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="4_sy8gh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vffkk"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_58trc"]
+font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nve8y"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.192157, 0.25098, 0.32549, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ew87"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.192157, 0.25098, 0.32549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mfrh"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0715942, 0.198556, 0.359375, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uodr5"]
+
+[node name="hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_mfka4")
+
+[node name="tutorials" type="Label" parent="."]
+layout_mode = 0
+offset_right = 204.0
+offset_bottom = 135.0
+text = "wasd to move
+ctrl to run
+esc to pause"
+label_settings = SubResource("LabelSettings_vffkk")
+
+[node name="v_box_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="moneys" type="Label" parent="v_box_container"]
+layout_mode = 2
+text = "2371-02-15 12:00"
+label_settings = SubResource("LabelSettings_58trc")
+horizontal_alignment = 2
+script = ExtResource("2_mq382")
+
+[node name="timer" type="Timer" parent="v_box_container/moneys"]
+wait_time = 12.5
+autostart = true
+
+[node name="margin_container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="h_box_container" type="HBoxContainer" parent="margin_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="button" type="Button" parent="margin_container/h_box_container" node_paths=PackedStringArray("g")]
+custom_minimum_size = Vector2(256, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+tooltip_text = "Resources & Development"
+theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3ew87")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7mfrh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uodr5")
+text = "Storage"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_0x1c4")
+g = NodePath("../../../storage")
+
+[node name="storage" parent="." instance=ExtResource("4_sy8gh")]
+visible = false
+custom_minimum_size = Vector2(1664, 824)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -832.0
+offset_top = -412.0
+offset_right = 832.0
+offset_bottom = 412.0
+
+[connection signal="timeout" from="v_box_container/moneys/timer" to="v_box_container/moneys" method="HourThing"]

@@ -8,6 +8,8 @@ public partial class NewUniverse : Button {
 	public LineEdit UniverseName { get; set; }
 	[Export]
 	public PackedScene UniverseScene { get; set; }
+    [Export]
+    public PackedScene HudStuff { get; set; }
 	[Export]
 	public Control Lol { get; set; }
 
@@ -27,6 +29,7 @@ public partial class NewUniverse : Button {
 
 		DirAccess.MakeDirRecursiveAbsolute($"user://universes/{Stellarthing.CurrentUniverse}");
 		GetTree().Root.AddChild(UniverseScene.Instantiate());
+        GetTree().Root.AddChild(HudStuff.Instantiate());
 		Lol.QueueFree();
     }
 }
