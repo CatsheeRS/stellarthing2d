@@ -11,14 +11,6 @@ public partial class Player : CharacterBody3D {
 	[Export]
 	public Node3D Model { get; set; }
 	AnimationPlayer modelAnimator;
-    //[Export]
-    //public AnimatedSprite2D Sprite { get; set; }
-    //[Export]
-    //public Sprite2D Preview { get; set; }
-    //[Export]
-    //public RayCast2D PointingRaycast { get; set; }
-    //[Export]
-    //public Control PauseThingLmao { get; set; }
 
     public override void _Ready()
     {
@@ -28,10 +20,10 @@ public partial class Player : CharacterBody3D {
     public override void _PhysicsProcess(double delta)
 	{
 		// pausing :D
-		//if (Input.IsActionJustPressed("pause")) {
-		//	PauseThingLmao.Visible = true;
-		//	GetTree().Paused = true;
-		//}
+		if (Input.IsActionJustPressed("pause")) {
+			GetNode<Control>("/root/hud/pause/pause").Visible = true;
+			GetTree().Paused = true;
+		}
 
 		// movement
 		float run = Input.IsActionPressed("run") ? (float)RunningThingy : 1.0f;
