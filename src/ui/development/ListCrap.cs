@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace stellarthing;
 
@@ -33,10 +34,17 @@ public partial class ListCrap : VBoxContainer {
     public override void _Ready()
     {
         Dictionary<string, Item> m = GetBlockStoreThing.Fuckery;
+		m = (
+			from h in m
+			orderby h.Value.Name ascending
+			select h
+		).ToDictionary();
 
 		foreach (var mm in m) {
 			Node mmm = Sceeneehee.Instantiate();
-			mmm.GetNode<TextureRect>("picture").Texture = GD.Load<Texture2D>(mm.Value.Image);
+			var g = GD.Load<PackedScene>(mm.Value.ModelPath).Instantiate<Node3D>();
+			g.Scale = mm.Value.PreviewScale;
+			mmm.GetNode("picture/a/b").AddChild(g);
 			mmm.GetNode<Label>("v/name").Text = mm.Value.Name;
 			mmm.GetNode<Label>("v/description").Text = mm.Value.Description;
 

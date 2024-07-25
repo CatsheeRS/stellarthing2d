@@ -17,18 +17,18 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cvkxc"]
 shader = ExtResource("2_tati1")
-shader_parameter/iterations = 20
+shader_parameter/iterations = 15
 shader_parameter/formuparam = 1.0
-shader_parameter/volsteps = 20
+shader_parameter/volsteps = 15
 shader_parameter/stepsize = 0.5
-shader_parameter/zoom = 0.025
+shader_parameter/zoom = 0.01
 shader_parameter/tile = 0.5
 shader_parameter/speed = 0.005
 shader_parameter/brightness = 0.001
 shader_parameter/darkmatter = 0.0
 shader_parameter/distfading = 0.65
 shader_parameter/saturation = 0.75
-shader_parameter/iResolution = Vector2(192, 192)
+shader_parameter/iResolution = Vector2(48, 48)
 shader_parameter/iMouse = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4pqa"]
@@ -171,7 +171,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="very_cool_outline" type="Panel" parent="center_container"]
-custom_minimum_size = Vector2(950, 599)
+custom_minimum_size = Vector2(950, 564)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_c174b")
