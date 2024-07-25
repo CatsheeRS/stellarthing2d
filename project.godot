@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="stellarthing"
-config/version="0.5.0"
+config/version="0.6.0"
 config/tags=PackedStringArray("stupidly_large")
 run/main_scene="res://scenes/menu.tscn"
 config/use_custom_user_dir=true
@@ -19,7 +19,7 @@ config/custom_user_dir_name="stellarthing"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://assets/ui/splash.png"
-config/icon="res://icon.svg"
+config/icon="res://assets/ui/icon.png"
 
 [autoload]
 
