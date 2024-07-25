@@ -15,4 +15,3 @@ func _process(delta):
 func hhjhhhhh():
 	b.visible = false
 	get_tree().paused = false
-

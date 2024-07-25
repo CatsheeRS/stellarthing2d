@@ -14,21 +14,7 @@ font_size = 32
 [sub_resource type="LabelSettings" id="LabelSettings_58trc"]
 font_size = 40
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nve8y"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.192157, 0.25098, 0.32549, 0.6)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uodr5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ew87"]
 content_margin_left = 16.0
@@ -62,7 +48,21 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uodr5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nve8y"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.192157, 0.25098, 0.32549, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_add8k"]
 shader = ExtResource("5_1lmaw")
@@ -133,10 +133,10 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 tooltip_text = "Resources & Development"
-theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uodr5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3ew87")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7mfrh")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_uodr5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
 text = "Storage"
 icon_alignment = 1
 expand_icon = true

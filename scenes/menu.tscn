@@ -144,10 +144,9 @@ size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_q4qf0")
 theme_override_font_sizes/font_size = 30
 alignment = 1
-item_count = 2
 selected = 0
+item_count = 2
 popup/item_0/text = "English"
-popup/item_0/id = 0
 popup/item_1/text = "there's only english"
 popup/item_1/id = 1
 
