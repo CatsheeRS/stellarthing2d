@@ -1,8 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://cr4p8cv60jhyn"]
+[gd_scene load_steps=25 format=3 uid="uid://cr4p8cv60jhyn"]
 
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_4r0ri"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_1rhh4"]
-[ext_resource type="Script" path="res://src/ui/main_menu/hide_universes.gd" id="3_i73xu"]
 [ext_resource type="Script" path="res://src/ui/development/ResourceDisplayFaffery.cs" id="4_4rctn"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="4_ufr36"]
 [ext_resource type="Texture2D" uid="uid://sxyh1bw0yajj" path="res://assets/ui/icons/resources/oxygen.png" id="5_knaea"]
@@ -30,8 +29,6 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbw0v"]
 bg_color = Color(0, 0, 0, 0.286275)
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_6l7jm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ucqxt"]
 font = ExtResource("4_ufr36")
@@ -71,53 +68,20 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="v_box_container" type="VBoxContainer" parent="margin_container"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="h_box_container" type="HBoxContainer" parent="margin_container/v_box_container"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="button" type="Button" parent="margin_container/v_box_container/h_box_container"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-toggle_mode = true
-button_pressed = true
-button_group = SubResource("ButtonGroup_6l7jm")
-text = "Develop"
-
-[node name="button2" type="Button" parent="margin_container/v_box_container/h_box_container"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-toggle_mode = true
-button_group = SubResource("ButtonGroup_6l7jm")
-text = "Build"
-
-[node name="button3" type="Button" parent="margin_container/v_box_container/h_box_container" node_paths=PackedStringArray("g")]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Exit"
-script = ExtResource("3_i73xu")
-g = NodePath("../../../..")
-
-[node name="h_box_container2" type="HBoxContainer" parent="margin_container/v_box_container"]
+[node name="h_box_container2" type="HBoxContainer" parent="margin_container"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="scroll_container" type="ScrollContainer" parent="margin_container/v_box_container/h_box_container2"]
+[node name="scroll_container" type="ScrollContainer" parent="margin_container/h_box_container2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="v_box_container" type="VBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container"]
+[node name="v_box_container" type="VBoxContainer" parent="margin_container/h_box_container2/scroll_container"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="faffery" type="Node" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container" node_paths=PackedStringArray("Oxygen", "RocketFuel", "Uranium", "Gunpowder", "Silicon", "Iron", "Steel", "Titanium", "Diamond", "Ruby", "Emerald", "Sapphire", "Obsidian")]
+[node name="faffery" type="Node" parent="margin_container/h_box_container2/scroll_container/v_box_container" node_paths=PackedStringArray("Oxygen", "RocketFuel", "Uranium", "Gunpowder", "Silicon", "Iron", "Steel", "Titanium", "Diamond", "Ruby", "Emerald", "Sapphire", "Obsidian")]
 script = ExtResource("4_4rctn")
 Oxygen = NodePath("../h_box_container/label")
 RocketFuel = NodePath("../h_box_container3/label")
@@ -133,250 +97,250 @@ Emerald = NodePath("../h_box_container12/label")
 Sapphire = NodePath("../h_box_container13/label")
 Obsidian = NodePath("../h_box_container14/label")
 
-[node name="timer" type="Timer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/faffery"]
+[node name="timer" type="Timer" parent="margin_container/h_box_container2/scroll_container/v_box_container/faffery"]
 autostart = true
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 text = "Essentials"
 label_settings = SubResource("LabelSettings_ucqxt")
 
-[node name="h_box_container" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("5_knaea")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container"]
 layout_mode = 2
 text = "Oxygen: 0"
 
-[node name="h_box_container3" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container3" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("6_k3nyv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container3"]
 layout_mode = 2
 text = "Rocket fuel: 0"
 
-[node name="h_box_container5" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container5" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("7_qbwuu")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container5"]
 layout_mode = 2
 text = "Uranium: 0"
 
-[node name="label2" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="label2" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 text = "Extras"
 label_settings = SubResource("LabelSettings_ucqxt")
 
-[node name="h_box_container4" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container4" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("8_3w5bk")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container4"]
 layout_mode = 2
 text = "Gunpowder: 0"
 
-[node name="h_box_container6" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container6" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("9_fl6it")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container6"]
 layout_mode = 2
 text = "Silicon: 0"
 
-[node name="label3" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="label3" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 text = "Technology levels"
 label_settings = SubResource("LabelSettings_ucqxt")
 
-[node name="h_box_container7" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container7" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("10_f44iy")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container7"]
 layout_mode = 2
 text = "Iron: 0"
 
-[node name="h_box_container8" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container8" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("11_6blpa")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container8"]
 layout_mode = 2
 text = "Steel: 0"
 
-[node name="h_box_container9" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container9" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("12_g4ik4")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container9"]
 layout_mode = 2
 text = "Titanium: 0"
 
-[node name="h_box_container10" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container10" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("13_60brc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container10"]
 layout_mode = 2
 text = "Diamond: 0"
 
-[node name="h_box_container11" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container11" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("14_ehyxr")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container11"]
 layout_mode = 2
 text = "Ruby: 0"
 
-[node name="h_box_container12" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container12" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("15_3ajvf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container12"]
 layout_mode = 2
 text = "Emerald: 0"
 
-[node name="h_box_container13" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container13" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("16_el1r4")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container13"]
 layout_mode = 2
 text = "Sapphire: 0"
 
-[node name="h_box_container14" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_box_container14" type="HBoxContainer" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="texture_rect" type="TextureRect" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
+[node name="texture_rect" type="TextureRect" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("17_lik84")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="label" type="Label" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
+[node name="label" type="Label" parent="margin_container/h_box_container2/scroll_container/v_box_container/h_box_container14"]
 layout_mode = 2
 text = "Obsidian: 0"
 
-[node name="h_separator" type="HSeparator" parent="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container"]
+[node name="h_separator" type="HSeparator" parent="margin_container/h_box_container2/scroll_container/v_box_container"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="v_box_container" type="VBoxContainer" parent="margin_container/v_box_container/h_box_container2"]
+[node name="v_box_container" type="VBoxContainer" parent="margin_container/h_box_container2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 16
 
-[node name="h_box_container" type="HBoxContainer" parent="margin_container/v_box_container/h_box_container2/v_box_container"]
+[node name="h_box_container" type="HBoxContainer" parent="margin_container/h_box_container2/v_box_container"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="button" type="Button" parent="margin_container/v_box_container/h_box_container2/v_box_container/h_box_container"]
+[node name="button" type="Button" parent="margin_container/h_box_container2/v_box_container/h_box_container"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Decoration"
 
-[node name="button2" type="Button" parent="margin_container/v_box_container/h_box_container2/v_box_container/h_box_container"]
+[node name="button2" type="Button" parent="margin_container/h_box_container2/v_box_container/h_box_container"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Essentials"
 
-[node name="decoration" type="ScrollContainer" parent="margin_container/v_box_container/h_box_container2/v_box_container"]
+[node name="decoration" type="ScrollContainer" parent="margin_container/h_box_container2/v_box_container"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="v_box_container" type="VBoxContainer" parent="margin_container/v_box_container/h_box_container2/v_box_container/decoration" node_paths=PackedStringArray("AwesomeTimer")]
+[node name="v_box_container" type="VBoxContainer" parent="margin_container/h_box_container2/v_box_container/decoration" node_paths=PackedStringArray("AwesomeTimer")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 32
@@ -394,10 +358,10 @@ Gunpowder = ExtResource("8_3w5bk")
 Silicon = ExtResource("9_fl6it")
 AwesomeTimer = NodePath("timer")
 
-[node name="timer" type="Timer" parent="margin_container/v_box_container/h_box_container2/v_box_container/decoration/v_box_container"]
+[node name="timer" type="Timer" parent="margin_container/h_box_container2/v_box_container/decoration/v_box_container"]
 autostart = true
 
-[node name="h_separator" type="HSeparator" parent="margin_container/v_box_container/h_box_container2/v_box_container/decoration/v_box_container"]
+[node name="h_separator" type="HSeparator" parent="margin_container/h_box_container2/v_box_container/decoration/v_box_container"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
@@ -407,4 +371,4 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g52qq")
 metadata/_edit_lock_ = true
 
-[connection signal="timeout" from="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/faffery/timer" to="margin_container/v_box_container/h_box_container2/scroll_container/v_box_container/faffery" method="LoadStuff"]
+[connection signal="timeout" from="margin_container/h_box_container2/scroll_container/v_box_container/faffery/timer" to="margin_container/h_box_container2/scroll_container/v_box_container/faffery" method="LoadStuff"]

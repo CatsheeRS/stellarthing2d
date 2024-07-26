@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
 [ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_mq382"]
-[ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="3_0x1c4"]
+[ext_resource type="Script" path="res://src/ui/hud/gosdkgoskgiskghidgps.gd" id="3_6tqxv"]
 [ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="4_sy8gh"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="5_1lmaw"]
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="6_ysgon"]
@@ -137,10 +137,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_uodr5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3ew87")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7mfrh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
+toggle_mode = true
 text = "Storage"
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("3_0x1c4")
+script = ExtResource("3_6tqxv")
 g = NodePath("../../../storage")
 
 [node name="storage" parent="." instance=ExtResource("4_sy8gh")]
