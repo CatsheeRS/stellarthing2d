@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3s6tcudu7eim"]
+[gd_scene load_steps=18 format=3 uid="uid://b3s6tcudu7eim"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
 [ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_mq382"]
 [ext_resource type="Script" path="res://src/ui/hud/gosdkgoskgiskghidgps.gd" id="3_6tqxv"]
 [ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="4_sy8gh"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="5_1lmaw"]
+[ext_resource type="PackedScene" uid="uid://dvfjgds6p5qpv" path="res://scenes/inventory.tscn" id="5_x365m"]
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="6_ysgon"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="7_42s4a"]
 
@@ -63,6 +64,9 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_15w4l"]
+allow_unpress = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_add8k"]
 shader = ExtResource("5_1lmaw")
@@ -126,9 +130,10 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+theme_override_constants/separation = 24
 
 [node name="button" type="Button" parent="margin_container/h_box_container" node_paths=PackedStringArray("g")]
-custom_minimum_size = Vector2(256, 80)
+custom_minimum_size = Vector2(450, 80)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
@@ -138,11 +143,30 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_3ew87")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7mfrh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
 toggle_mode = true
-text = "Storage"
+button_group = SubResource("ButtonGroup_15w4l")
+text = "Resources & Development"
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("3_6tqxv")
 g = NodePath("../../../storage")
+
+[node name="button2" type="Button" parent="margin_container/h_box_container" node_paths=PackedStringArray("g")]
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+tooltip_text = "Resources & Development"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uodr5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3ew87")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7mfrh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nve8y")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_15w4l")
+text = "Edit Spaceship"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_6tqxv")
+g = NodePath("../../../inventory")
 
 [node name="storage" parent="." instance=ExtResource("4_sy8gh")]
 visible = false
@@ -157,6 +181,12 @@ offset_left = -832.0
 offset_top = -412.0
 offset_right = 832.0
 offset_bottom = 412.0
+
+[node name="inventory" parent="." instance=ExtResource("5_x365m")]
+visible = false
+layout_mode = 1
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="pause" type="CanvasLayer" parent="."]
 process_mode = 2

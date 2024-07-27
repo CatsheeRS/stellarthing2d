@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using Godot;
 
 namespace stellarthing;
@@ -28,4 +29,26 @@ public class Item {
     public int Emerald { get; set; } = 0;
     public int Sapphire { get; set; } = 0;
     public int Obsidian { get; set; } = 0;
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Item item) {
+            return Scene == item.Scene && Name == item.Name && Description == item.Description &&
+            ModelPath == item.ModelPath && PreviewScale.IsEqualApprox(item.PreviewScale) && Amount == item.Amount &&
+            Oxygen == item.Oxygen && RocketFuel == item.RocketFuel && Uranium == item.Uranium &&
+            Gunpowder == item.Gunpowder && Silicon == item.Silicon && Iron == item.Iron && Steel == item.Steel &&
+            Titanium == item.Titanium && Diamond == item.Diamond && Ruby == item.Ruby && Emerald == item.Emerald &&
+            Sapphire == item.Sapphire && Obsidian == item.Obsidian;
+        }
+        else return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return Scene.GetHashCode() ^ Name.GetHashCode() ^ Description.GetHashCode() ^ ModelPath.GetHashCode() ^
+        PreviewScale.GetHashCode() ^ Amount.GetHashCode() ^ Oxygen.GetHashCode() ^ RocketFuel.GetHashCode() ^
+        Uranium.GetHashCode() ^ Gunpowder.GetHashCode() ^ Silicon.GetHashCode() ^ Iron.GetHashCode() ^
+        Steel.GetHashCode() ^ Titanium.GetHashCode() ^ Diamond.GetHashCode() ^ Ruby.GetHashCode() ^
+        Emerald.GetHashCode() ^ Sapphire.GetHashCode() ^ Obsidian.GetHashCode();
+    }
 }

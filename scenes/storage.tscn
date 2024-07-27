@@ -365,6 +365,10 @@ autostart = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
+[node name="v_box_container" type="VBoxContainer" parent="margin_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
 [node name="very_cool_outline" type="Panel" parent="."]
 layout_mode = 2
 mouse_filter = 2

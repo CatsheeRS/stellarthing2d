@@ -49,8 +49,8 @@ public partial class ListCrap : VBoxContainer {
 			var g = GD.Load<PackedScene>(mm.Value.ModelPath).Instantiate<Node3D>();
 			g.Scale = mm.Value.PreviewScale;
 			mmm.GetNode("picture/a/b").AddChild(g);
-			mmm.GetNode<Label>("v/name").Text = mm.Value.Name;
-			mmm.GetNode<Label>("v/description").Text = mm.Value.Description;
+			mmm.GetNode<Label>("v/name").Text = Tr(mm.Value.Name);
+			mmm.GetNode<Label>("v/description").Text = Tr(mm.Value.Description);
 			Node why = mmm.GetNode("v/resources");
 			var crapbutton = mmm.GetNode<Button>("v/build");
 
