@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b2s6bel6u7yle" path="res://assets/spaceship/basic.glb" id="1_gv7lc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f8ega"]
-size = Vector3(100, 1, 50)
+size = Vector3(100, 2, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kwpts"]
 size = Vector3(100, 2, 2)

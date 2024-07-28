@@ -67,11 +67,11 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     public override void _Process(double delta)
     {
         if (h != null) {
-            h.Position = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 5);
+            h.Position = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 0) /*+ new Vector3(0, -4, 0)*/;
             if (Input.IsMouseButtonPressed(MouseButton.Left)) {
-                h.GetChildOrNull<Node2D>(0)?.QueueFree();
+                h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
-                m.Position = h.Position + new Vector3(0, 0, -5);
+                m.Position = h.Position;
                 GetNode("/root/universe").AddChild(m);
 
                 h = null;
