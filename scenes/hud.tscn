@@ -115,7 +115,7 @@ script = ExtResource("2_mq382")
 wait_time = 12.5
 autostart = true
 
-[node name="margin_container" type="MarginContainer" parent="."]
+[node name="tool" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,13 +126,13 @@ mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="h_box_container" type="HBoxContainer" parent="margin_container"]
+[node name="bar" type="HBoxContainer" parent="tool"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/separation = 24
 
-[node name="button" type="Button" parent="margin_container/h_box_container" node_paths=PackedStringArray("g")]
+[node name="resdev" type="Button" parent="tool/bar" node_paths=PackedStringArray("g")]
 custom_minimum_size = Vector2(450, 80)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -150,7 +150,7 @@ expand_icon = true
 script = ExtResource("3_6tqxv")
 g = NodePath("../../../storage")
 
-[node name="button2" type="Button" parent="margin_container/h_box_container" node_paths=PackedStringArray("g")]
+[node name="spaceship" type="Button" parent="tool/bar" node_paths=PackedStringArray("g")]
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 size_flags_horizontal = 0

@@ -10,10 +10,14 @@ public partial class Player : CharacterBody3D {
 	public double RunningThingy { get; set; } = 1.25;
 	[Export]
 	public Node3D Model { get; set; }
+	[Export]
+	public Camera3D Camêra { get; set; }
+	public static Camera3D Camera { get; private set; }
 	AnimationPlayer modelAnimator;
 
     public override void _Ready()
     {
+		Camera = Camêra;
         modelAnimator = Model.GetNode<AnimationPlayer>("animation_player");
     }
 

@@ -8,7 +8,12 @@ namespace stellarthing;
 public partial class ListInventoryFlucklery : VBoxContainer {
     [Export]
     public PackedScene Sceeneehee { get; set; }
+    [Export]
+    public Control Inve { get; set; }
     Config<Inventory> pastConfig = new();
+    Node3D h;
+    Item hh;
+    string hhh;
 
     public void MurderersOfMurderers()
     {
@@ -17,10 +22,8 @@ public partial class ListInventoryFlucklery : VBoxContainer {
         // wouldn't be ideal to do node faffery every bloody second
         // that'd be bollocks mate
         // kill me
-        GD.Print("g kgglg");
         DictionaryComparer<string, Item> whythough = new();
         if (whythough.Equals(config.Data.Items, pastConfig.Data.Items) && GetChildCount() > 1) {
-            GD.Print("g");
             return;
         }
 
@@ -44,14 +47,37 @@ public partial class ListInventoryFlucklery : VBoxContainer {
 			mmm.GetNode<Label>("v/name").Text = Tr(mm.Value.Name);
 			mmm.GetNode<Label>("v/description").Text = Tr(mm.Value.Description);
             mmm.GetNode<Label>("v/amount").Text = $"{mm.Value.Amount} {Tr("available")}";
-			mmm.GetNode<Button>("v/place").Pressed += () => Jfjiwjijwjvwviwjviwjviwjviwdnvdvn(mm.Value);
+			mmm.GetNode<Button>("v/place").Pressed += () => Jfjiwjijwjvwviwjviwjviwjviwdnvdvn(mm.Value, mm.Key);
 			AddChild(mmm);
 		}
     }
 
-    void Jfjiwjijwjvwviwjviwjviwjviwdnvdvn(Item item)
+    void Jfjiwjijwjvwviwjviwjviwjviwdnvdvn(Item item, string key)
     {
-        GD.Print("dfdfdof4rbfsa´b,r/wt4w[\\w2]");
+        Inve.Visible = false;
+        Inve.GetNode<Button>("../tool/bar/spaceship").ButtonPressed = false;
+        Vector3 A = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 5);
+        var g = GetNode<Node3D>("/root/universe/preview_thing");
+        h = GD.Load<PackedScene>(item.ModelPath).Instantiate<Node3D>();
+        h.Position = A;
+        hh = item;
+        g.AddChild(h);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (h != null) {
+            h.Position = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 5);
+            if (Input.IsMouseButtonPressed(MouseButton.Left)) {
+                h.GetChildOrNull<Node2D>(0)?.QueueFree();
+                var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
+                m.Position = h.Position + new Vector3(0, 0, -5);
+                GetNode("/root/universe").AddChild(m);
+
+                h = null;
+                hh = null;
+            }
+        }
     }
 }
 
