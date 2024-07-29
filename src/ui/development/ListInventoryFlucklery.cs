@@ -56,10 +56,10 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     {
         Inve.Visible = false;
         Inve.GetNode<Button>("../tool/bar/spaceship").ButtonPressed = false;
-        Vector3 A = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 5);
         var g = GetNode<Node3D>("/root/universe/preview_thing");
         h = GD.Load<PackedScene>(item.ModelPath).Instantiate<Node3D>();
-        h.Position = A;
+        h.Position = Player.ThingFafferyFuckeryThingy;
+        h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe;
         hh = item;
         g.AddChild(h);
     }
@@ -67,11 +67,13 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     public override void _Process(double delta)
     {
         if (h != null) {
-            h.Position = Player.Camera.ProjectPosition(GetGlobalMousePosition(), 0) /*+ new Vector3(0, -4, 0)*/;
+            h.Position = Player.ThingFafferyFuckeryThingy;
+            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe;
             if (Input.IsMouseButtonPressed(MouseButton.Left)) {
                 h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
                 m.Position = h.Position;
+                m.Rotation = h.Rotation;
                 GetNode("/root/universe").AddChild(m);
 
                 h = null;

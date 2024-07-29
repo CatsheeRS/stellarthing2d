@@ -97,12 +97,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.827, 1, -1.455)
 [node name="fridge" parent="." instance=ExtResource("5_2oxnf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.296, 2.5, -5.58)
 
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra")]
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra", "ThingFafferyFuckery")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 script = ExtResource("1_2s2vk")
 Speed = 25
 Model = NodePath("bob_guy")
 "Camêra" = NodePath("orthographic")
+ThingFafferyFuckery = NodePath("place_stuff")
 metadata/_edit_group_ = true
 
 [node name="bob_guy" parent="player" instance=ExtResource("2_b8bnt")]
@@ -122,6 +123,9 @@ v_offset = -65.0
 projection = 1
 current = true
 size = 23.0
+
+[node name="place_stuff" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

@@ -12,7 +12,12 @@ public partial class Player : CharacterBody3D {
 	public Node3D Model { get; set; }
 	[Export]
 	public Camera3D Camêra { get; set; }
+	[Export]
+	public Node3D ThingFafferyFuckery { get; set; }
+
 	public static Camera3D Camera { get; private set; }
+	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
+	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
 	AnimationPlayer modelAnimator;
 
     public override void _Ready()
@@ -56,5 +61,8 @@ public partial class Player : CharacterBody3D {
 		else {
 			modelAnimator.Play("idle");
 		}
+
+		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
+		ThingFafferyFuckeryThingyHehehehe = ThingFafferyFuckery.GlobalRotation;
 	}
 }
