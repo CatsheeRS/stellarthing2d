@@ -68,14 +68,14 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     {
         if (h != null) {
             h.Position = Player.ThingFafferyFuckeryThingy;
-            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe;
+            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe - new Vector3(0, Mathf.DegToRad(90), 0);
             if (Input.IsMouseButtonPressed(MouseButton.Left)) {
                 h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
                 m.Position = h.Position;
                 m.Rotation = h.Rotation;
                 GetNode("/root/universe").AddChild(m);
-
+                
                 h = null;
                 hh = null;
             }

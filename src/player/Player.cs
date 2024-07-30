@@ -63,6 +63,6 @@ public partial class Player : CharacterBody3D {
 		}
 
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
-		ThingFafferyFuckeryThingyHehehehe = ThingFafferyFuckery.GlobalRotation;
+		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
 	}
 }

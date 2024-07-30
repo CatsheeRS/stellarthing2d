@@ -67,6 +67,7 @@ offset_bottom = 40.0
 
 [node name="mesh_instance_3d" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0, -16.9208, -14.9285)
+visible = false
 mesh = SubResource("PlaneMesh_1i43m")
 
 [node name="world_environment" type="WorldEnvironment" parent="."]
@@ -103,11 +104,14 @@ script = ExtResource("1_2s2vk")
 Speed = 25
 Model = NodePath("bob_guy")
 "Camêra" = NodePath("orthographic")
-ThingFafferyFuckery = NodePath("place_stuff")
+ThingFafferyFuckery = NodePath("bob_guy/place_stuff")
 metadata/_edit_group_ = true
 
 [node name="bob_guy" parent="player" instance=ExtResource("2_b8bnt")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
+
+[node name="place_stuff" type="Node3D" parent="player/bob_guy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -2)
 
 [node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
 shape = SubResource("SphereShape3D_vmp6v")
@@ -123,9 +127,6 @@ v_offset = -65.0
 projection = 1
 current = true
 size = 23.0
-
-[node name="place_stuff" type="Node3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
