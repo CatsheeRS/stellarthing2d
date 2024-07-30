@@ -73,9 +73,9 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                 h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
                 m.Position = h.Position;
-                m.Rotation = h.Rotation;
+                m.Rotation = h.Rotation + new Vector3(0, Mathf.DegToRad(90), 0);
                 GetNode("/root/universe").AddChild(m);
-                
+
                 h = null;
                 hh = null;
             }

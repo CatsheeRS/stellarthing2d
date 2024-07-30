@@ -168,6 +168,12 @@ expand_icon = true
 script = ExtResource("3_6tqxv")
 g = NodePath("../../../inventory")
 
+[node name="inventory" parent="." instance=ExtResource("5_x365m")]
+visible = false
+layout_mode = 1
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="storage" parent="." instance=ExtResource("4_sy8gh")]
 visible = false
 custom_minimum_size = Vector2(1664, 824)
@@ -181,12 +187,6 @@ offset_left = -832.0
 offset_top = -412.0
 offset_right = 832.0
 offset_bottom = 412.0
-
-[node name="inventory" parent="." instance=ExtResource("5_x365m")]
-visible = false
-layout_mode = 1
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="pause" type="CanvasLayer" parent="."]
 process_mode = 2
