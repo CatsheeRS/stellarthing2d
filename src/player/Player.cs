@@ -20,6 +20,7 @@ public partial class Player : CharacterBody3D {
 	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
 	AnimationPlayer modelAnimator;
 	public static Vector3 OffsetThingy = new(0, -1.5f, -2);
+	double gravity = (double)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
     public override void _Ready()
     {
@@ -35,6 +36,15 @@ public partial class Player : CharacterBody3D {
 			GetTree().Paused = true;
 		}
 
+		// GRAVITY !!
+		Vector3 fall;
+		if (!IsOnFloor()) {
+			fall = new Vector3(0, (float)(gravity * delta), 0);
+		}
+		else {
+			fall = Vector3.Zero;
+		}
+
 		// movement
 		float run = Input.IsActionPressed("run") ? (float)RunningThingy : 1.0f;
 		
@@ -45,7 +55,7 @@ public partial class Player : CharacterBody3D {
 		if (Input.IsActionPressed("move_down")) dir.Z += 1;
 
 		dir = dir.Normalized();
-        Velocity = dir * Speed * new Vector3(run, 0, run);
+        Velocity = (dir * Speed * new Vector3(run, 0, run)) - (fall * 100);
 		MoveAndSlide();
 
 		if (!dir.IsZeroApprox()) {

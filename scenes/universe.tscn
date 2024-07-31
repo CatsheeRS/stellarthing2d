@@ -48,8 +48,9 @@ sky_material = SubResource("ProceduralSkyMaterial_c16i4")
 sky = SubResource("Sky_ryih7")
 tonemap_mode = 2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_vmp6v"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tl4vs"]
 radius = 1.0
+height = 2.3
 
 [node name="universe" type="Node3D"]
 
@@ -91,7 +92,7 @@ shadow_blur = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra", "ThingFafferyFuckery")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.84998, 0)
 script = ExtResource("1_2s2vk")
 Speed = 25
 Model = NodePath("bob_guy")
@@ -106,7 +107,8 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -2)
 
 [node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
-shape = SubResource("SphereShape3D_vmp6v")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, -0.161423, 0)
+shape = SubResource("CapsuleShape3D_tl4vs")
 
 [node name="perspective" type="Camera3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 8, 12)
