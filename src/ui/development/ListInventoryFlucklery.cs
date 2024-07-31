@@ -58,26 +58,41 @@ public partial class ListInventoryFlucklery : VBoxContainer {
         Inve.GetNode<Button>("../tool/bar/spaceship").ButtonPressed = false;
         var g = GetNode<Node3D>("/root/universe/preview_thing");
         h = GD.Load<PackedScene>(item.ModelPath).Instantiate<Node3D>();
+        Player.OffsetThingy = item.PreviewOffset;
         h.Position = Player.ThingFafferyFuckeryThingy;
         h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe;
         hh = item;
         g.AddChild(h);
+
+        Config<Inventory> inv = new();
+        inv.Data.Items[key].Amount--;
+        inv.Save();
+
+        Config<SpaceshipLayout> layout = new();
+        layout.Data.Stuff.Add(new Furniture {
+            Position = h.Position,
+            Rotation = h.Rotation,
+            Item = item
+        });
+        layout.Save();
     }
 
     public override void _Process(double delta)
     {
         if (h != null) {
             h.Position = Player.ThingFafferyFuckeryThingy;
-            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe - new Vector3(0, Mathf.DegToRad(90), 0);
+            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe + hh.ModelRotation;
+            
             if (Input.IsMouseButtonPressed(MouseButton.Left)) {
                 h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
                 m.Position = h.Position;
-                m.Rotation = h.Rotation + new Vector3(0, Mathf.DegToRad(90), 0);
+                m.Rotation = h.Rotation - hh.ModelRotation;
                 GetNode("/root/universe").AddChild(m);
 
                 h = null;
                 hh = null;
+                Player.OffsetThingy = new Vector3(0, -1.5f, -2);
             }
         }
     }

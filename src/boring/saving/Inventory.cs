@@ -15,6 +15,8 @@ public class Item {
     public string Description { get; set; } = "";
     public string ModelPath { get; set; } = "";
     public Vector3 PreviewScale { get; set; } = Vector3.One;
+    public Vector3 PreviewOffset { get; set; } = new Vector3(0, -1.5f, -2);
+    public Vector3 ModelRotation { get; set; } = Vector3.Zero;
     public uint Amount { get; set; } = 0;
     public int Oxygen { get; set; } = 0;
     public int RocketFuel { get; set; } = 0;

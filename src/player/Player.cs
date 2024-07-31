@@ -19,6 +19,7 @@ public partial class Player : CharacterBody3D {
 	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
 	AnimationPlayer modelAnimator;
+	public static Vector3 OffsetThingy = new(0, -1.5f, -2);
 
     public override void _Ready()
     {
@@ -62,6 +63,7 @@ public partial class Player : CharacterBody3D {
 			modelAnimator.Play("idle");
 		}
 
+		ThingFafferyFuckery.Position = OffsetThingy;
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
 		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
 	}

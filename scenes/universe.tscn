@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=17 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
 [ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="1_2vaum"]
+[ext_resource type="Script" path="res://src/ui/development/LoadLayout.cs" id="1_lqq0y"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
 [ext_resource type="PackedScene" uid="uid://cm7p5eum4doci" path="res://furniture/soft_chair.tscn" id="3_v0fhx"]
 [ext_resource type="PackedScene" uid="uid://bljftxrlhlne" path="res://furniture/table.tscn" id="4_rqu65"]
@@ -54,6 +55,9 @@ tonemap_mode = 2
 radius = 1.0
 
 [node name="universe" type="Node3D"]
+
+[node name="load_layout" type="Node" parent="."]
+script = ExtResource("1_lqq0y")
 
 [node name="sub_viewport" type="SubViewport" parent="."]
 transparent_bg = true
