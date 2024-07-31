@@ -40,6 +40,8 @@ public partial class ListInventoryFlucklery : VBoxContainer {
         }
 
         foreach (var mm in m) {
+            if (mm.Value.Amount == 0) continue;
+            
 			Node mmm = Sceeneehee.Instantiate();
 			var g = GD.Load<PackedScene>(mm.Value.ModelPath).Instantiate<Node3D>();
 			g.Scale = mm.Value.PreviewScale;
@@ -62,36 +64,45 @@ public partial class ListInventoryFlucklery : VBoxContainer {
         h.Position = Player.ThingFafferyFuckeryThingy;
         h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe;
         hh = item;
+        hhh = key;
         g.AddChild(h);
-
-        Config<Inventory> inv = new();
-        inv.Data.Items[key].Amount--;
-        inv.Save();
-
-        Config<SpaceshipLayout> layout = new();
-        layout.Data.Stuff.Add(new Furniture {
-            Position = h.Position,
-            Rotation = h.Rotation,
-            Item = item
-        });
-        layout.Save();
     }
 
     public override void _Process(double delta)
     {
         if (h != null) {
             h.Position = Player.ThingFafferyFuckeryThingy;
-            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe + hh.ModelRotation;
+            h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe +
+                new Vector3(
+                    Mathf.DegToRad(hh.ModelRotation.X),
+                    Mathf.DegToRad(hh.ModelRotation.Y),
+                    Mathf.DegToRad(hh.ModelRotation.Z));
             
             if (Input.IsMouseButtonPressed(MouseButton.Left)) {
                 h.QueueFree();
                 var m = GD.Load<PackedScene>(hh.Scene).Instantiate<Node3D>();
                 m.Position = h.Position;
-                m.Rotation = h.Rotation - hh.ModelRotation;
+                m.Rotation = h.Rotation - new Vector3(
+                    Mathf.DegToRad(hh.ModelRotation.X),
+                    Mathf.DegToRad(hh.ModelRotation.Y),
+                    Mathf.DegToRad(hh.ModelRotation.Z));
                 GetNode("/root/universe").AddChild(m);
+
+                Config<Inventory> inv = new();
+                inv.Data.Items[hhh].Amount--;
+                inv.Save();
+
+                Config<SpaceshipLayout> layout = new();
+                layout.Data.Stuff.Add(new Furniture {
+                    Position = m.Position,
+                    Rotation = m.Rotation,
+                    Item = hh
+                });
+                layout.Save();
 
                 h = null;
                 hh = null;
+                hhh = "";
                 Player.OffsetThingy = new Vector3(0, -1.5f, -2);
             }
         }

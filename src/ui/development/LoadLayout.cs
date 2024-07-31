@@ -13,7 +13,7 @@ public partial class LoadLayout : Node {
             var q = GD.Load<PackedScene>(p.Item.Scene).Instantiate<Node3D>();
             q.Position = p.Position;
             q.Rotation = p.Rotation;
-            g.AddChild(q);
+            g.CallDeferred(MethodName.AddChild, q);
         }
     }
 }
