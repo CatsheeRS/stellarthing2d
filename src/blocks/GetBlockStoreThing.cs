@@ -11,7 +11,7 @@ public static class GetBlockStoreThing {
             Description = "Useful for sitting.",
             ModelPath = "res://assets/furniture/soft_chair.glb",
             PreviewScale = new Vector3(1, 1, 1),
-            PreviewOffset = new Vector3(0, 4, -2),
+            PreviewOffset = new Vector3(0, -2, -2),
             Iron = 1,
         }},
 
@@ -21,7 +21,7 @@ public static class GetBlockStoreThing {
             Description = "Great for putting things on it.",
             ModelPath = "res://assets/furniture/table.glb",
             PreviewScale = new Vector3(0.3f, 0.3f, 0.3f),
-            PreviewOffset = new Vector3(0, 4, -3),
+            PreviewOffset = new Vector3(0, -2, -3),
             Iron = 1,
         }},
 

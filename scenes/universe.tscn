@@ -1,12 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=14 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
 [ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="1_2vaum"]
 [ext_resource type="Script" path="res://src/ui/development/LoadLayout.cs" id="1_lqq0y"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
-[ext_resource type="PackedScene" uid="uid://cm7p5eum4doci" path="res://furniture/soft_chair.tscn" id="3_v0fhx"]
-[ext_resource type="PackedScene" uid="uid://bljftxrlhlne" path="res://furniture/table.tscn" id="4_rqu65"]
-[ext_resource type="PackedScene" uid="uid://cribkddt5yyjs" path="res://furniture/fridge.tscn" id="5_2oxnf"]
 [ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gjlii"]
@@ -92,15 +89,6 @@ shadow_blur = 10.0
 
 [node name="cylinder" parent="." instance=ExtResource("6_eb5e2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="soft_chair" parent="." instance=ExtResource("3_v0fhx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80287, 0.9, -4.58594)
-
-[node name="table" parent="." instance=ExtResource("4_rqu65")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.827, 1, -1.455)
-
-[node name="fridge" parent="." instance=ExtResource("5_2oxnf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.296, 2.5, -5.58)
 
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra", "ThingFafferyFuckery")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
