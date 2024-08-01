@@ -14,6 +14,8 @@ public partial class Player : CharacterBody3D {
 	public Camera3D Camêra { get; set; }
 	[Export]
 	public Node3D ThingFafferyFuckery { get; set; }
+	[Export]
+	public RayCast3D RaycastThing { get; set; }
 
 	public static Camera3D Camera { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
