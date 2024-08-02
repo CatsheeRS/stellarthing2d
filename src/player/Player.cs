@@ -20,6 +20,7 @@ public partial class Player : CharacterBody3D {
 	public static Camera3D Camera { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
+	public static RayCast3D Raycasttjtrsji { get; private set; }
 	AnimationPlayer modelAnimator;
 	public static Vector3 OffsetThingy = new(0, -1.5f, -2);
 	double gravity = (double)ProjectSettings.GetSetting("physics/3d/default_gravity");
@@ -78,5 +79,6 @@ public partial class Player : CharacterBody3D {
 		ThingFafferyFuckery.Position = OffsetThingy;
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
 		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
+		Raycasttjtrsji = RaycastThing;
 	}
 }

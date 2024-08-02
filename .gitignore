@@ -1,5 +1,9 @@
 # godot 4+ specific ignores
 .godot/
+# i use kde and i like having this folder having the game's icon
+.directory
+# keeps showing up when i update godot
+*.old
 
 # uncomment if you want to port this to android for some reason
 # android/
