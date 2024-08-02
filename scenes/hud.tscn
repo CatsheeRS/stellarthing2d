@@ -16,6 +16,8 @@ font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_58trc"]
 font_size = 40
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uodr5"]
 
@@ -87,6 +89,7 @@ grow_vertical = 2
 theme = ExtResource("1_mfka4")
 
 [node name="tutorials" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 204.0
 offset_bottom = 135.0
@@ -150,7 +153,7 @@ text = "Resources & Development"
 icon = ExtResource("3_jlt2k")
 expand_icon = true
 script = ExtResource("3_6tqxv")
-g = NodePath("../../../storage")
+g = NodePath("../../../resdev")
 
 [node name="spaceship" type="Button" parent="tool/bar" node_paths=PackedStringArray("g")]
 custom_minimum_size = Vector2(325, 80)
@@ -168,15 +171,15 @@ text = "Edit Spaceship"
 icon = ExtResource("5_2lse2")
 expand_icon = true
 script = ExtResource("3_6tqxv")
-g = NodePath("../../../inventory")
+g = NodePath("../../../editor")
 
-[node name="inventory" parent="." instance=ExtResource("5_x365m")]
+[node name="editor" parent="." instance=ExtResource("5_x365m")]
 visible = false
 layout_mode = 1
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="storage" parent="." instance=ExtResource("4_sy8gh")]
+[node name="resdev" parent="." instance=ExtResource("4_sy8gh")]
 visible = false
 custom_minimum_size = Vector2(1664, 824)
 layout_mode = 1

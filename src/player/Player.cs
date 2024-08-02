@@ -20,7 +20,7 @@ public partial class Player : CharacterBody3D {
 	public static Camera3D Camera { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
-	public static RayCast3D Raycasttjtrsji { get; private set; }
+	public static bool CommenceOnslaughter { get; set; }
 	AnimationPlayer modelAnimator;
 	public static Vector3 OffsetThingy = new(0, -1.5f, -2);
 	double gravity = (double)ProjectSettings.GetSetting("physics/3d/default_gravity");
@@ -76,9 +76,16 @@ public partial class Player : CharacterBody3D {
 			modelAnimator.Play("idle");
 		}
 
+		// funni editor stuff
 		ThingFafferyFuckery.Position = OffsetThingy;
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
 		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
-		Raycasttjtrsji = RaycastThing;
+		
+		// thy onslaughter (removing items)
+		if (CommenceOnslaughter) {
+			if (Input.IsMouseButtonPressed(MouseButton.Left)) {
+				Onslaughter.OnslaughterShallCommence(RaycastThing.GetCollider());
+			}
+		}
 	}
 }

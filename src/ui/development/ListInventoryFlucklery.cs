@@ -36,7 +36,7 @@ public partial class ListInventoryFlucklery : VBoxContainer {
 
         // do node faffery
         foreach (var g in GetChildren().Cast<Node>()) {
-            if (g is not Timer) g.QueueFree();
+            if (g is HBoxContainer) g.QueueFree();
         }
 
         foreach (var mm in m) {
@@ -96,7 +96,8 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                 layout.Data.Stuff.Add(new Furniture {
                     Position = m.Position,
                     Rotation = m.Rotation,
-                    Item = hh
+                    Item = hh,
+                    Key = hhh
                 });
                 layout.Save();
 

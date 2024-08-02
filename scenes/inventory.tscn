@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvfjgds6p5qpv"]
+[gd_scene load_steps=10 format=3 uid="uid://dvfjgds6p5qpv"]
 
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_r33ly"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_drol5"]
 [ext_resource type="Script" path="res://src/ui/development/ListInventoryFlucklery.cs" id="3_01o38"]
 [ext_resource type="PackedScene" uid="uid://beav0x3r56jr8" path="res://scenes/non_craft_thing.tscn" id="4_yn2vh"]
+[ext_resource type="Script" path="res://src/ui/development/Onslaughter.cs" id="5_o7m0i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2o3p"]
 shader = ExtResource("1_r33ly")
@@ -60,6 +61,13 @@ theme_override_constants/separation = 32
 script = ExtResource("3_01o38")
 Sceeneehee = ExtResource("4_yn2vh")
 Inve = NodePath("../../..")
+
+[node name="button" type="Button" parent="margin_container/scroll_container/v_box_container" node_paths=PackedStringArray("Gggg")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Remove Items"
+script = ExtResource("5_o7m0i")
+Gggg = NodePath("../../../..")
 
 [node name="timer" type="Timer" parent="margin_container/scroll_container/v_box_container"]
 autostart = true
