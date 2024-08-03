@@ -109,7 +109,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -2)
 
 [node name="ray_cast_3d" type="RayCast3D" parent="player/bob_guy"]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, -0.774567, 0)
-target_position = Vector3(0, 0, 2)
+target_position = Vector3(0, -0.5, 2)
 
 [node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, -0.161423, 0)

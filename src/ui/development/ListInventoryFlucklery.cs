@@ -14,6 +14,12 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     Node3D h;
     Item hh;
     string hhh;
+    Label instruction;
+
+    public override void _Ready()
+    {
+        instruction = GetNode<Label>("/root/hud/instruction_craft");
+    }
 
     public void MurderersOfMurderers()
     {
@@ -71,6 +77,7 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     public override void _Process(double delta)
     {
         if (h != null) {
+            instruction.Visible = true;
             h.Position = Player.ThingFafferyFuckeryThingy;
             h.Rotation = Player.ThingFafferyFuckeryThingyHehehehe +
                 new Vector3(
@@ -106,6 +113,18 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                 hhh = "";
                 Player.OffsetThingy = new Vector3(0, -1.5f, -2);
             }
+
+            // cancel
+            if (Input.IsMouseButtonPressed(MouseButton.Right)) {
+                h.QueueFree();
+                h = null;
+                hh = null;
+                hhh = "";
+                Player.OffsetThingy = new Vector3(0, -1.5f, -2);
+            }
+        }
+        else {
+            instruction.Visible = false;
         }
     }
 }

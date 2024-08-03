@@ -24,6 +24,7 @@ public partial class Player : CharacterBody3D {
 	AnimationPlayer modelAnimator;
 	public static Vector3 OffsetThingy = new(0, -1.5f, -2);
 	double gravity = (double)ProjectSettings.GetSetting("physics/3d/default_gravity");
+	Label instruction;
 
     public override void _Ready()
     {
@@ -80,11 +81,18 @@ public partial class Player : CharacterBody3D {
 		ThingFafferyFuckery.Position = OffsetThingy;
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
 		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
-		
+
 		// thy onslaughter (removing items)
+		instruction ??= GetNode<Label>("/root/hud/instruction_notcraft");
+		
+		instruction.Visible = CommenceOnslaughter;
 		if (CommenceOnslaughter) {
 			if (Input.IsMouseButtonPressed(MouseButton.Left)) {
 				Onslaughter.OnslaughterShallCommence(RaycastThing.GetCollider());
+			}
+
+			if (Input.IsMouseButtonPressed(MouseButton.Right)) {
+				CommenceOnslaughter = false;
 			}
 		}
 	}
