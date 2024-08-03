@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace stellarthing;
@@ -35,8 +36,9 @@ public partial class Onslaughter : Button {
 		if (uvrs != null) {
 			Config<SpaceshipLayout> layout = new();
 			// The IEEE Standard for Floating-Point Arithmetic (IEEE 754) is a technical standard for floating-point arithmetic established in 1985 by the Institute of Electrical and Electronics Engineers (IEEE). The standard addressed many problems found in the diverse floating-point implementations that made them difficult to use reliably and portably. Many hardware floating-point units use the IEEE 754 standard.
-			string k = layout.Data.Stuff.Find(x => FoolishAttemptOfDealingWithIEEE754AndTheFunctionNotWorkingLikeItShould(x.Position, pos) && FoolishAttemptOfDealingWithIEEE754AndTheFunctionNotWorkingLikeItShould(x.Rotation, rot)).Key;
-			layout.Data.Stuff.RemoveAll(x => FoolishAttemptOfDealingWithIEEE754AndTheFunctionNotWorkingLikeItShould(x.Position, pos) && FoolishAttemptOfDealingWithIEEE754AndTheFunctionNotWorkingLikeItShould(x.Rotation, rot));
+			string k = layout.Data.Stuff.Find(x => THEREISNOESCAPE(x.Position, pos, false) && THEREISNOESCAPE(x.Rotation, rot, true)).Key;
+
+			layout.Data.Stuff.RemoveAll(x => THEREISNOESCAPE(x.Position, pos, false) && THEREISNOESCAPE(x.Rotation, rot, true));
 			layout.Save();
 
 			// refund shit? idfk
@@ -48,11 +50,16 @@ public partial class Onslaughter : Button {
 		Player.CommenceOnslaughter = false;
 	}
 
-	static bool FoolishAttemptOfDealingWithIEEE754AndTheFunctionNotWorkingLikeItShould(Vector3 a, Vector3 b)
+	static bool THEREISNOESCAPE(Vector3 a, Vector3 b, bool includeY)
 	{
+		if (!includeY) {
+			a = new Vector3(a.X, 0, a.Z);
+			b = new Vector3(b.X, 0, b.Z);
+		}
+
 		// fuck you
-		string aa = $"({a.X:F2}, {a.Y:F2}, {a.Z:F2})";
-		string bb = $"({b.X:F2}, {b.Y:F2}, {b.Z:F2})";
+		string aa = $"({a.X.ToString("F2", CultureInfo.InvariantCulture)}, {a.Y.ToString("F2", CultureInfo.InvariantCulture)}, {a.Z.ToString("F2", CultureInfo.InvariantCulture)})".Replace("-0", "0");
+		string bb = $"({b.X.ToString("F2", CultureInfo.InvariantCulture)}, {b.Y.ToString("F2", CultureInfo.InvariantCulture)}, {b.Z.ToString("F2", CultureInfo.InvariantCulture)})".Replace("-0", "0");
 		GD.Print(aa, " == ", bb);
 		return aa == bb;
 	}
