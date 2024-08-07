@@ -64,8 +64,8 @@ size = Vector2i(540, 540)
 [node name="color_rect" type="ColorRect" parent="sub_viewport"]
 material = SubResource("ShaderMaterial_gjlii")
 custom_minimum_size = Vector2(960, 540)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 960.0
+offset_bottom = 540.0
 
 [node name="mesh_instance_3d" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0, -16.9208, -14.9285)
