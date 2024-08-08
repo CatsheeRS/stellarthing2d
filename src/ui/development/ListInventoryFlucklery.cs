@@ -10,6 +10,8 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     public PackedScene Sceeneehee { get; set; }
     [Export]
     public Control Inve { get; set; }
+    [Export]
+    public AudioStreamPlayer FunniSoundy { get; set; }
     Config<Inventory> pastConfig = new();
     Node3D h;
     Item hh;
@@ -112,6 +114,7 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                 hh = null;
                 hhh = "";
                 Player.OffsetThingy = new Vector3(0, -1.5f, -2);
+                FunniSoundy.Play();
             }
 
             // cancel

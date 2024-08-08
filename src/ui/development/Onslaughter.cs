@@ -8,6 +8,14 @@ namespace stellarthing;
 public partial class Onslaughter : Button {
 	[Export]
     public Control Gggg { get; set; }
+	[Export]
+	public AudioStreamPlayer FunniSoundy { get; set; }
+	public static AudioStreamPlayer Fuckoff { get; set; }
+
+    public override void _Ready()
+    {
+        Fuckoff = FunniSoundy;
+    }
 
     public override void _Pressed()
     {
@@ -45,6 +53,8 @@ public partial class Onslaughter : Button {
 			Config<Inventory> inv = new();
 			inv.Data.Items[k].Amount++;
 			inv.Save();
+
+			Fuckoff.Play();
 		}
 
 		Player.CommenceOnslaughter = false;
