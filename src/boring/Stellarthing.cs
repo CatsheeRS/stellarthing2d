@@ -28,9 +28,9 @@ public partial class Stellarthing : Node {
 			var lol = GetViewport().GuiGetFocusOwner();
 			if (lol != null) {
 				if (lol is BaseButton) {
-					//if (!m.HasMeta("dont_play_button_sound")) {
+					if (!lol.HasMeta("dont_play_button_sound")) {
 						player.Play();
-					//}
+					}
 				}
 			}
 		}
