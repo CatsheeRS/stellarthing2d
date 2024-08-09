@@ -1,0 +1,206 @@
+[gd_scene load_steps=10 format=3 uid="uid://ct8vwgduoiic7"]
+
+[ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_v23nn"]
+[ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_m0kni"]
+[ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="3_sna6d"]
+[ext_resource type="Script" path="res://src/ui/settings/exit_settings.gd" id="4_vavrs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i2o3p"]
+shader = ExtResource("1_v23nn")
+shader_parameter/lod = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xj4x"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbw0v"]
+bg_color = Color(0, 0, 0, 0.286275)
+
+[sub_resource type="LabelSettings" id="LabelSettings_017sl"]
+font = ExtResource("3_sna6d")
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g52qq"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.627451)
+
+[node name="settings" type="PanelContainer"]
+material = SubResource("ShaderMaterial_i2o3p")
+custom_minimum_size = Vector2(1664, 824)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = -128.0
+offset_bottom = -128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_m0kni")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xj4x")
+
+[node name="not_outline" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bbw0v")
+metadata/_edit_lock_ = true
+
+[node name="margin_container" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="tab_container" type="TabContainer" parent="margin_container"]
+layout_mode = 2
+tab_alignment = 1
+current_tab = 0
+
+[node name="Audio" type="CenterContainer" parent="margin_container/tab_container"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="v_box_container" type="VBoxContainer" parent="margin_container/tab_container/Audio"]
+layout_mode = 2
+
+[node name="h_box_container" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "All Sounds"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="h_box_container2" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container2"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "Music"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container2"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="h_box_container3" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container3"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "UI"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container3"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="h_box_container4" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container4"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "Ambient/Weather"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container4"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="h_box_container5" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container5"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "Enemies"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container5"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="h_box_container6" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container/h_box_container6"]
+custom_minimum_size = Vector2(253, 0)
+layout_mode = 2
+text = "Furniture"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container6"]
+custom_minimum_size = Vector2(600, 80)
+layout_mode = 2
+
+[node name="label" type="Label" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+text = "Test Headphones"
+label_settings = SubResource("LabelSettings_017sl")
+horizontal_alignment = 1
+
+[node name="h_box_container7" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="button" type="Button" parent="margin_container/tab_container/Audio/v_box_container/h_box_container7"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Left"
+
+[node name="button2" type="Button" parent="margin_container/tab_container/Audio/v_box_container/h_box_container7"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Right"
+
+[node name="Credits" type="RichTextLabel" parent="margin_container/tab_container"]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][font_size=48][b]Stellarthing[/b][/font_size]
+Developed by hellory4n
+Music by alex343xd
+
+[font_size=48][b]Sounds[/b][/font_size]
+Placing/removing furniture: Anthousai [i](Freesound)[/i]
+[/center]"
+metadata/_tab_index = 1
+
+[node name="Exit" type="Control" parent="margin_container/tab_container" node_paths=PackedStringArray("thething", "firthtab")]
+visible = false
+layout_mode = 2
+script = ExtResource("4_vavrs")
+thething = NodePath("../../..")
+firthtab = NodePath("../Audio")
+metadata/_tab_index = 2
+
+[node name="very_cool_outline" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g52qq")
+metadata/_edit_lock_ = true

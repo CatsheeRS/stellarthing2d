@@ -12,7 +12,8 @@ public partial class Stellarthing : Node {
 	/// </summary>
 	public static string CurrentUniverse { get; set; } = "";
 	AudioStreamPlayer player = new() {
-		Stream = GD.Load<AudioStream>("res://assets/sounds/one_synth_note.mp3")
+		Stream = GD.Load<AudioStream>("res://assets/sounds/one_synth_note.mp3"),
+		Bus = "ui",
 	};
 
     public override void _Ready()

@@ -77,6 +77,7 @@ autostart = true
 
 [node name="audio_stream_player" type="AudioStreamPlayer" parent="margin_container/scroll_container/v_box_container"]
 stream = ExtResource("6_iy2vd")
+bus = &"furniture"
 
 [node name="very_cool_outline" type="Panel" parent="."]
 layout_mode = 2

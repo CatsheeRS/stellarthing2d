@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bpnbhydtygtoh"]
+[gd_scene load_steps=23 format=3 uid="uid://bpnbhydtygtoh"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
 [ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="2_tati1"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://78hvyw2ffjmg" path="res://scenes/universe.tscn" id="11_wmlif"]
 [ext_resource type="PackedScene" uid="uid://b3s6tcudu7eim" path="res://scenes/hud.tscn" id="12_ebj58"]
 [ext_resource type="Script" path="res://src/ui/main_menu/DeleteUniverses.cs" id="13_m6pfs"]
+[ext_resource type="PackedScene" uid="uid://ct8vwgduoiic7" path="res://scenes/settings.tscn" id="15_7855w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cvkxc"]
 shader = ExtResource("2_tati1")
@@ -134,10 +135,12 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="button2" type="Button" parent="center_container/panel_container/v_box_container/h_box_container"]
+[node name="button2" type="Button" parent="center_container/panel_container/v_box_container/h_box_container" node_paths=PackedStringArray("g")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Settings"
+script = ExtResource("5_ir4u7")
+g = NodePath("../../../../../settings")
 
 [node name="button3" type="OptionButton" parent="center_container/panel_container/v_box_container/h_box_container"]
 layout_mode = 2
@@ -385,5 +388,18 @@ Iwasinthemiddlegroundlookingtofindthefountainofinfinitemirror = NodePath("../../
 Treefallingnoonewouldhear = NodePath("../../../../universes/h_box_container/v_box_container2/h_box_container/button3")
 Shadowofnobodythere = NodePath("../../../../universes/h_box_container/v_box_container2/h_box_container/button4")
 Murdersofmurdererslivinginfearofit = NodePath("../../..")
+
+[node name="settings" parent="." instance=ExtResource("15_7855w")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -832.0
+offset_top = -412.0
+offset_right = 832.0
+offset_bottom = 412.0
 
 [connection signal="item_selected" from="universes/h_box_container/v_box_container2/item_list" to="universes/h_box_container/v_box_container2/item_list" method="Hdgfhsdjtdu5ujtdghs"]
