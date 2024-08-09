@@ -24,10 +24,13 @@ public partial class Stellarthing : Node {
     public override void _Process(double delta)
     {
         if (Input.IsActionJustPressed("click")) {
+			// i know
 			var lol = GetViewport().GuiGetFocusOwner();
 			if (lol != null) {
-				if (lol is BaseButton h) {
-					player.Play();
+				if (lol is BaseButton) {
+					//if (!m.HasMeta("dont_play_button_sound")) {
+						player.Play();
+					//}
 				}
 			}
 		}

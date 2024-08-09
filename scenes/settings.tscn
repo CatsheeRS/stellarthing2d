@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ct8vwgduoiic7"]
+[gd_scene load_steps=11 format=3 uid="uid://ct8vwgduoiic7"]
 
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_v23nn"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_m0kni"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="3_sna6d"]
+[ext_resource type="Script" path="res://src/ui/settings/AudioStuff.cs" id="3_us0a3"]
 [ext_resource type="Script" path="res://src/ui/settings/exit_settings.gd" id="4_vavrs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2o3p"]
@@ -80,6 +81,12 @@ vertical_alignment = 1
 [node name="h_slider" type="HSlider" parent="margin_container/tab_container/Audio/v_box_container/h_box_container"]
 custom_minimum_size = Vector2(600, 80)
 layout_mode = 2
+script = ExtResource("3_us0a3")
+Bus = "Master"
+
+[node name="timer" type="Timer" parent="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider"]
+wait_time = 3.0
+autostart = true
 
 [node name="h_box_container2" type="HBoxContainer" parent="margin_container/tab_container/Audio/v_box_container"]
 layout_mode = 2
@@ -171,6 +178,7 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Left"
+metadata/dont_play_button_sound = true
 
 [node name="button2" type="Button" parent="margin_container/tab_container/Audio/v_box_container/h_box_container7"]
 custom_minimum_size = Vector2(0, 80)
@@ -204,3 +212,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g52qq")
 metadata/_edit_lock_ = true
+
+[connection signal="drag_ended" from="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider" to="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider" method="OnDragEnd"]
+[connection signal="drag_started" from="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider" to="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider" method="OnDragStarted"]
+[connection signal="timeout" from="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider/timer" to="margin_container/tab_container/Audio/v_box_container/h_box_container/h_slider" method="Hehe"]
