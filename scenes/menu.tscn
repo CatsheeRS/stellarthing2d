@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bpnbhydtygtoh"]
+[gd_scene load_steps=24 format=3 uid="uid://bpnbhydtygtoh"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_6vfyk"]
 [ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="2_tati1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/ui/main_menu/quit.gd" id="5_8cdi6"]
 [ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="5_ir4u7"]
 [ext_resource type="FontFile" uid="uid://d3455b6whpcwr" path="res://assets/ui/RedHatText-Bold.ttf" id="5_q4qf0"]
+[ext_resource type="Script" path="res://src/ui/settings/language_changer_3000.gd" id="7_ie6rk"]
 [ext_resource type="Script" path="res://src/ui/main_menu/hide_universes.gd" id="8_ixil3"]
 [ext_resource type="Script" path="res://src/ui/main_menu/ListUniverses.cs" id="8_nanrg"]
 [ext_resource type="Script" path="res://src/ui/main_menu/NewUniverse.cs" id="9_gij6s"]
@@ -153,6 +154,7 @@ item_count = 2
 popup/item_0/text = "English"
 popup/item_1/text = "Português (Brasil)"
 popup/item_1/id = 1
+script = ExtResource("7_ie6rk")
 
 [node name="button3" type="Button" parent="center_container/panel_container/v_box_container"]
 custom_minimum_size = Vector2(700, 80)
@@ -402,4 +404,5 @@ offset_top = -412.0
 offset_right = 832.0
 offset_bottom = 412.0
 
+[connection signal="item_selected" from="center_container/panel_container/v_box_container/h_box_container/button3" to="center_container/panel_container/v_box_container/h_box_container/button3" method="on_item_selected"]
 [connection signal="item_selected" from="universes/h_box_container/v_box_container2/item_list" to="universes/h_box_container/v_box_container2/item_list" method="Hdgfhsdjtdu5ujtdghs"]

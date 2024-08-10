@@ -22,15 +22,15 @@ msgstr ""
 # this will eventually have icons for the mouse buttons, put [icon] there
 msgid "left click to place furniture\n"
 "right click to cancel"
-msgstr "[icon] para colocar mobília\n
-[icon] para cancelar"
+msgstr "[icon] para colocar mobília\n"
+"[icon] para cancelar"
 
 #: scenes/hud.tscn
 # this will eventually have icons for the mouse buttons, put [icon] there
 msgid "left click to remove furniture\n"
 "right click to cancel"
-msgstr "[icon] para remover mobília\n
-[icon] para cancel"
+msgstr "[icon] para remover mobília\n"
+"[icon] para cancel"
 
 #: scenes/hud.tscn
 msgid "Resources & Development"
