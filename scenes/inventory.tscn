@@ -67,7 +67,7 @@ FunniSoundy = NodePath("audio_stream_player")
 [node name="button" type="Button" parent="margin_container/scroll_container/v_box_container" node_paths=PackedStringArray("Gggg", "FunniSoundy")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-text = "Remove Items"
+text = "Remove Furniture"
 script = ExtResource("5_o7m0i")
 Gggg = NodePath("../../../..")
 FunniSoundy = NodePath("../audio_stream_player")

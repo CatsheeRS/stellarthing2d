@@ -151,7 +151,7 @@ alignment = 1
 selected = 0
 item_count = 2
 popup/item_0/text = "English"
-popup/item_1/text = "there's only english"
+popup/item_1/text = "Português (Brasil)"
 popup/item_1/id = 1
 
 [node name="button3" type="Button" parent="center_container/panel_container/v_box_container"]

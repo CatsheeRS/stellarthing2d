@@ -328,13 +328,19 @@ theme_override_constants/separation = 16
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Decoration"
+text = "Utility"
 
 [node name="button2" type="Button" parent="margin_container/h_box_container2/v_box_container/h_box_container"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Essentials"
+text = "Industry"
+
+[node name="button3" type="Button" parent="margin_container/h_box_container2/v_box_container/h_box_container"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Weapons"
 
 [node name="decoration" type="ScrollContainer" parent="margin_container/h_box_container2/v_box_container"]
 layout_mode = 2
