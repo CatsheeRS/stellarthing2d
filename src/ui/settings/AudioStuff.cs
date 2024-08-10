@@ -13,16 +13,9 @@ public partial class AudioStuff : HSlider {
     public void Hehe()
     {
         if (!doingFaffrery) {
-            Config<AudioSettings> config = new();
-            int partofaseriesondiscriminationfromwikipediathefreeencyclopedia = Bus switch {
-                "Master" => config.Data.AllSounds,
-                "music" => config.Data.Music,
-                "ui" => config.Data.UI,
-                "ambient_weather" => config.Data.AmbientWeather,
-                "enemies" => config.Data.Enemies,
-                "furniture" => config.Data.Furniture,
-                _ => -1
-            };
+            ConfigFile config = new();
+            config.Load("user://prefs.cfg");
+            int partofaseriesondiscriminationfromwikipediathefreeencyclopedia = (int)config.GetValue("audio", Bus, 100);
             Value = partofaseriesondiscriminationfromwikipediathefreeencyclopedia;
 
             // actually change the bloody volume bollocks mate
@@ -36,16 +29,10 @@ public partial class AudioStuff : HSlider {
     {
         if (!valueChanged) return;
 
-        Config<AudioSettings> config = new();
-        switch (Bus) {
-            case "Master": config.Data.AllSounds = (int)Value; break;
-            case "music": config.Data.Music = (int)Value; break;
-            case "ui": config.Data.UI = (int)Value; break;
-            case "ambient_weather": config.Data.AmbientWeather = (int)Value; break;
-            case "enemies": config.Data.Enemies = (int)Value; break;
-            case "furniture": config.Data.Furniture = (int)Value; break;
-        }
-        config.Save();
+        ConfigFile config = new();
+        config.Load("user://prefs.cfg");
+        config.SetValue("audio", Bus, Value);
+        config.Save("user://prefs.cfg");
 
         // actually change the bloody volume bollocks mate
         AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex(Bus), (float)Mathf.LinearToDb(Value / 100f));
