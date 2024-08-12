@@ -11,6 +11,8 @@ public partial class Stellarthing : Node {
 	/// name of the current universe, used for saving
 	/// </summary>
 	public static string CurrentUniverse { get; set; } = "";
+	public static string UniverseDir { get => $"user://universes/{CurrentUniverse}"; }
+
 	AudioStreamPlayer player = new() {
 		Stream = GD.Load<AudioStream>("res://assets/sounds/one_synth_note.mp3"),
 		Bus = "ui",
@@ -28,7 +30,7 @@ public partial class Stellarthing : Node {
 			var lol = GetViewport().GuiGetFocusOwner();
 			if (lol != null) {
 				if (lol is BaseButton) {
-					if (!lol.HasMeta("dont_play_button_sound")) {
+					if (!lol.HasMeta(MetaKeys.DontPlayButtonSound)) {
 						player.Play();
 					}
 				}

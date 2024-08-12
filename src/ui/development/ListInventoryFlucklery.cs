@@ -1,4 +1,5 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,6 +96,9 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                     Mathf.DegToRad(hh.ModelRotation.X),
                     Mathf.DegToRad(hh.ModelRotation.Y),
                     Mathf.DegToRad(hh.ModelRotation.Z));
+                m.AddToGroup("spaceship_furniture");
+                m.SetMeta(MetaKeys.FurnitureKey, hhh);
+                m.SetMeta(MetaKeys.FurnitureItem, JsonConvert.SerializeObject(hh));
                 GetNode("/root/universe").AddChild(m);
 
                 Config<Inventory> inv = new();

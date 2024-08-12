@@ -24,6 +24,7 @@ config/icon="res://assets/ui/icon.png"
 [autoload]
 
 Stellarthing="*res://src/boring/Stellarthing.cs"
+UltraSaver5000="*res://src/boring/saving/UltraSaver5000.cs"
 
 [display]
 
@@ -45,6 +46,10 @@ naming/default_signal_callback_to_self_name="on_{signal_name}"
 [filesystem]
 
 import/blender/enabled=false
+
+[global_group]
+
+spaceship_furniture="gets saved and loaded in the spaceship"
 
 [input]
 

@@ -13,6 +13,13 @@ public partial class LoadLayout : Node {
             var q = GD.Load<PackedScene>(p.Item.Scene).Instantiate<Node3D>();
             q.Position = p.Position;
             q.Rotation = p.Rotation;
+            q.AddToGroup("spaceship_furniture");
+
+            // apply metadata
+            foreach (var pp in p.Metadata) {
+                q.SetMeta(pp.Key, pp.Value);
+            }
+
             g.CallDeferred(MethodName.AddChild, q);
         }
     }
