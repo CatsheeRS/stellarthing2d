@@ -33,8 +33,6 @@ public partial class ListCrap : VBoxContainer {
 	[Export]
 	public Timer AwesomeTimer { get; set; }
 
-	Config<Resources> cpfmdfgd = new();
-
     public override void _Ready()
     {
         Dictionary<string, Item> m = GetBlockStoreThing.Fuckery;
@@ -66,7 +64,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Iron.ToString()
 				});
 				
-				if (cpfmdfgd.Data.Iron < mm.Value.Iron) crapbutton.Disabled = true;
+				if (Resources.Iron < mm.Value.Iron) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Steel != 0) {
@@ -80,7 +78,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Steel.ToString()
 				});
 
-				if (cpfmdfgd.Data.Steel < mm.Value.Steel) crapbutton.Disabled = true;
+				if (Resources.Steel < mm.Value.Steel) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Titanium != 0) {
@@ -94,7 +92,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Titanium.ToString()
 				});
 
-				if (cpfmdfgd.Data.Titanium < mm.Value.Titanium) crapbutton.Disabled = true;
+				if (Resources.Titanium < mm.Value.Titanium) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Diamond != 0) {
@@ -108,7 +106,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Titanium.ToString()
 				});
 
-				if (cpfmdfgd.Data.Diamond < mm.Value.Diamond) crapbutton.Disabled = true;
+				if (Resources.Diamond < mm.Value.Diamond) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Ruby != 0) {
@@ -122,7 +120,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Ruby.ToString()
 				});
 
-				if (cpfmdfgd.Data.Ruby < mm.Value.Ruby) crapbutton.Disabled = true;
+				if (Resources.Ruby < mm.Value.Ruby) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Emerald != 0) {
@@ -136,7 +134,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Emerald.ToString()
 				});
 
-				if (cpfmdfgd.Data.Emerald < mm.Value.Emerald) crapbutton.Disabled = true;
+				if (Resources.Emerald < mm.Value.Emerald) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Sapphire != 0) {
@@ -150,7 +148,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Sapphire.ToString()
 				});
 
-				if (cpfmdfgd.Data.Sapphire < mm.Value.Sapphire) crapbutton.Disabled = true;
+				if (Resources.Sapphire < mm.Value.Sapphire) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Obsidian != 0) {
@@ -164,7 +162,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Obsidian.ToString()
 				});
 
-				if (cpfmdfgd.Data.Obsidian < mm.Value.Obsidian) crapbutton.Disabled = true;
+				if (Resources.Obsidian < mm.Value.Obsidian) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Gunpowder != 0) {
@@ -178,7 +176,7 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Gunpowder.ToString()
 				});
 				
-				if (cpfmdfgd.Data.Gunpowder < mm.Value.Gunpowder) crapbutton.Disabled = true;
+				if (Resources.Gunpowder < mm.Value.Gunpowder) crapbutton.Disabled = true;
 			}
 
 			if (mm.Value.Silicon != 0) {
@@ -192,21 +190,21 @@ public partial class ListCrap : VBoxContainer {
 					Text = mm.Value.Silicon.ToString()
 				});
 
-				if (cpfmdfgd.Data.Silicon < mm.Value.Silicon) crapbutton.Disabled = true;
+				if (Resources.Silicon < mm.Value.Silicon) crapbutton.Disabled = true;
 			}
 
 			crapbutton.Pressed += () => BuildStuff(mm.Key, mm.Value, crapbutton);
 			AwesomeTimer.Timeout += () => {
-				if (cpfmdfgd.Data.Iron < mm.Value.Iron) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Steel < mm.Value.Steel) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Titanium < mm.Value.Titanium) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Diamond < mm.Value.Diamond) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Ruby < mm.Value.Ruby) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Emerald < mm.Value.Emerald) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Sapphire < mm.Value.Sapphire) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Obsidian < mm.Value.Obsidian) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Gunpowder < mm.Value.Gunpowder) crapbutton.Disabled = true;
-				if (cpfmdfgd.Data.Silicon < mm.Value.Silicon) crapbutton.Disabled = true;
+				if (Resources.Iron < mm.Value.Iron) crapbutton.Disabled = true;
+				if (Resources.Steel < mm.Value.Steel) crapbutton.Disabled = true;
+				if (Resources.Titanium < mm.Value.Titanium) crapbutton.Disabled = true;
+				if (Resources.Diamond < mm.Value.Diamond) crapbutton.Disabled = true;
+				if (Resources.Ruby < mm.Value.Ruby) crapbutton.Disabled = true;
+				if (Resources.Emerald < mm.Value.Emerald) crapbutton.Disabled = true;
+				if (Resources.Sapphire < mm.Value.Sapphire) crapbutton.Disabled = true;
+				if (Resources.Obsidian < mm.Value.Obsidian) crapbutton.Disabled = true;
+				if (Resources.Gunpowder < mm.Value.Gunpowder) crapbutton.Disabled = true;
+				if (Resources.Silicon < mm.Value.Silicon) crapbutton.Disabled = true;
 			};
 			AddChild(mmm);
 		}
@@ -215,39 +213,36 @@ public partial class ListCrap : VBoxContainer {
 	void BuildStuff(string id, Item item, Button crapbutton)
 	{
 		// add to inventory
-		Config<Inventory> config = new();
-		if (config.Data.Items.TryGetValue(id, out Item value)) {
+		if (SpaceshipFurniture.Inventory.TryGetValue(id, out Item value)) {
             value.Amount++;
 		}
 		else {
 			item.Amount = 1;
-			config.Data.Items.Add(id, item);
+			SpaceshipFurniture.Inventory.Add(id, item);
 		}
-		config.Save();
 
 		// kill
-		cpfmdfgd.Data.Iron -= item.Iron;
-		cpfmdfgd.Data.Steel -= item.Steel;
-		cpfmdfgd.Data.Titanium -= item.Titanium;
-		cpfmdfgd.Data.Diamond -= item.Diamond;
-		cpfmdfgd.Data.Ruby -= item.Ruby;
-		cpfmdfgd.Data.Emerald -= item.Emerald;
-		cpfmdfgd.Data.Sapphire -= item.Sapphire;
-		cpfmdfgd.Data.Obsidian -= item.Obsidian;
-		cpfmdfgd.Data.Gunpowder -= item.Gunpowder;
-		cpfmdfgd.Data.Silicon -= item.Silicon;
-		cpfmdfgd.Save();
+		Resources.Iron -= item.Iron;
+		Resources.Steel -= item.Steel;
+		Resources.Titanium -= item.Titanium;
+		Resources.Diamond -= item.Diamond;
+		Resources.Ruby -= item.Ruby;
+		Resources.Emerald -= item.Emerald;
+		Resources.Sapphire -= item.Sapphire;
+		Resources.Obsidian -= item.Obsidian;
+		Resources.Gunpowder -= item.Gunpowder;
+		Resources.Silicon -= item.Silicon;
 
 		// czech republic
-		if (cpfmdfgd.Data.Iron < item.Iron) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Steel < item.Steel) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Titanium < item.Titanium) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Diamond < item.Diamond) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Ruby < item.Ruby) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Emerald < item.Emerald) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Sapphire < item.Sapphire) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Obsidian < item.Obsidian) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Gunpowder < item.Gunpowder) crapbutton.Disabled = true;
-		if (cpfmdfgd.Data.Silicon < item.Silicon) crapbutton.Disabled = true;
+		if (Resources.Iron < item.Iron) crapbutton.Disabled = true;
+		if (Resources.Steel < item.Steel) crapbutton.Disabled = true;
+		if (Resources.Titanium < item.Titanium) crapbutton.Disabled = true;
+		if (Resources.Diamond < item.Diamond) crapbutton.Disabled = true;
+		if (Resources.Ruby < item.Ruby) crapbutton.Disabled = true;
+		if (Resources.Emerald < item.Emerald) crapbutton.Disabled = true;
+		if (Resources.Sapphire < item.Sapphire) crapbutton.Disabled = true;
+		if (Resources.Obsidian < item.Obsidian) crapbutton.Disabled = true;
+		if (Resources.Gunpowder < item.Gunpowder) crapbutton.Disabled = true;
+		if (Resources.Silicon < item.Silicon) crapbutton.Disabled = true;
 	}
 }

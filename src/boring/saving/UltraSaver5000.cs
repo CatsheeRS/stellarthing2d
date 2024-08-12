@@ -20,14 +20,24 @@ public partial class UltraSaver5000 : Node {
 
     public void Load()
     {
+        // furnitur
+        SpaceshipFurniture.SaveVersion furniture = new();
+        if (FileAccess.FileExists($"{Stellarthing.UniverseDir}/furniture.json")) {
+            using var f = FileAccess.Open($"{Stellarthing.UniverseDir}/furniture.json", FileAccess.ModeFlags.Read);
+            string furniturejson = f.GetAsText();
+            furniture = JsonConvert.DeserializeObject<SpaceshipFurniture.SaveVersion>(furniturejson);
+        }
+        else {
+            using var f = FileAccess.Open($"{Stellarthing.UniverseDir}/furniture.json", FileAccess.ModeFlags.Write);
+            f.StoreString(JsonConvert.SerializeObject(furniture));
+        }
 
+        SpaceshipFurniture.Inventory = furniture.Inventory;
+        SpaceshipFurniture.StartupFurniture = furniture.Furniture;
     }
 
     public void Save()
-    {
-        // why bother? it's gonna hurt me :(
-        using var f = FileAccess.Open($"{Stellarthing.UniverseDir}/furniture.json", FileAccess.ModeFlags.Write);
-        
+    {   
         // this processes furniture
         List<Furniture> items = [];
         var yarr = GetTree().GetNodesInGroup("spaceship_furniture");
@@ -49,8 +59,12 @@ public partial class UltraSaver5000 : Node {
             }
         }
 
-        // save faffery furniture :D
-        
-        f.StoreString(JsonConvert.SerializeObject(items));
+        // save faffery furniture
+        // why bother? it's gonna hurt me :(
+        using var f = FileAccess.Open($"{Stellarthing.UniverseDir}/furniture.json", FileAccess.ModeFlags.Write);
+        f.StoreString(JsonConvert.SerializeObject(new SpaceshipFurniture.SaveVersion {
+            Inventory = SpaceshipFurniture.Inventory,
+            Furniture = items
+        }));
     }
 }

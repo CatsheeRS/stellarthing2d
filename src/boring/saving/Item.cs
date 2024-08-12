@@ -4,11 +4,6 @@ using Godot;
 
 namespace stellarthing;
 
-public class Inventory : IConfigData {
-    public string GetFilename() => "%universe/inventory.json";
-    public Dictionary<string, Item> Items { get; set; } = [];
-}
-
 public class Item {
     public string Scene { get; set; } = "";
     public string Name { get; set; } = "";

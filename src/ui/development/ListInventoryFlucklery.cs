@@ -13,7 +13,7 @@ public partial class ListInventoryFlucklery : VBoxContainer {
     public Control Inve { get; set; }
     [Export]
     public AudioStreamPlayer FunniSoundy { get; set; }
-    Config<Inventory> pastConfig = new();
+    Dictionary<string, Item> pastNonConfig = [];
     Node3D h;
     Item hh;
     string hhh;
@@ -26,19 +26,17 @@ public partial class ListInventoryFlucklery : VBoxContainer {
 
     public void MurderersOfMurderers()
     {
-        var config = new Config<Inventory>();
-
         // wouldn't be ideal to do node faffery every bloody second
         // that'd be bollocks mate
         // kill me
         DictionaryComparer<string, Item> whythough = new();
-        if (whythough.Equals(config.Data.Items, pastConfig.Data.Items) && GetChildCount() > 1) {
+        if (whythough.Equals(SpaceshipFurniture.Inventory, pastNonConfig) && GetChildCount() > 1) {
             return;
         }
 
         // hehe
         Dictionary<string, Item> m = (
-			from h in config.Data.Items
+			from h in SpaceshipFurniture.Inventory
 			orderby h.Value.Name ascending
 			select h
 		).ToDictionary();
@@ -101,18 +99,7 @@ public partial class ListInventoryFlucklery : VBoxContainer {
                 m.SetMeta(MetaKeys.FurnitureItem, JsonConvert.SerializeObject(hh));
                 GetNode("/root/universe").AddChild(m);
 
-                Config<Inventory> inv = new();
-                inv.Data.Items[hhh].Amount--;
-                inv.Save();
-
-                Config<SpaceshipLayout> layout = new();
-                layout.Data.Stuff.Add(new Furniture {
-                    Position = m.Position,
-                    Rotation = m.Rotation,
-                    Item = hh,
-                    Key = hhh
-                });
-                layout.Save();
+                SpaceshipFurniture.Inventory[hhh].Amount--;
 
                 h = null;
                 hh = null;
