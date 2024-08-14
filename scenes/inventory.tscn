@@ -1,10 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvfjgds6p5qpv"]
+[gd_scene load_steps=8 format=3 uid="uid://dvfjgds6p5qpv"]
 
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="1_r33ly"]
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="2_drol5"]
-[ext_resource type="Script" path="res://src/ui/development/ListInventoryFlucklery.cs" id="3_01o38"]
-[ext_resource type="PackedScene" uid="uid://beav0x3r56jr8" path="res://scenes/non_craft_thing.tscn" id="4_yn2vh"]
-[ext_resource type="Script" path="res://src/ui/development/Onslaughter.cs" id="5_o7m0i"]
 [ext_resource type="AudioStream" uid="uid://q5uwr5qp42ud" path="res://assets/sounds/406261__anthousai__hit-glass-window-01_edited.mp3" id="6_iy2vd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2o3p"]
@@ -55,22 +52,15 @@ theme_override_constants/margin_right = 16
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="v_box_container" type="VBoxContainer" parent="margin_container/scroll_container" node_paths=PackedStringArray("Inve", "FunniSoundy")]
+[node name="v_box_container" type="VBoxContainer" parent="margin_container/scroll_container"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 32
-script = ExtResource("3_01o38")
-Sceeneehee = ExtResource("4_yn2vh")
-Inve = NodePath("../../..")
-FunniSoundy = NodePath("audio_stream_player")
 
-[node name="button" type="Button" parent="margin_container/scroll_container/v_box_container" node_paths=PackedStringArray("Gggg", "FunniSoundy")]
+[node name="button" type="Button" parent="margin_container/scroll_container/v_box_container"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Remove Furniture"
-script = ExtResource("5_o7m0i")
-Gggg = NodePath("../../../..")
-FunniSoundy = NodePath("../audio_stream_player")
 
 [node name="timer" type="Timer" parent="margin_container/scroll_container/v_box_container"]
 autostart = true

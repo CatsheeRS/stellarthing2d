@@ -82,18 +82,18 @@ public partial class Player : CharacterBody3D {
 		ThingFafferyFuckeryThingy = ThingFafferyFuckery.GlobalPosition;
 		ThingFafferyFuckeryThingyHehehehe = Model.Rotation;
 
-		// thy onslaughter (removing items)
-		instruction ??= GetNode<Label>("/root/hud/instruction_notcraft");
+		// // thy onslaughter (removing items)
+		// instruction ??= GetNode<Label>("/root/hud/instruction_notcraft");
 		
-		instruction.Visible = CommenceOnslaughter;
-		if (CommenceOnslaughter) {
-			if (Input.IsMouseButtonPressed(MouseButton.Left)) {
-				Onslaughter.OnslaughterShallCommence(RaycastThing.GetCollider());
-			}
+		// instruction.Visible = CommenceOnslaughter;
+		// if (CommenceOnslaughter) {
+		// 	if (Input.IsMouseButtonPressed(MouseButton.Left)) {
+		// 		Onslaughter.OnslaughterShallCommence(RaycastThing.GetCollider());
+		// 	}
 
-			if (Input.IsMouseButtonPressed(MouseButton.Right)) {
-				CommenceOnslaughter = false;
-			}
-		}
+		// 	if (Input.IsMouseButtonPressed(MouseButton.Right)) {
+		// 		CommenceOnslaughter = false;
+		// 	}
+		// }
 	}
 }

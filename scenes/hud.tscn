@@ -1,7 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://b3s6tcudu7eim"]
+[gd_scene load_steps=21 format=3 uid="uid://b3s6tcudu7eim"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
-[ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="2_mq382"]
 [ext_resource type="Script" path="res://src/ui/hud/gosdkgoskgiskghidgps.gd" id="3_6tqxv"]
 [ext_resource type="Texture2D" uid="uid://cmyi11lkpgdsc" path="res://assets/ui/icons/resdev.png" id="3_jlt2k"]
 [ext_resource type="PackedScene" uid="uid://cr4p8cv60jhyn" path="res://scenes/storage.tscn" id="4_sy8gh"]
@@ -154,7 +153,6 @@ layout_mode = 2
 text = "2371-02-15 12:00"
 label_settings = SubResource("LabelSettings_58trc")
 horizontal_alignment = 2
-script = ExtResource("2_mq382")
 
 [node name="timer" type="Timer" parent="v_box_container/moneys"]
 wait_time = 12.5

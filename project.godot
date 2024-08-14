@@ -24,7 +24,6 @@ config/icon="res://assets/ui/icon.png"
 [autoload]
 
 Stellarthing="*res://src/boring/Stellarthing.cs"
-UltraSaver5000="*res://src/boring/saving/UltraSaver5000.cs"
 
 [display]
 
