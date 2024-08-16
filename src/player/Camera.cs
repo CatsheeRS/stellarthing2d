@@ -23,7 +23,7 @@ public partial class Camera : Node3D {
         if (@event is InputEventMouseMotion eVent) {
 			RotateY(-eVent.Relative.X * 0.005f);
 			SpringArm.RotateX(eVent.Relative.Y * 0.005f);
-			SpringArm.Rotation = new Vector3(Mathf.Clamp(SpringArm.Rotation.X, -Mathf.Pi / 4, Mathf.Pi / 4),
+			SpringArm.Rotation = new Vector3(Mathf.Clamp(SpringArm.Rotation.X, (-Mathf.Pi / 4) - 180, Mathf.Pi / 4),
 				SpringArm.Rotation.Y, SpringArm.Rotation.Z);
 		}
     }

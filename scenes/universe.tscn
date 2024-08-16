@@ -81,7 +81,7 @@ SpringArm = NodePath("spring_arm_3d")
 Kammera = NodePath("spring_arm_3d/perspective")
 
 [node name="spring_arm_3d" type="SpringArm3D" parent="player/camera_pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, -7)
 
 [node name="perspective" type="Camera3D" parent="player/camera_pivot/spring_arm_3d"]
 current = true
