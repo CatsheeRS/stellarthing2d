@@ -1,49 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=10 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
-[ext_resource type="Shader" path="res://assets/ui/space.gdshader" id="1_2vaum"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
+[ext_resource type="Texture2D" uid="uid://dk1gsxqm2k56u" path="res://assets/misc/brett-ritchie-1vKTnwLMdqs-unsplash.jpg" id="2_pjfii"]
+[ext_resource type="Script" path="res://src/player/Camera.cs" id="5_exf76"]
 [ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjlii"]
-shader = ExtResource("1_2vaum")
-shader_parameter/iterations = 20
-shader_parameter/formuparam = 1.0
-shader_parameter/volsteps = 20
-shader_parameter/stepsize = 0.5
-shader_parameter/zoom = 0.025
-shader_parameter/tile = 0.5
-shader_parameter/speed = 0.005
-shader_parameter/brightness = 0.001
-shader_parameter/darkmatter = 0.0
-shader_parameter/distfading = 0.65
-shader_parameter/saturation = 0.75
-shader_parameter/iResolution = Vector2(192, 192)
-shader_parameter/iMouse = Vector2(0, 0)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_k6npx"]
-viewport_path = NodePath("sub_viewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88l57"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_k6npx")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_1i43m"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_88l57")
-size = Vector2(200, 200)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c16i4"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0.5, 0.5, 0.5, 1)
-sky_energy_multiplier = 0.0
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0.5, 0.5, 0.5, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3nraw"]
+panorama = ExtResource("2_pjfii")
 
 [sub_resource type="Sky" id="Sky_ryih7"]
-sky_material = SubResource("ProceduralSkyMaterial_c16i4")
+sky_material = SubResource("PanoramaSkyMaterial_3nraw")
 
 [sub_resource type="Environment" id="Environment_q5te5"]
+background_mode = 2
 sky = SubResource("Sky_ryih7")
 tonemap_mode = 2
 
@@ -54,21 +24,6 @@ height = 2.3
 [node name="universe" type="Node3D"]
 
 [node name="load_layout" type="Node" parent="."]
-
-[node name="sub_viewport" type="SubViewport" parent="."]
-transparent_bg = true
-size = Vector2i(540, 540)
-
-[node name="color_rect" type="ColorRect" parent="sub_viewport"]
-material = SubResource("ShaderMaterial_gjlii")
-custom_minimum_size = Vector2(960, 540)
-offset_right = 960.0
-offset_bottom = 540.0
-
-[node name="mesh_instance_3d" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0, -16.9208, -14.9285)
-visible = false
-mesh = SubResource("PlaneMesh_1i43m")
 
 [node name="world_environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q5te5")
@@ -82,6 +37,7 @@ shadow_blur = 10.0
 
 [node name="orthographic_light" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.991216, 0.0661281, -0.114537, 0, 0.866024, 0.5, 0.132256, -0.495607, 0.858418, 0, 0, 0)
+visible = false
 shadow_enabled = true
 shadow_opacity = 0.49
 shadow_blur = 10.0
@@ -92,9 +48,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra", "ThingFafferyFuckery", "RaycastThing")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5004, 0)
 script = ExtResource("1_2s2vk")
-Speed = 25
 Model = NodePath("bob_guy")
-"Camêra" = NodePath("orthographic")
+"Camêra" = NodePath("camera_pivot/spring_arm_3d/perspective")
 ThingFafferyFuckery = NodePath("bob_guy/place_stuff")
 RaycastThing = NodePath("bob_guy/ray_cast_3d")
 metadata/_edit_group_ = true
@@ -113,17 +68,24 @@ target_position = Vector3(0, -0.5, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, -0.161423, 0)
 shape = SubResource("CapsuleShape3D_tl4vs")
 
-[node name="perspective" type="Camera3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 8, 12)
-visible = false
-size = 20.0
-
 [node name="orthographic" type="Camera3D" parent="player"]
 transform = Transform3D(0.939693, 0.17101, -0.296198, 0, 0.866025, 0.5, 0.34202, -0.469846, 0.813798, 0, 75, 0)
+visible = false
 v_offset = -65.0
 projection = 1
-current = true
 size = 23.0
+
+[node name="camera_pivot" type="Node3D" parent="player" node_paths=PackedStringArray("SpringArm", "Kammera")]
+script = ExtResource("5_exf76")
+SpringArm = NodePath("spring_arm_3d")
+Kammera = NodePath("spring_arm_3d/perspective")
+
+[node name="spring_arm_3d" type="SpringArm3D" parent="player/camera_pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="perspective" type="Camera3D" parent="player/camera_pivot/spring_arm_3d"]
+current = true
+size = 20.0
 
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
