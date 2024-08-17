@@ -12,6 +12,10 @@ public partial class Camera : Node3D
 	[Export]
 	public Camera3D Camerá { get; set; }
 	[Export]
+	public SpringArm3D SpringArm { get; set; }
+	[Export]
+	public Player Player { get; set; }
+	[Export]
 	public double PitchMin { get; set; } = -55;
 	[Export]
 	public double PitchMax { get; set; } = 75;
@@ -26,6 +30,7 @@ public partial class Camera : Node3D
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
+		SpringArm.AddExcludedObject(Player.GetRid());
     }
 
     public override void _Input(InputEvent @event)

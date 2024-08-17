@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3s6tcudu7eim"]
+[gd_scene load_steps=24 format=3 uid="uid://b3s6tcudu7eim"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
 [ext_resource type="Script" path="res://src/ui/hud/gosdkgoskgiskghidgps.gd" id="3_6tqxv"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="6_ysgon"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="7_42s4a"]
 [ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="10_oedtl"]
+[ext_resource type="Texture2D" uid="uid://qa7pnmoeiuvy" path="res://assets/misc/plus.png" id="12_8ps5d"]
+[ext_resource type="Shader" path="res://assets/ui/invert.gdshader" id="12_jbbkq"]
 [ext_resource type="PackedScene" uid="uid://ct8vwgduoiic7" path="res://scenes/settings.tscn" id="12_je3et"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vffkk"]
@@ -79,6 +81,9 @@ shader_parameter/lod = 3.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2p2gd"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gq1es"]
+shader = ExtResource("12_jbbkq")
 
 [node name="hud" type="Control"]
 layout_mode = 3
@@ -282,5 +287,22 @@ gggg = NodePath("../../../../..")
 
 [node name="settings" parent="pause" instance=ExtResource("12_je3et")]
 visible = false
+
+[node name="crosshair" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_gq1es")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_8ps5d")
+expand_mode = 1
 
 [connection signal="timeout" from="v_box_container/moneys/timer" to="v_box_container/moneys" method="HourThing"]

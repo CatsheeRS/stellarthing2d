@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=12 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
 [ext_resource type="Texture2D" uid="uid://dk1gsxqm2k56u" path="res://assets/misc/brett-ritchie-1vKTnwLMdqs-unsplash.jpg" id="2_pjfii"]
 [ext_resource type="Script" path="res://src/player/Camera.cs" id="5_exf76"]
 [ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
+[ext_resource type="Texture2D" uid="uid://qa7pnmoeiuvy" path="res://assets/misc/plus.png" id="7_ko2u5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3nraw"]
 panorama = ExtResource("2_pjfii")
@@ -19,10 +20,10 @@ tonemap_mode = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tl4vs"]
 radius = 1.0
-height = 2.3
+height = 3.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pbme0"]
-radius = 1.0
+radius = 0.07
 
 [node name="universe" type="Node3D"]
 
@@ -52,6 +53,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "Camêra", "ThingFafferyFuckery", "RaycastThing")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01886, 0)
 script = ExtResource("1_2s2vk")
+Speed = 10
+JumpStrength = 100.0
 Model = NodePath("bob_guy")
 "Camêra" = NodePath("camera_root/yaw/pitch/spring_arm_3d/third_person")
 ThingFafferyFuckery = NodePath("bob_guy/place_stuff")
@@ -69,7 +72,7 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, -0.
 target_position = Vector3(0, -0.5, 2)
 
 [node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, 1.10379, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, 1.60977, 0)
 shape = SubResource("CapsuleShape3D_tl4vs")
 
 [node name="orthographic" type="Camera3D" parent="player"]
@@ -79,25 +82,38 @@ v_offset = -65.0
 projection = 1
 size = 23.0
 
-[node name="camera_root" type="Node3D" parent="player" node_paths=PackedStringArray("YawNode", "PitchNode", "Camerá")]
+[node name="camera_root" type="Node3D" parent="player" node_paths=PackedStringArray("YawNode", "PitchNode", "Camerá", "SpringArm", "Player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 script = ExtResource("5_exf76")
 YawNode = NodePath("yaw")
 PitchNode = NodePath("yaw/pitch")
 "Camerá" = NodePath("yaw/pitch/spring_arm_3d/third_person")
+SpringArm = NodePath("yaw/pitch/spring_arm_3d")
+Player = NodePath("..")
 
 [node name="yaw" type="Node3D" parent="player/camera_root"]
 
 [node name="pitch" type="Node3D" parent="player/camera_root/yaw"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0)
 
 [node name="spring_arm_3d" type="SpringArm3D" parent="player/camera_root/yaw/pitch"]
 shape = SubResource("SphereShape3D_pbme0")
-spring_length = 5.0
+spring_length = 3.0
 
 [node name="third_person" type="Camera3D" parent="player/camera_root/yaw/pitch/spring_arm_3d"]
-transform = Transform3D(-1, 0, -8.74226e-08, 0, 1, 0, 8.74226e-08, 0, -1, 0, 0, 0)
-v_offset = 3.0
+transform = Transform3D(-1, 0, 8.74227e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 1)
 current = true
+fov = 90.0
 size = 20.0
+
+[node name="sprite_3d" type="Sprite3D" parent="player/camera_root/yaw/pitch/spring_arm_3d/third_person"]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0, -6)
+modulate = Color(1, 1, 1, 0)
+pixel_size = 0.001
+billboard = 1
+texture = ExtResource("7_ko2u5")
 
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="canvas_layer" type="CanvasLayer" parent="."]

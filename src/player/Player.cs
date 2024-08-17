@@ -64,14 +64,14 @@ public partial class Player : CharacterBody3D {
 		if (Input.IsActionPressed("move_forwards")) dir.Z -= 1;
 		if (Input.IsActionPressed("move_backwards")) dir.Z += 1;
 
-		dir = dir.Normalized().Rotated(Camera.Rotation.Normalized(), -180).Normalized();
+		dir = dir.Normalized().Rotated(Vector3.Up, Camera.GlobalRotation.Y);
         Velocity = (dir * Speed * new Vector3(run, 0, run)) - (fall * 100);
 
 		// jump
 		bool justLanded = IsOnFloor() && snapVector == Vector3.Zero;
 		bool isJumping = IsOnFloor() && Input.IsActionJustPressed("jump");
 		if (isJumping) {
-			Velocity = new Vector3(Velocity.X, (float)JumpStrength, Velocity.Z);
+			Velocity = new Vector3(Velocity.X, (float)(JumpStrength * gravity), Velocity.Z);
 			snapVector = Vector3.Zero;
 		}
 		else if (justLanded) {
@@ -83,7 +83,7 @@ public partial class Player : CharacterBody3D {
 
 		if (!dir.IsZeroApprox()) {
 			Basis targetRot = Basis.LookingAt(dir);
-			Model.Basis = Model.Basis.Slerp(targetRot, 0.1f);
+			Model.Basis = Model.Basis.Slerp(targetRot, 0.5f);
 		}
 
 		// animate
