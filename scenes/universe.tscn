@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=11 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
 [ext_resource type="Texture2D" uid="uid://dk1gsxqm2k56u" path="res://assets/misc/brett-ritchie-1vKTnwLMdqs-unsplash.jpg" id="2_pjfii"]
 [ext_resource type="Script" path="res://src/player/Camera.cs" id="5_exf76"]
 [ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
-[ext_resource type="Texture2D" uid="uid://qa7pnmoeiuvy" path="res://assets/misc/plus.png" id="7_ko2u5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3nraw"]
 panorama = ExtResource("2_pjfii")
@@ -106,14 +105,5 @@ current = true
 fov = 90.0
 size = 20.0
 
-[node name="sprite_3d" type="Sprite3D" parent="player/camera_root/yaw/pitch/spring_arm_3d/third_person"]
-transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0, -6)
-modulate = Color(1, 1, 1, 0)
-pixel_size = 0.001
-billboard = 1
-texture = ExtResource("7_ko2u5")
-
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="canvas_layer" type="CanvasLayer" parent="."]
