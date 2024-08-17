@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://78hvyw2ffjmg"]
+[gd_scene load_steps=9 format=3 uid="uid://78hvyw2ffjmg"]
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2s2vk"]
 [ext_resource type="PackedScene" uid="uid://lryyk84lam5e" path="res://assets/people/bob_guy.tscn" id="2_b8bnt"]
 [ext_resource type="Texture2D" uid="uid://dk1gsxqm2k56u" path="res://assets/misc/brett-ritchie-1vKTnwLMdqs-unsplash.jpg" id="2_pjfii"]
-[ext_resource type="Script" path="res://src/player/Camera.cs" id="5_exf76"]
 [ext_resource type="PackedScene" uid="uid://cylidswewvj04" path="res://scenes/spaceships/basic.tscn" id="6_eb5e2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3nraw"]
@@ -49,7 +48,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5004, 0)
 script = ExtResource("1_2s2vk")
 Model = NodePath("bob_guy")
-"Camêra" = NodePath("camera_pivot/spring_arm_3d/perspective")
+"Camêra" = NodePath("bob_guy/third_person")
 ThingFafferyFuckery = NodePath("bob_guy/place_stuff")
 RaycastThing = NodePath("bob_guy/ray_cast_3d")
 metadata/_edit_group_ = true
@@ -64,6 +63,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -2)
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, -0.774567, 0)
 target_position = Vector3(0, -0.5, 2)
 
+[node name="third_person" type="Camera3D" parent="player/bob_guy"]
+transform = Transform3D(1, 0, -6.35732e-08, 0, 1, 0, 6.35732e-08, 0, 1, 0, 3, 6.5)
+current = true
+size = 20.0
+
 [node name="collision_shape_3d" type="CollisionShape3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86102e-05, -0.161423, 0)
 shape = SubResource("CapsuleShape3D_tl4vs")
@@ -74,18 +78,6 @@ visible = false
 v_offset = -65.0
 projection = 1
 size = 23.0
-
-[node name="camera_pivot" type="Node3D" parent="player" node_paths=PackedStringArray("SpringArm", "Kammera")]
-script = ExtResource("5_exf76")
-SpringArm = NodePath("spring_arm_3d")
-Kammera = NodePath("spring_arm_3d/perspective")
-
-[node name="spring_arm_3d" type="SpringArm3D" parent="player/camera_pivot"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, -7)
-
-[node name="perspective" type="Camera3D" parent="player/camera_pivot/spring_arm_3d"]
-current = true
-size = 20.0
 
 [node name="preview_thing" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
