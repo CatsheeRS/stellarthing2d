@@ -46,15 +46,6 @@ public partial class Player : CharacterBody3D {
 			GetTree().Paused = true;
 		}
 
-		// GRAVITY !!
-		Vector3 fall;
-		if (!IsOnFloor()) {
-			fall = new Vector3(0, (float)(gravity * delta), 0);
-		}
-		else {
-			fall = Vector3.Zero;
-		}
-
 		// movement
 		float run = Input.IsActionPressed("run") ? (float)RunningThingy : 1.0f;
 		
@@ -65,20 +56,14 @@ public partial class Player : CharacterBody3D {
 		if (Input.IsActionPressed("move_backwards")) dir.Z += 1;
 
 		dir = dir.Normalized().Rotated(Vector3.Up, Camera.GlobalRotation.Y);
-        Velocity = (dir * Speed * new Vector3(run, 0, run)) - (fall * 100);
+		Vector3 twoDeeVelocity = dir * Speed * new Vector3(run, 0, run);
 
-		// jump
-		bool justLanded = IsOnFloor() && snapVector == Vector3.Zero;
-		bool isJumping = IsOnFloor() && Input.IsActionJustPressed("jump");
-		if (isJumping) {
-			Velocity = new Vector3(Velocity.X, (float)(JumpStrength * gravity), Velocity.Z);
-			snapVector = Vector3.Zero;
-		}
-		else if (justLanded) {
-			snapVector = Vector3.Down;
-		}
-
-		ApplyFloorSnap();
+		// jump + gravity
+		float yvel = Velocity.Y;
+		yvel += (float)(gravity * delta);
+		if (Input.IsActionJustPressed("jump") && IsOnFloor()) yvel = (float)(JumpStrength * gravity);
+		
+        Velocity = new Vector3(twoDeeVelocity.X, yvel, twoDeeVelocity.Z);
 		MoveAndSlide();
 
 		if (!dir.IsZeroApprox()) {
