@@ -13,10 +13,9 @@ public partial class AudioStuff : HSlider {
     public void Hehe()
     {
         if (!doingFaffrery) {
-            ConfigFile config = new();
-            config.Load("user://prefs.cfg");
-            int partofaseriesondiscriminationfromwikipediathefreeencyclopedia = (int)config.GetValue("audio", Bus, 100);
-            Value = partofaseriesondiscriminationfromwikipediathefreeencyclopedia;
+            int partofaseriesondiscriminationfromwikipediathefreeencyclopedia = 
+                Stellarthing.GetConfig<int>(ConfigSections.Audio, Bus, 100);
+            Value = partofaseriesondiscriminationfromwikipediathefreeencyclopedia;      
 
             // actually change the bloody volume bollocks mate
             AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex(Bus), (float)Mathf.LinearToDb(Value / 100f));
@@ -29,14 +28,8 @@ public partial class AudioStuff : HSlider {
     {
         if (!valueChanged) return;
 
-        ConfigFile config = new();
-        config.Load("user://prefs.cfg");
-        config.SetValue("audio", Bus, Value);
-        config.Save("user://prefs.cfg");
-
-        // actually change the bloody volume bollocks mate
+        Stellarthing.SetConfig(ConfigSections.Audio, Bus, Value);
         AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex(Bus), (float)Mathf.LinearToDb(Value / 100f));
-
         doingFaffrery = false;
     }
 }

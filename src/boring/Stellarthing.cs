@@ -37,4 +37,25 @@ public partial class Stellarthing : Node {
 			}
 		}
     }
+
+	/// <summary>
+	/// very cool wrapper around ConfigFile so it's more convenient. use with ConfigSections and ConfigKeys. type must be able to convert to a Variant, if it can't, serialize it as json.
+	/// </summary>
+	public static T GetConfig<[MustBeVariant] T>(string section, string key, Variant defaultval = default)
+	{
+		ConfigFile config = new();
+        config.Load("user://prefs.cfg");
+		return config.GetValue(section, key, defaultval).As<T>();
+	}
+	
+	/// <summary>
+	/// very cool wrapper around ConfigFile so it's more convenient. use with ConfigSections and ConfigKeys. type must be able to convert to a Variant, if it can't, serialize it as json.
+	/// </summary>
+	public static void SetConfig(string section, string key, Variant value)
+	{
+		ConfigFile config = new();
+        config.Load("user://prefs.cfg");
+		config.SetValue(section, key, value);
+		config.Save("user://prefs.cfg");
+	}
 }
