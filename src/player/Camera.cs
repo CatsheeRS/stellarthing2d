@@ -19,6 +19,10 @@ public partial class Camera : Node3D
 	public double PitchMin { get; set; } = -55;
 	[Export]
 	public double PitchMax { get; set; } = 75;
+	[Export]
+	public double NormalFov { get; set; } = 90;
+	[Export]
+	public double RunFov { get; set; } = 125;
 
 	double yaw = 0;
 	double pitch = 0;
@@ -26,6 +30,7 @@ public partial class Camera : Node3D
 	double pitchSensitivity = 0.07;
 	double yawAcceleration = 15;
 	double pitchAcceleration = 15;
+	double currentFov = 90;
 
     public override void _Ready()
     {
@@ -55,5 +60,10 @@ public partial class Camera : Node3D
 		// not smooth camera
 		YawNode.RotationDegrees = new Vector3(0, (float)yaw, 0);
 		PitchNode.RotationDegrees = new Vector3((float)pitch, 0, 0);
+
+		if (Input.IsActionPressed("run")) currentFov = RunFov;
+		else currentFov = NormalFov;
+
+		Camerá.Fov = (float)Mathf.Lerp(Camerá.Fov, currentFov, 0.25);
     }
 }

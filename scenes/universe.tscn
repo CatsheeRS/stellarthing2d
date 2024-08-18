@@ -53,6 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01886, 0)
 script = ExtResource("1_2s2vk")
 Speed = 10
+RunningThingy = 1.5
 JumpStrength = 1.25
 Model = NodePath("bob_guy")
 "Camêra" = NodePath("camera_root/yaw/pitch/spring_arm_3d/third_person")
@@ -89,6 +90,7 @@ PitchNode = NodePath("yaw/pitch")
 "Camerá" = NodePath("yaw/pitch/spring_arm_3d/third_person")
 SpringArm = NodePath("yaw/pitch/spring_arm_3d")
 Player = NodePath("..")
+RunFov = 105.0
 
 [node name="yaw" type="Node3D" parent="player/camera_root"]
 

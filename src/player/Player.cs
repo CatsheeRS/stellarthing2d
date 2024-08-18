@@ -60,7 +60,7 @@ public partial class Player : CharacterBody3D {
 
 		// jump + gravity
 		float yvel = Velocity.Y;
-		yvel += (float)(gravity * delta);
+		yvel -= (float)(gravity * delta);
 		if (Input.IsActionJustPressed("jump") && IsOnFloor()) yvel = (float)(JumpStrength * gravity);
 		
         Velocity = new Vector3(twoDeeVelocity.X, yvel, twoDeeVelocity.Z);

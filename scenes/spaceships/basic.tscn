@@ -6,16 +6,16 @@
 size = Vector3(100, 2, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kwpts"]
-size = Vector3(100, 2, 2)
+size = Vector3(100, 50, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cpgem"]
-size = Vector3(2, 4, 50)
+size = Vector3(2, 50, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uuwei"]
-size = Vector3(2, 4, 50)
+size = Vector3(2, 50, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mpfli"]
-size = Vector3(2, 4, 20)
+size = Vector3(2, 50, 20)
 
 [node name="cylinder" type="StaticBody3D"]
 
@@ -24,6 +24,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.11908, 0, -0.896484)
 
 [node name="collision_shape_3d" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+shape = SubResource("BoxShape3D_f8ega")
+
+[node name="collision_shape_3d8" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 15, -1)
 shape = SubResource("BoxShape3D_f8ega")
 
 [node name="collision_shape_3d2" type="CollisionShape3D" parent="."]
@@ -51,25 +55,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 14)
 shape = SubResource("BoxShape3D_mpfli")
 
 [node name="omni_light_3d" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.5476, 6.19466, -0.612846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 12, 0)
 light_energy = 8.489
 shadow_enabled = true
 omni_range = 1248.27
 
 [node name="omni_light_3d2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6399, 6.19466, -0.612846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 12, 0)
 light_energy = 4.0
 shadow_enabled = true
 omni_range = 1248.27
 
 [node name="omni_light_3d3" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.3651, 6.195, -0.613)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 12, 0)
 light_energy = 4.0
 shadow_enabled = true
 omni_range = 1248.27
 
 [node name="omni_light_3d4" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.84106, 6.195, -0.613)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 12, 0)
 light_energy = 4.0
 shadow_enabled = true
 omni_range = 1248.27
