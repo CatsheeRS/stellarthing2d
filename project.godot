@@ -24,6 +24,7 @@ config/icon="res://assets/ui/icon.png"
 [autoload]
 
 Stellarthing="*res://src/boring/Stellarthing.cs"
+UniverseManager="*res://src/boring/UniverseManager.cs"
 
 [display]
 

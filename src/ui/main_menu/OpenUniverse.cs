@@ -15,7 +15,7 @@ public partial class OpenUniverse : Button {
 
     public override void _Pressed()
     {
-        Stellarthing.CurrentUniverse = G.GetItemText(G.GetSelectedItems()[0]);
+        UniverseManager.CurrentUniverse = G.GetItemText(G.GetSelectedItems()[0]);
 		GetTree().Root.AddChild(UniverseScene.Instantiate());
 		GetTree().Root.AddChild(HudStuff.Instantiate());
 		Lol.QueueFree();
