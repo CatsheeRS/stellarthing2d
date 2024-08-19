@@ -15,19 +15,20 @@ public partial class NewUniverse : Button {
 
     public override void _Pressed()
     {
-        Stellarthing.CurrentUniverse = UniverseName.Text != "" ? UniverseName.Text : "New Universe";
+        UniverseManager.CurrentUniverse = UniverseName.Text != "" ? UniverseName.Text : "New Universe";
 
 		// i'n prog rame
-		Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace(">", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace(":", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace("\\", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace("/", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace("?", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace("*", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace(".", "");
-        Stellarthing.CurrentUniverse = Stellarthing.CurrentUniverse.Replace(" ", "");
+		UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace(">", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace(":", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace("\\", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace("/", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace("?", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace("*", "!");
+        UniverseManager.CurrentUniverse = UniverseManager.CurrentUniverse.Replace(".", "!");
 
-		DirAccess.MakeDirRecursiveAbsolute($"user://universes/{Stellarthing.CurrentUniverse}");
+		DirAccess.MakeDirRecursiveAbsolute($"user://universes/{UniverseManager.CurrentUniverse}");
+        // comically large line to create the funni file
+        using var _ = FileAccess.Open($"user://universes/{UniverseManager.CurrentUniverse}/universe.cfg", FileAccess.ModeFlags.Write);
 		GetTree().Root.AddChild(UniverseScene.Instantiate());
         GetTree().Root.AddChild(HudStuff.Instantiate());
 		Lol.QueueFree();

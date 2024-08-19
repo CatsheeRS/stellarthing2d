@@ -7,20 +7,20 @@ namespace stellarthing;
 /// handsome singleton for crap
 /// </summary>
 public partial class Stellarthing : Node {
-	/// <summary>
-	/// name of the current universe, used for saving
-	/// </summary>
-	public static string CurrentUniverse { get; set; } = "";
-	public static string UniverseDir { get => $"user://universes/{CurrentUniverse}"; }
-
 	AudioStreamPlayer player = new() {
 		Stream = GD.Load<AudioStream>("res://assets/sounds/one_synth_note.mp3"),
 		Bus = "ui",
+	};
+	Timer autosave = new() {
+		WaitTime = 30,
+		Autostart = true
 	};
 
     public override void _Ready()
     {
         AddChild(player);
+		AddChild(autosave);
+		autosave.Timeout += UniverseManager.Save;
     }
 
     public override void _Process(double delta)
