@@ -13,5 +13,6 @@ func _process(delta):
 		hhjhhhhh()
 
 func hhjhhhhh():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	b.visible = false
 	get_tree().paused = false

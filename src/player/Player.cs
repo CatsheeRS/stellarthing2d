@@ -42,6 +42,8 @@ public partial class Player : CharacterBody3D {
 	{
 		// pausing :D
 		if (Input.IsActionJustPressed("pause")) {
+			Input.MouseMode = Input.MouseModeEnum.Visible;
+			GetNode<Button>("/root/hud/pause/pause/pause/pause/back").GrabFocus();
 			GetNode<Control>("/root/hud/pause/pause").Visible = true;
 			GetTree().Paused = true;
 		}
