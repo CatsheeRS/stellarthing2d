@@ -16,13 +16,13 @@ public partial class Player : CharacterBody3D {
 	[Export]
 	public Node3D Model { get; set; }
 	[Export]
-	public Camera3D Camêra { get; set; }
+	public Camera Camêra { get; set; }
 	[Export]
 	public Node3D ThingFafferyFuckery { get; set; }
 	[Export]
 	public RayCast3D RaycastThing { get; set; }
 
-	public static Camera3D Camera { get; private set; }
+	public static Camera Camera { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingy { get; private set; }
 	public static Vector3 ThingFafferyFuckeryThingyHehehehe { get; private set; }
 	public static bool CommenceOnslaughter { get; set; }
@@ -58,7 +58,7 @@ public partial class Player : CharacterBody3D {
 		if (Input.IsActionPressed("move_forwards")) dir.Z -= 1;
 		if (Input.IsActionPressed("move_backwards")) dir.Z += 1;
 
-		dir = dir.Normalized().Rotated(Vector3.Up, Camera.GlobalRotation.Y);
+		dir = dir.Normalized().Rotated(Vector3.Up, Camera.Camerá.GlobalRotation.Y);
 		Vector3 twoDeeVelocity = dir * Speed * new Vector3(run, 0, run);
 
 		// jump + gravity

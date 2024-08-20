@@ -29,4 +29,13 @@ public static class ConfigKeys
     /// sounds of furniture doing stuff
     /// </summary>
     public static string AudioFurniture { get => "furniture"; }
+
+    /// <summary>
+    /// the fov of the camera
+    /// </summary>
+    public static string ControlsFov { get => "fov"; }
+    /// <summary>
+    /// the fov of the camera while running, usually higher than the normal fov
+    /// </summary>
+    public static string ControlsRunFov { get => "run_fov"; }
 }
