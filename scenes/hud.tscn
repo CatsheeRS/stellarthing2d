@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://b3s6tcudu7eim"]
+[gd_scene load_steps=30 format=3 uid="uid://b3s6tcudu7eim"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
 [ext_resource type="Texture2D" uid="uid://c88he7slptmew" path="res://assets/ui/toolbar.png" id="2_eoipa"]
 [ext_resource type="Script" path="res://src/player/TimeRulesAll.cs" id="4_1tl8p"]
 [ext_resource type="Texture2D" uid="uid://dod542l8707ek" path="res://assets/ui/hotbar_square.png" id="4_og0pm"]
+[ext_resource type="Texture2D" uid="uid://dbars0tnokaro" path="res://assets/ui/sidebar.png" id="4_wef4s"]
 [ext_resource type="Shader" path="res://assets/ui/blur.gdshader" id="5_1lmaw"]
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="6_ysgon"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="7_42s4a"]
@@ -12,18 +13,101 @@
 [ext_resource type="Shader" path="res://assets/ui/invert.gdshader" id="12_jbbkq"]
 [ext_resource type="PackedScene" uid="uid://ct8vwgduoiic7" path="res://scenes/settings.tscn" id="12_je3et"]
 
+[sub_resource type="Animation" id="Animation_qnvm6"]
+resource_name = "open_sidebar"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sidebar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.37, 1),
+"update": 0,
+"values": [Vector2(-700, 65), Vector2(0, 65)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sidebar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.37, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_57xtn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sidebar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 65)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sidebar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_70lv2"]
+resource_name = "close_sidebar"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sidebar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.37, 1),
+"update": 0,
+"values": [Vector2(0, 65), Vector2(-700, 65)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sidebar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.37, 0.37),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4eul4"]
+_data = {
+"RESET": SubResource("Animation_57xtn"),
+"close_sidebar": SubResource("Animation_70lv2"),
+"open_sidebar": SubResource("Animation_qnvm6")
+}
+
 [sub_resource type="LabelSettings" id="LabelSettings_vffkk"]
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_58trc"]
 font_size = 24
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_add8k"]
-shader = ExtResource("5_1lmaw")
-shader_parameter/lod = 3.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2p2gd"]
-bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_64hg7"]
 texture = ExtResource("2_eoipa")
@@ -87,8 +171,18 @@ corner_radius_bottom_left = 8
 [sub_resource type="ButtonGroup" id="ButtonGroup_15w4l"]
 allow_unpress = true
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w0qvj"]
+texture = ExtResource("4_wef4s")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gq1es"]
 shader = ExtResource("12_jbbkq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_add8k"]
+shader = ExtResource("5_1lmaw")
+shader_parameter/lod = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2p2gd"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="hud" type="Control"]
 layout_mode = 3
@@ -98,6 +192,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_mfka4")
+
+[node name="animation_player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4eul4")
+}
 
 [node name="tutorials" type="Label" parent="."]
 visible = false
@@ -157,15 +256,6 @@ offset_top = 32.0
 offset_right = -32.0
 offset_bottom = 40.0
 grow_horizontal = 0
-
-[node name="toolbar_blur" type="PanelContainer" parent="."]
-material = SubResource("ShaderMaterial_add8k")
-custom_minimum_size = Vector2(0, 65)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2p2gd")
 
 [node name="tool" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(0, 64)
@@ -287,6 +377,13 @@ custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_mkqd6")
 
+[node name="sidebar" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 65.0
+offset_right = 700.0
+offset_bottom = 949.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_w0qvj")
+
 [node name="hotbar" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1280, 64)
 layout_mode = 1
@@ -304,82 +401,102 @@ grow_vertical = 0
 theme_override_constants/separation = -1
 
 [node name="1" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="2" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="3" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="4" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="5" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="6" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="7" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="8" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="9" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="10" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="11" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="12" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="13" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="14" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="15" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="16" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="17" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="18" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="19" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 
 [node name="20" type="TextureRect" parent="hotbar"]
+modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 texture = ExtResource("4_og0pm")
 

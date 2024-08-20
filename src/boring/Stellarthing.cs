@@ -21,6 +21,11 @@ public partial class Stellarthing : Node {
         AddChild(player);
 		AddChild(autosave);
 		autosave.Timeout += UniverseManager.Save;
+
+		// better for testing
+		#if DEBUG
+		DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+		#endif
     }
 
     public override void _Process(double delta)

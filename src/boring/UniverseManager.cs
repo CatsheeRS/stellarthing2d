@@ -47,10 +47,7 @@ public partial class UniverseManager : Node
     public static void SetProperty(string prop, Variant value)
     {
         // does the property even exist?
-        if (!Properties.ContainsKey(prop)) {
-            Properties.Add(prop, value);
-        }
-        else {
+        if (!Properties.TryAdd(prop, value)) {
             Properties[prop] = value;
         }
     }
