@@ -26,8 +26,8 @@ public partial class Camera : Node3D
 
 	double yaw = 0;
 	double pitch = 0;
-	double yawSensitivity = 0.07;
-	double pitchSensitivity = 0.07;
+	public double yawSensitivity = 0.07;
+	public double pitchSensitivity = 0.07;
 	double yawAcceleration = 15;
 	double pitchAcceleration = 15;
 	double currentFov = 90;

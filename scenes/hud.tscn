@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b3s6tcudu7eim"]
+[gd_scene load_steps=32 format=3 uid="uid://b3s6tcudu7eim"]
 
 [ext_resource type="Theme" uid="uid://ddvtxxrgtlywg" path="res://assets/ui/theme.tres" id="1_mfka4"]
 [ext_resource type="Texture2D" uid="uid://c88he7slptmew" path="res://assets/ui/toolbar.png" id="2_eoipa"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/ui/pause/unpause.gd" id="6_ysgon"]
 [ext_resource type="Script" path="res://src/ui/pause/go_to_main_menu.gd" id="7_42s4a"]
 [ext_resource type="Script" path="res://src/ui/main_menu/show_universes.gd" id="10_oedtl"]
+[ext_resource type="Script" path="res://src/ui/pause/save.gd" id="11_w6q65"]
 [ext_resource type="Texture2D" uid="uid://qa7pnmoeiuvy" path="res://assets/misc/plus.png" id="12_8ps5d"]
 [ext_resource type="Shader" path="res://assets/ui/invert.gdshader" id="12_jbbkq"]
 [ext_resource type="PackedScene" uid="uid://ct8vwgduoiic7" path="res://scenes/settings.tscn" id="12_je3et"]
@@ -552,6 +553,13 @@ size_flags_horizontal = 0
 text = "Back"
 script = ExtResource("6_ysgon")
 b = NodePath("../../..")
+
+[node name="settings2" type="Button" parent="pause/pause/pause/pause"]
+custom_minimum_size = Vector2(500, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save"
+script = ExtResource("11_w6q65")
 
 [node name="settings" type="Button" parent="pause/pause/pause/pause" node_paths=PackedStringArray("g")]
 custom_minimum_size = Vector2(500, 80)

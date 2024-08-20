@@ -57,6 +57,9 @@ public partial class UniverseManager : Node
     /// </summary>
     public static void Save()
     {
+        // can't save a universe that doesn't exist amirite fellas hahahahahahahahahahethdthsyeryrsrgfg
+        if (CurrentUniverse == "") return;
+
         ConfigFile config = new();
         config.Load($"{UniverseDir}/universe.cfg");
         foreach (var prop in Properties) {
@@ -64,4 +67,6 @@ public partial class UniverseManager : Node
         }
         config.Save($"{UniverseDir}/universe.cfg");
     }
+
+    public void ResetUniverseButGdscript() => CurrentUniverse = "";
 }

@@ -22,7 +22,7 @@ public partial class AudioStuff : HSlider {
         }
     }
 
-    public void OnDragStart() => doingFaffrery = true;
+    public void OnDragStarted() => doingFaffrery = true;
 
     public void OnDragEnd(bool valueChanged)
     {

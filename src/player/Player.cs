@@ -36,6 +36,9 @@ public partial class Player : CharacterBody3D {
     {
 		Camera = Camêra;
         modelAnimator = Model.GetNode<AnimationPlayer>("animation_player");
+
+		// save when the game is closed but not through the game ui :D
+		GetWindow().CloseRequested += UniverseManager.Save;
     }
 
     public override void _PhysicsProcess(double delta)

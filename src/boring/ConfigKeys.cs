@@ -38,4 +38,8 @@ public static class ConfigKeys
     /// the fov of the camera while running, usually higher than the normal fov
     /// </summary>
     public static string ControlsRunFov { get => "run_fov"; }
+    /// <summary>
+    /// the mouse sensitivity :D (from 1 to 10)
+    /// </summary>
+    public static string ControlsMouseSensitivity { get => "mouse_sensitivity"; }
 }
