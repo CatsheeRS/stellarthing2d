@@ -219,7 +219,7 @@ offset_top = -73.0
 offset_right = -32.0
 offset_bottom = -32.0
 grow_vertical = 0
-text = "Stellarthing v0.7.0 Private Beta"
+text = "Stellarthing v0.8.0 Private Beta"
 label_settings = SubResource("LabelSettings_y6q4n")
 horizontal_alignment = 2
 
