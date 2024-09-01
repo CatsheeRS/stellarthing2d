@@ -1,3 +1,4 @@
+using System;
 using Silk.NET.GLFW;
 using static starry.Starry;
 
@@ -6,6 +7,8 @@ namespace starry;
 public static class Application {
     public static Vector2i screenSize { get; private set; } = vec2i();
     static Glfw? glfw;
+
+    public static event EventHandler? onClose;
 
     public unsafe static void create()
     {
@@ -44,6 +47,13 @@ public static class Application {
             return;
         }
         glfw.MakeContextCurrent(window);
+        
+        // yes
+        glfw.SetWindowCloseCallback(window, (window) => {
+            onClose?.Invoke(typeof(Application), EventArgs.Empty);
+            // TODO: allow not always closing windows and stuff
+            glfw.SetWindowShouldClose(window, true);
+        });
 
         // main loop
         while (!glfw.WindowShouldClose(window)) {
