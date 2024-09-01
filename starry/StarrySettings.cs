@@ -5,6 +5,10 @@ public struct StarrySettings
     public StarrySettings() {}
 
     /// <summary>
+    /// the game name, used for the window title and stuff
+    /// </summary>
+    public string gameName { get; set; } = "Starry Engine";
+    /// <summary>
     /// the game's version. should start with a lowercase V.
     /// </summary>
     public string gameVersion { get; set; } = "v0.0.0";
