@@ -56,12 +56,16 @@ public static class Application {
         });
 
         World.create(glfw);
+        settings.startup();
 
         // main loop
         while (!glfw.WindowShouldClose(window)) {
             glfw.PollEvents();
 
-            // rendering goes here
+            log(World.entities);
+            log(World.entityInformation);
+            log(World.groups);
+            World.updateEntities();
 
             glfw.SwapBuffers(window);
         }

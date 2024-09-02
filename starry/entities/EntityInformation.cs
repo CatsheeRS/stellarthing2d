@@ -6,8 +6,18 @@ namespace starry;
 public struct EntityInformation {
     public EntityInformation() {}
 
+    /// <summary>
+    /// type of the entity; affects rendering, input, and pausing. update functions are called in this order: pausable/paused manager -> pausable/pause ui -> game world
+    /// </summary>
     public required EntityType type { get; set; }
+    /// <summary>
+    /// debug name for the entity
+    /// </summary>
     public string tag { get; set; } = "";
+    /// <summary>
+    /// groups the entity is assigned to when created
+    /// </summary>
+    public string[] groups { get; set; } = [];
 }
 
 /// <summary>

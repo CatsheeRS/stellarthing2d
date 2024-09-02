@@ -1,9 +1,15 @@
+using System;
+
 namespace starry;
 
 public struct StarrySettings
 {
     public StarrySettings() {}
 
+    /// <summary>
+    /// ran when the game starts
+    /// </summary>
+    public required Action startup { get; set; }
     /// <summary>
     /// the game name, used for the window title and stuff
     /// </summary>

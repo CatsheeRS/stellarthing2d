@@ -13,9 +13,9 @@ public static class World {
     /// </summary>
     public static bool paused { get; set; } = false;
 
-    static HashSet<IEntity> entities { get; set; } = [];
-    static Dictionary<IEntity, EntityInformation> entityInformation { get; set; } = [];
-    static Dictionary<string, HashSet<IEntity>> groups { get; set; } = [];
+    internal static HashSet<IEntity> entities { get; set; } = [];
+    internal static Dictionary<IEntity, EntityInformation> entityInformation { get; set; } = [];
+    internal static Dictionary<string, HashSet<IEntity>> groups { get; set; } = [];
     static double prevtime { get; set; }
     static Glfw? glfw;
     
@@ -41,6 +41,10 @@ public static class World {
             _ => "csharp_stop_complaining",
         };
         addToGroup(elgrupo, entity);
+
+        foreach (string group in entity.setup().groups) {
+            addToGroup(group, entity);
+        }
     }
 
     /// <summary>
