@@ -31,6 +31,7 @@ public static class World {
     public static void addEntity(IEntity entity)
     {
         entities.Add(entity);
+        entityInformation.Add(entity, entity.setup());
         string elgrupo = entity.setup().type switch
         {
             EntityType.gameWorld => "layers.game_world",
@@ -112,7 +113,7 @@ public static class World {
 
         // 3d stuff run last
         if (!paused) {
-            foreach (var entity in getGroup("layers.world")) {
+            foreach (var entity in getGroup("layers.game_world")) {
                 entity.update(delta);
             }
         }
