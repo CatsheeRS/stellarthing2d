@@ -6,28 +6,32 @@ namespace starry;
 public struct EntityInformation {
     public EntityInformation() {}
 
+    public required EntityType type { get; set; }
     public string tag { get; set; } = "";
-    public ProcessModes processMode { get; set; } = ProcessModes.pausable;
 }
 
 /// <summary>
-/// how entities react to pausing
+/// type of the entity; affects rendering, input, and pausing. update functions are called in this order: pausable/paused manager -> pausable/pause ui -> game world
 /// </summary>
-public enum ProcessModes {
+public enum EntityType {
     /// <summary>
-    /// stops processing when the world is paused
+    /// pausable 3d object
     /// </summary>
-    pausable,
+    gameWorld,
     /// <summary>
-    /// processes only when the world is paused
+    /// pausable 2d interface
     /// </summary>
-    whenPaused,
+    ui,
     /// <summary>
-    /// always processes, ignoring pausing
+    /// 2d interface only ran when paused
     /// </summary>
-    always,
+    pauseUi,
     /// <summary>
-    /// never processes, ignoring pausing
+    /// entity that isn't rendered or interacted with (doesn't receive input) and just manages stuff, can be paused
     /// </summary>
-    never
+    pausableManager,
+    /// <summary>
+    /// entity that isn't rendered or interacted with (doesn't receive input) and just manages stuff, only rendered on pause
+    /// </summary>
+    pausedManager,
 }

@@ -48,12 +48,14 @@ public static class Application {
         }
         glfw.MakeContextCurrent(window);
         
-        // yes
+        // callbacks
         glfw.SetWindowCloseCallback(window, (window) => {
             onClose?.Invoke(typeof(Application), EventArgs.Empty);
             // TODO: allow not always closing windows and stuff
             glfw.SetWindowShouldClose(window, true);
         });
+
+        World.create(glfw);
 
         // main loop
         while (!glfw.WindowShouldClose(window)) {
