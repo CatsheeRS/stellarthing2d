@@ -20,7 +20,7 @@ public static class Renderer3D {
 
 		uint vshader = gl.CreateShader(ShaderType.VertexShader);
 
-		fixed (byte *contents = File.ReadAllBytes(Path.GetFullPath("../"))) {
+		fixed (byte *contents = File.ReadAllBytes(Path.GetFullPath("../renderer/shaders/vertex.vert"))) {
 			gl.ShaderSource(vshader, 1, &contents, null);
 			gl.CompileShader(vshader);
 		}
@@ -34,7 +34,7 @@ public static class Renderer3D {
 
 		uint fshader = gl.CreateShader(ShaderType.FragmentShader);
 
-		fixed (byte *contents = File.ReadAllBytes("./shaders/fragment.frag")) {
+		fixed (byte *contents = File.ReadAllBytes("../renderer/shaders/fragment.frag")) {
 			gl.ShaderSource(fshader, 1, &contents, null);
 			gl.CompileShader(fshader);
 		}
