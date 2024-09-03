@@ -11,66 +11,65 @@ public static class Renderer3D {
 	private static Glfw? glfw;
 	private static GL? gl;
 	
-	private static uint shader_program;
+	private static uint shaderProgram;
 
-	public static unsafe void Init(Glfw _glfw) {
+	public static unsafe void init(Glfw _glfw)
+	{
 		glfw = _glfw;
 		gl = new GL(_glfw.Context);
 
-		uint v_shader = gl.CreateShader(ShaderType.VertexShader);
+		uint vshader = gl.CreateShader(ShaderType.VertexShader);
 
-		fixed (byte *contents = File.ReadAllBytes("./shaders/vertex.vert")) {
-			gl.ShaderSource(v_shader, 1, &contents, null);
-
-			gl.CompileShader(v_shader);
+		fixed (byte *contents = File.ReadAllBytes(Path.GetFullPath("../"))) {
+			gl.ShaderSource(vshader, 1, &contents, null);
+			gl.CompileShader(vshader);
 		}
 
-		gl.GetShader(v_shader, ShaderParameterName.CompileStatus, out int vstatus);
+		gl.GetShader(vshader, ShaderParameterName.CompileStatus, out int vstatus);
 
-		if (vstatus != (int) GLEnum.True) {
-			// Cannot compile vertex shader, therefore can't draw anything later on.
-			throw new Exception("Failed to compile vertex shader: " + gl.GetShaderInfoLog(v_shader));
+		if (vstatus != (int)GLEnum.True) {
+			// cannot compile vertex shader, therefore can't draw anything later on.
+			throw new Exception("Failed to compile vertex shader: " + gl.GetShaderInfoLog(vshader));
 		}
 
-		uint f_shader = gl.CreateShader(ShaderType.FragmentShader);
+		uint fshader = gl.CreateShader(ShaderType.FragmentShader);
 
 		fixed (byte *contents = File.ReadAllBytes("./shaders/fragment.frag")) {
-			gl.ShaderSource(f_shader, 1, &contents, null);
-
-			gl.CompileShader(f_shader);
+			gl.ShaderSource(fshader, 1, &contents, null);
+			gl.CompileShader(fshader);
 		}
 
-		gl.GetShader(f_shader, ShaderParameterName.CompileStatus, out int fstatus);
+		gl.GetShader(fshader, ShaderParameterName.CompileStatus, out int fstatus);
 
 		if (fstatus != (int) GLEnum.True) {
-			// Cannot compile fragment shader, therefore can't draw anything later on.
-			throw new Exception("Failed to compile fragment shader: " + gl.GetShaderInfoLog(f_shader));
+			// cannot compile fragment shader, therefore can't draw anything later on.
+			throw new Exception("Failed to compile fragment shader: " + gl.GetShaderInfoLog(fshader));
 		}
 
-		shader_program = gl.CreateProgram();
+		shaderProgram = gl.CreateProgram();
 
-		gl.AttachShader(shader_program, v_shader);
-		gl.AttachShader(shader_program, f_shader);
+		gl.AttachShader(shaderProgram, vshader);
+		gl.AttachShader(shaderProgram, fshader);
 
-		gl.LinkProgram(shader_program);
+		gl.LinkProgram(shaderProgram);
 
-		gl.GetProgram(shader_program, ProgramPropertyARB.LinkStatus, out int lstatus);
+		gl.GetProgram(shaderProgram, ProgramPropertyARB.LinkStatus, out int lstatus);
 
 		if (lstatus != (int) GLEnum.True) {
 			// Cannot link shader program
-			throw new Exception("Failed to link shader program: " + gl.GetProgramInfoLog(shader_program));
+			throw new Exception("Failed to link shader program: " + gl.GetProgramInfoLog(shaderProgram));
 		}
 
-		// the shaders arent needed anymore - the program is linked
+		// the shaders aren't needed anymore - the program is linked
 		// and can function by itself
-		gl.DetachShader(shader_program, v_shader);
-		gl.DetachShader(shader_program, f_shader);
+		gl.DetachShader(shaderProgram, vshader);
+		gl.DetachShader(shaderProgram, fshader);
 
-		gl.DeleteShader(v_shader);
-		gl.DeleteShader(f_shader);
+		gl.DeleteShader(vshader);
+		gl.DeleteShader(fshader);
 	}
 
-	public static unsafe void DrawCube(Vector3 pos, Vector3 size) {
+	public static unsafe void drawCube(Vector3 pos, Vector3 size) {
 		
 	}
 }
