@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GlmNet" Version="0.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Silk.NET.GLFW" Version="2.21.0" />
     <PackageReference Include="Silk.NET.Input" Version="2.21.0" />
