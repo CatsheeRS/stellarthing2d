@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace starry;
 
@@ -22,4 +23,8 @@ public struct StarrySettings
     /// if true, the engine will display all logging, which is probably bad for performance since json
     /// </summary>
     public bool verbose { get; set; } = false;
+    /// <summary>
+    /// keyboard actions that can be remapped
+    /// </summary>
+    public Dictionary<string, Key[]> keymap { get; set; } = [];
 }

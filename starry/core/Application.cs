@@ -54,6 +54,10 @@ public static class Application {
             // TODO: allow not always closing windows and stuff
             glfw.SetWindowShouldClose(window, true);
         });
+        
+        glfw.SetKeyCallback(window, (window, key, scancode, action, mods) => {
+            World.sendKeyCallbacks(key, action);
+        });
 
         World.create(glfw);
         settings.startup();
@@ -61,10 +65,15 @@ public static class Application {
         // main loop
         while (!glfw.WindowShouldClose(window)) {
             glfw.PollEvents();
+            
+            // i'm used to pressing f5 to start and f8 to stop in godot
+            #if DEBUG
+            if (glfw.GetKey(window, Keys.F8) == (int)InputAction.Press) {
+                glfw.SetWindowShouldClose(window, true);
+            }
+            #endif
 
-            log(World.entities);
-            log(World.entityInformation);
-            log(World.groups);
+            // rendering goes here
             World.updateEntities();
 
             glfw.SwapBuffers(window);

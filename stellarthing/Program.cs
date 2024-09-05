@@ -10,4 +10,7 @@ create(new StarrySettings {
     gameName = "Stellarthing",
     gameVersion = "v0.8.0",
     verbose = args.Contains("--verbose") || isDebug(),
+    keymap = {
+        {"explode", [Key.space]},
+    },
 });

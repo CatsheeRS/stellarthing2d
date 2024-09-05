@@ -118,4 +118,12 @@ public static class World {
             }
         }
     }
+
+    internal static void sendKeyCallbacks(Keys glkey, InputAction action)
+    {
+        // convert to starry keys
+        // glfw keys is Keys, starry keys is Key
+        Key sykey = (Key)(int)glkey;
+        log(sykey.ToString(), action.ToString());
+    }
 }

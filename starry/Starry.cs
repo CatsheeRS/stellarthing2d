@@ -31,8 +31,10 @@ public static class Starry {
         if (!settings.verbose) return;
 
         foreach (var item in x) {
-            if (item is string str) Console.WriteLine(str);
-            else Console.WriteLine(JsonConvert.SerializeObject(item, Formatting.Indented));
+            if (item is string str) Console.Write(str);
+            else Console.Write(JsonConvert.SerializeObject(item, Formatting.Indented));
+            if (x.Length > 1) Console.Write(",");
+            Console.WriteLine();
         }
     }
     

@@ -8,6 +8,9 @@ namespace starry;
 /// base of all input events
 /// </summary>
 public interface IInputEvent {
+    /// <summary>
+    /// used for casting input events
+    /// </summary>
     public InputType getType();
 }
 
