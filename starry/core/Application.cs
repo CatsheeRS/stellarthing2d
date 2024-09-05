@@ -4,8 +4,19 @@ using static starry.Starry;
 
 namespace starry;
 
+/// <summary>
+/// manages the lifecycle of the game
+/// </summary>
 public static class Application {
+    /// <summary>
+    /// the screen size
+    /// </summary>
     public static Vector2i screenSize { get; private set; } = vec2i();
+    /// <summary>
+    /// current delta time
+    /// </summary>
+    public static double delta { get; set; } = 0;
+    static double prevtime;
     static Glfw? glfw;
 
     public static event EventHandler? onClose;
@@ -59,12 +70,17 @@ public static class Application {
             World.sendKeyCallbacks(key, action);
         });
 
+        prevtime = glfw.GetTime();
         World.create(glfw);
         settings.startup();
 
         // main loop
         while (!glfw.WindowShouldClose(window)) {
             glfw.PollEvents();
+
+            // get delta time :D
+            double delta = glfw.GetTime() - prevtime;
+            prevtime = glfw.GetTime();
             
             // i'm used to pressing f5 to start and f8 to stop in godot
             #if DEBUG
@@ -74,6 +90,7 @@ public static class Application {
             #endif
 
             // rendering goes here
+            Input.update(delta);
             World.updateEntities();
 
             glfw.SwapBuffers(window);

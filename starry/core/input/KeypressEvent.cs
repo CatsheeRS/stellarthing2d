@@ -13,9 +13,9 @@ public class KeypressEvent : IInputEvent {
     /// <summary>
     /// the code for the key
     /// </summary>
-    public Key keycode { get; set; }
+    public Key key { get; set; }
     public KeypressType type { get; set; }
-    public bool isKeymap(string key) => settings.keymap[key].Contains(keycode);
+    public bool isKeymap(string key) => settings.keymap[key].Contains(this.key);
 }
 
 /// <summary>
@@ -35,6 +35,10 @@ public enum KeypressType
     /// the key just started being pressed
     /// </summary>
     justPressed,
+    /// <summary>
+    /// the key is being repeated. don't use this for checking if a key is being held down, as this is intended for inputting text and behaves like it would in a text editor, where the repeat interval is configurable and there's a bit of delay before starting to repeat.
+    /// </summary>
+    textRepeat,
     /// <summary>
     /// the key is not being pressed
     /// </summary>

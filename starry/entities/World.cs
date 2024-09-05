@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Silk.NET.GLFW;
 using static starry.Starry;
@@ -16,13 +17,11 @@ public static class World {
     internal static HashSet<IEntity> entities { get; set; } = [];
     internal static Dictionary<IEntity, EntityInformation> entityInformation { get; set; } = [];
     internal static Dictionary<string, HashSet<IEntity>> groups { get; set; } = [];
-    static double prevtime { get; set; }
     static Glfw? glfw;
     
     internal static void create(Glfw glfw)
     {
         World.glfw = glfw;
-        prevtime = glfw.GetTime();
     }
 
     /// <summary>
@@ -83,47 +82,61 @@ public static class World {
 
     internal static void updateEntities()
     {
-        // get delta :D
-        double delta = (glfw?.GetTime() ?? 0) - prevtime;
-        prevtime = glfw?.GetTime() ?? 0;
+        spreadToEntities(entity => {
+            entity.update(Application.delta);
+            return false;
+        });
+    }
 
+    internal static void sendKeyCallbacks(Keys glkey, InputAction action)
+    {
+        // don't process repeating for text input YET!!!
+        if (action == InputAction.Repeat) return;
+        
+        // convert to starry keys
+        // glfw keys is Keys, starry keys is Key
+        Key sykey = (Key)(int)glkey;
+        Input.setKeyState(sykey, action);
+        KeypressEvent ke = new() { key = sykey, type = Input.keyinfo[sykey].state };
+
+        // spread input :DDDDDDDDDDDDDDDdd
+        spreadToEntities(entity => {
+            return entity.input(ke);
+        });
+    }
+
+    // return true to stop the spreading
+    static void spreadToEntities(Func<IEntity, bool> func)
+    {
         // managers run first
         if (paused) {
             foreach (var entity in getGroup("layers.paused_manager")) {
-                entity.update(delta);
+                if (func(entity)) return;
             }
         }
-        else {
+        else {  
             foreach (var entity in getGroup("layers.pausable_manager")) {
-                entity.update(delta);
+                if (func(entity)) return;
             }
         }
 
         // the ui's next
         if (paused) {
             foreach (var entity in getGroup("layers.pause_ui")) {
-                entity.update(delta);
+                if (func(entity)) return;
             }
         }
         else {
             foreach (var entity in getGroup("layers.ui")) {
-                entity.update(delta);
+                if (func(entity)) return;
             }
         }
 
         // 3d stuff run last
         if (!paused) {
             foreach (var entity in getGroup("layers.game_world")) {
-                entity.update(delta);
+                if (func(entity)) return;
             }
         }
-    }
-
-    internal static void sendKeyCallbacks(Keys glkey, InputAction action)
-    {
-        // convert to starry keys
-        // glfw keys is Keys, starry keys is Key
-        Key sykey = (Key)(int)glkey;
-        log(sykey.ToString(), action.ToString());
     }
 }

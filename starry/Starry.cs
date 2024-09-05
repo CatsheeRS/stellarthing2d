@@ -33,9 +33,9 @@ public static class Starry {
         foreach (var item in x) {
             if (item is string str) Console.Write(str);
             else Console.Write(JsonConvert.SerializeObject(item, Formatting.Indented));
-            if (x.Length > 1) Console.Write(",");
-            Console.WriteLine();
+            if (x.Length > 1) Console.Write(", ");
         }
+        Console.WriteLine();
     }
     
     // if true, the game is currently in debug mode

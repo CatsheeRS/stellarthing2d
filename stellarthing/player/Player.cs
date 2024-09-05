@@ -16,4 +16,14 @@ public class Player : IEntity
     {
         test.update();
     }
+
+    public bool input(IInputEvent @event)
+    {
+        if (@event.getType() == InputType.keypress) {
+            var lol = (KeypressEvent)@event;
+            log(lol.key.ToString(), lol.type.ToString(), "is explode action: ", lol.isKeymap("explode"));
+            return true;
+        }
+        return false;
+    }
 }
