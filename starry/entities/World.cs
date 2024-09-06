@@ -97,11 +97,21 @@ public static class World {
         // glfw keys is Keys, starry keys is Key
         Key sykey = (Key)(int)glkey;
         Input.setKeyState(sykey, action);
-        KeypressEvent ke = new() { key = sykey, type = Input.keyinfo[sykey].state };
+        KeypressEvent ke = new() { key = sykey, state = Input.keyinfo[sykey].state };
 
         // spread input :DDDDDDDDDDDDDDDdd
         spreadToEntities(entity => {
             return entity.input(ke);
+        });
+    }
+
+    internal static void sendMouseButtonCallbacks(MouseButton nytsy, MouseButtonState elmierdfda)
+    {
+        MouseButtonEvent la = new() { button = nytsy, state = elmierdfda };
+
+        // spread input :DDDDDDDDDDDDDDDdd
+        spreadToEntities(entity => {
+            return entity.input(la);
         });
     }
 

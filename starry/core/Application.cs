@@ -51,7 +51,13 @@ public static class Application {
         glfw.WindowHint(WindowHintInt.RefreshRate, 60);
         
         // make window!!!!!!1
+        // it's not fullscreen in debug mode since it's nicer that way
+        // TODO: add fullscreen and resolution options :D
+        #if DEBUG
+        WindowHandle* window = glfw.CreateWindow(mode->Width, mode->Height, settings.gameName, null, null);
+        #else
         WindowHandle* window = glfw.CreateWindow(mode->Width, mode->Height, settings.gameName, monitor, null);
+        #endif
         if (window == null) {
             log("Fatal error: couldn't create window");
             glfw.Terminate();
@@ -68,6 +74,29 @@ public static class Application {
         
         glfw.SetKeyCallback(window, (window, key, scancode, action, mods) => {
             World.sendKeyCallbacks(key, action);
+        });
+
+        glfw.SetCursorPosCallback(window, (window, xpos, ypos) => {
+            Input.mousePosition = vec2(xpos, ypos);
+        });
+
+        glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {
+            MouseButton? elmierda = button switch {
+                Silk.NET.GLFW.MouseButton.Left => MouseButton.left,
+                Silk.NET.GLFW.MouseButton.Right => MouseButton.right,
+                Silk.NET.GLFW.MouseButton.Middle => MouseButton.middle,
+                _ => null
+            };
+
+            MouseButtonState? province = action switch {
+                InputAction.Press => MouseButtonState.justPressed,
+                InputAction.Release => MouseButtonState.released,
+                _ => null,
+            };
+
+            // fuck off
+            if (elmierda == null || province == null) return;
+            World.sendMouseButtonCallbacks((MouseButton)elmierda, (MouseButtonState)province);
         });
 
         prevtime = glfw.GetTime();

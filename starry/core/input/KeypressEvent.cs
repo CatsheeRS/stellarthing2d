@@ -14,7 +14,7 @@ public class KeypressEvent : IInputEvent {
     /// the code for the key
     /// </summary>
     public Key key { get; set; }
-    public KeypressState type { get; set; }
+    public KeypressState state { get; set; }
     public bool isKeymap(string key) => settings.keymap[key].Contains(this.key);
 }
 

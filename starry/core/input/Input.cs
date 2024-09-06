@@ -6,6 +6,7 @@ using static starry.Starry;
 namespace starry;
 
 public static class Input {
+    public static Vector2 mousePosition { get; internal set; }
     // you should minimize this
     internal static Dictionary<Key, KeyInfo> keyinfo { get; set; } = new() {
         { Key.space, new() },

@@ -14,16 +14,16 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        if (Input.isKeyPressed(Key.pause)) log("fuck off");
+        log(Input.mousePosition);
     }
 
-    /*public bool input(IInputEvent @event)
+    public bool input(IInputEvent @event)
     {
-        if (@event.getType() == InputType.keypress) {
-            var lol = (KeypressEvent)@event;
-            log(lol.key.ToString(), lol.type.ToString(), "is explode action: ", lol.isKeymap("explode"));
+        if (@event.getType() == InputType.mouseButton) {
+            var elmierda = (MouseButtonEvent)@event;
+            log(elmierda.button, elmierda.state);
             return true;
         }
         return false;
-    }*/
+    }
 }

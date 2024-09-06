@@ -23,15 +23,7 @@ public enum InputType {
     /// </summary>
     keypress,
     /// <summary>
-    /// the mouse's position was updated
-    /// </summary>
-    mouse_motion,
-    /// <summary>
     /// a mouse button was pressed
     /// </summary>
-    mouse_button,
-    /// <summary>
-    /// the user has scrolled
-    /// </summary>
-    mouse_scroll
+    mouseButton,
 }
