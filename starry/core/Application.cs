@@ -1,5 +1,6 @@
 using System;
 using Silk.NET.GLFW;
+using Silk.NET.OpenGL;
 using static starry.Starry;
 
 namespace starry;
@@ -64,6 +65,10 @@ public static class Application {
             return;
         }
         glfw.MakeContextCurrent(window);
+
+        // setup opengl
+        GL gl = GL.GetApi(glfw.GetProcAddress);
+        GLRenderer.create(gl, glfw, window);
         
         // callbacks
         glfw.SetWindowCloseCallback(window, (window) => {
@@ -97,6 +102,10 @@ public static class Application {
             // fuck off
             if (elmierda == null || province == null) return;
             World.sendMouseButtonCallbacks((MouseButton)elmierda, (MouseButtonState)province);
+        });
+
+        glfw.SetErrorCallback((error, description) => {
+            log("OPENGL ERROR: ", error.ToString(), description);
         });
 
         prevtime = glfw.GetTime();
