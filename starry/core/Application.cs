@@ -1,7 +1,9 @@
 using System;
 using Silk.NET.GLFW;
-using Silk.NET.OpenGL;
+using Veldrid.StartupUtilities;
+using Veldrid;
 using static starry.Starry;
+using Veldrid.Sdl2;
 
 namespace starry;
 
@@ -18,64 +20,28 @@ public static class Application {
     /// </summary>
     public static double delta { get; set; } = 0;
     static double prevtime;
-    static Glfw? glfw;
 
     public static event EventHandler? onClose;
 
     public unsafe static void create()
     {
-        // init stuff
-        glfw = Glfw.GetApi();
-        if (!glfw.Init()) {
-            log("Fatal error: couldn't start GLFW");
-            return;
-        }
+        WindowCreateInfo winfo = new() {
+            X = 100,
+            Y = 100 ,
+            WindowWidth = 960,
+            WindowHeight = 540,
+            WindowTitle = settings.gameName,
+            WindowInitialState = WindowState.FullScreen,
+        };
+        Sdl2Window window = VeldridStartup.CreateWindow(ref winfo);
 
-        // get screen width and height and stuff
-        Monitor* monitor = glfw.GetPrimaryMonitor();
-        if (monitor == null) {
-            log("Fatal error: couldn't get primary monitor");
-            glfw.Terminate();
-            return;
-        }
+        VeldridStartup.CreateGraphicsDevice(window, new GraphicsDeviceOptions {
 
-        VideoMode* mode = glfw.GetVideoMode(monitor);
-        if (mode == null) {
-            log("Fatal error: couldn't get video mode");
-            glfw.Terminate();
-            return;
-        }
-
-        // hints and stuff
-        glfw.WindowHint(WindowHintInt.ContextVersionMajor, 3);
-        glfw.WindowHint(WindowHintInt.ContextVersionMinor, 3);
-        glfw.WindowHint(WindowHintInt.RefreshRate, 60);
-        
-        // make window!!!!!!1
-        // it's not fullscreen in debug mode since it's nicer that way
-        // TODO: add fullscreen and resolution options :D
-        #if DEBUG
-        WindowHandle* window = glfw.CreateWindow(mode->Width, mode->Height, settings.gameName, null, null);
-        #else
-        WindowHandle* window = glfw.CreateWindow(mode->Width, mode->Height, settings.gameName, monitor, null);
-        #endif
-        if (window == null) {
-            log("Fatal error: couldn't create window");
-            glfw.Terminate();
-            return;
-        }
-        glfw.MakeContextCurrent(window);
-
-        // setup opengl
-        GL gl = GL.GetApi(glfw.GetProcAddress);
-        GLRenderer.create(gl, glfw, window);
+        });
         
         // callbacks
-        glfw.SetWindowCloseCallback(window, (window) => {
-            onClose?.Invoke(typeof(Application), EventArgs.Empty);
-            // TODO: allow not always closing windows and stuff
-            glfw.SetWindowShouldClose(window, true);
-        });
+        window.Closed += () => onClose?.Invoke(typeof(Application), EventArgs.Empty);
+        window.KeyDown += (keyevent) => World.sendKeyCallbacks(keyevent.Key, KeypressState.justPressed);
         
         glfw.SetKeyCallback(window, (window, key, scancode, action, mods) => {
             World.sendKeyCallbacks(key, action);
@@ -105,7 +71,7 @@ public static class Application {
         });
 
         glfw.SetErrorCallback((error, description) => {
-            log("OPENGL ERROR: ", error.ToString(), description);
+            log("GLFW ERROR: ", error.ToString(), description);
         });
 
         prevtime = glfw.GetTime();

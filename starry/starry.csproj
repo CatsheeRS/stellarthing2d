@@ -12,8 +12,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Silk.NET.GLFW" Version="2.21.0" />
     <PackageReference Include="Silk.NET.Input" Version="2.21.0" />
-    <PackageReference Include="Silk.NET.OpenGL" Version="2.21.0" />
-    <PackageReference Include="Silk.NET.Windowing" Version="2.21.0" />
+    <PackageReference Include="Veldrid" Version="4.8.0" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.13" />
   </ItemGroup>
 
 </Project>

@@ -88,14 +88,12 @@ public static class World {
         });
     }
 
-    internal static void sendKeyCallbacks(Keys glkey, InputAction action)
+    internal static void sendKeyCallbacks(Veldrid.Key vkey, KeypressState action)
     {
-        // don't process repeating for text input YET!!!
-        if (action == InputAction.Repeat) return;
         
         // convert to starry keys
         // glfw keys is Keys, starry keys is Key
-        Key sykey = (Key)(int)glkey;
+        Key sykey = (Key)(int)vkey;
         Input.setKeyState(sykey, action);
         KeypressEvent ke = new() { key = sykey, state = Input.keyinfo[sykey].state };
 

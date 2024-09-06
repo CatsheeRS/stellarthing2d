@@ -159,19 +159,13 @@ public static class Input {
         }
     }
 
-    internal static void setKeyState(Key key, InputAction state)
+    internal static void setKeyState(Key key, KeypressState state)
     {
-        KeypressState systate = state switch {
-            InputAction.Press => KeypressState.justPressed,
-            InputAction.Release => KeypressState.released,
-            InputAction.Repeat => KeypressState.pressed,
-            _ => throw new Exception(), // c# stop complaining
-        };
-        if (systate == KeypressState.justPressed) {
+        if (state == KeypressState.justPressed) {
             pressed.Add(key);
         }
         var hola = keyinfo[key];
-        hola.state = systate;
+        hola.state = state;
     }
 
     // epic functions for polling input stuff

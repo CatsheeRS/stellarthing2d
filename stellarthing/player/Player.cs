@@ -10,11 +10,9 @@ public class Player : IEntity
         type = EntityType.gameWorld,
         tag = "player",
     };
-    public GraphicsTestComp test { get; set; } = new();
 
     public void update(double delta)
     {
-        test.update();
     }
 
     public bool input(IInputEvent @event)
