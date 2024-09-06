@@ -134,33 +134,96 @@ public static class Input {
     // called every frame to do some check stuff
     internal static void update(double delta)
     {
+        Stack<Key> released = [];
         foreach (Key key in pressed) {
             KeyInfo kinf = keyinfo[key];
             // TODO: if you change the frame rate then you have to change how many frames are in a second
             // a key should only be in the just pressed or release for 1 frame
-            if (kinf.secondsPressed > 0.016 && kinf.state == KeypressType.justPressed) {
-                kinf.state = KeypressType.pressed;
+            if (kinf.secondsPressed > 0.016 && kinf.state == KeypressState.justPressed) {
+                kinf.state = KeypressState.pressed;
             }
 
-            if (kinf.secondsPressed > 0.016 && kinf.state == KeypressType.released) {
-                kinf.state = KeypressType.inactive;
+            if (kinf.secondsPressed > 0.016 && kinf.state == KeypressState.released) {
+                kinf.state = KeypressState.inactive;
+                // we can't just .Remove() in a foreach loop lmao
+                released.Push(key);
             }
 
             kinf.secondsPressed += delta;
+        }
+
+        // we can't just .Remove() in a foreach loop lmao
+        while (released.Count > 0) {
+            pressed.Remove(released.Pop());
         }
     }
 
     internal static void setKeyState(Key key, InputAction state)
     {
-        KeypressType systate = state switch {
-            InputAction.Press => KeypressType.justPressed,
-            InputAction.Release => KeypressType.released,
-            InputAction.Repeat => KeypressType.pressed,
+        KeypressState systate = state switch {
+            InputAction.Press => KeypressState.justPressed,
+            InputAction.Release => KeypressState.released,
+            InputAction.Repeat => KeypressState.pressed,
             _ => throw new Exception(), // c# stop complaining
         };
-        pressed.Add(key);
+        if (systate == KeypressState.justPressed) {
+            pressed.Add(key);
+        }
         var hola = keyinfo[key];
         hola.state = systate;
+    }
+
+    // epic functions for polling input stuff
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeyPressed(Key key) => keyinfo[key].state != KeypressState.inactive;
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeyJustPressed(Key key) => keyinfo[key].state == KeypressState.justPressed;
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeyReleased(Key key) => keyinfo[key].state == KeypressState.released;
+
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeymapPressed(string keymap)
+    {
+        foreach (var elmierda in settings.keymap[keymap]) {
+            if (keyinfo[elmierda].state != KeypressState.inactive) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeymapJustPressed(string keymap)
+    {
+        foreach (var elmierda in settings.keymap[keymap]) {
+            if (keyinfo[elmierda].state == KeypressState.justPressed) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// self explanatory
+    /// </summary>
+    public static bool isKeymapReleased(string keymap)
+    {
+        foreach (var elmierda in settings.keymap[keymap]) {
+            if (keyinfo[elmierda].state == KeypressState.released) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
@@ -168,5 +231,5 @@ public class KeyInfo
 {
     public KeyInfo() {}
     public double secondsPressed { get; set; } = 0;
-    public KeypressType state { get; set; } = KeypressType.inactive;
+    public KeypressState state { get; set; } = KeypressState.inactive;
 }

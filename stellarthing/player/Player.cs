@@ -14,10 +14,10 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        test.update();
+        if (Input.isKeyPressed(Key.pause)) log("fuck off");
     }
 
-    public bool input(IInputEvent @event)
+    /*public bool input(IInputEvent @event)
     {
         if (@event.getType() == InputType.keypress) {
             var lol = (KeypressEvent)@event;
@@ -25,5 +25,5 @@ public class Player : IEntity
             return true;
         }
         return false;
-    }
+    }*/
 }

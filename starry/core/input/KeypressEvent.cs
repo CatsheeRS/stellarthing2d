@@ -14,14 +14,14 @@ public class KeypressEvent : IInputEvent {
     /// the code for the key
     /// </summary>
     public Key key { get; set; }
-    public KeypressType type { get; set; }
+    public KeypressState type { get; set; }
     public bool isKeymap(string key) => settings.keymap[key].Contains(this.key);
 }
 
 /// <summary>
 /// type of keypress
 /// </summary>
-public enum KeypressType
+public enum KeypressState
 {
     /// <summary>
     /// the key is currently pressed
@@ -38,7 +38,7 @@ public enum KeypressType
     /// <summary>
     /// the key is being repeated. don't use this for checking if a key is being held down, as this is intended for inputting text and behaves like it would in a text editor, where the repeat interval is configurable and there's a bit of delay before starting to repeat.
     /// </summary>
-    textRepeat,
+    //textRepeat,
     /// <summary>
     /// the key is not being pressed
     /// </summary>
