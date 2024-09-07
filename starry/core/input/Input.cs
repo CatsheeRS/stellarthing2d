@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Silk.NET.GLFW;
 using static starry.Starry;
 
 namespace starry;
