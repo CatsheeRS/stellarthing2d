@@ -7,11 +7,7 @@ namespace starry;
 /// <summary>
 /// manages the lifecycle of the game
 /// </summary>
-public static class Application {
-    /// <summary>
-    /// the screen size
-    /// </summary>
-    public static Vector2i screenSize { get; private set; } = vec2i();
+public static partial class Application {
     /// <summary>
     /// current delta time
     /// </summary>
@@ -22,18 +18,26 @@ public static class Application {
 
     public unsafe static void create()
     {
-        Raylib.InitWindow(800, 480, "Hello World");
+        // setup stuff
+        Raylib.InitWindow(1280, 720, "Hello World");
+        Raylib.SetWindowState(ConfigFlags.FullscreenMode);
+        #if DEBUG
+        Raylib.SetExitKey(KeyboardKey.F8);
+        #else
+        Raylib.SetExitKey(KeyboardKey.Null);
+        #endif
 
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.White);
+            Raylib.ClearBackground(Color.Black);
 
             Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
 
             Raylib.EndDrawing();
         }
 
+        onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Raylib.CloseWindow();
     }
 }

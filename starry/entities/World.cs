@@ -16,12 +16,6 @@ public static class World {
     internal static HashSet<IEntity> entities { get; set; } = [];
     internal static Dictionary<IEntity, EntityInformation> entityInformation { get; set; } = [];
     internal static Dictionary<string, HashSet<IEntity>> groups { get; set; } = [];
-    // static Glfw? glfw;
-    
-    // internal static void create(Glfw glfw)
-    // {
-        // World.glfw = glfw;
-    // }
 
     /// <summary>
     /// adds an entity to the game world
@@ -84,31 +78,6 @@ public static class World {
         spreadToEntities(entity => {
             entity.update(Application.delta);
             return false;
-        });
-    }
-
-    // internal static void sendKeyCallbacks(Veldrid.Key vkey, KeypressState action)
-    // {
-        
-    //     // convert to starry keys
-    //     // glfw keys is Keys, starry keys is Key
-    //     Key sykey = (Key)(int)vkey;
-    //     Input.setKeyState(sykey, action);
-    //     KeypressEvent ke = new() { key = sykey, state = Input.keyinfo[sykey].state };
-
-    //     // spread input :DDDDDDDDDDDDDDDdd
-    //     spreadToEntities(entity => {
-    //         return entity.input(ke);
-    //     });
-    // }
-
-    internal static void sendMouseButtonCallbacks(MouseButton nytsy, MouseButtonState elmierdfda)
-    {
-        MouseButtonEvent la = new() { button = nytsy, state = elmierdfda };
-
-        // spread input :DDDDDDDDDDDDDDDdd
-        spreadToEntities(entity => {
-            return entity.input(la);
         });
     }
 
