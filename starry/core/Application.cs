@@ -42,39 +42,27 @@ public static class Application {
         // callbacks
         window.Closed += () => onClose?.Invoke(typeof(Application), EventArgs.Empty);
         window.KeyDown += (keyevent) => World.sendKeyCallbacks(keyevent.Key, KeypressState.justPressed);
-        
-        glfw.SetKeyCallback(window, (window, key, scancode, action, mods) => {
-            World.sendKeyCallbacks(key, action);
-        });
+        window.KeyUp += (keyevent) => World.sendKeyCallbacks(keyevent.Key, KeypressState.released);
+        window.MouseMove += (el) => Input.mousePosition = vec2(el.MousePosition.X, el.MousePosition.Y);
+        window.MouseDown += (el) => {
+            MouseButton buttonOfMouse = (MouseButton)el.MouseButton;
+            // so the game doesn't explode when you try a button that isn't left middle right
+            if (buttonOfMouse != MouseButton.left || buttonOfMouse != MouseButton.right ||
+                buttonOfMouse != MouseButton.middle) return;
+            
+            World.sendMouseButtonCallbacks(buttonOfMouse, MouseButtonState.justPressed);
+        };
 
-        glfw.SetCursorPosCallback(window, (window, xpos, ypos) => {
-            Input.mousePosition = vec2(xpos, ypos);
-        });
+        window.MouseUp += (el) => {
+            MouseButton buttonOfMouse = (MouseButton)el.MouseButton;
+            // so the game doesn't explode when you try a button that isn't left middle right
+            if (buttonOfMouse != MouseButton.left || buttonOfMouse != MouseButton.right ||
+                buttonOfMouse != MouseButton.middle) return;
+            
+            World.sendMouseButtonCallbacks(buttonOfMouse, MouseButtonState.released);
+        };
 
-        glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {
-            MouseButton? elmierda = button switch {
-                Silk.NET.GLFW.MouseButton.Left => MouseButton.left,
-                Silk.NET.GLFW.MouseButton.Right => MouseButton.right,
-                Silk.NET.GLFW.MouseButton.Middle => MouseButton.middle,
-                _ => null
-            };
-
-            MouseButtonState? province = action switch {
-                InputAction.Press => MouseButtonState.justPressed,
-                InputAction.Release => MouseButtonState.released,
-                _ => null,
-            };
-
-            // fuck off
-            if (elmierda == null || province == null) return;
-            World.sendMouseButtonCallbacks((MouseButton)elmierda, (MouseButtonState)province);
-        });
-
-        glfw.SetErrorCallback((error, description) => {
-            log("GLFW ERROR: ", error.ToString(), description);
-        });
-
-        prevtime = glfw.GetTime();
+        prevtime = window
         World.create(glfw);
         settings.startup();
 
