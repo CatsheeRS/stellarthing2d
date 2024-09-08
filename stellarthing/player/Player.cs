@@ -13,10 +13,9 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-    }
-
-    public bool input(IInputEvent @event)
-    {
-        return false;
+        if (Input.isKeymapJustPressed("explode")) log("A Grande Greguificação");
+        //log(Input.mousePosition);
+        if (Input.isMouseButtonPressed(MouseButton.left)) log("La Gran Greguificación");
+        log(vec2(69, 420) == vec2(69, 420));
     }
 }

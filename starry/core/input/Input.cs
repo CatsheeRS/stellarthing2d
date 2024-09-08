@@ -1,12 +1,14 @@
 using System;
-using System.Collections.Generic;
 using Raylib_cs;
 using static starry.Starry;
 
 namespace starry;
 
+/// <summary>
+/// manages all things input
+/// </summary>
 public static class Input {
-    public static Vector2i mousePosition { get => vec2i(Raylib.GetMouseX(), Raylib.GetMouseY()); }
+    public static vec2i mousePosition { get => vec2i(Raylib.GetMouseX(), Raylib.GetMouseY()); }
 
     /// <summary>
     /// if true, the key is currently being held
@@ -94,12 +96,54 @@ public static class Input {
         return false;
     }
 
+    /// <summary>
+    /// if true, the button is currently being held
+    /// </summary>
     public static bool isMouseButtonPressed(MouseButton button)
     {
         return button switch {
             MouseButton.left => Raylib.IsMouseButtonDown(Raylib_cs.MouseButton.Left),
             MouseButton.middle => Raylib.IsMouseButtonDown(Raylib_cs.MouseButton.Middle),
             MouseButton.right => Raylib.IsMouseButtonDown(Raylib_cs.MouseButton.Right),
+            _ => throw new Exception(),
+        };
+    }
+
+    /// <summary>
+    /// if true, the button just started being pressed
+    /// </summary>
+    public static bool isMouseButtonJustPressed(MouseButton button)
+    {
+        return button switch {
+            MouseButton.left => Raylib.IsMouseButtonPressed(Raylib_cs.MouseButton.Left),
+            MouseButton.middle => Raylib.IsMouseButtonPressed(Raylib_cs.MouseButton.Middle),
+            MouseButton.right => Raylib.IsMouseButtonPressed(Raylib_cs.MouseButton.Right),
+            _ => throw new Exception(),
+        };
+    }
+
+    /// <summary>
+    /// if true, the button just stopped being pressed
+    /// </summary>
+    public static bool isMouseButtonReleased(MouseButton button)
+    {
+        return button switch {
+            MouseButton.left => Raylib.IsMouseButtonReleased(Raylib_cs.MouseButton.Left),
+            MouseButton.middle => Raylib.IsMouseButtonReleased(Raylib_cs.MouseButton.Middle),
+            MouseButton.right => Raylib.IsMouseButtonReleased(Raylib_cs.MouseButton.Right),
+            _ => throw new Exception(),
+        };
+    }
+
+    /// <summary>
+    /// if true, the button isn't pressed at all
+    /// </summary>
+    public static bool isMouseButtonNotPressed(MouseButton button)
+    {
+        return button switch {
+            MouseButton.left => Raylib.IsMouseButtonUp(Raylib_cs.MouseButton.Left),
+            MouseButton.middle => Raylib.IsMouseButtonUp(Raylib_cs.MouseButton.Middle),
+            MouseButton.right => Raylib.IsMouseButtonUp(Raylib_cs.MouseButton.Right),
             _ => throw new Exception(),
         };
     }

@@ -27,16 +27,28 @@ public static partial class Application {
         Raylib.SetExitKey(KeyboardKey.Null);
         #endif
 
-        while (!Raylib.WindowShouldClose())
-        {
+        prevtime = getTime();
+
+        // this is where the game starts running
+        settings.startup();
+
+        // main loop
+        while (!Raylib.WindowShouldClose()) {
+            // get delta time :D
+            double delta = getTime() - prevtime;
+            prevtime = getTime();
+
+            // render stuff and update entities since that's when entities render stuff
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
+            Raylib.DrawText("Hello, world!", 12, 12, 20, Color.White);
+            World.updateEntities();
 
             Raylib.EndDrawing();
         }
 
+        // clean up and close and stuff
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Raylib.CloseWindow();
     }
