@@ -27,4 +27,8 @@ public struct StarrySettings
     /// keyboard actions that can be remapped
     /// </summary>
     public Dictionary<string, Key[]> keymap { get; set; } = [];
+    /// <summary>
+    /// place where assets are loaded, usually relative to the project folder
+    /// </summary>
+    public string assetPath { get; set; } = "";
 }

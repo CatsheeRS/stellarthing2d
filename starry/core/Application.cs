@@ -42,7 +42,7 @@ public static partial class Application {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawText("Hello, world!", 12, 12, 20, Color.White);
+            Raylib.DrawText("hi mom", 12, 12, 20, Color.White);
             World.updateEntities();
 
             Raylib.EndDrawing();

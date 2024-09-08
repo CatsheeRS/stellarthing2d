@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using starry;
 using stellarthing;
 using static starry.Starry;
@@ -13,4 +14,5 @@ create(new StarrySettings {
     keymap = {
         {"explode", [Key.space]},
     },
+    assetPath = Path.GetFullPath("../assets"),
 });
