@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static starry.Starry;
 
 namespace starry;
 
@@ -31,4 +32,8 @@ public struct StarrySettings
     /// place where assets are loaded, usually relative to the project folder
     /// </summary>
     public string assetPath { get; set; } = "";
+    /// <summary>
+    /// resolution in which the game is rendered.
+    /// </summary>
+    public vec2i renderSize { get; set; } = vec2i(1920, 1080);
 }

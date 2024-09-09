@@ -21,11 +21,12 @@ public static partial class Application {
         // setup stuff
         Raylib.InitWindow(1280, 720, "Hello World");
         Raylib.SetWindowState(ConfigFlags.FullscreenMode);
-        #if DEBUG
-        Raylib.SetExitKey(KeyboardKey.F8);
-        #else
-        Raylib.SetExitKey(KeyboardKey.Null);
-        #endif
+        if (isDebug()) {
+            Raylib.SetExitKey(KeyboardKey.F8);
+        }
+        else {
+            Raylib.SetExitKey(KeyboardKey.Null);
+        }
 
         prevtime = getTime();
 
@@ -41,7 +42,7 @@ public static partial class Application {
             // render stuff and update entities since that's when entities render stuff
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
-
+            
             Raylib.DrawText("hi mom", 12, 12, 20, Color.White);
             World.updateEntities();
 

@@ -18,6 +18,11 @@ public struct EntityInformation {
     /// groups the entity is assigned to when created
     /// </summary>
     public string[] groups { get; set; } = [];
+    /// <summary>
+    /// layer in which this is rendered. if it's an empty string, it's gonna be based on the entity type.
+    /// </summary>
+    public string layer { get; set; } = "";
+    
 }
 
 /// <summary>
