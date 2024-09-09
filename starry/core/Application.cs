@@ -28,6 +28,10 @@ public static partial class Application {
             Raylib.SetExitKey(KeyboardKey.Null);
         }
 
+        // more setup
+        Raylib.SetTargetFPS(60);
+        Renderer.create();
+
         prevtime = getTime();
 
         // this is where the game starts running
@@ -40,13 +44,10 @@ public static partial class Application {
             prevtime = getTime();
 
             // render stuff and update entities since that's when entities render stuff
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.Black);
-            
             Raylib.DrawText("hi mom", 12, 12, 20, Color.White);
+            // the renderer is called by the world since it has to switch between 2d and 3d and stuff
             World.updateEntities();
-
-            Raylib.EndDrawing();
+            Renderer.composite();
         }
 
         // clean up and close and stuff
