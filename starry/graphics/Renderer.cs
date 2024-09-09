@@ -21,6 +21,13 @@ public static class Renderer {
     {
         target3d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         target2d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
+        camera3d = new() {
+            Position = new System.Numerics.Vector3(0.5f, 1.0f, 1.5f),
+            Target = new System.Numerics.Vector3(0.0f, 0.5f, 0.0f),
+            Up = new System.Numerics.Vector3(0.0f, 1.0f, 0.0f),
+            FovY = 45.0f,
+            Projection = CameraProjection.Perspective,
+        };
 
         // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints,
         // and we use decimals instead of double so pixels aren't 0.001 pixels bigger than they should be
@@ -28,6 +35,7 @@ public static class Renderer {
         scrh = Raylib.GetScreenHeight();
         scaleFactor = scrh / settings.renderSize.y;
         centerOffset = (scrw - (settings.renderSize.x * (scrh / settings.renderSize.y))) / 2m;
+        log(scrw, settings.renderSize.x * scaleFactor);
     }
 
     /// <summary>
@@ -37,6 +45,7 @@ public static class Renderer {
     {
         Raylib.BeginTextureMode(target2d);
             Raylib.ClearBackground(Color.Blank);
+            Raylib.DrawRectangle(500, 0, 60, 20, Color.Gold);
     }
 
     /// <summary>
@@ -61,11 +70,11 @@ public static class Renderer {
         Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawTextureRec(target3d.Texture, new Rectangle(0, 0, (float)scrw, (float)-scrh),
-                new System.Numerics.Vector2(0, 0), Color.White);
+            Raylib.DrawTextureRec(target3d.Texture, new Rectangle(0, 0, (float)(settings.renderSize.x * scaleFactor),
+                -(float)(settings.renderSize.y * scaleFactor)), new System.Numerics.Vector2(0, 0), Color.White);
             
-            Raylib.DrawTextureRec(target2d.Texture, new Rectangle(0, 0, (float)scrw, (float)-scrh),
-                new System.Numerics.Vector2(0, 0), Color.White);
+            Raylib.DrawTextureRec(target2d.Texture, new Rectangle(0, 0, (float)(settings.renderSize.x * scaleFactor),
+                -(float)(settings.renderSize.y * scaleFactor)), new System.Numerics.Vector2(0, 0), Color.White);
 
             if (isDebug()) Raylib.DrawFPS(0, 0);
         Raylib.EndDrawing();
