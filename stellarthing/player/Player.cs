@@ -11,7 +11,7 @@ public class Player : IEntity
         tag = "player",
     };
 
-    Model model = load<Model>("furniture/fridge.obj");
+    Model model = load<Model>("furniture/teapot.vox");
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
