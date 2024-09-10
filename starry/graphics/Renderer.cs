@@ -22,8 +22,8 @@ public static class Renderer {
         target3d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         target2d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         camera3d = new() {
-            Position = new System.Numerics.Vector3(0.5f, 5.0f, -10.0f),
-            Target = new System.Numerics.Vector3(0.0f, 0.5f, 0.0f),
+            Position = new System.Numerics.Vector3(-1.0f, 5.0f, -15.0f),
+            Target = new System.Numerics.Vector3(0.0f, 0.0f, 0.0f),
             Up = new System.Numerics.Vector3(0.0f, 1.0f, 0.0f),
             FovY = 45.0f,
             Projection = CameraProjection.Perspective,
@@ -58,12 +58,10 @@ public static class Renderer {
             Raylib.ClearBackground(Color.Black);
             Raylib.BeginMode3D(camera3d);
                 if (isDebug()) Raylib.DrawGrid(100, 1);
-                Raylib.DrawCube(new System.Numerics.Vector3(), 1, 2, 3, Color.Beige);
     }
 
     internal static void composite()
     {
-                Raylib.DrawCube(new System.Numerics.Vector3(), 3, 2, 1, Color.Violet);
             Raylib.EndMode3D();
         Raylib.EndTextureMode();
 
@@ -71,11 +69,13 @@ public static class Renderer {
         Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawTextureRec(target3d.Texture, new Rectangle(0, 0, (float)(settings.renderSize.x * scaleFactor),
-                -(float)(settings.renderSize.y * scaleFactor)), new System.Numerics.Vector2(0, 0), Color.White);
+            Raylib.DrawTextureRec(target3d.Texture, new Rectangle((float)centerOffset, 0,
+                (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
+                new System.Numerics.Vector2(0, 0), Color.White);
             
-            Raylib.DrawTextureRec(target2d.Texture, new Rectangle(0, 0, (float)(settings.renderSize.x * scaleFactor),
-                -(float)(settings.renderSize.y * scaleFactor)), new System.Numerics.Vector2(0, 0), Color.White);
+            Raylib.DrawTextureRec(target2d.Texture, new Rectangle((float)centerOffset, 0,
+                (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
+                new System.Numerics.Vector2(0, 0), Color.White);
         Raylib.EndDrawing();
     }
 

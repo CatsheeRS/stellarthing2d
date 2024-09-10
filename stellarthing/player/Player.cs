@@ -11,7 +11,7 @@ public class Player : IEntity
         tag = "player",
     };
 
-    Model model = load<Model>("furniture/fridge.glb");
+    Model model = load<Model>("furniture/fridge.obj");
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
@@ -20,7 +20,7 @@ public class Player : IEntity
 
     public Player()
     {
-        log(settings.assetPath);
+        
     }
 
     public void update(double delta)

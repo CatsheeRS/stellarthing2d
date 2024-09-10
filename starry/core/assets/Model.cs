@@ -9,6 +9,8 @@ namespace starry;
 public class Model : IAsset {
     internal Raylib_cs.Model rlModel;
 
-    public void load(string path) => rlModel = Raylib.LoadModel(path);
+    public unsafe void load(string path) {
+        rlModel = Raylib.LoadModel(path);
+    }
     public void cleanup() => Raylib.UnloadModel(rlModel);
 }
