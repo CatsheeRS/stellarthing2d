@@ -11,11 +11,21 @@ public class Player : IEntity
         tag = "player",
     };
 
+    Model model = load<Model>("furniture/fridge.glb");
+
+    TransformComp3D tf = new() {
+        position = vec3(0, 0, 0),
+    };
+    ModelComp modelrender = new();
+
+    public Player()
+    {
+        log(settings.assetPath);
+    }
+
     public void update(double delta)
     {
-        if (Input.isKeymapJustPressed("explode")) log("A Grande Greguificação");
-        //log(Input.mousePosition);
-        if (Input.isMouseButtonPressed(MouseButton.left)) log("La Gran Greguificación");
-        log(vec2(69, 420) == vec2(69, 420));
+        tf.rotation = vec3(0, tf.rotation.y - 1, 0);
+        modelrender.update(model, tf);
     }
 }

@@ -52,6 +52,7 @@ public static partial class Application {
 
         // clean up and close and stuff
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
+        Assets.cleanup();
         Raylib.CloseWindow();
     }
 }

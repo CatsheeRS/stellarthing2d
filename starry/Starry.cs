@@ -59,7 +59,9 @@ public static class Starry {
         Console.WriteLine();
     }
     
-    // if true, the game is currently in debug mode
+    /// <summary>
+    /// if true, the game is currently in debug mode
+    /// </summary>
     public static bool isDebug()
     {
         #if DEBUG
@@ -102,4 +104,12 @@ public static class Starry {
     /// shortcut for vec2i.zero
     /// </summary>
     public static vec2i vec2i() => starry.vec2i.zero;
+
+    /// <summary>
+    /// loads an asset, with the path specified in the project settings. for efficiency, assets are loaded once and then put into a dictionary with the paths. this is literally just Assets.load()
+    /// </summary>
+    public static T load<T>(string path) where T : IAsset, new()
+    {
+        return Assets.load<T>(path);
+    }
 }

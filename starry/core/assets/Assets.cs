@@ -25,6 +25,16 @@ public static class Assets {
             return (T)value;
         }
     }
+
+    /// <summary>
+    /// cleans up all assets
+    /// </summary>
+    public static void cleanup()
+    {
+        foreach (var elasset in assets) {
+            elasset.Value.cleanup();
+        }
+    }
 }
 
 /// <summary>
@@ -35,4 +45,8 @@ public interface IAsset {
     /// specifies how is the asset loaded
     /// </summary>
     public void load(string path);
+    /// <summary>
+    /// specifies that happens to the asset once the game closes
+    /// </summary>
+    public void cleanup();
 }

@@ -14,6 +14,6 @@ create(new StarrySettings {
     keymap = {
         {"explode", [Key.space]},
     },
-    assetPath = Path.GetFullPath("../assets"),
+    assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),
 });

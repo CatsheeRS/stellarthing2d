@@ -22,7 +22,7 @@ public static class Renderer {
         target3d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         target2d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         camera3d = new() {
-            Position = new System.Numerics.Vector3(0.5f, 1.0f, 1.5f),
+            Position = new System.Numerics.Vector3(0.5f, 5.0f, -10.0f),
             Target = new System.Numerics.Vector3(0.0f, 0.5f, 0.0f),
             Up = new System.Numerics.Vector3(0.0f, 1.0f, 0.0f),
             FovY = 45.0f,
@@ -35,7 +35,6 @@ public static class Renderer {
         scrh = Raylib.GetScreenHeight();
         scaleFactor = scrh / settings.renderSize.y;
         centerOffset = (scrw - (settings.renderSize.x * (scrh / settings.renderSize.y))) / 2m;
-        log(scrw, settings.renderSize.x * scaleFactor);
     }
 
     /// <summary>
@@ -45,7 +44,6 @@ public static class Renderer {
     {
         Raylib.BeginTextureMode(target2d);
             Raylib.ClearBackground(Color.Blank);
-            Raylib.DrawRectangle(500, 0, 60, 20, Color.Gold);
     }
 
     /// <summary>
@@ -53,16 +51,19 @@ public static class Renderer {
     /// </summary>
     internal static void render3d()
     {
+            if (isDebug()) Raylib.DrawFPS(0, 0);
         Raylib.EndTextureMode();
         
         Raylib.BeginTextureMode(target3d);
             Raylib.ClearBackground(Color.Black);
             Raylib.BeginMode3D(camera3d);
                 if (isDebug()) Raylib.DrawGrid(100, 1);
+                Raylib.DrawCube(new System.Numerics.Vector3(), 1, 2, 3, Color.Beige);
     }
 
     internal static void composite()
     {
+                Raylib.DrawCube(new System.Numerics.Vector3(), 3, 2, 1, Color.Violet);
             Raylib.EndMode3D();
         Raylib.EndTextureMode();
 
@@ -75,8 +76,6 @@ public static class Renderer {
             
             Raylib.DrawTextureRec(target2d.Texture, new Rectangle(0, 0, (float)(settings.renderSize.x * scaleFactor),
                 -(float)(settings.renderSize.y * scaleFactor)), new System.Numerics.Vector2(0, 0), Color.White);
-
-            if (isDebug()) Raylib.DrawFPS(0, 0);
         Raylib.EndDrawing();
     }
 
