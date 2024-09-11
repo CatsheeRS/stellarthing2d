@@ -36,4 +36,8 @@ public struct StarrySettings
     /// resolution in which the game is rendered.
     /// </summary>
     public vec2i renderSize { get; set; } = vec2i(1920, 1080);
+    /// <summary>
+    /// how many voxels is a meter, affects the coordinate system. i hope you're not american
+    /// </summary>
+    public int meterSize { get; set; } = 16;
 }

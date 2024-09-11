@@ -22,7 +22,7 @@ public static class Renderer {
         target3d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         target2d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         camera3d = new() {
-            Position = new System.Numerics.Vector3(-1.0f, 50.0f, -50.0f),
+            Position = new System.Numerics.Vector3(-5.0f, 2.0f, -5.0f),
             Target = new System.Numerics.Vector3(0.0f, 0.0f, 0.0f),
             Up = new System.Numerics.Vector3(0.0f, 1.0f, 0.0f),
             FovY = 45.0f,
