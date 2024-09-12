@@ -87,6 +87,14 @@ public static class Starry {
     /// shortcut for new vec2i()
     /// </summary>
     public static vec2i vec2i(int x, int y) => new(x, y);
+    /// <summary>
+    /// shortcut for new color()
+    /// </summary>
+    public static color color(byte r, byte g, byte b, byte a) => new(r, g, b, a);
+    /// <summary>
+    /// color() but without transparency
+    /// </summary>
+    public static color color(byte r, byte g, byte b) => new(r, g, b, 255);
 
     /// <summary>
     /// shortcut for vec3.zero

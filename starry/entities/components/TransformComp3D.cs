@@ -3,7 +3,7 @@ using static starry.Starry;
 namespace starry;
 
 /// <summary>
-/// adds a 3d 
+/// adds 3d stuff
 /// </summary>
 public class TransformComp3D {
     /// <summary>
@@ -18,4 +18,8 @@ public class TransformComp3D {
     /// a scale factor for the object, 1 means the original size
     /// </summary>
     public double scale { get; set; } = 1;
+    /// <summary>
+    /// origin point, each number must be from 0 to 1, (0, 0, 0) is bottom left, and (0.5, 0.5, 0.5) is the center
+    /// </summary>
+    public vec3 origin { get; set; } = vec3();
 }

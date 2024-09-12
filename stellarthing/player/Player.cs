@@ -15,6 +15,7 @@ public class Player : IEntity
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
+        origin = vec3(1, 1, 1),
     };
     ModelComp modelrender = new();
 
