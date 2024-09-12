@@ -15,9 +15,9 @@ public class TransformComp3D {
     /// </summary>
     public vec3 rotation { get; set; } = vec3();
     /// <summary>
-    /// a scale factor for the object, 1 means the original size
+    /// a scale factor for the object. this is just multiplication so 1 is the original size, smaller values make it smaller, and bigger values make it bigger
     /// </summary>
-    public double scale { get; set; } = 1;
+    public vec3 scale { get; set; } = vec3(1, 1, 1);
     /// <summary>
     /// origin point, each number must be from 0 to 1, (0, 0, 0) is bottom left, and (0.5, 0.5, 0.5) is the center
     /// </summary>

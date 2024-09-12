@@ -24,21 +24,7 @@ public class LightComp {
     /// </summary>
     public double energy { get; set; } = 1;
 
-    // shader locations
-    int enabledloc;
-    int typeloc;
-    int positionloc;
-    int targetloc;
-    int colorloc;
-    int attenuationloc;
+    public LightComp() {}
 
-    public LightComp()
-    {
-        enabled
-    }
-
-    public void update()
-    {
-
-    }
+    public void update() {}
 }

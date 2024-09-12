@@ -39,7 +39,6 @@ public static class Renderer {
         centerOffset = (scrw - (settings.renderSize.x * (scrh / settings.renderSize.y))) / 2m;
 
         // i predict this create function will eventually become comically large
-        createLighting();
     }
 
     /// <summary>
@@ -62,13 +61,11 @@ public static class Renderer {
         Raylib.BeginTextureMode(target3d);
             Raylib.ClearBackground(Color.Black);
             Raylib.BeginMode3D(camera3d);
-                Raylib.BeginShaderMode(lightshader);
-                    if (isDebug()) Raylib.DrawGrid(100, 1);
+                if (isDebug()) Raylib.DrawGrid(100, 1);
     }
 
     internal static void composite()
     {
-                Raylib.EndShaderMode();
             Raylib.EndMode3D();
         Raylib.EndTextureMode();
 
@@ -84,18 +81,5 @@ public static class Renderer {
                 (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
                 new System.Numerics.Vector2(0, 0), Color.White);
         Raylib.EndDrawing();
-    }
-
-    internal unsafe static void createLighting()
-    {
-        // load the handsome shader
-        lightshader = Raylib.LoadShader(Path.GetFullPath("assets/engine/shaders/lighting.vert"),
-                                        Path.GetFullPath("assets/engine/shaders/lighting.frag"));
-        
-        lightshader.Locs[(int)ShaderLocationIndex.VectorView] = Raylib.GetShaderLocation(lightshader, "viewPos");
-
-        // ambient light level
-        int ambientloc = Raylib.GetShaderLocation(lightshader, "ambient");
-        Raylib.SetShaderValue(lightshader, ambientloc, [0.1f, 0.1f, 0.1f, 1.0f], ShaderUniformDataType.Vec4);
     }
 }
