@@ -52,6 +52,12 @@ public static partial class Renderer {
             0.0f,        0.0f,      far / (far - near),  -far * near / (far - near),
             0.0f,        0.0f,      1.0f,                0.0f
         );
+        /*matproj = new(
+            aspectRatio, 0.0f,   0.0f,                       0.0f,
+            0.0f,        fovRad, 0.0f,                       0.0f,
+            0.0f,        0.0f,   far / (far - near),         1.0f,
+            0.0f,        0.0f,   -far * near / (far - near), 0.0f
+        );*/
     }
 
     /// <summary>
@@ -98,6 +104,8 @@ public static partial class Renderer {
                 Rlgl.Vertex3f((float)projected.vert2.x, (float)projected.vert2.y, (float)projected.vert2.z);
                 Rlgl.Vertex3f((float)projected.vert3.x, (float)projected.vert3.y, (float)projected.vert3.z);
             Rlgl.End();
+
+            log(projected);
         }
     }
 }
