@@ -19,7 +19,7 @@ public static partial class Application {
     public unsafe static void create()
     {
         // setup stuff
-        Raylib.InitWindow(settings.renderSize.x, settings.renderSize.y, "Hello World");
+        Raylib.InitWindow(settings.renderSize.x, settings.renderSize.y, settings.gameName);
         Raylib.SetWindowState(ConfigFlags.FullscreenMode);
         if (isDebug()) {
             Raylib.SetExitKey(KeyboardKey.F8);

@@ -13,6 +13,7 @@ public class ModelComp {
     /// </summary>
     public void update(Model model, TransformComp3D tf)
     {
-        
+        // for now we're just testing the renderer
+        Renderer.drawMesh(Mesh.cube);
     }
 }

@@ -19,10 +19,7 @@ public class Player : IEntity
     };
     ModelComp modelrender = new();
 
-    public Player()
-    {
-        
-    }
+    public Player() {}
 
     public void update(double delta)
     {

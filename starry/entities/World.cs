@@ -122,7 +122,7 @@ public static class World {
     /// <summary>
     /// the position of the 3d camera
     /// </summary>
-    public static vec3 cameraPosition {
+    /*public static vec3 cameraPosition {
         get => vec3(Renderer.camera3d.Position.X, Renderer.camera3d.Position.Y, Renderer.camera3d.Position.Z);
         set => Renderer.camera3d.Position = new Vector3((float)value.x, (float)value.y, (float)value.z);
     }
@@ -162,5 +162,5 @@ public static class World {
             float RATIO = settings.renderSize.x / settings.renderSize.y;
             Renderer.camera3d.FovY = 2f * MathF.Atan(MathF.Tan(hfov / 2f) * RATIO) * (180f / MathF.PI);
         }
-    }
+    }*/
 }
