@@ -30,7 +30,7 @@ public struct EntityInformation {
 /// </summary>
 public enum EntityType {
     /// <summary>
-    /// pausable 3d object
+    /// pausable 3d-ish object
     /// </summary>
     gameWorld,
     /// <summary>

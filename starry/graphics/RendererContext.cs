@@ -8,8 +8,8 @@ namespace starry;
 /// manages all things rendering
 /// </summary>
 public static partial class Renderer {
-    static RenderTexture2D target3d;
-    static RenderTexture2D target2d;
+    static RenderTexture2D targetWorld;
+    static RenderTexture2D targetUi;
     static decimal scaleFactor = 1;
     static decimal centerOffset = 0;
     static decimal scrw = 0;
@@ -17,8 +17,8 @@ public static partial class Renderer {
 
     internal static void create()
     {
-        target3d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
-        target2d = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
+        targetWorld = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
+        targetUi = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
 
         // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints,
         // and we use decimals instead of double so pixels aren't 0.001 pixels bigger than they should be
@@ -26,30 +26,27 @@ public static partial class Renderer {
         scrh = Raylib.GetScreenHeight();
         scaleFactor = scrh / settings.renderSize.y;
         centerOffset = (scrw - (settings.renderSize.x * (scrh / settings.renderSize.y))) / 2m;
-
-        // do stuff
-        setupProjectionMatrix(0.1f, 1000.0f, 90.0f);
     }
 
     /// <summary>
-    /// switches to rendering 2d. ending the thing is handled when the game switches to 3d
+    /// switches to rendering the ui. ending the thing is handled when the game switches to the game world
     /// </summary>
-    internal static void render2d()
+    internal static void renderUi()
     {
-        Raylib.BeginTextureMode(target2d);
+        Raylib.BeginTextureMode(targetUi);
             Raylib.ClearBackground(Color.Blank);
     }
 
     /// <summary>
-    /// switches to rendering 3d and finishes 2d stuff. 3d rendering is finished in the composite function
+    /// switches to rendering the world and finishes ui stuff. world rendering is finished in the composite function
     /// </summary>
-    internal static void render3d()
+    internal static void renderWorld()
     {
-            //if (isDebug()) Raylib.DrawFPS(0, 0);
+            if (isDebug()) Raylib.DrawFPS(0, 0);
         Raylib.EndTextureMode();
         
-        Raylib.BeginTextureMode(target3d);
-            Raylib.ClearBackground(Color.Black);
+        Raylib.BeginTextureMode(targetWorld);
+            Raylib.ClearBackground(Color.Blank);
     }
 
     /// <summary>
@@ -63,11 +60,11 @@ public static partial class Renderer {
         Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawTextureRec(target3d.Texture, new Rectangle((float)centerOffset, 0,
+            Raylib.DrawTextureRec(targetWorld.Texture, new Rectangle((float)centerOffset, 0,
                 (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
                 new System.Numerics.Vector2(0, 0), Color.White);
             
-            Raylib.DrawTextureRec(target2d.Texture, new Rectangle((float)centerOffset, 0,
+            Raylib.DrawTextureRec(targetUi.Texture, new Rectangle((float)centerOffset, 0,
                 (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
                 new System.Numerics.Vector2(0, 0), Color.White);
         Raylib.EndDrawing();

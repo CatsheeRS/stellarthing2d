@@ -11,19 +11,18 @@ public class Player : IEntity
         tag = "player",
     };
 
-    Model model = load<Model>("furniture/elfridge.vox");
+    Sprite spr = load<Sprite>("cheese.png");
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
-        origin = vec3(1, 1, 1),
+        origin = vec2(0.5, 1),
     };
-    ModelComp modelrender = new();
+    IsoSpriteComp render = new();
 
     public Player() {}
 
     public void update(double delta)
     {
-        tf.rotation += vec3(0, 5, 0);
-        modelrender.update(model, tf);
+        render.update(spr, tf);
     }
 }

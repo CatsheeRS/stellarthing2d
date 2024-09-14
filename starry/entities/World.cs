@@ -98,7 +98,7 @@ public static class World {
         }
 
         // the ui's next
-        Renderer.render2d();
+        Renderer.renderUi();
         if (paused) {
             foreach (var entity in getGroup("layers.pause_ui")) {
                 if (func(entity)) return;
@@ -111,7 +111,7 @@ public static class World {
         }
 
         // 3d stuff run last
-        Renderer.render3d();
+        Renderer.renderWorld();
         if (!paused) {
             foreach (var entity in getGroup("layers.game_world")) {
                 if (func(entity)) return;
