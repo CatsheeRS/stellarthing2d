@@ -47,6 +47,7 @@ public static partial class Application {
             Raylib.DrawText("hi mom", 12, 12, 20, Color.White);
             // the renderer is called by the world since it has to switch between 2d and 3d and stuff
             World.updateEntities();
+            Tilemap.update();
             Renderer.composite();
         }
 

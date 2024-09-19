@@ -37,12 +37,7 @@ public struct StarrySettings
     /// </summary>
     public vec2i renderSize { get; set; } = vec2i(1920, 1080);
     /// <summary>
-    /// the width of the block, in pixels
+    /// how many pixels is each tile
     /// </summary>
-    public uint blockWidth { get; set; } = 96;
-    /// <summary>
-    /// the main height of the block, in pixels. in a wall, this is the bottom part of the image, and in a floor, this is the entire image.
-    /// </summary>
-    public uint blockMainHeight { get; set; } = 1;
-    public uint blockTopHeight { get; set; } = 1;
+    public vec2i tileSize { get; set; } = vec2i(1, 1);
 }

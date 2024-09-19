@@ -11,18 +11,19 @@ public class Player : IEntity
         tag = "player",
     };
 
-    Sprite spr = load<Sprite>("cheese.png");
+    Sprite spr = load<Sprite>("bob_guy.png");
 
-    WorldTransformComp tf = new() {
+    TransformComp tf = new() {
         position = vec3(0, 0, 0),
-        origin = vec2(0.5, 1),
     };
-    WorldSpriteComp render = new();
+    TileComp render = new();
 
     public Player() {}
 
     public void update(double delta)
     {
+        Camera.target = vec2(tf.position.x, tf.position.y);
+        tf.rotation += 1;
         render.update(spr, tf);
     }
 }

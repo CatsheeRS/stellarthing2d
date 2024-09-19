@@ -46,7 +46,8 @@ public static partial class Renderer {
         Raylib.EndTextureMode();
         
         Raylib.BeginTextureMode(targetWorld);
-            Raylib.ClearBackground(Color.Blank);
+            Raylib.BeginMode2D(Tilemap.rlcam);
+                Raylib.ClearBackground(Color.Blank);
     }
 
     /// <summary>
@@ -54,6 +55,7 @@ public static partial class Renderer {
     /// </summary>
     internal static void composite()
     {
+            Raylib.EndMode2D();
         Raylib.EndTextureMode();
 
         // actually draw stuff
