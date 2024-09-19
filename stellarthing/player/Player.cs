@@ -13,11 +13,11 @@ public class Player : IEntity
 
     Sprite spr = load<Sprite>("cheese.png");
 
-    TransformComp3D tf = new() {
+    WorldTransformComp tf = new() {
         position = vec3(0, 0, 0),
         origin = vec2(0.5, 1),
     };
-    IsoSpriteComp render = new();
+    WorldSpriteComp render = new();
 
     public Player() {}
 

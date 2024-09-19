@@ -37,7 +37,12 @@ public struct StarrySettings
     /// </summary>
     public vec2i renderSize { get; set; } = vec2i(1920, 1080);
     /// <summary>
-    /// how many voxels is a meter, affects the coordinate system. i hope you're not american
+    /// the width of the block, in pixels
     /// </summary>
-    public int meterSize { get; set; } = 16;
+    public uint blockWidth { get; set; } = 96;
+    /// <summary>
+    /// the main height of the block, in pixels. in a wall, this is the bottom part of the image, and in a floor, this is the entire image.
+    /// </summary>
+    public uint blockMainHeight { get; set; } = 1;
+    public uint blockTopHeight { get; set; } = 1;
 }

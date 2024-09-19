@@ -5,32 +5,32 @@ namespace starry;
 /// <summary>
 /// adds stuff for the isometric game world
 /// </summary>
-public class TransformComp3D {
+public class WorldTransformComp {
     /// <summary>
-    /// position in meters. it's important to note that Y is up, similar to opengl, raylib, godot, and minecraft
+    /// position, with 1 being 1 tile, and (0, 0) being the top left
     /// </summary>
-    public vec3 position { get; set; } = vec3();
+    public vec2 position { get; set; } = vec2();
     
-    int isotation;
+    int sideside;
     /// <summary>
-    /// isometric rotation, 0 is pointing west, 1 is pointing south, 2 is pointing east, and 3 is pointing north, see https://files.catbox.moe/lpu4ur.png (not malware). this will automatically loop if it's smaller than 0 or bigger than 3
+    /// the side the thing is pointing at, 0 points bottom, 1 points right, 2 points up, and 3 points left. this will automatically loop if it's smaller than 0 or bigger than 3. 0 is supposed to be the front btw
     /// </summary>
-    public int isoRotation {
-        get { return isotation; }
+    public int side {
+        get { return sideside; }
         set {
             int val = value;
             if (val < 0) val = 0;
             if (val > 3) val = 3;
-            isotation = val;
+            sideside = val;
         }
     }
 
     /// <summary>
-    /// a scale factor for the object. this is just multiplication so 1 is the original size, smaller values make it smaller, and bigger values make it bigger
+    /// if true, the tilemap will treat this block as a floor (no top side)
     /// </summary>
-    public vec2 scale { get; set; } = vec2(1, 1);
+    public bool flat { get; set; } = true;
     /// <summary>
-    /// origin point, each number must be from 0 to 1, (0, 0, 0) is top left, and (0.5, 0.5, 0.5) is the center
+    /// tints the sprite (white is the original colors)
     /// </summary>
-    public vec2 origin { get; set; } = vec2(0.5, 0.5);
+    public color tint { get; set; } = color.white;
 }

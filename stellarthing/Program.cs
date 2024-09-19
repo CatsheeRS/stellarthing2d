@@ -16,5 +16,7 @@ create(new StarrySettings {
     },
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),
-    meterSize = 16,
+    blockWidth = 96,
+    blockMainHeight = 90,
+    blockTopHeight = 33,
 });
