@@ -23,12 +23,18 @@ public static class Tilemap {
     /// as the name implies, it's a bunch of sprites for the layers of the worlds. this type declaration is a mess, so first there's a dictionary of worlds, then there's the layers, which is a dictionary since there can be an indefinite amount of positive and negative indexes, then there's a queue instead of a list since it's faster, and finally there's a tuple of a sprite and a transform component
     /// </summary>
     static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp)>>> worldLayerSprites = [];
-    internal static Camera2D rlcam = new() {
-        Target = new Vector2(0, 0),
-        Offset = new Vector2(settings.renderSize.x / 2, settings.renderSize.y / 2),
-        Rotation = 0,
-        Zoom = 1,
-    };
+    internal static Camera2D rlcam;
+
+    internal static void create()
+    {
+        rlcam = new Camera2D {
+            Target = new Vector2(0, 0),
+            Offset = new Vector2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
+                                 (float)(settings.renderSize.y * Renderer.scaleFactor) / 2f),
+            Rotation = 0,
+            Zoom = 1,
+        };
+    }
 
     /// <summary>
     /// adds a sprite to the world, intended to be used by TileComp. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
@@ -42,13 +48,14 @@ public static class Tilemap {
 
     internal static void update()
     {
+        //log(rlcam.Offset.X, rlcam.Offset.Y);
         while (worldLayerSprites[world][layer].Count > 0) {
             var sprtf = worldLayerSprites[world][layer].Dequeue();
             // slightly complicated lmao
             Raylib.DrawTexturePro(
                 sprtf.Item1.rlSprite,
                 new Rectangle(0, 0, sprtf.Item1.size.x, sprtf.Item1.size.y),
-                new Rectangle((float)sprtf.Item2.position.x, (float)sprtf.Item2.position.y,
+                new Rectangle((float)sprtf.Item2.position.x, (float)sprtf.Item2.position.z,
                     (float)(sprtf.Item1.size.x * sprtf.Item2.scale.x),
                     (float)(sprtf.Item1.size.y * sprtf.Item2.scale.y)),
                 new Vector2((float)(sprtf.Item1.size.x * sprtf.Item2.scale.x) / 2,
@@ -57,6 +64,14 @@ public static class Tilemap {
                 new Color(sprtf.Item2.tint.r, sprtf.Item2.tint.g, sprtf.Item2.tint.b, sprtf.Item2.tint.a)
             );
         }
+    }
+
+    /// <summary>
+    /// annihilates an entire world from existence
+    /// </summary>
+    public static void cleanupWorld(string world)
+    {
+        worldLayerSprites.Remove(world);
     }
 }
 
@@ -76,10 +91,13 @@ public static class Camera
     /// an offset applied to the camera's target
     /// </summary>
     public static vec2 offset {
-        get => vec2(settings.renderSize.x / 2, settings.renderSize.y / 2)
-               + vec2(Tilemap.rlcam.Offset.X, Tilemap.rlcam.Offset.Y);
-        set => Tilemap.rlcam.Offset = new Vector2((float)value.x, (float)value.y)
-               + new Vector2(settings.renderSize.x / 2, settings.renderSize.y / 2);
+        get => vec2(Tilemap.rlcam.Offset.X, Tilemap.rlcam.Offset.Y) -
+                    vec2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
+                         (float)(settings.renderSize.x * Renderer.scaleFactor) / 2f);
+
+        set => Tilemap.rlcam.Offset = new Vector2((float)value.x, (float)value.y) +
+                    new Vector2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
+                                (float)(settings.renderSize.x * Renderer.scaleFactor) / 2f);
     }
     /// <summary>
     /// camera rotation in degrees

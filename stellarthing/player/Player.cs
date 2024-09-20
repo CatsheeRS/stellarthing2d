@@ -14,7 +14,7 @@ public class Player : IEntity
     Sprite spr = load<Sprite>("bob_guy.png");
 
     TransformComp tf = new() {
-        position = vec3(0, 0, 0),
+        position = vec3(-500, 0, -500),
     };
     TileComp render = new();
 
@@ -22,8 +22,9 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        Camera.target = vec2(tf.position.x, tf.position.y);
-        tf.rotation += 1;
+        //Camera.target = vec2(tf.position.x, tf.position.z);
+        tf.position += vec3(100 * delta, 0, 100 * delta);
+        tf.rotation += 750 * delta;
         render.update(spr, tf);
     }
 }

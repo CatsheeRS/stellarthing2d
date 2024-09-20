@@ -1,5 +1,6 @@
 using System;
 using Raylib_cs;
+using System.Numerics;
 using static starry.Starry;
 
 namespace starry;
@@ -10,10 +11,9 @@ namespace starry;
 public static partial class Renderer {
     static RenderTexture2D targetWorld;
     static RenderTexture2D targetUi;
-    static decimal scaleFactor = 1;
-    static decimal centerOffset = 0;
-    static decimal scrw = 0;
-    static decimal scrh = 0;
+    internal static float scaleFactor = 1;
+    static int scrw = 0;
+    static int scrh = 0;
 
     internal static void create()
     {
@@ -23,9 +23,9 @@ public static partial class Renderer {
         // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints,
         // and we use decimals instead of double so pixels aren't 0.001 pixels bigger than they should be
         scrw = Raylib.GetScreenWidth();
-        scrh = Raylib.GetScreenHeight();
-        scaleFactor = scrh / settings.renderSize.y;
-        centerOffset = (scrw - (settings.renderSize.x * (scrh / settings.renderSize.y))) / 2m;
+        scrh = Raylib.GetScreenHeight();        
+        // we put (float) so it doesn't do integer scaling, this isn't a pixel art game
+        scaleFactor = Math.Min((float)scrw / settings.renderSize.x, (float)scrh / settings.renderSize.y);
     }
 
     /// <summary>
@@ -62,13 +62,33 @@ public static partial class Renderer {
         Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            Raylib.DrawTextureRec(targetWorld.Texture, new Rectangle((float)centerOffset, 0,
-                (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
-                new System.Numerics.Vector2(0, 0), Color.White);
-            
-            Raylib.DrawTextureRec(targetUi.Texture, new Rectangle((float)centerOffset, 0,
-                (float)(settings.renderSize.x * scaleFactor), -(float)(settings.renderSize.y * scaleFactor)),
-                new System.Numerics.Vector2(0, 0), Color.White);
+            // help
+            Raylib.DrawTexturePro(
+                targetWorld.Texture,
+                new Rectangle(0f, 0f, targetWorld.Texture.Width, -targetWorld.Texture.Height),
+                new Rectangle((Raylib.GetScreenWidth() - settings.renderSize.x * scaleFactor) * 0.5f,
+                    (Raylib.GetScreenHeight() - settings.renderSize.y * scaleFactor) * 0.5f, settings.renderSize.x
+                    * scaleFactor, settings.renderSize.y * scaleFactor),
+                new Vector2(0, 0),
+                0f,
+                Color.White
+            );
+            Raylib.DrawTexturePro(
+                targetUi.Texture,
+                new Rectangle(0f, 0f, targetUi.Texture.Width, -targetUi.Texture.Height),
+                new Rectangle((Raylib.GetScreenWidth() - settings.renderSize.x * scaleFactor) * 0.5f,
+                    (Raylib.GetScreenHeight() - settings.renderSize.y * scaleFactor) * 0.5f, settings.renderSize.x
+                    * scaleFactor, settings.renderSize.y * scaleFactor),
+                new Vector2(0, 0),
+                0f,
+                Color.White
+            );
         Raylib.EndDrawing();
+    }
+
+    internal static void cleanup()
+    {
+        Raylib.UnloadRenderTexture(targetWorld);
+        Raylib.UnloadRenderTexture(targetUi);
     }
 }
