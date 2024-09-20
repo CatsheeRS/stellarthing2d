@@ -13,7 +13,7 @@ public static class Tilemap {
     /// <summary>
     /// the current world. by default it's space
     /// </summary>
-    public static string world { get; set; } = "space";
+    public static string world { get; set; } = "";
     /// <summary>
     /// the current layer of the world. the surface is 0
     /// </summary>
@@ -25,7 +25,7 @@ public static class Tilemap {
     static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp)>>> worldLayerSprites = [];
     internal static Camera2D rlcam = new() {
         Target = new Vector2(0, 0),
-        Offset = new Vector2(0, 0),
+        Offset = new Vector2(settings.renderSize.x / 2, settings.renderSize.y / 2),
         Rotation = 0,
         Zoom = 1,
     };
@@ -35,6 +35,8 @@ public static class Tilemap {
     /// </summary>
     public static void pushSprite(string world, int layer, Sprite sprite, TransformComp tf)
     {
+        if (!worldLayerSprites.ContainsKey(world)) worldLayerSprites.Add(world, []);
+        if (!worldLayerSprites[world].ContainsKey(layer)) worldLayerSprites[world].Add(layer, []);
         worldLayerSprites[world][layer].Enqueue((sprite, tf));
     }
 
@@ -74,8 +76,10 @@ public static class Camera
     /// an offset applied to the camera's target
     /// </summary>
     public static vec2 offset {
-        get => vec2(Tilemap.rlcam.Offset.X, Tilemap.rlcam.Offset.Y);
-        set => Tilemap.rlcam.Offset = new Vector2((float)value.x, (float)value.y);
+        get => vec2(settings.renderSize.x / 2, settings.renderSize.y / 2)
+               + vec2(Tilemap.rlcam.Offset.X, Tilemap.rlcam.Offset.Y);
+        set => Tilemap.rlcam.Offset = new Vector2((float)value.x, (float)value.y)
+               + new Vector2(settings.renderSize.x / 2, settings.renderSize.y / 2);
     }
     /// <summary>
     /// camera rotation in degrees

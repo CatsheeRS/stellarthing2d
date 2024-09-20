@@ -6,6 +6,7 @@ using static starry.Starry;
 
 create(new StarrySettings {
     startup = () => {
+        Tilemap.world = "space";
         World.addEntity(new Player());
     },
     gameName = "Stellarthing",
