@@ -56,4 +56,11 @@ public struct vec2(double x, double y) {
     /// adds a y component, which is used for layers by the top down renderer
     /// </summary>
     public readonly vec3 as3d(double layer) => new(x, layer, y);
+
+    // for using vec2 in switch statements :D
+    public readonly void Deconstruct(out double ecks, out double why)
+    {
+        ecks = x;
+        why = y;
+    }
 }

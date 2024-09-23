@@ -41,4 +41,12 @@ public struct vec3i(int x, int y, int z) {
         hash.Add(z);
         return hash.ToHashCode();
     }
+
+    // for using vec3i in switch statements :D
+    public readonly void Deconstruct(out int ecks, out int why, out int zeezed)
+    {
+        ecks = x;
+        why = y;
+        zeezed = z;
+    }
 }

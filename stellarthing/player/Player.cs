@@ -31,11 +31,23 @@ public class Player : IEntity
         if (Input.isKeymapPressed("move_down")) velocity += vec2(0, 1);
         if (Input.isKeymapPressed("move_left")) velocity -= vec2(1, 0);
         if (Input.isKeymapPressed("move_right")) velocity += vec2(1, 0);
+        vec2 dir = velocity;
         velocity = velocity.normalized() * vec2(speed * delta, speed * delta);
         tf.position += velocity.as3d(0);
 
         // rotate stuff
-        tf.rotation += 100 * delta;
+        // yes this is all hardcoded and there's nothing you can do about it
+        tf.rotation = dir switch {
+            vec2(0, 1) => 0,
+            vec2(0, -1) => 180,
+            vec2(1, 0) => -90,
+            vec2(-1, 0) => 90,
+            vec2(1, -1) => -135,
+            vec2(-1, -1) => 135,
+            vec2(-1, 1) => 45,
+            vec2(1, 1) => -45,
+            _ => tf.rotation,
+        };
 
         render.update(spr, tf);
         Camera.target = tf.position.as2d();

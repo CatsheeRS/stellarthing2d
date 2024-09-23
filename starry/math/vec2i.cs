@@ -40,4 +40,11 @@ public struct vec2i(int x, int y) {
         hash.Add(y);
         return hash.ToHashCode();
     }
+
+    // for using vec2i in switch statements :D
+    public readonly void Deconstruct(out int ecks, out int why)
+    {
+        ecks = x;
+        why = y;
+    }
 }

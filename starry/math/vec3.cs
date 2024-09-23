@@ -46,4 +46,12 @@ public struct vec3(double x, double y, double z) {
     /// extracts the y component, which is used for layers by the top down renderer
     /// </summary>
     public readonly vec2 as2d() => new(x, z);
+
+    // for using vec3 in switch statements :D
+    public readonly void Deconstruct(out double ecks, out double why, out double zeezed)
+    {
+        ecks = x;
+        why = y;
+        zeezed = z;
+    }
 }
