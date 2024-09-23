@@ -14,7 +14,10 @@ create(new StarrySettings {
     gameVersion = "v0.8.0",
     verbose = args.Contains("--verbose") || isDebug(),
     keymap = {
-        {"explode", [Key.space]},
+        {"move_up", [Key.w, Key.arrowUp]},
+        {"move_left", [Key.a, Key.arrowLeft]},
+        {"move_down", [Key.s, Key.arrowDown]},
+        {"move_right", [Key.d, Key.arrowRight]},
     },
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),

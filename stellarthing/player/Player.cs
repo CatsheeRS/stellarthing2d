@@ -12,10 +12,10 @@ public class Player : IEntity
     };
 
     Sprite spr = load<Sprite>("bob_guy.png");
-    //double speed = 400;
+    double speed = 350;
 
     TransformComp tf = new() {
-        position = vec3(-500, 0, -500),
+        position = vec3(0, 0, 0),
     };
     TileComp render = new();
 
@@ -23,8 +23,21 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        Camera.target = tf.position.as2d();
-        tf.rotation = World.lookAt(tf.position.as2d(), Application.getMousePosition());
+        // move :D
+        // TODO: add a physics component for managing velocity and collisions (something like ps.velocity with
+        // a setter to apply collisions)
+        vec2 velocity = vec2();
+        if (Input.isKeymapPressed("move_up")) velocity -= vec2(0, 1);
+        if (Input.isKeymapPressed("move_down")) velocity += vec2(0, 1);
+        if (Input.isKeymapPressed("move_left")) velocity -= vec2(1, 0);
+        if (Input.isKeymapPressed("move_right")) velocity += vec2(1, 0);
+        velocity = velocity.normalized() * vec2(speed * delta, speed * delta);
+        tf.position += velocity.as3d(0);
+
+        // rotate stuff
+        tf.rotation += 100 * delta;
+
         render.update(spr, tf);
+        Camera.target = tf.position.as2d();
     }
 }

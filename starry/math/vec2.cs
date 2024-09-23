@@ -40,7 +40,7 @@ public struct vec2(double x, double y) {
         return hash.ToHashCode();
     }
 
-    public readonly vec2 normalize()
+    public readonly vec2 normalized()
     {
         vec2 r = this;
         double l = x * x + y * y;
@@ -51,4 +51,9 @@ public struct vec2(double x, double y) {
         }
         return r;
     }
+
+    /// <summary>
+    /// adds a y component, which is used for layers by the top down renderer
+    /// </summary>
+    public readonly vec3 as3d(double layer) => new(x, layer, y);
 }

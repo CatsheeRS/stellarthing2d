@@ -29,8 +29,8 @@ public static class Tilemap {
     {
         rlcam = new Camera2D {
             Target = new Vector2(0, 0),
-            Offset = new Vector2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
-                                 (float)(settings.renderSize.y * Renderer.scaleFactor) / 2f),
+            Offset = new Vector2(settings.renderSize.x / 2f,
+                                 settings.renderSize.y / 2f),
             Rotation = 0,
             Zoom = 1,
         };
@@ -55,11 +55,12 @@ public static class Tilemap {
             Raylib.DrawTexturePro(
                 sprtf.Item1.rlSprite,
                 new Rectangle(0, 0, sprtf.Item1.size.x, sprtf.Item1.size.y),
-                new Rectangle((float)sprtf.Item2.position.x, (float)sprtf.Item2.position.z,
+                new Rectangle((float)sprtf.Item2.position.x - -(float)(sprtf.Item1.size.x * sprtf.Item2.scale.x / 2),
+                    (float)sprtf.Item2.position.z - -(float)(sprtf.Item1.size.y * sprtf.Item2.scale.y / 2),
                     (float)(sprtf.Item1.size.x * sprtf.Item2.scale.x),
                     (float)(sprtf.Item1.size.y * sprtf.Item2.scale.y)),
                 new Vector2((float)(sprtf.Item1.size.x * sprtf.Item2.scale.x) / 2,
-                    (float)(sprtf.Item1.size.y * sprtf.Item2.scale.y) / 2),
+                            (float)(sprtf.Item1.size.y * sprtf.Item2.scale.y) / 2),
                 (float)sprtf.Item2.rotation,
                 new Color(sprtf.Item2.tint.r, sprtf.Item2.tint.g, sprtf.Item2.tint.b, sprtf.Item2.tint.a)
             );
@@ -92,12 +93,12 @@ public static class Camera
     /// </summary>
     public static vec2 offset {
         get => vec2(Tilemap.rlcam.Offset.X, Tilemap.rlcam.Offset.Y) -
-                    vec2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
-                         (float)(settings.renderSize.x * Renderer.scaleFactor) / 2f);
+                    vec2(settings.renderSize.x / 2f,
+                         settings.renderSize.y / 2f);
 
         set => Tilemap.rlcam.Offset = new Vector2((float)value.x, (float)value.y) +
-                    new Vector2((float)(settings.renderSize.x * Renderer.scaleFactor) / 2f,
-                                (float)(settings.renderSize.x * Renderer.scaleFactor) / 2f);
+                    new Vector2(settings.renderSize.x * Renderer.scaleFactor / 2f,
+                                settings.renderSize.y * Renderer.scaleFactor / 2f);
     }
     /// <summary>
     /// camera rotation in degrees
