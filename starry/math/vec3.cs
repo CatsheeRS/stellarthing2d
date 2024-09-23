@@ -41,4 +41,9 @@ public struct vec3(double x, double y, double z) {
         hash.Add(z);
         return hash.ToHashCode();
     }
+
+    /// <summary>
+    /// extracts the y component, which is used for layers by the top down renderer
+    /// </summary>
+    public readonly vec2 as2d() => new(x, z);
 }

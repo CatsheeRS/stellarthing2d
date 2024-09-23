@@ -120,4 +120,17 @@ public static class World {
 
         // Tilemap.update() and Renderer.composite() are ran by Application immediately after updating the entities
     }
+
+    /// <summary>
+    /// returns a rotation that points somewhere. it's important to note that whatever you're using needs to point right for it to look right
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    public static double lookAt(vec2 from, vec2 to)
+    {
+        vec2 dir = (to - from).normalize();
+        double angle = Math.Atan2(dir.y, dir.x);
+        return rad2deg(angle);
+    }
 }

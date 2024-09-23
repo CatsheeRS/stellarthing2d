@@ -4,27 +4,25 @@ using static starry.Starry;
 
 namespace stellarthing;
 
-public class Player : IEntity
+public class SpaceScene : IEntity
 {
     public EntityInformation setup() => new() {
         type = EntityType.gameWorld,
-        tag = "player",
+        tag = "space_scene",
     };
 
-    Sprite spr = load<Sprite>("bob_guy.png");
-    //double speed = 400;
+    Sprite spr = load<Sprite>("galaxy.png");
 
     TransformComp tf = new() {
-        position = vec3(-500, 0, -500),
+        position = vec3(0, 0, 0),
+        scale = vec2(2, 2),
     };
     TileComp render = new();
 
-    public Player() {}
+    public SpaceScene() {}
 
     public void update(double delta)
     {
-        Camera.target = tf.position.as2d();
-        tf.rotation = World.lookAt(tf.position.as2d(), Application.getMousePosition());
         render.update(spr, tf);
     }
 }

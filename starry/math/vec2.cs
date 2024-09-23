@@ -39,4 +39,16 @@ public struct vec2(double x, double y) {
         hash.Add(y);
         return hash.ToHashCode();
     }
+
+    public readonly vec2 normalize()
+    {
+        vec2 r = this;
+        double l = x * x + y * y;
+        if (l != 0) {
+            l = Math.Sqrt(l);
+            r.x /= l;
+            r.y /= l;
+        }
+        return r;
+    }
 }

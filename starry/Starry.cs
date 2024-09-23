@@ -120,4 +120,13 @@ public static class Starry {
     {
         return Assets.load<T>(path);
     }
+
+    /// <summary>
+    /// converts degrees to radians
+    /// </summary>
+    public static double deg2rad(double deg) => deg * (Math.PI / 180);
+    /// <summary>
+    /// converts radians to degrees
+    /// </summary>
+    public static double rad2deg(double rad) => rad * (180 / Math.PI);
 }
