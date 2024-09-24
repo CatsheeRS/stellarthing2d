@@ -1,10 +1,13 @@
 # output stuff
 bin/
 obj/
-# i use kde and i like having this folder having the game's icon
+# kde momento
 .directory
 # backup stuff, we have git :DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 *.old
+# exported stuff
+stellarthing_linux.tar.gz
+stellarthing_windows.zip
 
 # bullshit
 # User-specific files
