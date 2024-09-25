@@ -11,7 +11,7 @@ create(new StarrySettings {
         World.addEntity(new Player());
     },
     gameName = "Stellarthing",
-    gameVersion = "v0.8.0",
+    gameVersion = "v0.9.0",
     verbose = args.Contains("--verbose") || isDebug(),
     keymap = {
         {"move_up", [Key.w, Key.arrowUp]},

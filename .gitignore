@@ -10,7 +10,7 @@ stellarthing_linux.tar.gz
 stellarthing_windows.zip
 
 # bullshit
-# User-specific files
+# User-specific files 
 *.rsuser
 *.suo
 *.user
