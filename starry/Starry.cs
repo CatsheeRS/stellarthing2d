@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace starry;
@@ -30,33 +31,36 @@ public static class Starry {
     {
         if (!settings.verbose) return;
 
+        StringBuilder str = new();
         foreach (var item in x) {
             // we optimize common types so the game doesn't explode
             switch (item) {
-                case string str: Console.Write(str); break;
-                case sbyte i8: Console.Write(i8.ToString("N0")); break;
-                case byte u8: Console.Write(u8.ToString("N0")); break;
-                case short i16: Console.Write(i16.ToString("N0")); break;
-                case ushort u16: Console.Write(u16.ToString("N0")); break;
-                case int i32: Console.Write(i32.ToString("N0")); break;
-                case uint u32: Console.Write(u32.ToString("N0")); break;
-                case long i64: Console.Write(i64.ToString("N0")); break;
-                case ulong u64: Console.Write(u64.ToString("N0")); break;
-                case float f32: Console.Write(f32.ToString("N0")); break;
-                case double f64: Console.Write(f64.ToString("N0")); break;
-                case decimal f128: Console.Write(f128.ToString("N0")); break;
-                case bool boo: Console.Write(boo ? "true" : "false"); break;
-                case vec2 vecthesecond: Console.Write($"({vecthesecond.x}, {vecthesecond.y})"); break;
-                case vec2i vecthesecondi: Console.Write($"({vecthesecondi.x}, {vecthesecondi.y})"); break;
-                case vec3 vecthethird: Console.Write($"({vecthethird.x}, {vecthethird.y}, {vecthethird.z})"); break;
-                case vec3i vecthethirdi: Console.Write($"({vecthethirdi.x}, {vecthethirdi.y}, {vecthethirdi.z})"); break;
-                case null: Console.Write("null"); break;
-                default: Console.Write(JsonConvert.SerializeObject(item, Formatting.Indented)); break;
+                case string strr: str.Append(strr); break;
+                case sbyte i8: str.Append(i8.ToString("N0")); break;
+                case byte u8: str.Append(u8.ToString("N0")); break;
+                case short i16: str.Append(i16.ToString("N0")); break;
+                case ushort u16: str.Append(u16.ToString("N0")); break;
+                case int i32: str.Append(i32.ToString("N0")); break;
+                case uint u32: str.Append(u32.ToString("N0")); break;
+                case long i64: str.Append(i64.ToString("N0")); break;
+                case ulong u64: str.Append(u64.ToString("N0")); break;
+                case float f32: str.Append(f32.ToString("N0")); break;
+                case double f64: str.Append(f64.ToString("N0")); break;
+                case decimal f128: str.Append(f128.ToString("N0")); break;
+                case bool boo: str.Append(boo ? "true" : "false"); break;
+                case vec2 vecthesecond: str.Append($"({vecthesecond.x}, {vecthesecond.y})"); break;
+                case vec2i vecthesecondi: str.Append($"({vecthesecondi.x}, {vecthesecondi.y})"); break;
+                case vec3 vecthethird: str.Append($"({vecthethird.x}, {vecthethird.y}, {vecthethird.z})"); break;
+                case vec3i vecthethirdi: str.Append($"({vecthethirdi.x}, {vecthethirdi.y}, {vecthethirdi.z})"); break;
+                case null: str.Append("null"); break;
+                default: str.Append(JsonConvert.SerializeObject(item, Formatting.Indented)); break;
             }
 
-            if (x.Length > 1) Console.Write(", ");
+            if (x.Length > 1) str.Append(", ");
         }
-        Console.WriteLine();
+        str.Append('\n');
+        Console.Write(str);
+        DebugMode.text += str;
     }
     
     /// <summary>

@@ -41,7 +41,7 @@ public struct StarrySettings
     /// </summary>
     public vec2i tileSize { get; set; } = vec2i(1, 1);
     /// <summary>
-    /// if true, the window can be resized once made windowed with F11
+    /// font used for debug mode
     /// </summary>
-    public bool resizable { get; set; } = true;
+    public Font? debugFont { get; set; }
 }

@@ -42,7 +42,6 @@ public static partial class Renderer {
     /// </summary>
     internal static void renderWorld()
     {
-            if (isDebug()) Raylib.DrawFPS(0, 0);
         Raylib.EndTextureMode();
         
         Raylib.BeginTextureMode(targetWorld);

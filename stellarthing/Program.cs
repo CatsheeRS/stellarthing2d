@@ -22,4 +22,5 @@ create(new StarrySettings {
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),
     tileSize = vec2i(96, 96),
+    debugFont = load<Font>("ui/RedHatText-Bold.tff"),
 });

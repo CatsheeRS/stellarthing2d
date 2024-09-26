@@ -21,15 +21,15 @@ public class TextComp {
     /// <summary>
     /// the position (based in global coordinates)
     /// </summary>
-    public vec2 position { get; set; }
+    public vec2 position { get; set; } = vec2();
     /// <summary>
     /// the size the font is limited to, does nothing is <c>wordWrap</c> is disabled
     /// </summary>
-    public vec2 size { get; set; }
+    public vec2 size { get; set; } = vec2();
     /// <summary>
     /// if true, the text will wrap around <c>size</c>
     /// </summary>
-    public bool wordWrap { get; set; }
+    public bool wordWrap { get; set; } = false;
     /// <summary>
     /// the color of the text
     /// </summary>
