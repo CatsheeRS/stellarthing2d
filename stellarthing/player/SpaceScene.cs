@@ -13,7 +13,7 @@ public class SpaceScene : IEntity
 
     Sprite spr = load<Sprite>("galaxy.png");
 
-    TransformComp tf = new() {
+    TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
         scale = vec2(2, 2),
     };

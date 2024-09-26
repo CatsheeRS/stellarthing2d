@@ -22,7 +22,7 @@ public static class Tilemap {
     /// <summary>
     /// as the name implies, it's a bunch of sprites for the layers of the worlds. this type declaration is a mess, so first there's a dictionary of worlds, then there's the layers, which is a dictionary since there can be an indefinite amount of positive and negative indexes, then there's a queue instead of a list since it's faster, and finally there's a tuple of a sprite and a transform component
     /// </summary>
-    static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp)>>> worldLayerSprites = [];
+    static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp3D)>>> worldLayerSprites = [];
     internal static Camera2D rlcam;
 
     internal static void create()
@@ -39,7 +39,7 @@ public static class Tilemap {
     /// <summary>
     /// adds a sprite to the world, intended to be used by TileComp. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
     /// </summary>
-    public static void pushSprite(string world, int layer, Sprite sprite, TransformComp tf)
+    public static void pushSprite(string world, int layer, Sprite sprite, TransformComp3D tf)
     {
         if (!worldLayerSprites.ContainsKey(world)) worldLayerSprites.Add(world, []);
         if (!worldLayerSprites[world].ContainsKey(layer)) worldLayerSprites[world].Add(layer, []);

@@ -14,7 +14,7 @@ public class Player : IEntity
     Sprite spr = load<Sprite>("bob_guy.png");
     double speed = 350;
 
-    TransformComp tf = new() {
+    TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
     };
     TileComp render = new();

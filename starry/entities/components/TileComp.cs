@@ -11,7 +11,7 @@ public class TileComp {
     /// <summary>
     /// run in your update function
     /// </summary>
-    public void update(Sprite sprite, TransformComp tf)
+    public void update(Sprite sprite, TransformComp3D tf)
     {
         Tilemap.pushSprite(Tilemap.world, (int)Math.Round(tf.position.y), sprite, tf);
     }
