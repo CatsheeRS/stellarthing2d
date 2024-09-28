@@ -41,7 +41,8 @@ public struct StarrySettings
     /// </summary>
     public vec2i tileSize { get; set; } = vec2i(1, 1);
     /// <summary>
-    /// font used for debug mode
+    /// path for font used for debug mode
     /// </summary>
-    public Font? debugFont { get; set; }
+    public string debugFont { get; set; } = "";
+    internal readonly Font actualDebugFont { get => Assets.load<Font>(debugFont); }
 }

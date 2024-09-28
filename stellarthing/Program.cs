@@ -6,6 +6,7 @@ using static starry.Starry;
 
 create(new StarrySettings {
     startup = () => {
+        load<Font>("ui/RedHatText-Bold.tff");
         Tilemap.world = "space";
         World.addEntity(new SpaceScene());
         World.addEntity(new Player());
@@ -22,5 +23,5 @@ create(new StarrySettings {
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),
     tileSize = vec2i(96, 96),
-    debugFont = load<Font>("ui/RedHatText-Bold.tff"),
+    debugFont = "ui/RedHatText-Bold.tff",
 });

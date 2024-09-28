@@ -9,6 +9,6 @@ namespace starry;
 public class Font : IAsset {
     internal Raylib_cs.Font rlfont;
 
-    public void load(string path) => rlfont = Raylib.LoadFont(path);
+    public void load(string path) => rlfont = Raylib.LoadFontEx(path, 16, [], 250);
     public void cleanup() => Raylib.UnloadFont(rlfont);
 }

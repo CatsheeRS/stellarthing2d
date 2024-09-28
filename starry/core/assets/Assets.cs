@@ -8,7 +8,7 @@ namespace starry;
 /// manages all things assets
 /// </summary>
 public static class Assets {
-    static Dictionary<string, IAsset> assets = [];
+    internal static Dictionary<string, IAsset> assets = [];
 
     /// <summary>
     /// loads an asset, with the path specified in the project settings. for efficiency, assets are loaded once and then put into a dictionary with the paths.
