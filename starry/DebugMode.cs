@@ -8,14 +8,14 @@ namespace starry;
 /// </summary>
 public static class DebugMode {
     static TextComp ltextrender = new() {
-        font = settings.actualDebugFont,
+        font = load<Font>(settings.defaultFont),
         fontSize = 24,
         position = vec2i(),
         size = settings.renderSize / vec2i(2, 1),
         wordWrap = true
     };
     static TextComp rtextrender = new() {
-        font = settings.actualDebugFont,
+        font = load<Font>(settings.defaultFont),
         fontSize = 24,
         position = vec2i(settings.renderSize.x / 2, 0),
         size = settings.renderSize / vec2i(2, 1),

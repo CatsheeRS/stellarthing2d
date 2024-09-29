@@ -41,8 +41,15 @@ public struct StarrySettings
     /// </summary>
     public vec2i tileSize { get; set; } = vec2i(1, 1);
     /// <summary>
-    /// path for font used for debug mode
+    /// path for the default font, must be a mono sprite font (it's easier when every character is the same size)
     /// </summary>
-    public string debugFont { get; set; } = "";
-    internal readonly Font actualDebugFont { get => Assets.load<Font>(debugFont); }
+    public string defaultFont { get; set; } = "";
+    /// <summary>
+    /// the size for every character in pixels, at a font size of 100. it needs to be a monospace font so every character has the same size
+    /// </summary>
+    public vec2i fontCharacterSize { get; set; } = vec2i();
+    /// <summary>
+    /// the grid for the characters in the sprite font, multiplied by <c>fontCharacterSize</c> since it's nicer that way
+    /// </summary>
+    public Dictionary<char, vec2i> fontCharacters { get; set; } = [];
 }
