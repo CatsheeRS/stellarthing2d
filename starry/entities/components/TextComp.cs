@@ -14,7 +14,7 @@ public class TextComp {
     /// <summary>
     /// the font to use
     /// </summary>
-    public required Font font { get; set; }
+    public Font font { get; set; } = load<Font>(settings.defaultFont);
     /// <summary>
     /// the font size in pixels
     /// </summary>
@@ -23,6 +23,10 @@ public class TextComp {
     /// the position (based in global coordinates)
     /// </summary>
     public vec2i position { get; set; } = vec2i();
+    /// <summary>
+    /// rotation in degrees
+    /// </summary>
+    public double rotation { get; set; } = 0;
     /// <summary>
     /// the size the font is limited to, does nothing is <c>wordWrap</c> is disabled
     /// </summary>
@@ -41,14 +45,10 @@ public class TextComp {
     /// </summary>
     public void update(string text)
     {
-        uint spacing = 2 * fontSize;
-        double lineStuff = 1.2;
-        Raylib.SetTextLineSpacing((int)(fontSize * lineStuff));
-
         if (!wordWrap) {
-            Raylib.DrawTextPro(font.rlfont, text, new Vector2(position.x, position.y), Vector2.Zero,
-                0, fontSize, spacing, new Color(color.r, color.g, color.b, color.a));
+            TextUtil.drawText(text, position, fontSize, rotation, color, font);
         }
+
         // this is chatgpt i can't be bothered to write this
         else {
             string[] words = text.Split(' ');
@@ -75,10 +75,8 @@ public class TextComp {
             Raylib.BeginScissorMode(position.x, position.y, size.x, size.y);
                 int yoffset = 0;
                 while (wrappedLines.Count > 0) {
-                    Raylib.DrawTextPro(font.rlfont, wrappedLines.Dequeue(), new Vector2(position.x, position.y + 
-                        yoffset), Vector2.Zero, 0, fontSize, spacing, new Color(color.r, color.g, color.b, color.a));
-                    
-                    yoffset += (int)(fontSize * lineStuff);
+                    TextUtil.drawText(wrappedLines.Dequeue(), position, fontSize, rotation, color, font);
+                    yoffset += (int)(fontSize / 100 * settings.fontCharacterSize.y);
                 }
             Raylib.EndScissorMode();
         }

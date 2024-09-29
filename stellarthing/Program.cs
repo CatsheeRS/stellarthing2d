@@ -26,6 +26,7 @@ create(new StarrySettings {
     defaultFont = "ui/RedHatText-Bold.tff",
     fontCharacterSize = vec2i(60, 131),
     fontCharacters = new() {
+        {'\0', vec2i(30, 4)}, // for invalid characters
         {' ', vec2i(0, 0)},
         {'!', vec2i(1, 0)},
         {'"', vec2i(2, 0)},

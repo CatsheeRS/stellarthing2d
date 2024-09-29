@@ -4,11 +4,11 @@ using static starry.Starry;
 namespace starry;
 
 /// <summary>
-/// it's a font (ttf, not a sprite font)
+/// it's a sprite font
 /// </summary
 public class Font : IAsset {
-    internal Raylib_cs.Font rlfont;
+    internal Texture2D texture;
 
-    public void load(string path) => rlfont = Raylib.LoadFontEx(path, 16, [], 250);
-    public void cleanup() => Raylib.UnloadFont(rlfont);
+    public void load(string path) => texture = Raylib.LoadTexture(path);
+    public void cleanup() => Raylib.UnloadTexture(texture);
 }
