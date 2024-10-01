@@ -37,17 +37,15 @@ public static partial class TextUtil {
     /// <summary>
     /// draws many characters :D
     /// </summary>
-    public static void drawText(string str, vec2i pos, uint fontSize, double rotation, color tint, Font font)
+    public static void drawText(string s, vec2i pos, uint fontSize, double rot, color tint, Font font, RenderTexture2D rt)
     {
         uint xoffset = 0;
         uint yoffset = 0;
         vec2i size = vec2i();
 
         // draw to a texture so we can also rotate it lol
-        // TODO: don't annihilate performance loading and unloading a render texture every frame
-        RenderTexture2D rt = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
         Raylib.BeginTextureMode(rt);
-            foreach (var c in str) {
+            foreach (var c in s) {
                 if (c == '\n') {
                     yoffset += (uint)(settings.fontCharacterSize.y * (fontSize / 100));
                     size += vec2i(0, (int)yoffset);
@@ -67,9 +65,9 @@ public static partial class TextUtil {
             new Rectangle(0, 0, size.x, size.y),
             new Rectangle(pos.x, pos.y, size.x, size.y),
             new System.Numerics.Vector2(size.x / 2, size.y / 2),
-            (float)rotation,
+            (float)rot,
             new Color(tint.r, tint.g, tint.b, tint.a)
         );
-        Raylib.UnloadRenderTexture(rt);
+        log(size, pos, size / vec2i(2, 2), rot, tint);
     }
 }

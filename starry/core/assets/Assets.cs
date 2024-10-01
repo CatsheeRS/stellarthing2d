@@ -15,6 +15,11 @@ public static class Assets {
     /// </summary>
     public static T load<T>(string path) where T : IAsset, new()
     {
+        if (!Application.raylibSetup) {
+            log("Raylib hasn't started yet, assets can't be loaded yet");
+            return new();
+        }
+
         if (!assets.TryGetValue(path, out IAsset? value)) {
             T canigetaT = new();
             canigetaT.load($"{settings.assetPath}/{path}");

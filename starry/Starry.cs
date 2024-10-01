@@ -52,6 +52,7 @@ public static class Starry {
                 case vec2i vecthesecondi: str.Append($"({vecthesecondi.x}, {vecthesecondi.y})"); break;
                 case vec3 vecthethird: str.Append($"({vecthethird.x}, {vecthethird.y}, {vecthethird.z})"); break;
                 case vec3i vecthethirdi: str.Append($"({vecthethirdi.x}, {vecthethirdi.y}, {vecthethirdi.z})"); break;
+                case color col: str.Append($"rgba({col.r}, {col.g}, {col.b}, {col.a})"); break;
                 case null: str.Append("null"); break;
                 default: str.Append(JsonConvert.SerializeObject(item, Formatting.Indented)); break;
             }

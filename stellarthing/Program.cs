@@ -6,7 +6,6 @@ using static starry.Starry;
 
 create(new StarrySettings {
     startup = () => {
-        load<Font>("ui/RedHatText-Bold.tff");
         Tilemap.world = "space";
         World.addEntity(new SpaceScene());
         World.addEntity(new Player());
@@ -23,7 +22,7 @@ create(new StarrySettings {
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(1920, 1080),
     tileSize = vec2i(96, 96),
-    defaultFont = "ui/RedHatText-Bold.tff",
+    defaultFont = "ui/fira_code_spritefont.png",
     fontCharacterSize = vec2i(60, 131),
     fontCharacters = new() {
         {'\0', vec2i(30, 4)}, // for invalid characters

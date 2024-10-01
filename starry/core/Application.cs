@@ -12,6 +12,10 @@ public static partial class Application {
     /// current delta time
     /// </summary>
     public static double delta { get; set; } = 0;
+    /// <summary>
+    /// if true, raylib has been setup
+    /// </summary>
+    public static bool raylibSetup { get; set; } = false;
     static double prevtime;
     static bool isfullscreen = true;
 
@@ -21,6 +25,7 @@ public static partial class Application {
     {
         // setup stuff
         Raylib.InitWindow(Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), settings.gameName);
+        raylibSetup = true;
         Raylib.SetWindowState(ConfigFlags.FullscreenMode);
         if (isDebug()) {
             Raylib.SetExitKey(KeyboardKey.F8);
@@ -33,8 +38,11 @@ public static partial class Application {
         Raylib.SetTargetFPS(60);
         Renderer.create();
         Tilemap.create();
+        log("figma");
+        DebugMode.create();
         prevtime = getTime();
         log("Engine finished startup");
+        raylibSetup = true;
 
         // this is where the game starts running
         settings.startup();
@@ -59,6 +67,7 @@ public static partial class Application {
         }
 
         // clean up and close and stuff
+        log("Ending engine");
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Assets.cleanup();
         Renderer.cleanup();

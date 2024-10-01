@@ -82,6 +82,9 @@ public static partial class Renderer {
                 0f,
                 Color.White
             );
+
+            // the debug mode is very peculiar
+            DebugMode.update();
         Raylib.EndDrawing();
     }
 

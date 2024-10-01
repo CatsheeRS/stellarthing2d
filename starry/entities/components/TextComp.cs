@@ -18,7 +18,7 @@ public class TextComp {
     /// <summary>
     /// the font size in pixels
     /// </summary>
-    public required uint fontSize { get; set; }
+    public uint fontSize { get; set; } = 30;
     /// <summary>
     /// the position (based in global coordinates)
     /// </summary>
@@ -39,52 +39,58 @@ public class TextComp {
     /// the color of the text
     /// </summary>
     public color color { get; set; } = color.white;
+    RenderTexture2D rt;
+
+    public TextComp()
+    {
+        rt = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
+    }
 
     /// <summary>
     /// run in your update function
     /// </summary>
     public void update(string text)
     {
-        if (!wordWrap) {
-            TextUtil.drawText(text, position, fontSize, rotation, color, font);
-        }
+        // if (!wordWrap) {
+            TextUtil.drawText(text, position, fontSize, rotation, color, font, rt);
+        // }
 
         // this is chatgpt i can't be bothered to write this
-        else {
-            string[] words = text.Split(' ');
-            Queue<string> wrappedLines = [];
-            string currentLine = "";
-            uint lineLength = (uint)(size.x / fontSize);
+        // else {
+        //     string[] words = text.Split(' ');
+        //     Queue<string> wrappedLines = [];
+        //     string currentLine = "";
+        //     uint lineLength = (uint)(size.x / fontSize);
             
-            // i sure hope this doesn't annihilate performance
-            // TODO: don't annihilate performance
-            foreach (var word in words) {
-                if ((currentLine.Length + word.Length + 1) > lineLength) {
-                    wrappedLines.Enqueue(currentLine.Trim());
-                    currentLine = word + " ";
-                }
-                else currentLine += word + " ";
-            }
+        //     // i sure hope this doesn't annihilate performance
+        //     // TODO: don't annihilate performance
+        //     foreach (var word in words) {
+        //         if ((currentLine.Length + word.Length + 1) > lineLength) {
+        //             wrappedLines.Enqueue(currentLine.Trim());
+        //             currentLine = word + " ";
+        //         }
+        //         else currentLine += word + " ";
+        //     }
             
-            if (!string.IsNullOrEmpty(currentLine.Trim())) {
-                wrappedLines.Enqueue(currentLine.Trim());
-            }
+        //     if (!string.IsNullOrEmpty(currentLine.Trim())) {
+        //         wrappedLines.Enqueue(currentLine.Trim());
+        //     }
 
-            // render stuff (i actually wrote this)
-            // it's in scissor mode since it looks better and is easier than stopping when we run out of lines
-            Raylib.BeginScissorMode(position.x, position.y, size.x, size.y);
-                int yoffset = 0;
-                while (wrappedLines.Count > 0) {
-                    TextUtil.drawText(wrappedLines.Dequeue(), position, fontSize, rotation, color, font);
-                    yoffset += (int)(fontSize / 100 * settings.fontCharacterSize.y);
-                }
-            Raylib.EndScissorMode();
-        }
+        //     // render stuff (i actually wrote this)
+        //     // it's in scissor mode since it looks better and is easier than stopping when we run out of lines
+        //     Raylib.BeginScissorMode(position.x, position.y, size.x, size.y);
+        //         int yoffset = 0;
+        //         while (wrappedLines.Count > 0) {
+        //             TextUtil.drawText(wrappedLines.Dequeue(), position, fontSize, rotation, color, font, rt);
+        //             yoffset += (int)(fontSize / 100 * settings.fontCharacterSize.y);
+        //         }
+        //     Raylib.EndScissorMode();
+        // }
     }
 
-    enum WordWrapState
+    // i know
+    ~TextComp()
     {
-        measureState,
-        drawState
+        Raylib.UnloadRenderTexture(rt);
     }
 }

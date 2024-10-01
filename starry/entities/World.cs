@@ -99,7 +99,6 @@ public static class World {
 
         // the ui's next
         if (render) Renderer.renderUi();
-        if (render) DebugMode.update(); // the debug mode is very peculiar
         if (paused) {
             foreach (var entity in getGroup("layers.pause_ui")) {
                 if (func(entity)) return;
