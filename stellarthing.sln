@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stellarthing", "stellarthin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "starry", "starry\starry.csproj", "{A6782732-CC2F-4AAB-9B3A-B1158A9E5491}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sandboxrl", "sandboxrl\sandboxrl.csproj", "{B92C4B24-74F1-4E75-AEC0-A06AF8E699CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,13 @@ Global
 		{A6782732-CC2F-4AAB-9B3A-B1158A9E5491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6782732-CC2F-4AAB-9B3A-B1158A9E5491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6782732-CC2F-4AAB-9B3A-B1158A9E5491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07BB822A-C6C3-4CCD-A458-0B5FAEB0F1D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07BB822A-C6C3-4CCD-A458-0B5FAEB0F1D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07BB822A-C6C3-4CCD-A458-0B5FAEB0F1D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07BB822A-C6C3-4CCD-A458-0B5FAEB0F1D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92C4B24-74F1-4E75-AEC0-A06AF8E699CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92C4B24-74F1-4E75-AEC0-A06AF8E699CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92C4B24-74F1-4E75-AEC0-A06AF8E699CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92C4B24-74F1-4E75-AEC0-A06AF8E699CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
