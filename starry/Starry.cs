@@ -25,7 +25,7 @@ public static class Starry {
     }
 
     /// <summary>
-    /// it's like Console.WriteLine() but it doesn't print garbage with any custom types or lists or dictionaries
+    /// it's like Console.WriteLine() but it doesn't print garbage with any custom types or lists or dictionaries. keep in mind this might shit itself if it's running every frame in debug mode
     /// </summary>
     public static void log(params object[] x)
     {

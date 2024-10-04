@@ -15,7 +15,7 @@ public static partial class Application {
     /// <summary>
     /// if true, raylib has been setup
     /// </summary>
-    public static bool raylibSetup { get; set; } = false;
+    public static bool windowCreated { get; set; } = false;
     static double prevtime;
     static bool isfullscreen = true;
 
@@ -24,25 +24,22 @@ public static partial class Application {
     public unsafe static void create()
     {
         // setup stuff
-        Raylib.InitWindow(Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), settings.gameName);
-        raylibSetup = true;
-        Raylib.SetWindowState(ConfigFlags.FullscreenMode);
-        if (isDebug()) {
-            Raylib.SetExitKey(KeyboardKey.F8);
-        }
-        else {
-            Raylib.SetExitKey(KeyboardKey.Null);
-        }
+        Platform.createWindow(new WindowSettings {
+            title = $"{settings.gameName} {settings.gameVersion}",
+            size = vec2i(1, 1), // this doesn't matter when the window is fullscreen borderless
+            renderSize = settings.renderSize,
+            type = WindowType.fullscreenBorderless,
+        });
+        windowCreated = true;
 
         // more setup
         Raylib.SetTargetFPS(60);
         Renderer.create();
         Tilemap.create();
-        log("figma");
         DebugMode.create();
         prevtime = getTime();
         log("Engine finished startup");
-        raylibSetup = true;
+        windowCreated = true;
 
         // this is where the game starts running
         settings.startup();
