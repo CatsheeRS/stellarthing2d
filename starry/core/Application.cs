@@ -7,7 +7,7 @@ namespace starry;
 /// <summary>
 /// manages the lifecycle of the game
 /// </summary>
-public static partial class Application {
+public static class Application {
     /// <summary>
     /// current delta time
     /// </summary>
@@ -29,32 +29,33 @@ public static partial class Application {
             size = vec2i(1, 1), // this doesn't matter when the window is fullscreen borderless
             renderSize = settings.renderSize,
             type = WindowType.fullscreenBorderless,
+            targetFps = 60,
         });
         windowCreated = true;
 
         // more setup
-        Raylib.SetTargetFPS(60);
         Renderer.create();
         Tilemap.create();
         DebugMode.create();
-        prevtime = getTime();
+        prevtime = Platform.getTime() / 1000d;
         log("Engine finished startup");
-        windowCreated = true;
 
         // this is where the game starts running
         settings.startup();
 
         // main loop
-        while (!Raylib.WindowShouldClose()) {
+        while (!Platform.shouldClose()) {
             // get delta time :D
-            delta = getTime() - prevtime;
-            prevtime = getTime();
+            delta = Platform.getTime() - prevtime;
+            prevtime = Platform.getTime();
 
             // set fullscreen
-            if (Raylib.IsKeyPressed(KeyboardKey.F11)) {
-                if (isfullscreen) Raylib.SetWindowState(ConfigFlags.ResizableWindow);
-                else Raylib.SetWindowState(ConfigFlags.FullscreenMode);
-            }
+            // if (Raylib.IsKeyPressed(KeyboardKey.F11)) {
+            //     if (isfullscreen) Raylib.SetWindowState(ConfigFlags.ResizableWindow);
+            //     else Raylib.SetWindowState(ConfigFlags.FullscreenMode);
+            // }
+
+            // TODO: remake the f8 to exit on debug mode thing
 
             // render stuff and update entities since that's when entities render stuff
             // the renderer is called by the world since it has to switch between 2d and 3d and stuff
@@ -68,6 +69,6 @@ public static partial class Application {
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Assets.cleanup();
         Renderer.cleanup();
-        Raylib.CloseWindow();
+        Platform.cleanup();
     }
 }

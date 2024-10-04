@@ -40,6 +40,10 @@ public struct WindowSettings
     /// if true, the application can use high DPI
     /// </summary>
     public bool highDpi { get; set; } = false;
+    /// <summary>
+    /// the target fps for the thing
+    /// </summary>
+    public uint targetFps { get; set; } = 60;
 }
 
 public enum WindowType
@@ -52,10 +56,6 @@ public enum WindowType
     /// the window is fullscreen
     /// </summary>
     fullscreen,
-    /// <summary>
-    /// the window is not visible
-    /// </summary>
-    hidden,
     /// <summary>
     /// the window doesn't get decorations
     /// </summary>

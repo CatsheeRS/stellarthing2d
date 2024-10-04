@@ -1,6 +1,5 @@
 using System;
 using System.Numerics;
-using Raylib_cs;
 using static starry.Starry;
 
 namespace starry;
@@ -8,11 +7,7 @@ namespace starry;
 /// <summary>
 /// manages the lifecycle of the game
 /// </summary>
-public static partial class Application {
-    /// <summary>
-    /// time in seconds since the engine has started up
-    /// </summary>
-    public static double getTime() => Raylib.GetTime();
+public static class Application {
 
     /// <summary>
     /// gets the virtual mouse position, in the game's render size.
