@@ -1,6 +1,7 @@
 using System;
 using SDL2;
 using static starry.Starry;
+
 namespace starry;
 
 /// <summary>

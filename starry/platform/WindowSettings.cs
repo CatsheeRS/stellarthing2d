@@ -1,4 +1,5 @@
 using static starry.Starry;
+
 namespace starry;
 
 /// <summary>
