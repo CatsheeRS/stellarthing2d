@@ -44,6 +44,8 @@ public static class Application {
 
         // main loop
         while (!Platform.shouldClose()) {
+            Platform.startUpdate();
+
             // get delta time :D
             delta = Platform.getTime() - prevtime;
             prevtime = Platform.getTime();
@@ -61,6 +63,8 @@ public static class Application {
             World.updateEntities();
             Tilemap.update();
             Renderer.composite();
+
+            Platform.endUpdate();
         }
 
         // clean up and close and stuff

@@ -4,7 +4,7 @@ using static starry.Starry;
 namespace starry;
 
 /// <summary>
-/// key codes, mapped directly to raylib keys
+/// key codes
 /// </summary>
 public enum Key {
     unknown = 0,
@@ -86,11 +86,9 @@ public enum Key {
     leftShift = 340,
     leftControl = 341,
     leftAlt = 342,
-    leftSuper = 343,
     rightShift = 344,
     rightControl = 345,
     rightAlt = 346,
-    rightSuper = 347,
     menu = 348,
     leftBracket = 91,
     backslash = 92,
@@ -113,7 +111,4 @@ public enum Key {
     kpAdd = 334,
     kpEnter = 335,
     kpEqual = 336,
-    back = 4,
-    volumeUp = 24,
-    volumeDown = 25
 }
