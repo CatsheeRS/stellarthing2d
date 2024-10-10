@@ -278,16 +278,17 @@ public static class Platform
     }
 
     /// <summary>
-    /// returns a texture pointer which is used by sdl to render stuff, it's as nint since yes
+    /// returns a texture pointer and a size
     /// </summary>
-    public unsafe static nint loadTexture(string rawpath)
+    public unsafe static (nint, vec2i) loadTexture(string rawpath)
     {
         nint surf = IMG_Load(rawpath);
         nint optsurf = SDL_ConvertSurface(surf, ((SDL_Surface*)screenSurface.ToPointer())->format, 0);
         SDL_FreeSurface(surf);
         nint m = SDL_CreateTextureFromSurface(sdlRender, optsurf);
         SDL_FreeSurface(optsurf);
-        return m;
+        SDL_QueryTexture(m, out uint idontwant1, out int idontwant2, out int w, out int h);
+        return (m, vec2i(w, h));
     }
 
     public static void cleanupTexture(nint id)
