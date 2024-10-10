@@ -1,6 +1,9 @@
 using System;
+// help
 using static starry.Starry;
 using static SDL2.SDL;
+using static SDL2.SDL_image;
+using SDL2;
 
 namespace starry;
 
@@ -14,6 +17,7 @@ public static class Platform
     static ulong startTicks = 0;
     static double fps = 0;
     static nint sdlRender;
+    static nint screenSurface;
     public static event EventHandler? onInput;
 
     /// <summary>
@@ -22,8 +26,15 @@ public static class Platform
     /// <param name="settings"></param>
     public static void createWindow(WindowSettings settings)
     {
+        // TODO: don't init everything, don't init if it's just a server
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             log("FATAL ERROR: SDL couldn't initialize.");
+            return;
+        }
+
+        // no one uses .tif
+        if (IMG_Init(IMG_InitFlags.IMG_INIT_PNG | IMG_InitFlags.IMG_INIT_JPG | IMG_InitFlags.IMG_INIT_WEBP) < 0) {
+            log("FATAL ERROR: can't load images, which are probably important");
             return;
         }
 
@@ -49,6 +60,8 @@ public static class Platform
             log("FATAL ERROR: Couldn't create renderer");
             return;
         }
+
+        screenSurface = SDL_GetWindowSurface(window);
 
         Platform.settings = settings;
     }
@@ -262,5 +275,23 @@ public static class Platform
         SDL_DestroyWindow(window);
         SDL_DestroyRenderer(sdlRender);
         SDL_Quit();
+    }
+
+    /// <summary>
+    /// returns a texture pointer which is used by sdl to render stuff, it's as nint since yes
+    /// </summary>
+    public unsafe static nint loadTexture(string rawpath)
+    {
+        nint surf = IMG_Load(rawpath);
+        nint optsurf = SDL_ConvertSurface(surf, ((SDL_Surface*)screenSurface.ToPointer())->format, 0);
+        SDL_FreeSurface(surf);
+        nint m = SDL_CreateTextureFromSurface(sdlRender, optsurf);
+        SDL_FreeSurface(optsurf);
+        return m;
+    }
+
+    public static void cleanupTexture(nint id)
+    {
+        SDL_DestroyTexture(id);
     }
 }
