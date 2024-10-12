@@ -26,19 +26,19 @@ public static class Input {
     /// <summary>
     /// if true, the key is currently being held
     /// </summary>
-    public static bool isKeyPressed(Key key) => keystates[key] != inactive;
+    public static bool isKeyPressed(Key key) => keystates.TryGetValue(key, out byte value) && value != inactive;
     /// <summary>
     /// if true, the key just started being pressed
     /// </summary>
-    public static bool isKeyJustPressed(Key key) => keystates[key] == justPressed;
+    public static bool isKeyJustPressed(Key key) => keystates.TryGetValue(key, out byte value) && value == justPressed;
     /// <summary>
     /// if true, the key just stopped being pressed
     /// </summary>
-    public static bool isKeyReleased(Key key) => keystates[key] == justReleased;
+    public static bool isKeyReleased(Key key) => keystates.TryGetValue(key, out byte value) && value == justReleased;
     /// <summary>
     /// if true, the key isn't pressed at all
     /// </summary>
-    public static bool isKeyNotPressed(Key key) => keystates[key] == inactive;
+    public static bool isKeyNotPressed(Key key) => keystates.TryGetValue(key, out byte value) && value == inactive;
 
     /// <summary>
     /// if true, the keymap is currently being held

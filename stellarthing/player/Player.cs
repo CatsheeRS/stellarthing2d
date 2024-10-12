@@ -23,8 +23,6 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        log("g");
-        
         // move :D
         // TODO: add a physics component for managing velocity and collisions (something like ps.velocity with
         // a setter to apply collisions)

@@ -16,7 +16,7 @@ public static class Application {
     /// </summary>
     public static bool windowCreated { get; set; } = false;
     static double prevtime;
-    static bool isfullscreen = true;
+    //static bool isfullscreen = true;
 
     public static event EventHandler? onClose;
 

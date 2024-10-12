@@ -17,7 +17,6 @@ public static partial class Platform
     internal static double fps = 0;
     internal static nint sdlRender;
     internal static nint screenSurface;
-    public static event EventHandler? onInput;
 
     /// <summary>
     /// creates the window and stuff
@@ -81,10 +80,10 @@ public static partial class Platform
         // hell
         if (e.type == SDL_EventType.SDL_KEYDOWN) {
             Key k = sdlToStarryKey(e.key.keysym.scancode);
-            if (Input.keystates[k] == Input.inactive) {
+            if ((Input.keystates.TryGetValue(k, out byte v) ? v : Input.inactive) == Input.inactive) {
                 if (!Input.keystates.TryAdd(k, Input.justPressed)) Input.keystates[k] = Input.justPressed;
             }
-            else if (Input.keystates[k] == Input.justPressed) {
+            else if ((Input.keystates.TryGetValue(k, out byte w) ? w : Input.inactive) == Input.justPressed) {
                 if (!Input.keystates.TryAdd(k, Input.pressed)) Input.keystates[k] = Input.pressed;
             }
         }
@@ -260,10 +259,12 @@ public static partial class Platform
             }
         }
 
+        int i = 0;
         foreach (var fromwikipediathefreeencyclopedia in Input.mousefuckingstate) {
-            if (Input.mousefuckingstate[fromwikipediathefreeencyclopedia] == Input.justReleased) {
-                Input.mousefuckingstate[fromwikipediathefreeencyclopedia] = Input.inactive;
+            if (fromwikipediathefreeencyclopedia == Input.justReleased) {
+                Input.mousefuckingstate[i] = Input.inactive;
             }
+            i++;
         }
 
         SDL_RenderPresent(sdlRender);
