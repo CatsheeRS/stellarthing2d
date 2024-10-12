@@ -63,4 +63,9 @@ public struct vec2(double x, double y) {
         ecks = x;
         why = y;
     }
+
+    /// <summary>
+    /// it rounds the vector.
+    /// </summary>
+    public vec2i round() => new((int)Math.Round(x), (int)Math.Round(y));
 }

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using Raylib_cs;
 using static starry.Starry;
 
 namespace starry;
@@ -39,12 +37,7 @@ public class TextComp {
     /// the color of the text
     /// </summary>
     public color color { get; set; } = color.white;
-    RenderTexture2D rt;
-
-    public TextComp()
-    {
-        rt = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
-    }
+    Viewport view = new(settings.renderSize);
 
     /// <summary>
     /// run in your update function
@@ -52,7 +45,7 @@ public class TextComp {
     public void update(string text)
     {
         // if (!wordWrap) {
-            TextUtil.drawText(text, position, fontSize, rotation, color, font, rt);
+            TextUtil.drawText(text, position, fontSize, rotation, color, font, view);
         // }
 
         // this is chatgpt i can't be bothered to write this
@@ -86,11 +79,5 @@ public class TextComp {
         //         }
         //     Raylib.EndScissorMode();
         // }
-    }
-
-    // i know
-    ~TextComp()
-    {
-        Raylib.UnloadRenderTexture(rt);
     }
 }

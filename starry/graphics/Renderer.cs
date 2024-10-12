@@ -1,5 +1,4 @@
 using System;
-using Raylib_cs;
 using System.Numerics;
 using static starry.Starry;
 
@@ -9,23 +8,19 @@ namespace starry;
 /// manages all things rendering
 /// </summary>
 public static partial class Renderer {
-    static RenderTexture2D targetWorld;
-    static RenderTexture2D targetUi;
+    static Viewport? targetWorld;
+    static Viewport? targetUi;
     internal static float scaleFactor = 1;
-    static int scrw = 0;
-    static int scrh = 0;
 
     internal static void create()
     {
-        targetWorld = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
-        targetUi = Raylib.LoadRenderTexture(settings.renderSize.x, settings.renderSize.y);
+        targetWorld = new Viewport(settings.renderSize);
+        targetUi = new Viewport(settings.renderSize);
 
-        // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints,
-        // and we use decimals instead of double so pixels aren't 0.001 pixels bigger than they should be
-        scrw = Raylib.GetScreenWidth();
-        scrh = Raylib.GetScreenHeight();        
-        // we put (float) so it doesn't do integer scaling, this isn't a pixel art game
-        scaleFactor = Math.Min((float)scrw / settings.renderSize.x, (float)scrh / settings.renderSize.y);
+        // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints
+        // we convert it to a regular vec2 so it doesn't do integer scaling, this isn't a pixel art game
+        vec2 ü = Platform.getScreenSize();
+        scaleFactor = (float)Math.Min(ü.x / settings.renderSize.x, ü.y / settings.renderSize.y);
     }
 
     /// <summary>
@@ -33,8 +28,7 @@ public static partial class Renderer {
     /// </summary>
     internal static void renderUi()
     {
-        Raylib.BeginTextureMode(targetUi);
-            Raylib.ClearBackground(Color.Blank);
+        targetUi?.start(color.transparent);
     }
 
     /// <summary>
@@ -42,11 +36,9 @@ public static partial class Renderer {
     /// </summary>
     internal static void renderWorld()
     {
-        Raylib.EndTextureMode();
+        targetUi?.end();
         
-        Raylib.BeginTextureMode(targetWorld);
-            Raylib.BeginMode2D(Tilemap.rlcam);
-                Raylib.ClearBackground(Color.Blank);
+        targetWorld?.start(color.transparent);
     }
 
     /// <summary>
@@ -54,43 +46,26 @@ public static partial class Renderer {
     /// </summary>
     internal static void composite()
     {
-            Raylib.EndMode2D();
-        Raylib.EndTextureMode();
+        targetWorld?.end();
+        vec2 g = Platform.getScreenSize() - settings.renderSize * vec2(scaleFactor, scaleFactor);
+        vec2 j = settings.renderSize * vec2(scaleFactor, scaleFactor);
 
         // actually draw stuff
-        Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.Black);
+        // help
+        targetWorld?.render(
+            vec2i(), settings.renderSize,
+            vec2i((int)Math.Round(g.x), (int)Math.Round(g.y)),
+            vec2i((int)Math.Round(j.x), (int)Math.Round(j.y)),
+            0, vec2i(), color.white
+        );
+        targetUi?.render(
+            vec2i(), settings.renderSize,
+            vec2i((int)Math.Round(g.x), (int)Math.Round(g.y)),
+            vec2i((int)Math.Round(j.x), (int)Math.Round(j.y)),
+            0, vec2i(), color.white
+        );
 
-            // help
-            Raylib.DrawTexturePro(
-                targetWorld.Texture,
-                new Rectangle(0f, 0f, targetWorld.Texture.Width, -targetWorld.Texture.Height),
-                new Rectangle((Raylib.GetScreenWidth() - settings.renderSize.x * scaleFactor) * 0.5f,
-                    (Raylib.GetScreenHeight() - settings.renderSize.y * scaleFactor) * 0.5f, settings.renderSize.x
-                    * scaleFactor, settings.renderSize.y * scaleFactor),
-                new Vector2(0, 0),
-                0f,
-                Color.White
-            );
-            Raylib.DrawTexturePro(
-                targetUi.Texture,
-                new Rectangle(0f, 0f, targetUi.Texture.Width, -targetUi.Texture.Height),
-                new Rectangle((Raylib.GetScreenWidth() - settings.renderSize.x * scaleFactor) * 0.5f,
-                    (Raylib.GetScreenHeight() - settings.renderSize.y * scaleFactor) * 0.5f, settings.renderSize.x
-                    * scaleFactor, settings.renderSize.y * scaleFactor),
-                new Vector2(0, 0),
-                0f,
-                Color.White
-            );
-
-            // the debug mode is very peculiar
-            DebugMode.update();
-        Raylib.EndDrawing();
-    }
-
-    internal static void cleanup()
-    {
-        Raylib.UnloadRenderTexture(targetWorld);
-        Raylib.UnloadRenderTexture(targetUi);
+        // the debug mode is very peculiar
+        DebugMode.update();
     }
 }

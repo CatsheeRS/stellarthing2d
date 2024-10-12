@@ -52,6 +52,6 @@ public class Player : IEntity
         };
 
         render.update(spr, tf);
-        Camera.target = tf.position.as2d();
+        Camera.target = tf.position.as2d().round();
     }
 }

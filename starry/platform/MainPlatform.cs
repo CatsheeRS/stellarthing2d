@@ -4,20 +4,19 @@ using static starry.Starry;
 using static SDL2.SDL;
 using static SDL2.SDL_image;
 using SDL2;
-
 namespace starry;
 
 /// <summary>
 /// comically large class for platform abstractions. this currently uses SDL2 but i may change it
 /// </summary>
-public static class Platform
+public static partial class Platform
 {
-    static WindowSettings settings;
-    static nint window;
-    static ulong startTicks = 0;
-    static double fps = 0;
-    static nint sdlRender;
-    static nint screenSurface;
+    internal static WindowSettings settings;
+    internal static nint window;
+    internal static ulong startTicks = 0;
+    internal static double fps = 0;
+    internal static nint sdlRender;
+    internal static nint screenSurface;
     public static event EventHandler? onInput;
 
     /// <summary>
@@ -227,14 +226,23 @@ public static class Platform
     }
 
     /// <summary>
-    /// you should run this at the start of your main loop for things to work
+    /// you should run this at the start of your main loop for things to work. this also clears the screen
     /// </summary>
     public static void startUpdate()
     {
         startTicks = SDL_GetTicks64();
         
         SDL_GetMouseState(out int mx, out int my);
-        Input.mousePosition = vec2i(mx, my);
+        // fucking virtual mouse stuff
+        vec2 virt = vec2();
+        virt.x = (mx - ((getScreenSize().x - (settings.renderSize.x * Renderer.scaleFactor)) * 0.5))
+            / Renderer.scaleFactor;
+        virt.y = (mx - ((getScreenSize().y - (settings.renderSize.y * Renderer.scaleFactor)) * 0.5))
+            / Renderer.scaleFactor;
+        virt = vec2(Math.Clamp(virt.x, 0, settings.renderSize.x), Math.Clamp(virt.y, 0, settings.renderSize.y));
+        Input.mousePosition = vec2i((int)virt.x, (int)virt.y);
+
+        SDL_RenderClear(sdlRender);
     }
 
     /// <summary>
@@ -257,6 +265,8 @@ public static class Platform
                 Input.mousefuckingstate[fromwikipediathefreeencyclopedia] = Input.inactive;
             }
         }
+
+        SDL_RenderPresent(sdlRender);
     }
 
     /// <summary>
@@ -275,24 +285,5 @@ public static class Platform
         SDL_DestroyWindow(window);
         SDL_DestroyRenderer(sdlRender);
         SDL_Quit();
-    }
-
-    /// <summary>
-    /// returns a texture pointer and a size
-    /// </summary>
-    public unsafe static (nint, vec2i) loadTexture(string rawpath)
-    {
-        nint surf = IMG_Load(rawpath);
-        nint optsurf = SDL_ConvertSurface(surf, ((SDL_Surface*)screenSurface.ToPointer())->format, 0);
-        SDL_FreeSurface(surf);
-        nint m = SDL_CreateTextureFromSurface(sdlRender, optsurf);
-        SDL_FreeSurface(optsurf);
-        SDL_QueryTexture(m, out uint idontwant1, out int idontwant2, out int w, out int h);
-        return (m, vec2i(w, h));
-    }
-
-    public static void cleanupTexture(nint id)
-    {
-        SDL_DestroyTexture(id);
     }
 }

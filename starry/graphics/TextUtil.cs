@@ -1,5 +1,4 @@
 using System;
-using Raylib_cs;
 using static starry.Starry;
 
 namespace starry;
@@ -16,35 +15,28 @@ public static partial class TextUtil {
         // if the character doesn't exist it becomes a square
         if (!settings.fontCharacters.ContainsKey(c)) c = '\0';
 
-        Raylib.DrawTexturePro(
+        #pragma warning disable CS8604 // Possible null reference argument.
+        Platform.renderTexture(
             font.texture,
-            new Rectangle(
-                settings.fontCharacterSize.x * settings.fontCharacters[c].x,
-                settings.fontCharacterSize.y * settings.fontCharacters[c].y,
-                settings.fontCharacterSize.x,
-                settings.fontCharacterSize.y
-            ),
-            new Rectangle(
-                pos.x, pos.y,
-                settings.fontCharacterSize.x * (fontSize / 100),
-                settings.fontCharacterSize.y * (fontSize / 100)
-            ),
-            new System.Numerics.Vector2(0, 0),
-            0, new Color(tint.r, tint.g, tint.b, tint.a)
+            settings.fontCharacterSize * settings.fontCharacters[c],
+            settings.fontCharacterSize,
+            pos, settings.fontCharacterSize * vec2i((int)(fontSize / 100), (int)(fontSize / 100)),
+            0, vec2i(), tint
         );
+        #pragma warning restore CS8604 // Possible null reference argument.
     }
 
     /// <summary>
     /// draws many characters :D
     /// </summary>
-    public static void drawText(string s, vec2i pos, uint fontSize, double rot, color tint, Font font, RenderTexture2D rt)
+    public static void drawText(string s, vec2i pos, uint fontSize, double rot, color tint, Font font, Viewport view)
     {
         uint xoffset = 0;
         uint yoffset = 0;
         vec2i size = vec2i();
 
         // draw to a texture so we can also rotate it lol
-        Raylib.BeginTextureMode(rt);
+        view.start(color.transparent);
             foreach (var c in s) {
                 if (c == '\n') {
                     yoffset += (uint)(settings.fontCharacterSize.y * (fontSize / 100));
@@ -57,17 +49,10 @@ public static partial class TextUtil {
                 xoffset += (uint)(settings.fontCharacterSize.x * (fontSize / 100));
                 size += vec2i((int)xoffset, 0);
             }
-        Raylib.EndTextureMode();
+        view.end();
 
         // actually render and rotate
-        Raylib.DrawTexturePro(
-            rt.Texture,
-            new Rectangle(0, 0, size.x, size.y),
-            new Rectangle(pos.x, pos.y, size.x, size.y),
-            new System.Numerics.Vector2(size.x / 2, size.y / 2),
-            (float)rot,
-            new Color(tint.r, tint.g, tint.b, tint.a)
-        );
-        log(size, pos, size / vec2i(2, 2), rot, tint);
+        view.render(vec2i(), size, pos, size, 0, size / vec2i(2, 2), tint);
+        //log(size, pos, size / vec2i(2, 2), rot, tint);
     }
 }

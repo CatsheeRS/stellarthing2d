@@ -71,7 +71,6 @@ public static class Application {
         log("Ending engine");
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Assets.cleanup();
-        Renderer.cleanup();
         Platform.cleanup();
     }
 }

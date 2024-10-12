@@ -1,5 +1,4 @@
 using System;
-using Raylib_cs;
 using static starry.Starry;
 namespace starry;
 
@@ -36,12 +35,12 @@ public static class DebugMode {
         if (Input.isKeyJustPressed(Key.f3)) ondebug = !ondebug;
         if (!ondebug) return;
 
-        Raylib.DrawRectangle(0, 0, settings.renderSize.x, settings.renderSize.y, new Color(0, 0, 0, 75));
+        Platform.renderRectangle(vec2i(), settings.renderSize, color(0, 0, 0, 75));
         ltextrender?.update(text);
 
         string rtext =
             $@"Stellarthing {settings.gameVersion}
-            {Raylib.GetFPS()} FPS
+            {Platform.getFps()} FPS
             Running {Environment.OSVersion.VersionString}
             Tilemap: x, y: {Camera.target}; world ""{Tilemap.world}""; layer {Tilemap.layer}
             Memory: {GC.GetTotalMemory(false) / 1_049_000} MB";
