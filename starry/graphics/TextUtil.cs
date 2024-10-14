@@ -12,7 +12,7 @@ public static partial class TextUtil {
     /// </summary>
     public static void drawCharacter(char c, vec2i pos, uint fontSize, color tint, Font font)
     {
-        // if the character doesn't exist it becomes a square
+        /*// if the character doesn't exist it becomes a square
         if (!settings.fontCharacters.ContainsKey(c)) c = '\0';
 
         #pragma warning disable CS8604 // Possible null reference argument.
@@ -29,7 +29,7 @@ public static partial class TextUtil {
     /// <summary>
     /// draws many characters :D
     /// </summary>
-    public static void drawText(string s, vec2i pos, uint fontSize, double rot, color tint, Font font, Viewport view)
+    public static void drawText(string s, vec2i pos, uint fontSize, double rot, color tint, Font font)
     {
         uint xoffset = 0;
         uint yoffset = 0;
@@ -49,10 +49,10 @@ public static partial class TextUtil {
                 xoffset += (uint)(settings.fontCharacterSize.x * (fontSize / 100));
                 size += vec2i((int)xoffset, 0);
             }
-        view.end();
+        view.end();*/
 
         // actually render and rotate
-        view.render(vec2i(), size, pos, size, 0, size / vec2i(2, 2), tint);
+        //view.render(vec2i(), size, pos, size, 0, size / vec2i(2, 2), tint);
         //log(size, pos, size / vec2i(2, 2), rot, tint);
     }
 }

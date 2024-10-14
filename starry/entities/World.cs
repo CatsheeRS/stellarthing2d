@@ -76,14 +76,18 @@ public static class World {
 
     internal static void updateEntities()
     {
-        spreadToEntities(true, entity => {
+        spreadToEntities(entity => {
             entity.update(Application.delta);
+            return false;
+        });
+        spreadToEntitiesButBackwards(entity => {
+            entity.draw();
             return false;
         });
     }
 
     // return true to stop the spreading
-    static void spreadToEntities(bool render, Func<IEntity, bool> func)
+    static void spreadToEntities(Func<IEntity, bool> func)
     {
         // managers run first
         if (paused) {
@@ -98,7 +102,6 @@ public static class World {
         }
 
         // the ui's next
-        if (render) Renderer.renderUi();
         if (paused) {
             foreach (var entity in getGroup("layers.pause_ui")) {
                 if (func(entity)) return;
@@ -111,13 +114,44 @@ public static class World {
         }
 
         // 3d stuff run last
-        if (render) Renderer.renderWorld();
+        if (!paused) {
+            foreach (var entity in getGroup("layers.game_world")) {
+                if (func(entity)) return;
+            }
+        }
+    }
+
+    static void spreadToEntitiesButBackwards(Func<IEntity, bool> func)
+    {
+        // 3d stuff run first
         if (!paused) {
             foreach (var entity in getGroup("layers.game_world")) {
                 if (func(entity)) return;
             }
         }
 
-        // Tilemap.update() and Renderer.composite() are ran by Application immediately after updating the entities
+        // the ui's next
+        if (paused) {
+            foreach (var entity in getGroup("layers.pause_ui")) {
+                if (func(entity)) return;
+            }
+        }
+        else {
+            foreach (var entity in getGroup("layers.ui")) {
+                if (func(entity)) return;
+            }
+        }
+
+        // managers run last
+        if (paused) {
+            foreach (var entity in getGroup("layers.paused_manager")) {
+                if (func(entity)) return;
+            }
+        }
+        else {  
+            foreach (var entity in getGroup("layers.pausable_manager")) {
+                if (func(entity)) return;
+            }
+        }
     }
 }

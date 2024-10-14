@@ -21,8 +21,5 @@ public class SpaceScene : IEntity
 
     public SpaceScene() {}
 
-    public void update(double delta)
-    {
-        render.update(spr, tf);
-    }
+    public void draw() => render.draw(spr, tf);
 }

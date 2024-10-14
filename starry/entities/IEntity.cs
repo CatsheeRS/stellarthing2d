@@ -14,4 +14,8 @@ public interface IEntity {
     /// called every frame. delta is in seconds
     /// </summary>
     public void update(double delta) {}
+    /// <summary>
+    /// called every frame, renders stuff
+    /// </summary>
+    public void draw() {}
 }

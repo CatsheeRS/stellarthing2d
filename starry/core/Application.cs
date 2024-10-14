@@ -33,7 +33,6 @@ public static class Application {
         windowCreated = true;
 
         // more setup
-        Renderer.create();
         Tilemap.create();
         DebugMode.create();
         prevtime = Platform.getTime() / 1000d;
@@ -62,7 +61,6 @@ public static class Application {
             // the renderer is called by the world since it has to switch between 2d and 3d and stuff
             World.updateEntities();
             Tilemap.update();
-            Renderer.composite();
 
             Platform.endUpdate();
         }
@@ -72,5 +70,6 @@ public static class Application {
         onClose?.Invoke(typeof(Application), EventArgs.Empty);
         Assets.cleanup();
         Platform.cleanup();
+        log("🛑 ITS JOEVER");
     }
 }

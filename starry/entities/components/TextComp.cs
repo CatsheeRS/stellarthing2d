@@ -37,15 +37,15 @@ public class TextComp {
     /// the color of the text
     /// </summary>
     public color color { get; set; } = color.white;
-    Viewport view = new(settings.renderSize);
+    //Viewport view = new(settings.renderSize);
 
     /// <summary>
     /// run in your update function
     /// </summary>
-    public void update(string text)
+    public void draw(string text)
     {
         // if (!wordWrap) {
-            TextUtil.drawText(text, position, fontSize, rotation, color, font, view);
+            //TextUtil.drawText(text, position, fontSize, rotation, color, font, view);
         // }
 
         // this is chatgpt i can't be bothered to write this

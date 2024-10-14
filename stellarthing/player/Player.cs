@@ -50,7 +50,8 @@ public class Player : IEntity
             _ => tf.rotation,
         };
 
-        render.update(spr, tf);
         Camera.target = tf.position.as2d().round();
     }
+
+    public void draw() => render.draw(spr, tf);
 }

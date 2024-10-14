@@ -35,7 +35,7 @@ public static class DebugMode {
         if (!ondebug) return;
 
         Platform.renderRectangle(vec2i(), settings.renderSize, color(0, 0, 0, 75));
-        ltextrender?.update(text);
+        //ltextrender?.update(text);
 
         string rtext =
             $@"Stellarthing {settings.gameVersion}
@@ -43,6 +43,6 @@ public static class DebugMode {
             Running {Environment.OSVersion.VersionString}
             Tilemap: x, y: {Camera.target}; world ""{Tilemap.world}""; layer {Tilemap.layer}
             Memory: {GC.GetTotalMemory(false) / 1_049_000} MB";
-        rtextrender?.update(text);
+        //rtextrender?.update(text);
     }
 }

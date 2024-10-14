@@ -11,6 +11,14 @@ namespace starry;
 /// </summary>
 public static partial class Platform
 {
+    public static float renderScale { get; set; }
+
+    internal static void createRendererSubsystemThing()
+    {
+        vec2 ü = getScreenSize();
+        renderScale = (float)Math.Min(ü.x / settings.renderSize.x, ü.y / settings.renderSize.y);
+    }
+
     /// <summary>
     /// returns a texture pointer and a size
     /// </summary>
@@ -45,9 +53,22 @@ public static partial class Platform
     public static void renderTexture(Sprite texture, vec2i srcPos, vec2i srcSize, vec2i destPos, vec2i destSize,
     double rotation, vec2i origin, color tint)
     {
-        var fuckingsrc = new SDL_Rect() { x = srcPos.x, y = srcPos.y, w = srcSize.x, h = srcSize.y };
-        var fuckingdst = new SDL_Rect() { x = destPos.x, y = destPos.y, w = destSize.x, h = destSize.y };
-        var fuckingorigin = new SDL_Point() { x = origin.x, y = origin.y };
+        var fuckingsrc = new SDL_Rect() {
+            x = (int)(srcPos.x * renderScale),
+            y = (int)(srcPos.y * renderScale),
+            w = (int)(srcSize.x * renderScale),
+            h = (int)(srcSize.y * renderScale)
+        };
+        var fuckingdst = new SDL_Rect() {
+            x = (int)(destPos.x * renderScale),
+            y = (int)(destPos.y * renderScale),
+            w = (int)(destSize.x * renderScale),
+            h = (int)(destSize.y * renderScale)
+        };
+        var fuckingorigin = new SDL_Point() {
+            x = (int)(origin.x * renderScale),
+            y = (int)(origin.y * renderScale)
+        };
 
         // sdl doesn't have a tint parameter in the shits 🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑
         SDL_SetTextureColorMod(texture.texturePtr, tint.r, tint.g, tint.b);
@@ -65,7 +86,12 @@ public static partial class Platform
     {
         SDL_SetRenderDrawColor(sdlRender, color.r, color.g, color.b, color.a);
         SDL_SetRenderDrawBlendMode(sdlRender, SDL_BlendMode.SDL_BLENDMODE_BLEND);
-        var fk = new SDL_Rect() { x = pos.x, y = pos.y, h = size.x, w = size.y };
+        var fk = new SDL_Rect() {
+            x = (int)(pos.x * renderScale),
+            y = (int)(pos.y * renderScale),
+            h = (int)(size.x * renderScale),
+            w = (int)(size.y * renderScale)
+        };
         SDL_RenderFillRect(sdlRender, ref fk);
         SDL_SetRenderDrawColor(sdlRender, 0, 0, 0, 255);
         SDL_SetRenderDrawBlendMode(sdlRender, SDL_BlendMode.SDL_BLENDMODE_NONE);
