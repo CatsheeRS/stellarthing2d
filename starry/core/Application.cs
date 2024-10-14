@@ -25,7 +25,7 @@ public static class Application {
         // setup stuff
         Platform.createWindow(new WindowSettings {
             title = $"{settings.gameName} {settings.gameVersion}",
-            size = vec2i(1, 1), // this doesn't matter when the window is fullscreen borderless
+            size = vec2i(settings.renderSize.x, settings.renderSize.y),
             renderSize = settings.renderSize,
             type = WindowType.fullscreenBorderless,
             targetFps = 60,

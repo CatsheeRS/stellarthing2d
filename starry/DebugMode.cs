@@ -27,7 +27,6 @@ public static class DebugMode {
             size = settings.renderSize / vec2i(2, 1),
             wordWrap = false
         };
-        log("balls");
     }
 
     internal static void update()

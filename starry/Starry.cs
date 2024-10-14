@@ -35,25 +35,29 @@ public static class Starry {
         foreach (var item in x) {
             // we optimize common types so the game doesn't explode
             switch (item) {
-                case string strr: str.Append(strr); break;
-                case sbyte i8: str.Append(i8.ToString("N0")); break;
-                case byte u8: str.Append(u8.ToString("N0")); break;
-                case short i16: str.Append(i16.ToString("N0")); break;
-                case ushort u16: str.Append(u16.ToString("N0")); break;
-                case int i32: str.Append(i32.ToString("N0")); break;
-                case uint u32: str.Append(u32.ToString("N0")); break;
-                case long i64: str.Append(i64.ToString("N0")); break;
-                case ulong u64: str.Append(u64.ToString("N0")); break;
-                case float f32: str.Append(f32.ToString("N0")); break;
-                case double f64: str.Append(f64.ToString("N0")); break;
-                case decimal f128: str.Append(f128.ToString("N0")); break;
-                case bool boo: str.Append(boo ? "true" : "false"); break;
-                case vec2 vecthesecond: str.Append($"({vecthesecond.x}, {vecthesecond.y})"); break;
-                case vec2i vecthesecondi: str.Append($"({vecthesecondi.x}, {vecthesecondi.y})"); break;
-                case vec3 vecthethird: str.Append($"({vecthethird.x}, {vecthethird.y}, {vecthethird.z})"); break;
-                case vec3i vecthethirdi: str.Append($"({vecthethirdi.x}, {vecthethirdi.y}, {vecthethirdi.z})"); break;
-                case color col: str.Append($"rgba({col.r}, {col.g}, {col.b}, {col.a})"); break;
+                case string:
+                case sbyte:
+                case byte:
+                case short:
+                case ushort:
+                case int:
+                case uint:
+                case long:
+                case ulong:
+                case float:
+                case double:
+                case decimal:
+                case bool:
+                    str.Append(item.ToString());
+                    break;
+                
+                case vec2 wec2: str.Append($"({wec2.x}, {wec2.y})"); break;
+                case vec2i wec2i: str.Append($"({wec2i.x}, {wec2i.y})"); break;
+                case vec3 wec3: str.Append($"({wec3.x}, {wec3.y}, {wec3.z})"); break;
+                case vec3i wec3i: str.Append($"({wec3i.x}, {wec3i.y}, {wec3i.z})"); break;
+                case color coughlour: str.Append($"rgba({coughlour.r}, {coughlour.g}, {coughlour.b}, {coughlour.a})"); break;
                 case null: str.Append("null"); break;
+                // todo use custom fucking serializer
                 default: str.Append(JsonConvert.SerializeObject(item, Formatting.Indented)); break;
             }
 

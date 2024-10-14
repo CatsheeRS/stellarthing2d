@@ -16,7 +16,7 @@ public static class Assets {
     public static T load<T>(string path) where T : IAsset, new()
     {
         if (!Application.windowCreated) {
-            log("Raylib hasn't started yet, assets can't be loaded yet");
+            log("Engine hasn't started yet, assets can't be loaded yet");
             return new();
         }
 

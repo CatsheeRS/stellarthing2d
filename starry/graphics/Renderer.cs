@@ -10,7 +10,7 @@ namespace starry;
 public static partial class Renderer {
     static Viewport? targetWorld;
     static Viewport? targetUi;
-    internal static float scaleFactor = 1;
+    internal static double scaleFactor = 1;
 
     internal static void create()
     {
@@ -20,7 +20,8 @@ public static partial class Renderer {
         // get scaling factor, the screen width and height are decimal so it doesn't fuck up the calculation with ints
         // we convert it to a regular vec2 so it doesn't do integer scaling, this isn't a pixel art game
         vec2 ü = Platform.getScreenSize();
-        scaleFactor = (float)Math.Min(ü.x / settings.renderSize.x, ü.y / settings.renderSize.y);
+        scaleFactor = Math.Min(ü.x / settings.renderSize.x, ü.y / settings.renderSize.y); 
+        log(scaleFactor);
     }
 
     /// <summary>
@@ -37,7 +38,6 @@ public static partial class Renderer {
     internal static void renderWorld()
     {
         targetUi?.end();
-        
         targetWorld?.start(color.transparent);
     }
 
@@ -47,7 +47,7 @@ public static partial class Renderer {
     internal static void composite()
     {
         targetWorld?.end();
-        vec2 g = Platform.getScreenSize() - settings.renderSize * vec2(scaleFactor, scaleFactor);
+        vec2 g = Platform.getScreenSize() - (settings.renderSize * vec2(scaleFactor, scaleFactor));
         vec2 j = settings.renderSize * vec2(scaleFactor, scaleFactor);
 
         // actually draw stuff
