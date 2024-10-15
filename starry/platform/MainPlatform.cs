@@ -11,7 +11,7 @@ namespace starry;
 /// </summary>
 public static partial class Platform
 {
-    internal static WindowSettings settings;
+    internal static WindowSettings platsettings;
     internal static nint window;
     internal static ulong startTicks = 0;
     internal static double fps = 0;
@@ -61,7 +61,7 @@ public static partial class Platform
 
         screenSurface = SDL_GetWindowSurface(window);
 
-        Platform.settings = settings;
+        Platform.platsettings = settings;
         createRendererSubsystemThing();
     }
 
@@ -235,9 +235,9 @@ public static partial class Platform
         SDL_GetMouseState(out int mx, out int my);
         // fucking virtual mouse stuff
         vec2 virt = vec2();
-        virt.x = (mx - ((getScreenSize().x - (settings.renderSize.x * renderScale)) * 0.5)) / renderScale;
-        virt.y = (mx - ((getScreenSize().y - (settings.renderSize.y * renderScale)) * 0.5)) / renderScale;
-        virt = vec2(Math.Clamp(virt.x, 0, settings.renderSize.x), Math.Clamp(virt.y, 0, settings.renderSize.y));
+        virt.x = (mx - ((getScreenSize().x - (platsettings.renderSize.x * renderScale)) * 0.5)) / renderScale;
+        virt.y = (mx - ((getScreenSize().y - (platsettings.renderSize.y * renderScale)) * 0.5)) / renderScale;
+        virt = vec2(Math.Clamp(virt.x, 0, platsettings.renderSize.x), Math.Clamp(virt.y, 0, platsettings.renderSize.y));
         Input.mousePosition = vec2i((int)virt.x, (int)virt.y);
         
         SDL_RenderClear(sdlRender);
@@ -266,6 +266,7 @@ public static partial class Platform
             i++;
         }
 
+        processVideoBufferStuff();
         SDL_RenderPresent(sdlRender);
     }
 

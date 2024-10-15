@@ -20,7 +20,7 @@ create(new StarrySettings {
         {"move_right", [Key.d, Key.arrowRight]},
     },
     assetPath = Path.GetFullPath("assets"),
-    renderSize = vec2i(1920, 1080),
+    renderSize = vec2i(240, 160),
     tileSize = vec2i(96, 96),
     defaultFont = "ui/fira_code_spritefont.png",
     fontCharacterSize = vec2i(60, 131),
