@@ -2,15 +2,13 @@ using System;
 // help
 using static starry.Starry;
 using static SDL2.SDL;
-using static SDL2.SDL_image;
 using SDL2;
 namespace starry;
 
 /// <summary>
 /// comically large class for platform abstractions. this currently uses SDL2 but i may change it
 /// </summary>
-public static partial class Platform
-{
+public static partial class Platform {
     internal static color[,]? videobuf { get; set; }
     internal static nint rendertarget { get; set; }
     public static float renderScale { get; set; }
@@ -93,10 +91,10 @@ public static partial class Platform
         return vec2i(w, h);
     }
 
-    public static void renderTexture(Sprite texture, vec2i srcPos, vec2i srcSize, vec2i destPos, vec2i destSize,
+    /*public static void renderTexture(Sprite texture, vec2i srcPos, vec2i srcSize, vec2i destPos, vec2i destSize,
     double rotation, vec2i origin, color tint)
     {
-        /*var fuckingsrc = new SDL_Rect() {
+        var fuckingsrc = new SDL_Rect() {
             x = (int)(srcPos.x * renderScale),
             y = (int)(srcPos.y * renderScale),
             w = (int)(srcSize.x * renderScale),
@@ -119,8 +117,8 @@ public static partial class Platform
 
         SDL_RenderCopyEx(sdlRender, texture.texturePtr, ref fuckingsrc, ref fuckingdst, rotation, ref fuckingorigin, 0);
 
-        // X calls Y but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method. (CA1806)*/
-    }
+        // X calls Y but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method. (CA1806)
+    }*/
 
     /// <summary>
     /// draws a rectangle :D

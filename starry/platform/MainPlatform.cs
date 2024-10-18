@@ -30,7 +30,7 @@ public static partial class Platform
             return;
         }
 
-        // no one uses .tif
+        // no one uses .tiff
         if (IMG_Init(IMG_InitFlags.IMG_INIT_PNG | IMG_InitFlags.IMG_INIT_JPG | IMG_InitFlags.IMG_INIT_WEBP) < 0) {
             log("FATAL ERROR: can't load images, which are probably important");
             return;
