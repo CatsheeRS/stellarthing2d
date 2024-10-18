@@ -6,7 +6,7 @@ namespace starry;
 /// handles debug mode stuff :D
 /// </summary>
 public static class DebugMode {
-    static TextComp? ltextrender;
+    /*static TextComp? ltextrender;
     static TextComp? rtextrender;
     public static string text { get; set; } = "";
     static bool ondebug = false;
@@ -44,5 +44,5 @@ public static class DebugMode {
             Tilemap: x, y: {Camera.target}; world ""{Tilemap.world}""; layer {Tilemap.layer}
             Memory: {GC.GetTotalMemory(false) / 1_049_000} MB";
         //rtextrender?.update(text);
-    }
+    }*/
 }

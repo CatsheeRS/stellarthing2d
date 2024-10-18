@@ -13,7 +13,7 @@ public static partial class Platform {
 
     internal unsafe static void loadAtlas(string path)
     {
-        var surf = (SDL_Surface*)IMG_Load(path).ToPointer();
-        surf->pixels.ToPointer();
+        //var surf = (SDL_Surface*)IMG_Load(path).ToPointer();
+        //surf->pixels.ToPointer();
     }
 }

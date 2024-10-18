@@ -33,8 +33,8 @@ public static class Application {
         windowCreated = true;
 
         // more setup
-        Tilemap.create();
-        DebugMode.create();
+        //Tilemap.create();
+        //DebugMode.create();
         prevtime = Platform.getTime() / 1000d;
         log("Engine finished startup");
 

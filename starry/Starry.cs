@@ -65,7 +65,7 @@ public static class Starry {
         }
         str.Append('\n');
         Console.Write(str);
-        DebugMode.text += str;
+        //DebugMode.text += str;
     }
     
     /// <summary>

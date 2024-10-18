@@ -11,7 +11,7 @@ public class SpaceScene : IEntity
         tag = "space_scene",
     };
 
-    Sprite spr = load<Sprite>("galaxy.png");
+    //Sprite spr = load<Sprite>("galaxy.png");
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
@@ -21,5 +21,5 @@ public class SpaceScene : IEntity
 
     public SpaceScene() {}
 
-    public void draw() => render.draw(spr, tf);
+    //public void draw() => render.draw(spr, tf);
 }

@@ -11,7 +11,7 @@ public class Player : IEntity
         tag = "player",
     };
 
-    Sprite spr = load<Sprite>("bob_guy.png");
+    //Sprite spr = load<Sprite>("bob_guy.png");
     double speed = 350;
 
     TransformComp3D tf = new() {
@@ -53,5 +53,5 @@ public class Player : IEntity
         Camera.target = tf.position.as2d().round();
     }
 
-    public void draw() => render.draw(spr, tf);
+    //public void draw() => render.draw(spr, tf);
 }

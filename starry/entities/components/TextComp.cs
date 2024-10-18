@@ -9,7 +9,7 @@ namespace starry;
 /// TODO: add word wrap and stuff
 /// </summary>
 public class TextComp {
-    /// <summary>
+    /*/// <summary>
     /// the font to use
     /// </summary>
     public Font font { get; set; } = load<Font>(settings.defaultFont);
@@ -79,5 +79,5 @@ public class TextComp {
         //         }
         //     Raylib.EndScissorMode();
         // }
-    }
+    }*/
 }

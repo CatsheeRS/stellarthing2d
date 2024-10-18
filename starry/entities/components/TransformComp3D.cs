@@ -13,10 +13,10 @@ public class TransformComp3D {
     /// <summary>
     /// the position converted to non-tile coordinates
     /// </summary>
-    public vec2 globalPosition {
+    /*public vec2 globalPosition {
         get => position.as2d() * settings.tileSize;
         set => (value / settings.tileSize).as3d(position.y);
-    }
+    }*/
     /// <summary>
     /// the rotation, in degrees
     /// </summary>
