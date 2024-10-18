@@ -35,21 +35,13 @@ public struct StarrySettings
     /// <summary>
     /// resolution in which the game is rendered.
     /// </summary>
-    public vec2i renderSize { get; set; } = vec2i(1920, 1080);
+    public vec2i renderSize { get; set; } = vec2i(192, 108);
     /// <summary>
-    /// how many pixels is each tile
+    /// path to the atlas image. an atlas contains all of the image
     /// </summary>
-    public vec2i tileSize { get; set; } = vec2i(1, 1);
+    public string atlas { get; set; } = "";
     /// <summary>
-    /// path for the default font, must be a mono sprite font (it's easier when every character is the same size)
+    /// all of the sprites from the atlas image. the key is a name for the sprite, and the value is a rectangle inside the atlas (position followed by size, in pixels)
     /// </summary>
-    public string defaultFont { get; set; } = "";
-    /// <summary>
-    /// the size for every character in pixels, at a font size of 100. it needs to be a monospace font so every character has the same size
-    /// </summary>
-    public vec2i fontCharacterSize { get; set; } = vec2i();
-    /// <summary>
-    /// the grid for the characters in the sprite font, multiplied by <c>fontCharacterSize</c> since it's nicer that way
-    /// </summary>
-    public Dictionary<char, vec2i> fontCharacters { get; set; } = [];
+    public Dictionary<string, (vec2i, vec2i)> sprites { get; set; } = [];
 }
