@@ -13,8 +13,9 @@ namespace starry;
 /// </summary>
 public static partial class Platform {
     internal static color[,]? atlasdata;
+    internal static Dictionary<string, color[,]> help = [];
 
-    internal unsafe static void loadAtlas(string path)
+    internal static void loadAtlas(string path)
     {
         // wtf is this
         using Image img = Image.Load(path);
@@ -47,6 +48,29 @@ public static partial class Platform {
             y++;
         }
 
-        log(atlasdata);
+        splitAtlas();
+        log(help);
+    }
+
+    internal static void splitAtlas()
+    {
+        foreach (var fhish in settings.sprites) {
+            color[,] ithoughroughlyenjoythisdoughnought = splitAtlasButSmaller(fhish.Value.Item1, fhish.Value.Item2);
+            help.Add(fhish.Key, ithoughroughlyenjoythisdoughnought);
+        }
+    }
+
+    internal static color[,] splitAtlasButSmaller(vec2i pos, vec2i size)
+    {
+        color[,] fuckoff = new color[size.x, size.y];
+        for (int y = pos.y; y < size.y + pos.y; y++) {
+            for (int x = pos.x; x < size.x + pos.x; x++) {
+                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                fuckoff[x - pos.x, y - pos.y] = atlasdata[x, y];
+                log(atlasdata[x, y]);
+                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
+        }
+        return fuckoff;
     }
 }
