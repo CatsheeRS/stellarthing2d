@@ -6,9 +6,8 @@ handsome game engine
 
 - core/Application: this is where the main loop is ran and the engine both starts and ends
 - core/Save: flabbergasting save system
-- core/assets: everything assets
 - core/input: simple input system
-- entities: the entity system, as well as `Tilemap` which manages the tile rendering
+- entities: the entity system
 - entities/components: default components you can use and stuff
 - graphics: graphics stuff :D
 - math: some vectors and the color struct
@@ -26,3 +25,8 @@ handsome game engine
     - `Queue<T>`/`Stack<T>` instead of `List<T>` (it's faster, specially important if you're running stuff every frame)
 - everything should pass through the platform module before getting to whatever framework the engine is currently using, except for the game which shouldn't have to interact with the platform module at all
 - the game can only run code through entities and the `StarrySettings.startup` function
+
+## dependencies
+- SDL2 (you need to install it probably)
+- ImageSharp for images
+- Newtonsoft.Json because i haven't finished the custom serializer

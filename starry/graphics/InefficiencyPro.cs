@@ -30,6 +30,8 @@ public static partial class Platform {
         rendertarget = SDL_CreateTexture(sdlRender, SDL_PIXELFORMAT_ABGR8888,
             (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STREAMING,
             platsettings.renderSize.x, platsettings.renderSize.y);
+        
+        loadAtlas($"{settings.assetPath}/{settings.atlas}");
     }
 
     internal unsafe static void processVideoBufferStuff()
