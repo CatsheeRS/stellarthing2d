@@ -30,12 +30,6 @@ public static partial class Platform
             return;
         }
 
-        // no one uses .tiff
-        if (IMG_Init(IMG_InitFlags.IMG_INIT_PNG | IMG_InitFlags.IMG_INIT_JPG | IMG_InitFlags.IMG_INIT_WEBP) < 0) {
-            log("FATAL ERROR: can't load images, which are probably important");
-            return;
-        }
-
         // make flags since it's kinda fucky
         SDL_WindowFlags flags = 0;
         flags |= settings.type switch {
@@ -94,15 +88,15 @@ public static partial class Platform
         }
 
         else if (e.type == SDL_EventType.SDL_MOUSEBUTTONDOWN) {
-            if (Input.mousefuckingstate[e.button.button] == Input.inactive) {
-                Input.mousefuckingstate[e.button.button] = Input.justPressed;
+            if (Input.mousefuckingstate[e.button.button - 1] == Input.inactive) {
+                Input.mousefuckingstate[e.button.button - 1] = Input.justPressed;
             }
-            else if (Input.mousefuckingstate[e.button.button] == Input.justPressed) {
-                Input.mousefuckingstate[e.button.button] = Input.pressed;
+            else if (Input.mousefuckingstate[e.button.button - 1] == Input.justPressed) {
+                Input.mousefuckingstate[e.button.button - 1] = Input.pressed;
             }
         }
         else if (e.type == SDL_EventType.SDL_MOUSEBUTTONUP) {
-            Input.mousefuckingstate[e.button.button] = Input.justReleased;
+            Input.mousefuckingstate[e.button.button - 1] = Input.justReleased;
         }
     }
 
@@ -241,6 +235,7 @@ public static partial class Platform
         Input.mousePosition = vec2i((int)virt.x, (int)virt.y);
         
         SDL_RenderClear(sdlRender);
+        clearScreen(color.white);
     }
 
     /// <summary>

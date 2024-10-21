@@ -55,7 +55,9 @@ public static class Application {
             //     else Raylib.SetWindowState(ConfigFlags.FullscreenMode);
             // }
 
-            // TODO: remake the f8 to exit on debug mode thing
+            if (isDebug()) {
+                if (Input.isKeyJustPressed(Key.f8)) break;
+            }
 
             // render stuff and update entities since that's when entities render stuff
             // the renderer is called by the world since it has to switch between 2d and 3d and stuff

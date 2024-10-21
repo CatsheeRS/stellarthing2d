@@ -16,7 +16,7 @@ public class Sprite : IAsset {
     /// <summary>
     /// pixel data for the pixels
     /// </summary>
-    public required color[,] data { get; set; }
+    public color[,] data { get; set; } = new color[0, 0];
 
     public void load(string path) {
         // wtf is this

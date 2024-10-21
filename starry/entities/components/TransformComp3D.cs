@@ -3,7 +3,7 @@ using static starry.Starry;
 namespace starry;
 
 /// <summary>
-/// adds 2d stuff
+/// adds stuff
 /// </summary>
 public class TransformComp3D {
     /// <summary>
@@ -13,20 +13,20 @@ public class TransformComp3D {
     /// <summary>
     /// the position converted to non-tile coordinates
     /// </summary>
-    /*public vec2 globalPosition {
+    public vec2 globalPosition {
         get => position.as2d() * settings.tileSize;
         set => (value / settings.tileSize).as3d(position.y);
-    }*/
+    }
     /// <summary>
     /// the rotation, in degrees
     /// </summary>
-    public double rotation { get; set; } = 0;
+    //public double rotation { get; set; } = 0;
     /// <summary>
     /// the scale. this is just multiplication so (1, 1) is the original size, smaller values make it smaller, and bigger values make it bigger
     /// </summary>
-    public vec2 scale { get; set; } = vec2(1, 1);
+    //public vec2 scale { get; set; } = vec2(1, 1);
     /// <summary>
     /// tints the sprite (white is the original colors)
     /// </summary>
-    public color tint { get; set; } = color.white;
+    //public color tint { get; set; } = color.white;
 }

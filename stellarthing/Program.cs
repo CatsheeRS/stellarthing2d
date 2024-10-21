@@ -21,4 +21,5 @@ create(new StarrySettings {
     },
     assetPath = Path.GetFullPath("assets"),
     renderSize = vec2i(240, 160),
+    tileSize = vec2i(16, 16)
 });

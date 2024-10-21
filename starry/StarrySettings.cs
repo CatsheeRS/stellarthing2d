@@ -36,4 +36,8 @@ public struct StarrySettings
     /// resolution in which the game is rendered.
     /// </summary>
     public vec2i renderSize { get; set; } = vec2i(192, 108);
+    /// <summary>
+    /// size of tiles, used for coordinates
+    /// </summary>
+    public vec2i tileSize { get; set; } = vec2i(16, 16);
 }

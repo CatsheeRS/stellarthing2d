@@ -21,7 +21,7 @@ public static class Tilemap {
     /// <summary>
     /// as the name implies, it's a bunch of sprites for the layers of the worlds. this type declaration is a mess, so first there's a dictionary of worlds, then there's the layers, which is a dictionary since there can be an indefinite amount of positive and negative indexes, then there's a queue instead of a list since it's faster, and finally there's a tuple of a sprite and a transform component
     /// </summary>
-    //static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp3D)>>> worldLayerSprites = [];
+    static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp3D)>>> worldLayerSprites = [];
 
     internal static void create()
     {
@@ -31,39 +31,20 @@ public static class Tilemap {
     /// <summary>
     /// adds a sprite to the world, intended to be used by TileComp. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
     /// </summary>
-    /*public static void pushSprite(string world, int layer, Sprite sprite, TransformComp3D tf)
+    public static void pushSprite(string world, int layer, Sprite sprite, TransformComp3D tf)
     {
         if (!worldLayerSprites.ContainsKey(world)) worldLayerSprites.Add(world, []);
         if (!worldLayerSprites[world].ContainsKey(layer)) worldLayerSprites[world].Add(layer, []);
         worldLayerSprites[world][layer].Enqueue((sprite, tf));
-    }*/
+    }
 
     internal static void update()
     {
-        /*while (worldLayerSprites[world][layer].Count > 0) {
+        while (worldLayerSprites[world][layer].Count > 0) {
             var sprtf = worldLayerSprites[world][layer].Dequeue();
-            var killme = vec2i(
-                            (int)Math.Round(sprtf.Item1.size.x * sprtf.Item2.scale.x),
-                            (int)Math.Round(sprtf.Item1.size.y * sprtf.Item2.scale.y))
-                            * vec2(Camera.zoom, Camera.zoom);
-            
-            // slightly complicated lmao
-            Platform.renderTexture(
-                sprtf.Item1,
-                vec2i(), sprtf.Item1.size,
-                vec2i(
-                    (int)Math.Round(sprtf.Item2.position.x - -(sprtf.Item1.size.x * sprtf.Item2.scale.x / 2)),
-                    (int)Math.Round(sprtf.Item2.position.z - -(sprtf.Item1.size.y * sprtf.Item2.scale.y / 2))
-                ) + Camera.target + Camera.offset,
-                vec2i((int)Math.Round(killme.x), (int)Math.Round(killme.y)),
-                sprtf.Item2.rotation + Camera.rotation,
-                vec2i(
-                    (int)Math.Round(sprtf.Item1.size.x * sprtf.Item2.scale.x) / 2,
-                    (int)Math.Round(sprtf.Item1.size.y * sprtf.Item2.scale.y) / 2
-                ),
-                color(sprtf.Item2.tint.r, sprtf.Item2.tint.g, sprtf.Item2.tint.b, sprtf.Item2.tint.a)
-            );
-        }*/
+            Platform.renderTexture(sprtf.Item1, sprtf.Item2.position.as2d().round() * settings.tileSize
+                + Camera.target + Camera.offset);
+        }
     }
 
     /// <summary>
@@ -71,7 +52,7 @@ public static class Tilemap {
     /// </summary>
     public static void cleanupWorld(string world)
     {
-        //worldLayerSprites.Remove(world);
+        worldLayerSprites.Remove(world);
     }
 }
 
@@ -88,12 +69,4 @@ public static class Camera
     /// an offset applied to the camera's target
     /// </summary>
     public static vec2i offset { get; set; } = vec2i();
-    /// <summary>
-    /// camera rotation in degrees
-    /// </summary>
-    public static double rotation { get; set; } = 0;
-    /// <summary>
-    /// camera zoom. this is multiplication so 1 is the default
-    /// </summary>
-    public static double zoom { get; set; } = 1;
 }

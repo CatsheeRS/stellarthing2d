@@ -11,7 +11,7 @@ public class Player : IEntity
         tag = "player",
     };
 
-    //Sprite spr = load<Sprite>("bob_guy.png");
+    Sprite spr = load<Sprite>("red_ball.png");
     double speed = 350;
 
     TransformComp3D tf = new() {
@@ -23,7 +23,6 @@ public class Player : IEntity
 
     public void update(double delta)
     {
-        Platform.renderRectangle(vec2i(), vec2i(70, 800), starry.color.orange);
         // move :D
         // TODO: add a physics component for managing velocity and collisions (something like ps.velocity with
         // a setter to apply collisions)
@@ -38,7 +37,7 @@ public class Player : IEntity
 
         // rotate stuff
         // yes this is all hardcoded and there's nothing you can do about it
-        tf.rotation = dir switch {
+        /*tf.rotation = dir switch {
             vec2(0, 1) => 0,
             vec2(0, -1) => 180,
             vec2(1, 0) => -90,
@@ -48,10 +47,10 @@ public class Player : IEntity
             vec2(-1, 1) => 45,
             vec2(1, 1) => -45,
             _ => tf.rotation,
-        };
+        };*/
 
         Camera.target = tf.position.as2d().round();
     }
 
-    //public void draw() => render.draw(spr, tf);
+    public void draw() => render.draw(spr, tf);
 }

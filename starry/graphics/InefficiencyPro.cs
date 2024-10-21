@@ -22,7 +22,7 @@ public static partial class Platform {
         videobuf = new color[platsettings.renderSize.x, platsettings.renderSize.y];
         for (int y = 0; y < platsettings.renderSize.y; y++) {
             for (int x = 0; x < platsettings.renderSize.x; x++) {
-                videobuf[x, y] = color.darkBlue;
+                videobuf[x, y] = color.black;
             }
         }
 
@@ -30,8 +30,6 @@ public static partial class Platform {
         rendertarget = SDL_CreateTexture(sdlRender, SDL_PIXELFORMAT_ABGR8888,
             (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STREAMING,
             platsettings.renderSize.x, platsettings.renderSize.y);
-        
-        loadAtlas($"{settings.assetPath}/{settings.atlas}");
     }
 
     internal unsafe static void processVideoBufferStuff()
@@ -56,32 +54,9 @@ public static partial class Platform {
         }
 
         var fuckimsigma = new SDL_Rect() { x = 0, y = 0, w = platsettings.renderSize.x, h = platsettings.renderSize.y };
-        // todo: don't
+        // TODO: don't (scale crap)
         var gay = new SDL_Rect() { x = 0, y = 0, w = platsettings.renderSize.x * 3, h = platsettings.renderSize.y * 3 };
         SDL_RenderCopy(sdlRender, rendertarget, ref fuckimsigma, ref gay);
-    }
-
-    /// <summary>
-    /// returns a texture pointer and a size
-    /// </summary>
-    public unsafe static (nint, vec2i) loadTexture(string rawpath)
-    {
-        /*nint surf = IMG_Load(rawpath);
-        nint optsurf = SDL_ConvertSurface(surf, ((SDL_Surface*)screenSurface.ToPointer())->format, 0);
-        SDL_FreeSurface(surf);
-        nint m = SDL_CreateTextureFromSurface(sdlRender, optsurf);
-        SDL_FreeSurface(optsurf);
-        SDL_QueryTexture(m, out uint idontwant1, out int idontwant2, out int w, out int h);
-        return (m, vec2i(w, h));*/
-        return default;
-    }
-
-    /// <summary>
-    /// deletes the texture :D
-    /// </summary>
-    public static void cleanupTexture(nint id)
-    {
-        //SDL_DestroyTexture(id);
     }
 
     /// <summary>
@@ -93,50 +68,25 @@ public static partial class Platform {
         return vec2i(w, h);
     }
 
-    /*public static void renderTexture(Sprite texture, vec2i srcPos, vec2i srcSize, vec2i destPos, vec2i destSize,
-    double rotation, vec2i origin, color tint)
+    public static void clearScreen(color color)
     {
-        var fuckingsrc = new SDL_Rect() {
-            x = (int)(srcPos.x * renderScale),
-            y = (int)(srcPos.y * renderScale),
-            w = (int)(srcSize.x * renderScale),
-            h = (int)(srcSize.y * renderScale)
-        };
-        var fuckingdst = new SDL_Rect() {
-            x = (int)(destPos.x * renderScale),
-            y = (int)(destPos.y * renderScale),
-            w = (int)(destSize.x * renderScale),
-            h = (int)(destSize.y * renderScale)
-        };
-        var fuckingorigin = new SDL_Point() {
-            x = (int)(origin.x * renderScale),
-            y = (int)(origin.y * renderScale)
-        };
+        for (int y = 0; y < platsettings.renderSize.y; y++) {
+            for (int x = 0; x < platsettings.renderSize.x; x++) {
+                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                videobuf[x, y] = color;
+                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
+        }
+    }
 
-        // sdl doesn't have a tint parameter in the shits 🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑
-        SDL_SetTextureColorMod(texture.texturePtr, tint.r, tint.g, tint.b);
-        SDL_SetTextureAlphaMod(texture.texturePtr, tint.a);
-
-        SDL_RenderCopyEx(sdlRender, texture.texturePtr, ref fuckingsrc, ref fuckingdst, rotation, ref fuckingorigin, 0);
-
-        // X calls Y but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method. (CA1806)
-    }*/
-
-    /// <summary>
-    /// draws a rectangle :D
-    /// </summary>
-    public static void renderRectangle(vec2i pos, vec2i size, color color)
+    public static void renderTexture(Sprite texture, vec2i pos)
     {
-        /*SDL_SetRenderDrawColor(sdlRender, color.r, color.g, color.b, color.a);
-        SDL_SetRenderDrawBlendMode(sdlRender, SDL_BlendMode.SDL_BLENDMODE_BLEND);
-        var fk = new SDL_Rect() {
-            x = (int)(pos.x * renderScale),
-            y = (int)(pos.y * renderScale),
-            h = (int)(size.x * renderScale),
-            w = (int)(size.y * renderScale)
-        };
-        SDL_RenderFillRect(sdlRender, ref fk);
-        SDL_SetRenderDrawColor(sdlRender, 0, 0, 0, 255);
-        SDL_SetRenderDrawBlendMode(sdlRender, SDL_BlendMode.SDL_BLENDMODE_NONE);*/
+        for (int y = 0; y < texture.size.y; y++) {
+            for (int x = 0; x < texture.size.x; x++) {
+                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                videobuf[x + pos.x, y + pos.y] = texture.data[x, y];
+                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
+        }
     }
 }
