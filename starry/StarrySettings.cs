@@ -36,12 +36,4 @@ public struct StarrySettings
     /// resolution in which the game is rendered.
     /// </summary>
     public vec2i renderSize { get; set; } = vec2i(192, 108);
-    /// <summary>
-    /// path to the atlas image. an atlas contains all of the image
-    /// </summary>
-    public string atlas { get; set; } = "";
-    /// <summary>
-    /// all of the sprites from the atlas image. the key is a name for the sprite, and the value is a rectangle inside the atlas (position followed by size, in pixels)
-    /// </summary>
-    public Dictionary<string, (vec2i, vec2i)> sprites { get; set; } = [];
 }
