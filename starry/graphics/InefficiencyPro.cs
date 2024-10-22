@@ -85,6 +85,7 @@ public static partial class Platform {
             for (int x = 0; x < texture.size.x; x++) {
                 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                 videobuf[x + pos.x, y + pos.y] = texture.data[x, y];
+                log(texture.data[x, y]);
                 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
         }

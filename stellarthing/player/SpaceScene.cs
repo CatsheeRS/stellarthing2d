@@ -16,7 +16,6 @@ public class SpaceScene : IEntity
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
     };
-    TileComp render = new();
 
     public SpaceScene() {}
 

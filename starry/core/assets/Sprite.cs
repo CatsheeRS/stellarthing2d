@@ -23,9 +23,10 @@ public class Sprite : IAsset {
         using Image img = Image.Load(path);
         var imgdata = img.CloneAs<Rgba32>();
         data = new color[img.Width, img.Height];
+        size = vec2i(img.Width, img.Height);
 
         // i fucking hate the programming world send help
-        // why can´t they just make a reasonable library
+        // why can´t they just make a normal library
         int i = 0;
         Queue<Queue<color>> steitjgi = [];
         imgdata.ProcessPixelRows(x => {
@@ -49,8 +50,6 @@ public class Sprite : IAsset {
             }
             y++;
         }
-
-        
     }
 
     // this sprite shit isn't based on sdl, the garbage collector will catch it

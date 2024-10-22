@@ -17,7 +17,6 @@ public class Player : IEntity
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
     };
-    TileComp render = new();
 
     public Player() {}
 
@@ -52,5 +51,5 @@ public class Player : IEntity
         Camera.target = tf.position.as2d().round();
     }
 
-    public void draw() => render.draw(spr, tf);
+    public void draw() => Tilemap.pushSprite(spr, tf);
 }

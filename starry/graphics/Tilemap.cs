@@ -29,13 +29,21 @@ public static class Tilemap {
     }
 
     /// <summary>
-    /// adds a sprite to the world, intended to be used by TileComp. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
+    /// adds a sprite to the world. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
     /// </summary>
     public static void pushSprite(string world, int layer, Sprite sprite, TransformComp3D tf)
     {
         if (!worldLayerSprites.ContainsKey(world)) worldLayerSprites.Add(world, []);
         if (!worldLayerSprites[world].ContainsKey(layer)) worldLayerSprites[world].Add(layer, []);
         worldLayerSprites[world][layer].Enqueue((sprite, tf));
+    }
+
+    /// <summary>
+    /// adds a sprite to the world. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
+    /// </summary>
+    public static void pushSprite(Sprite sprite, TransformComp3D tf)
+    {
+        pushSprite(world, (int)tf.position.y, sprite, tf);
     }
 
     internal static void update()
