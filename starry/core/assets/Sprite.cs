@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
+using System.IO;
+using StbImageSharp;
 using static starry.Starry;
 namespace starry;
 
@@ -14,41 +13,25 @@ public class Sprite : IAsset {
     /// </summary>
     public vec2i size { get; internal set; }
     /// <summary>
-    /// pixel data for the pixels
+    /// pixel data for the pixels. you can edit this property to edit sprites
     /// </summary>
     public color[,] data { get; set; } = new color[0, 0];
 
     public void load(string path) {
-        // wtf is this
-        using Image img = Image.Load(path);
-        var imgdata = img.CloneAs<Rgba32>();
-        data = new color[img.Width, img.Height];
-        size = vec2i(img.Width, img.Height);
+        using var stream = File.OpenRead(path);
+        ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+        data = new color[image.Width, image.Height];
+        size = vec2i(image.Width, image.Height);
 
-        // i fucking hate the programming world send help
-        // why can´t they just make a normal library
-        int i = 0;
-        Queue<Queue<color>> steitjgi = [];
-        imgdata.ProcessPixelRows(x => {
-            Span<Rgba32> h = x.GetRowSpan(i);
-            Queue<color> faffery = [];
-            foreach (var j in h) {
-                faffery.Enqueue(color(j.R, j.G, j.B, j.A));
+        int eye = 0;
+        for (int y = 0; y < image.Height; y++) {
+            for (int x = 0; x < image.Height; x++) {
+                byte r = image.Data[eye++];
+                byte g = image.Data[eye++];
+                byte b = image.Data[eye++];
+                byte a = image.Data[eye++];
+                data[x, y] = color(r, g, b, a);
             }
-            steitjgi.Enqueue(faffery);
-            i++;
-        });
-
-        // murders of murderers
-        int y = 0;
-        while (steitjgi.Count > 0) {
-            var lol = steitjgi.Dequeue();
-            int x = 0;
-            while (lol.Count > 0) {
-                data[x, y] = lol.Dequeue();
-                x++;
-            }
-            y++;
         }
     }
 

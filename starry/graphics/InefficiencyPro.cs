@@ -45,7 +45,7 @@ public static partial class Platform {
                 socialconstruct[eye++] = colores.r;
                 socialconstruct[eye++] = colores.g;
                 socialconstruct[eye++] = colores.b;
-                socialconstruct[eye++] = colores.a;
+                socialconstruct[eye++] = 255; // alpha
             }
         }
 
@@ -81,11 +81,11 @@ public static partial class Platform {
 
     public static void renderTexture(Sprite texture, vec2i pos)
     {
-        for (int y = 0; y < texture.size.y; y++) {
-            for (int x = 0; x < texture.size.x; x++) {
+        for (int x = 0; x < texture.size.x; x++) {
+            for (int y = 0; y < texture.size.y; y++) {
                 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                videobuf[x + pos.x, y + pos.y] = texture.data[x, y];
-                log(texture.data[x, y]);
+                // TODO: support transparency properly
+                if (videobuf[x, y] != color.transparent) videobuf[x, y] = texture.data[x, y];
                 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
         }
