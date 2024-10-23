@@ -54,7 +54,7 @@ public static partial class Platform {
         }
 
         var fuckimsigma = new SDL_Rect() { x = 0, y = 0, w = platsettings.renderSize.x, h = platsettings.renderSize.y };
-        // TODO: don't (scale crap)
+        // TODO: ascale crap
         var gay = new SDL_Rect() { x = 0, y = 0, w = platsettings.renderSize.x * 3, h = platsettings.renderSize.y * 3 };
         SDL_RenderCopy(sdlRender, rendertarget, ref fuckimsigma, ref gay);
     }
