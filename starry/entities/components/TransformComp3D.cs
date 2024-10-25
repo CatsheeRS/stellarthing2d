@@ -24,7 +24,7 @@ public class TransformComp3D {
     /// <summary>
     /// the scale. this is just multiplication so (1, 1) is the original size, smaller values make it smaller, and bigger values make it bigger
     /// </summary>
-    //public vec2 scale { get; set; } = vec2(1, 1);
+    public vec2 scale { get; set; } = vec2(1, 1);
     /// <summary>
     /// tints the sprite (white is the original colors)
     /// </summary>

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using StbImageSharp;
 using static starry.Starry;
+using static SDL2.SDL;
 namespace starry;
 
 /// <summary>
@@ -16,23 +17,21 @@ public class Sprite : IAsset {
     /// pixel data for the pixels. you can edit this property to edit sprites
     /// </summary>
     public color[,] data { get; set; } = new color[0, 0];
+    public nint ytfytyt { get; set; }
 
-    public void load(string path) {
+    public unsafe void load(string path) {
         using var stream = File.OpenRead(path);
         ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
-        data = new color[image.Width, image.Height];
         size = vec2i(image.Width, image.Height);
-
-        int eye = 0;
-        for (int y = 0; y < image.Height; y++) {
-            for (int x = 0; x < image.Height; x++) {
-                byte r = image.Data[eye++];
-                byte g = image.Data[eye++];
-                byte b = image.Data[eye++];
-                byte a = image.Data[eye++];
-                data[x, y] = color(r, g, b, a);
-            }
+        
+        nint crapper;
+        fixed (byte* crap = image.Data) {
+            crapper = SDL_CreateRGBSurfaceFrom((nint)crap, image.Width, image.Height, 4 * 8, image.Width * 4,
+                0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
         }
+
+        ytfytyt = SDL_CreateTextureFromSurface(Platform.sdlRender, crapper);
+        SDL_FreeSurface(crapper);
     }
 
     // this sprite shit isn't based on sdl, the garbage collector will catch it

@@ -16,6 +16,7 @@ public class Player : IEntity
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
+        scale = vec2(15 , 10),
     };
 
     public Player() {}

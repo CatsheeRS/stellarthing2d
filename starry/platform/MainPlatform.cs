@@ -55,7 +55,7 @@ public static partial class Platform
 
         screenSurface = SDL_GetWindowSurface(window);
 
-        Platform.platsettings = settings;
+        platsettings = settings;
         createRendererSubsystemThing();
     }
 
@@ -235,7 +235,6 @@ public static partial class Platform
         Input.mousePosition = vec2i((int)virt.x, (int)virt.y);
         
         SDL_RenderClear(sdlRender);
-        clearScreen(color.white);
     }
 
     /// <summary>
@@ -261,7 +260,6 @@ public static partial class Platform
             i++;
         }
 
-        processVideoBufferStuff();
         SDL_RenderPresent(sdlRender);
     }
 

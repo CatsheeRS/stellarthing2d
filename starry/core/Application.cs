@@ -25,7 +25,7 @@ public static class Application {
         // setup stuff
         Platform.createWindow(new WindowSettings {
             title = $"{settings.gameName} {settings.gameVersion}",
-            size = vec2i(settings.renderSize.x, settings.renderSize.y),
+            size = vec2i(2000, 2000), // i fucking hate sdl
             renderSize = settings.renderSize,
             type = WindowType.fullscreenBorderless,
             targetFps = 60,
