@@ -90,6 +90,7 @@ public static partial class TextEngineProMax {
             '©' => "copyright",
             'ç' => "crl",
             'Ç' => "cru",
+            'C' => "cu",
             '{' => "curly_left",
             '}' => "curly_right",
             '÷' => "divide",
