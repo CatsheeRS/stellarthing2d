@@ -16,7 +16,8 @@ public class Player : IEntity
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),
-        scale = vec2(15 , 10),
+        scale = vec2(30, 20),
+        tint = color(255, 255, 255, 127)
     };
 
     public Player() {}
@@ -54,7 +55,7 @@ public class Player : IEntity
 
     public void draw()
     {
-        //Tilemap.pushSprite(spr, tf);
-        Platform.drawText("¡Thé quìçk brõwñ fôx jümped ovÉr the låzý dog!", vec2i(), vec2i(1, 0));
+        Tilemap.pushSprite(spr, tf);
+        Platform.drawText("¡Thé quìçk brõwñ fôx jümped ovÉr the låzý dog!\n¡Thé quìçk brõwñ fôx jümped ovÉr the låzý dog!", vec2i(), vec2i(1, 0), starry.color.white);
     }
 }

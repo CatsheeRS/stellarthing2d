@@ -10,30 +10,36 @@ public static partial class TextEngineProMax {
     /// <summary>
     /// draws a single character from the sprite font (you should probably use <c>drawText()</c>)
     /// </summary>
-    public static void drawCharacter(char c, vec2i pos, string fontpath)
+    public static void drawCharacter(char c, vec2i pos, string fontpath, out vec2i charSize, color color)
     {
         var cra = getCharFile(c, fontpath);
-        Platform.drawTexture(cra, pos, cra.size);
+        charSize = cra.size;
+        Platform.drawTexture(cra, pos, cra.size, color);
     }
 
     /// <summary>
     /// draws many characters :D
     /// </summary>
-    public static void drawText(string s, vec2i pos, string fontpath, vec2i spacing)
+    public static void drawText(string s, string fontpath, vec2i pos, vec2i spacing, color color)
     {
-        int xoffset = 0;
+        int xoffset = spacing.x;
         int yoffset = 0;
         vec2i fontsize = getCharFile('\0', fontpath).size;
 
         foreach (var c in s) {
             if (c == '\n') {
                 yoffset += fontsize.y + spacing.y;
-                xoffset = 0;
+                xoffset = spacing.x;
                 continue;
             }
 
-            drawCharacter(c, pos + vec2i(xoffset, yoffset), fontpath);
-            xoffset += fontsize.x + spacing.x;
+            if (c == ' ') {
+                xoffset += fontsize.x + spacing.x;
+                continue;
+            }
+
+            drawCharacter(c, pos + vec2i(xoffset, yoffset), fontpath, out vec2i lol, color);
+            xoffset += lol.x + spacing.x;
         }
     }
 

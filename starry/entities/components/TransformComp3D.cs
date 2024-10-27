@@ -28,5 +28,5 @@ public class TransformComp3D {
     /// <summary>
     /// tints the sprite (white is the original colors)
     /// </summary>
-    //public color tint { get; set; } = color.white;
+    public color tint { get; set; } = color.white;
 }

@@ -20,7 +20,7 @@ create(new StarrySettings {
         {"move_right", [Key.d, Key.arrowRight]},
     },
     assetPath = Path.GetFullPath("assets"),
-    renderSize = vec2i(240, 160),
+    renderSize = vec2i(480, 320),
     tileSize = vec2i(16, 16),
     fontPath = "ui/font"
 });

@@ -21,7 +21,11 @@ public static class Tilemap {
     /// <summary>
     /// as the name implies, it's a bunch of sprites for the layers of the worlds. this type declaration is a mess, so first there's a dictionary of worlds, then there's the layers, which is a dictionary since there can be an indefinite amount of positive and negative indexes, then there's a queue instead of a list since it's faster, and finally there's a tuple of a sprite and a transform component
     /// </summary>
-    static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp3D)>>> worldLayerSprites = [];
+    static Dictionary<string, Dictionary<int, Queue<(Sprite, TransformComp3D)>>> worldLayerSprites = new() {
+        {"space", new() {
+            {0, []},
+        }},
+    };
 
     internal static void create()
     {
@@ -51,7 +55,7 @@ public static class Tilemap {
         while (worldLayerSprites[world][layer].Count > 0) {
             var sprtf = worldLayerSprites[world][layer].Dequeue();
             Platform.drawTexture(sprtf.Item1, sprtf.Item2.position.as2d().round() * settings.tileSize
-                + Camera.target + Camera.offset, (sprtf.Item1.size * sprtf.Item2.scale).round());
+                + Camera.target + Camera.offset, (sprtf.Item1.size * sprtf.Item2.scale).round(), sprtf.Item2.tint);
         }
     }
 
