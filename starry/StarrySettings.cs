@@ -40,4 +40,8 @@ public struct StarrySettings
     /// size of tiles, used for coordinates
     /// </summary>
     public vec2i tileSize { get; set; } = vec2i(16, 16);
+    /// <summary>
+    /// folder with the font and stuff, NOT a ttf or sprite font
+    /// </summary>
+    public string fontPath { get; set; } = "";
 }

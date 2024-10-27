@@ -52,5 +52,9 @@ public class Player : IEntity
         Camera.target = tf.position.as2d().round();
     }
 
-    public void draw() => Tilemap.pushSprite(spr, tf);
+    public void draw()
+    {
+        //Tilemap.pushSprite(spr, tf);
+        Platform.drawText("¡Thé quìçk brõwñ fôx jümped ovÉr the låzý dog!", vec2i(), vec2i(1, 0));
+    }
 }

@@ -50,7 +50,7 @@ public static class Tilemap {
     {
         while (worldLayerSprites[world][layer].Count > 0) {
             var sprtf = worldLayerSprites[world][layer].Dequeue();
-            Platform.renderTexture(sprtf.Item1, sprtf.Item2.position.as2d().round() * settings.tileSize
+            Platform.drawTexture(sprtf.Item1, sprtf.Item2.position.as2d().round() * settings.tileSize
                 + Camera.target + Camera.offset, (sprtf.Item1.size * sprtf.Item2.scale).round());
         }
     }

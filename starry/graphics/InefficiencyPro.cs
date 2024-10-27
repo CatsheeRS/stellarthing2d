@@ -28,11 +28,19 @@ public static partial class Platform {
         return vec2i(w, h);
     }
 
-    public static void renderTexture(Sprite texture, vec2i pos, vec2i size)
+    public static void drawTexture(Sprite texture, vec2i pos, vec2i size)
     {
         SDL_Rect src = new() { x = 0, y = 0, w = texture.size.x, h = texture.size.y };
         SDL_Rect dst = new() { x = pos.x + offset.x, y = pos.y + offset.y, w = (int)(size.x * renderScale),
             h = (int)(size.y * renderScale) };
         SDL_RenderCopy(sdlRender, texture.ytfytyt, ref src, ref dst);
+    }
+
+    /// <summary>
+    /// draws text using the default font. this is literally just TextEngineProMax
+    /// </summary>
+    public static void drawText(string s, vec2i pos, vec2i spacing)
+    {
+        TextEngineProMax.drawText(s, pos, settings.fontPath, spacing);
     }
 }
