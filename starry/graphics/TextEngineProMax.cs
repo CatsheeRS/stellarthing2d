@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static starry.Starry;
 
 namespace starry;
 
 /// <summary>
-/// sprite font manager thing for text stuff since text is
+/// comically large class for platform abstractions. this currently uses SDL2 but i may change it.
 /// </summary>
-public static partial class TextEngineProMax {
+public static partial class Platform {
     /// <summary>
     /// draws a single character from the sprite font (you should probably use <c>drawText()</c>)
     /// </summary>
@@ -18,13 +20,13 @@ public static partial class TextEngineProMax {
     }
 
     /// <summary>
-    /// draws many characters :D
+    /// draws text using the default font. use <c>drawTextWordwrap()</c> if you want wordwrap, which you probably do if you're rendering any amount of large text
     /// </summary>
-    public static void drawText(string s, string fontpath, vec2i pos, vec2i spacing, color color)
+    public static void drawText(string s, vec2i pos, vec2i spacing, color color)
     {
         int xoffset = spacing.x;
         int yoffset = 0;
-        vec2i fontsize = getCharFile('\0', fontpath).size;
+        vec2i fontsize = getCharFile('\0', settings.fontPath).size;
 
         foreach (var c in s) {
             if (c == '\n') {
@@ -34,12 +36,33 @@ public static partial class TextEngineProMax {
             }
 
             if (c == ' ') {
-                xoffset += fontsize.x + spacing.x;
+                xoffset += (int)((fontsize.x + spacing.x) / 1.5); // TODO d ont
                 continue;
             }
 
-            drawCharacter(c, pos + vec2i(xoffset, yoffset), fontpath, out vec2i lol, color);
+            drawCharacter(c, pos + vec2i(xoffset, yoffset), settings.fontPath, out vec2i lol, color);
             xoffset += lol.x + spacing.x;
+        }
+    }
+
+    /// <summary>
+    /// it's like <c>drawText()</c> but it wrap words, which is very convenient when you have more than 1 sentence of text
+    /// </summary>
+    /// TODO: make this word wrap not character crap wrap
+    public static void drawTextWordwrap(string s, vec2i pos, vec2i size, vec2i spacing, color color)
+    {
+        vec2i fontSize = getCharFile('\0', settings.fontPath).size;
+        // TODO Dont muiltiply fix your dumbas ocde
+        int lineLength = (int)(size.x / (fontSize.x + spacing.x) * 1.15);
+        string[] wrappedLines = s.Chunk(lineLength).Select(x => new string(x)).ToArray();
+
+        // render stuff (i actually wrote this)
+        int yoffset = 0;
+        int i = 0;
+        foreach (string g in wrappedLines) {
+            drawText(g, pos + vec2i(0, yoffset), spacing, color);
+            yoffset += fontSize.y + spacing.y;
+            i++;
         }
     }
 

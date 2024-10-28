@@ -7,7 +7,7 @@ using SDL2;
 namespace starry;
 
 /// <summary>
-/// comically large class for platform abstractions. this currently uses SDL2 but i may change it
+/// comically large class for platform abstractions. this currently uses SDL2 but i may change it.
 /// </summary>
 public static partial class Platform
 {

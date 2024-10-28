@@ -41,12 +41,4 @@ public static partial class Platform {
         SDL_SetTextureColorMod(texture.ytfytyt, 255, 255, 255);
         SDL_SetTextureAlphaMod(texture.ytfytyt, 255);
     }
-
-    /// <summary>
-    /// draws text using the default font. this is literally just TextEngineProMax
-    /// </summary>
-    public static void drawText(string s, vec2i pos, vec2i spacing, color color)
-    {
-        TextEngineProMax.drawText(s, settings.fontPath, pos, spacing, color);
-    }
 }
