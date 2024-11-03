@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using static starry.Starry;
 
 namespace starry;
@@ -33,8 +34,6 @@ public static class Application {
         windowCreated = true;
 
         // more setup
-        //Tilemap.create();
-        //DebugMode.create();
         prevtime = Platform.getTime() / 1000d;
         log("Engine finished startup");
 
@@ -59,10 +58,10 @@ public static class Application {
                 if (Input.isKeyJustPressed(Key.f8)) break;
             }
 
-            // render stuff and update entities since that's when entities render stuff
-            // the renderer is called by the world since it has to switch between 2d and 3d and stuff
+            // yugfvyi8gbyugbi
             World.updateEntities();
             Tilemap.update();
+            DebugMode.update();
 
             Platform.endUpdate();
         }

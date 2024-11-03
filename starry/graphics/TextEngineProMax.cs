@@ -55,8 +55,7 @@ public static partial class Platform {
         // TODO Dont muiltiply fix your dumbas ocde
         int lineLength = (int)(size.x / (fontSize.x + spacing.x) * 1.15);
         string[] wrappedLines = s.Chunk(lineLength).Select(x => new string(x)).ToArray();
-
-        // render stuff (i actually wrote this)
+        
         int yoffset = 0;
         int i = 0;
         foreach (string g in wrappedLines) {

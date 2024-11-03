@@ -56,6 +56,6 @@ public class Player : IEntity
     public void draw()
     {
         Tilemap.pushSprite(spr, tf);
-        Platform.drawTextWordwrap("¡Thé quìçk brõwñ fôx jümps ovÉr the låzý dog!¡Thé quìçk brõwñ fôx jümps ovÉr the låzý dog!ß!#$%'()&+,-./0123456789:;<=>?@THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG[\\]^_`the quick brown fox jumps over the lazy dog{|}~¡¨©®¯˚ªº±´¿ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞàáâãäåçèéêëìíîïðñòóôõöøùúûüýþÿ", vec2i(), settings.renderSize, vec2i(1, 0), starry.color.white);
+        //Platform.drawTextWordwrap("¡Thé quìçk brõwñ fôx jümps ovÉr the låzý dog!¡Thé quìçk brõwñ fôx jümps ovÉr the låzý dog!ß!#$%'()&+,-./0123456789:;<=>?@THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG[\\]^_`the quick brown fox jumps over the lazy dog{|}~¡¨©®¯˚ªº±´¿ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞàáâãäåçèéêëìíîïðñòóôõöøùúûüýþÿ", vec2i(), settings.renderSize, vec2i(1, 0), starry.color.white);
     }
 }

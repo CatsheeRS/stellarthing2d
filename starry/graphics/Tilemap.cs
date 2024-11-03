@@ -27,11 +27,6 @@ public static class Tilemap {
         }},
     };
 
-    internal static void create()
-    {
-        Camera.offset -= settings.renderSize / vec2i(2, 2);
-    }
-
     /// <summary>
     /// adds a sprite to the world. you have to run this every frame as the renderer is gonna pop everything in the update loop. the world by default is "space"
     /// </summary>
