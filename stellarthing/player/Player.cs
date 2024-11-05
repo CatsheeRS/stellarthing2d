@@ -12,7 +12,7 @@ public class Player : IEntity
     };
 
     Sprite spr = load<Sprite>("red_ball.png");
-    double speed = 350;
+    double speed = 35;
 
     TransformComp3D tf = new() {
         position = vec3(0, 0, 0),

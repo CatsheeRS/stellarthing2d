@@ -47,4 +47,6 @@ public struct vec2i(int x, int y) {
         ecks = x;
         why = y;
     }
+
+    public override readonly string ToString() => $"vec2i({x}, {y})";
 }

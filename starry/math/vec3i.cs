@@ -49,4 +49,6 @@ public struct vec3i(int x, int y, int z) {
         why = y;
         zeezed = z;
     }
+
+    public override readonly string ToString() => $"vec3i({x}, {y}, {z})";
 }

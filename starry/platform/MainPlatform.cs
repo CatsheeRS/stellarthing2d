@@ -264,14 +264,6 @@ public static partial class Platform
     }
 
     /// <summary>
-    /// the current fps of the game
-    /// </summary>
-    public static double getFps()
-    {
-        return fps;
-    }
-
-    /// <summary>
     /// cleans up the internal stuff
     /// </summary>
     public static void cleanup()

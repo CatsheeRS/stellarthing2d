@@ -54,4 +54,6 @@ public struct vec3(double x, double y, double z) {
         why = y;
         zeezed = z;
     }
+
+    public override readonly string ToString() => $"vec3({x}, {y}, {z})";
 }

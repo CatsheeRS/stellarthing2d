@@ -29,7 +29,7 @@ public static class Application {
             size = vec2i(2000, 2000), // i fucking hate sdl
             renderSize = settings.renderSize,
             type = WindowType.fullscreenBorderless,
-            targetFps = 60,
+            //targetFps = 60,
         });
         windowCreated = true;
 
@@ -45,8 +45,8 @@ public static class Application {
             Platform.startUpdate();
 
             // get delta time :D
-            delta = Platform.getTime() - prevtime;
-            prevtime = Platform.getTime();
+            delta = (Platform.getTime() / 1000d) - prevtime;
+            prevtime = Platform.getTime() / 1000d;
 
             // set fullscreen
             // if (Raylib.IsKeyPressed(KeyboardKey.F11)) {

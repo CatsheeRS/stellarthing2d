@@ -36,7 +36,7 @@ public static partial class Platform {
         
         SDL_SetTextureColorMod(texture.ytfytyt, tint.r, tint.g, tint.b);
         SDL_SetTextureAlphaMod(texture.ytfytyt, tint.a);
-        SDL_SetTextureBlendMode(texture.ytfytyt, SDL_BlendMode.SDL_BLENDMODE_ADD);
+        SDL_SetTextureBlendMode(texture.ytfytyt, SDL_BlendMode.SDL_BLENDMODE_BLEND);
         SDL_RenderCopy(sdlRender, texture.ytfytyt, ref src, ref dst);
         SDL_SetTextureColorMod(texture.ytfytyt, 255, 255, 255);
         SDL_SetTextureAlphaMod(texture.ytfytyt, 255);

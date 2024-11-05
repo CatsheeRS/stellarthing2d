@@ -68,4 +68,6 @@ public struct vec2(double x, double y) {
     /// it rounds the vector.
     /// </summary>
     public vec2i round() => new((int)Math.Round(x), (int)Math.Round(y));
+
+    public override readonly string ToString() => $"vec2({x}, {y})";
 }
