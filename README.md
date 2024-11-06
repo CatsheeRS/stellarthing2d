@@ -2,12 +2,6 @@
 
 a game about space things
 
-made in a custom c# game engine with sdl
+made in a custom engine made with c++ and sfml
 
-starry is the engine, stellarthing is the game
-
-## running and stuff
-
-1. step one: you need the .net 8 sdk
-
-2. you also need to install SDL (sdl2, not 3)
+NOTE: i can't be bothered to make this environment stuff work on windows
