@@ -32,8 +32,7 @@ project "starry"
         defines { "STARRY_DEBUG" }  
         symbols "On" 
 
-        links
-		{	
+        links {
 			"sfml-graphics-s-d",
 			"sfml-window-s-d",
 			"sfml-system-s-d",
@@ -45,8 +44,7 @@ project "starry"
         defines { "STARRY_RELEASE" }    
         optimize "On"
 
-        links
-		{	
+        links {
 			"sfml-graphics-s",
 			"sfml-window-s",
 			"sfml-system-s",
