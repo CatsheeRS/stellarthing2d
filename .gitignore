@@ -538,3 +538,5 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 bin
+build/build_files
+build/external
