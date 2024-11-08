@@ -67,3 +67,5 @@ int get_five() {
   - Files are named using `snake_case`: `main_title.png`, `cubicmap.png`, `sound.wav`
 
 _NOTE: Spaces and special characters are always avoided in the files/dir naming!_
+
+Directories should have header files that include the entire directory, e.g. `modules/thing_module/thing_module.h`
