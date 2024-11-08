@@ -17,3 +17,9 @@ This is a layer of abstraction over raylib, which allows me to change frameworks
 ## catplusplus
 
 A standard library type thing since I don't like C++'s STL
+
+## lib
+
+Dependencies i've included in the source code
+
+- [lua](https://lua.org) v5.4.7: scripting language for modding, the engine also uses lua's string type
