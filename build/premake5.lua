@@ -132,6 +132,7 @@ workspace (workspaceName)
         kind "ConsoleApp"
         location "build_files/"
         targetdir "../bin/%{cfg.buildcfg}"
+        language "C++"
 
         filter "action:vs*"
             debugdir "$(SolutionDir)"
@@ -154,7 +155,7 @@ workspace (workspaceName)
 
         links {"raylib"}
 
-        cdialect "C99"
+        --cdialect "C99"
         cppdialect "C++17"
 
         includedirs {raylib_dir .. "/src" }

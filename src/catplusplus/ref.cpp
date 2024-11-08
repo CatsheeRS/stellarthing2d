@@ -11,6 +11,7 @@ void* ref::operator new(size size)
     void* ptr = ::operator new(size);
     ref* lopontero = (ref*)ptr;
     lopontero->refs++;
+    return lopontero;
 }
 
 void ref::operator delete(void* ptr)

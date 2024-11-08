@@ -25,6 +25,7 @@ Ternary Operator | condition ? result1 : result2 | `log("Value is 0: %s", (value
 Documentation comments | /\* Documentation \*/ | `/* This function does something. */`
 
 Other conventions:
+ - Files should begin with a comment saying what the file does.
  - All defined variables are ALWAYS initialized
  - Four spaces are used, instead of TABS
  - Trailing spaces are always avoided
