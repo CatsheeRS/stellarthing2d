@@ -1,9 +1,9 @@
 //#include "raylib.h"
 //#include "resource_dir.hpp"	// utility header for SearchAndSetResourceDir
-#include "sandbox/string_tests.hpp"
+#include "sandbox/collections.hpp"
 
 int main()
 {
-	sandbox::string_tests();
+	sandbox::collections();
 	return 0;
 }

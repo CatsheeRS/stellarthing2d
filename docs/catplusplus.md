@@ -12,6 +12,6 @@ For strings use `string`, and for characters use `uchar`, they're unicode and re
 
 ## Memory management
 
-By inheriting `ref` you can get instant and automatic reference counting
+By inheriting `ref` you can get instant and automatic reference counting (similar to `std::shared_ptr<T>`)
 
 Unlike the STL's smart pointers, this applies to the entire type
