@@ -30,7 +30,6 @@ Other conventions:
  - Four spaces are used, instead of TABS
  - Trailing spaces are always avoided
  - Use pragma once
- - Avoid templates (use `void*` instead) (the editor simply gives up when i write them)
  - Add an "i" at the start of interface names (since C++ doesn't have an interface keyword, it's just classes), e.g. `ithingy`
  - Control flow statements are followed **by a space**:
 ```c

@@ -18,8 +18,7 @@ This is a layer of abstraction over raylib, which allows me to change frameworks
 
 A standard library type thing since I don't like C++'s STL
 
-## lib
+## dependencies
 
-Dependencies i've included in the source code
-
-- [lua](https://lua.org) v5.4.7: scripting language for modding, the engine also uses lua's string type
+- [Raylib](https://raylib.com): it's a game library, important since stellarthing is a game
+- [Lua](https://lua.org): embedded scripting language, I also stole their strings
