@@ -540,3 +540,5 @@ FodyWeavers.xsd
 bin
 build/build_files
 build/external
+# lua has a weird makefile, we need to build it using its makefile otherwise it's gonna conflict with itself
+!src/lib/lua/Makefile

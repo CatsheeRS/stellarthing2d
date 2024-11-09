@@ -143,8 +143,7 @@ workspace (workspaceName)
 
         filter{}
 
-        vpaths 
-        {
+        vpaths {
             ["Header Files/*"] = { "../include/**.h",  "../include/**.hpp", "../src/**.h", "../src/**.hpp"},
             ["Source Files/*"] = {"../src/**.c", "src/**.cpp"},
         }
@@ -153,7 +152,7 @@ workspace (workspaceName)
         includedirs { "../src" }
         includedirs { "../include" }
 
-        links {"raylib"}
+        links {"raylib", "lua-lib"}
 
         --cdialect "C99"
         cppdialect "C++17"
@@ -183,7 +182,10 @@ workspace (workspaceName)
             links {"OpenGL.framework", "Cocoa.framework", "IOKit.framework", "CoreFoundation.framework", "CoreAudio.framework", "CoreVideo.framework", "AudioToolbox.framework"}
 
         filter{}
-		
+
+        excludes {
+            "../src/lib"
+        }
 
     project "raylib"
         kind "StaticLib"
@@ -202,8 +204,7 @@ workspace (workspaceName)
         filter{}
 
         includedirs {raylib_dir .. "/src", raylib_dir .. "/src/external/glfw/include" }
-        vpaths
-        {
+        vpaths {
             ["Header Files"] = { raylib_dir .. "/src/**.h"},
             ["Source Files/*"] = { raylib_dir .. "/src/**.c"},
         }
@@ -215,3 +216,30 @@ workspace (workspaceName)
             compileas "Objective-C"
 
         filter{}
+
+    project "lua-lib"
+        language    "C"
+        kind        "StaticLib"
+        warnings    "off"
+    
+        includedirs { "../src/lib/lua/src" }
+    
+        files {
+            "../src/lib/lua/src/**.h",
+            "../src/lib/lua/src**.c"
+        }
+    
+        excludes {
+            "../src/lib/lua/src/lauxlib.c",
+            "../src/lib/lua/src/lua.c",
+            "../src/lib/lua/src/luac.c",
+            "../src/lib/lua/src/print.c",
+            "../src/lib/lua/src/**.lua",
+            "../src/lib/lua/etc/*.c"
+        }
+    
+        filter "system:linux or bsd or hurd or aix or solaris or haiku"
+            defines     { "LUA_USE_POSIX", "LUA_USE_DLOPEN" }
+    
+        filter "system:macosx"
+            defines     { "LUA_USE_MACOSX" }
