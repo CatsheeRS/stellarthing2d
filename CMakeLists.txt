@@ -3,7 +3,9 @@ project(stellarthing)
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+if(WIN32)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+endif()
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -46,6 +48,16 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "stellarthing"
 )
 
+if(WIN32)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/windows")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/windows/lib")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/windows/lib")
+elseif(UNIX AND NOT WIN32)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/linux")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/linux/lib")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/linux/lib")
+endif()
+
 # Define the executable and link libraries
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
@@ -63,7 +75,7 @@ set(ASSETS_DIR "${CMAKE_SOURCE_DIR}/assets")
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${ASSETS_DIR} ${CMAKE_BINARY_DIR}/assets
+    ${ASSETS_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets
 )
 
 # we don't support web and mac anyway
