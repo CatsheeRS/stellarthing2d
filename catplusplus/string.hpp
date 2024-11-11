@@ -1,6 +1,5 @@
 /* one string type to rule them all */
 #pragma once
-#include "ref.hpp"
 #include "nums.hpp"
 #include <string>
 
@@ -8,7 +7,7 @@
 typedef wchar_t uchar;
 
 /* one string type to rule them all */
-class string : public ref {
+class string {
 private:
     std::wstring data;
 public:

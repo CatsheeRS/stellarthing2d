@@ -31,6 +31,7 @@ Other conventions:
  - Trailing spaces are always avoided
  - Use pragma once
  - Add an "i" at the start of interface names (since C++ doesn't have an interface keyword, it's just classes), e.g. `ithingy`
+ - Use `override`
  - Control flow statements are followed **by a space**:
 ```c
 if (condition) value = 0;

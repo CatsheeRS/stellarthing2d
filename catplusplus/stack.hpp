@@ -1,10 +1,9 @@
 /* stack collection implemented through linked lists */
 #pragma once
 #include "nums.hpp"
-#include "ref.hpp"
 
 /* stack collection implemented through linked lists */
-class stack : public ref {
+class stack {
 private:
     struct node {
         void* data;
