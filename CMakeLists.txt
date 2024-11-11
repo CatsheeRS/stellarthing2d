@@ -34,9 +34,9 @@ endif()
 find_package(Lua REQUIRED)
 
 if (NOT Lua_FOUND)
-  message(STATUS "Lua not found, using custom paths...")
-  set(Lua_INCLUDE_DIR ${LUA_INCLUDE_DIR})
-  set(Lua_LIBRARY ${LUA_LIBRARIES})
+    message(STATUS "Lua not found, using custom paths...")
+    set(Lua_INCLUDE_DIR ${LUA_INCLUDE_DIR})
+    set(Lua_LIBRARY ${LUA_LIBRARIES})
 endif()
 
 # Gather source files from multiple directories
@@ -44,8 +44,8 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "catplusplus/*.cpp"
     "main/*.cpp"
     "sleep/*.cpp"
-    "starry"
-    "stellarthing"
+    "starry/*.cpp"
+    "stellarthing/.cpp"
 )
 
 if(WIN32)
@@ -66,7 +66,12 @@ include_directories(${Lua_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} raylib ${Lua_LIBRARY})
 
 # Include directories
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src ${ASSETS_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/catplusplus
+    ${CMAKE_SOURCE_DIR}/main
+    ${CMAKE_SOURCE_DIR}/sleep
+    ${CMAKE_SOURCE_DIR}/starry
+    ${CMAKE_SOURCE_DIR}/stellarthing)
 
 # Define the assets directory
 set(ASSETS_DIR "${CMAKE_SOURCE_DIR}/assets")

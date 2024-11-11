@@ -1,7 +1,7 @@
 /* tests cat++ strings */
 #pragma once
 #include <stdio.h>
-#include "catplusplus/catplusplus.hpp"
+#include "catplusplus.hpp"
 
 namespace sandbox {
 
@@ -14,7 +14,7 @@ void collections() {
     sta->push(&stuff4);
 
     while (sta->length() > 0) {
-        printf("item %i", *((int*)(sta->pop())));
+        printf("item %i\n", *((int*)(sta->pop())));
     }
 }
 
