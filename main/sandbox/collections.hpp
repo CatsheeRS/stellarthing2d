@@ -2,11 +2,12 @@
 #pragma once
 #include <stdio.h>
 #include "catplusplus.hpp"
+#include "collections/collections.hpp"
 
 namespace sandbox {
 
 void collections() {
-    stack* sta = new stack();
+    ptr<stack> sta = ptr(new stack());
     int32 stuff1 = 69, stuff2 = 420, stuff3 = 69420, stuff4 = 42069;
     sta->push(&stuff1);
     sta->push(&stuff2);
@@ -16,7 +17,6 @@ void collections() {
     while (sta->length() > 0) {
         printf("item %i\n", *((int*)(sta->pop())));
     }
-    delete sta;
 }
 
 }
