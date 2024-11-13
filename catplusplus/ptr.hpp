@@ -20,7 +20,7 @@ private:
 public:
 	ptr(T* ptr) : val(ptr) {
 		refs = new numptr();
-		refs->val = 1;
+		refs->val = 0;
 	}
 
 	ptr(const ptr& obj)
