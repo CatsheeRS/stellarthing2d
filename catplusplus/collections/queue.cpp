@@ -36,6 +36,7 @@ void* queue::pop()
     }
 
     delete tmp;
+    len--;
     return value;
 }
 
