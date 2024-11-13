@@ -19,6 +19,7 @@ void* stack::pop()
 {
     if (top == nullptr) {
         // TODO: add error
+        return nullptr;
     }
     node* tmp = top;
     void* data = tmp->data;
@@ -32,6 +33,7 @@ void* stack::peek()
 {
     if (top == nullptr) {
         // TODO: add error
+        return nullptr;
     }
     return top->data;
 }
