@@ -2,11 +2,15 @@
 #pragma once
 #include "nums.hpp"
 
+// templates break my lsp
+//typedef void* T;
+
 /* stack collection implemented through linked lists */
+template <typename T>
 class stack {
 private:
     struct node {
-        void* data;
+        T data;
         node* next;
     };
     
@@ -14,16 +18,50 @@ private:
     node* top = nullptr;
 public:
     /* returns the size of the stack */
-    size length();
+    size length() {
+        return len;
+    }
 
     /* puts a new item at the top (start) of the stack */
-    void push(void* data);
+    void push(T data)
+    {
+        node* n = new node();
+        n->data = data;
+        n->next = top;
+        top = n;
+        len++;
+    }
 
     /* removes the item at the top (start) of the stack */
-    void* pop();
+    T pop()
+    {
+        if (top == nullptr) {
+            // TODO: add error
+            return T{};
+        }
+        node* tmp = top;
+        T data = tmp->data;
+        top = top->next;
+        delete tmp;
+        len--;
+        return data;
+    }
 
     /* returns the item at the top (start) without removing it */
-    void* peek();
+    T peek()
+    {
+        if (top == nullptr) {
+            // TODO: add error
+            return T{};
+        }
+        return top->data;
+    }
 
-    ~stack();
+    ~stack()
+    {
+        printf("rip\n");
+        while (len != 0) {
+            pop();
+        }
+    }
 };

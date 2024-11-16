@@ -10,6 +10,6 @@ made in a custom engine made with c++ and raylib
 
 install raylib and lua
 
-then use make
+then run `./scripts/run`
 
 to compile to windows from linux you need to install mingw

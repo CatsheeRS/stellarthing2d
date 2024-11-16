@@ -8,10 +8,10 @@ NOTE: DO NOT abbreviate Cat++ as "catpp", that sounds suspicious.
 
 Cat++ comes with versions of stdint.h numbers without the _t part, for example `int64` instead of `int64_t`
 
-For strings use `string`, and for characters use `uchar`, they're unicode and reference counted and stuff
+You can use these collections:
+- `stack<T>`: LIFO linked list
+- `queue<T>`: FIFO linked list
 
 ## Memory management
 
-By inheriting `ref` you can get instant and automatic reference counting (similar to `std::shared_ptr<T>`)
-
-Unlike the STL's smart pointers, this applies to the entire type
+Wrap your stuff in `ptr<T>` to get reference counting (similar to `std::shared_ptr<T>`)

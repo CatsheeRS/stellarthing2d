@@ -2,11 +2,15 @@
 #pragma once
 #include "nums.hpp"
 
+// templates break my lsp
+//typedef void* T;
+
 /* queue collection implemented through linked lists */
+template <typename T>
 class queue {
 private:
     struct node {
-        void* data;
+        T data;
         node* next;
     };
     
@@ -15,16 +19,61 @@ private:
     node* rear = nullptr;
 public:
     /* returns the size of the queue */
-    size length();
+    size length() {
+        return len;
+    }
 
     /* puts a new item at the end of the queue */
-    void push(void* data);
+    void push(T data)
+    {
+        node* n = new node();
+        n->data = data;
+        n->next = nullptr;
+
+        if (rear == nullptr) {
+            front = rear = n;
+        } else {
+            rear->next = n;
+            rear = n;
+        }
+        len++;
+    }
 
     /* removes the item at the start of the queue */
-    void* pop();
+    T pop()
+    {
+        if (front == nullptr) {
+            // TODO: add error
+            return T{};
+        }
+        node* tmp = front;
+        T value = tmp->data;
+        front = front->next;
+
+        if (front == nullptr) {
+            rear = nullptr;
+        }
+
+        delete tmp;
+        len--;
+        return value;
+    }
 
     /* returns the item at the start without removing it */
-    void* peek();
+    T peek()
+    {
+        if (front == nullptr) {
+            // TODO: add error
+            return T{};
+        }
+        return front->data;
+    }
 
-    ~queue();
+    ~queue()
+    {
+        printf("rip\n");
+        while (len != 0) {
+            pop();
+        }
+    }
 };

@@ -8,26 +8,25 @@ namespace sandbox {
 
 void collections() {
     // stack
-    ptr<stack> sta = ptr(new stack());
-    int32 stuff1 = 11, stuff2 = 22, stuff3 = 33, stuff4 = 44;
-    sta->push(&stuff1);
-    sta->push(&stuff2);
-    sta->push(&stuff3);
-    sta->push(&stuff4);
+    ptr<stack<int32>> sta = ptr(new stack<int32>());
+    sta->push(11);
+    sta->push(22);
+    sta->push(33);
+    sta->push(44);
 
     while (sta->length() > 0) {
-        printf("stack item %i\n", *((int*)(sta->pop())));
+        printf("stack item %i\n", sta->pop());
     }
 
     // queue (evil stack)
-    ptr<queue> que = ptr(new queue());
-    que->push(&stuff1);
-    que->push(&stuff2);
-    que->push(&stuff3);
-    que->push(&stuff4);
+    ptr<queue<int32>> que = ptr(new queue<int32>());
+    que->push(11);
+    que->push(22);
+    que->push(33);
+    que->push(44);
 
     while (que->length() > 0) {
-        printf("queue item %i\n", *((int*)(que->pop())));
+        printf("queue item %i\n", que->pop());
     }
 }
 
