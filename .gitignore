@@ -1,8 +1,4 @@
-.zig-cache/
-zig-out/
-/release/
-/debug/
-/build/
-/build-*/
-/docgen_tmp/
-zig-cache/
+bin
+obj
+build
+_deps
