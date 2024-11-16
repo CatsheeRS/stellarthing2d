@@ -2,7 +2,7 @@
 
 a game about space things
 
-made in a custom engine made with c++ and raylib
+made in a custom engine made with zig and raylib with modding through lua
 
 ## how to run????????????
 
