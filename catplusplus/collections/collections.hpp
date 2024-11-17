@@ -2,3 +2,4 @@
 #pragma once
 #include "stack.hpp"
 #include "queue.hpp"
+#include "array.hpp"
