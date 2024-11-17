@@ -1,7 +1,7 @@
 /* one string type to rule them all */
 #pragma once
 #include "nums.hpp"
-#include <string>
+#include <lua.hpp>
 
 /* unicode character */
 typedef wchar_t uchar;

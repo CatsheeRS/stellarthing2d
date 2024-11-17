@@ -1,12 +1,10 @@
-/* tests cat++ collections and also ptr<T> too why not */
-#pragma once
+#include "sandbox.hpp"
 #include <stdio.h>
 #include "catplusplus.hpp"
 #include "collections/collections.hpp"
 
-namespace sandbox {
-
-void collections() {
+void sandbox::collections()
+{
     // stack
     ptr<stack<int32>> sta = ptr(new stack<int32>());
     sta->push(11);
@@ -56,7 +54,4 @@ void collections() {
     for (size i = 0; i < vec->length(); i++) {
         printf("vector item %i\n", *(int*)vec->at(i));
     }
-    
-}
-
 }

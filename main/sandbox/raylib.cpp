@@ -1,10 +1,8 @@
 /* checks if raylib works */
-#pragma once
 #include <raylib.h>
+#include "sandbox.hpp"
 
-namespace sandbox {
-
-void raylib()
+void sandbox::raylib()
 {
     const int scrw = 800;
     const int scrh = 450;
@@ -20,6 +18,4 @@ void raylib()
     }
 
     CloseWindow();
-}
-
 }

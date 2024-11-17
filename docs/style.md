@@ -32,6 +32,7 @@ Other conventions:
  - Use pragma once
  - Add an "i" at the start of interface names (since C++ doesn't have an interface keyword, it's just classes), e.g. `ithingy`
  - Use `override`
+ - In `#include` statements use quotes for internal code and brackets for third-party code
  - Control flow statements are followed **by a space**:
 ```c
 if (condition) value = 0;
@@ -64,14 +65,10 @@ int get_five() {
     return 5;
 }
 ```
- - Namespace don't have identation, use namespaces instead of static classes/singletons
+ - Use namespaces instead of static classes/singletons
 ```cpp
 namespace thing_manager {
-
-void thing_function() {
-    // do something
-}
-
+    void thing_function();
 }
 ```
 
