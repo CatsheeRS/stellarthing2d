@@ -40,6 +40,23 @@ void collections() {
         printf("array item %i\n", arr->at(i));
     }
     
+    // vector
+    ptr<vector<int32*>> vec = ptr(new vector<int32*>(0));
+    int32 j1 = 11;
+    int32 j2 = 22;
+    int32 j3 = 33;
+    int32 j4 = 69420;
+    int32 j5 = 44;
+    vec->add(&j1);
+    vec->add(&j2);
+    vec->add(&j3);
+    vec->add(&j4);
+    vec->set(3, &j5);
+
+    for (size i = 0; i < vec->length(); i++) {
+        printf("vector item %i\n", *(int*)vec->at(i));
+    }
+    
 }
 
 }
