@@ -1,21 +1,18 @@
 /* one string type to rule them all */
 #pragma once
 #include "nums.hpp"
-#include <lua.hpp>
+#include "ptr.hpp"
 
-/* unicode character */
-typedef wchar_t uchar;
-
-/* one string type to rule them all */
+/* one string type to rule them all (they're just lua strings) */
 class string {
 private:
-    std::wstring data;
+    /* reference to a lua string duh */
+    int luastrref;
 public:
-    string(std::wstring s) : data(s) {};
-    string(const uchar* s) : data(s) {};
+    string(const char* s);
     
-    /* gets the character at that index */
-    uchar at(size idx);
     /* returns a C string version */
-    const uchar* as_cstr();
+    const char* as_cstr();
+
+    ~string();
 };

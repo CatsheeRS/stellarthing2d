@@ -1,10 +1,11 @@
 /* tests cat++ strings */
 #include <stdio.h>
-#include <inttypes.h>
-#include "catplusplus/catplusplus.hpp"
+#include "catplusplus.hpp"
 #include "sandbox.hpp"
 
 void sandbox::string_tests() {
+    ptr<string> s = str("¡Hola mamá!");
+    printf("str: %s", s->as_cstr());
     /*string str = L"¡Hi móm!";
     string* str2 = &str;
     printf("str references: %" PRIu64 "\n", str2->get_ref_count()); // should be 2
