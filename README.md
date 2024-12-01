@@ -1,15 +1,29 @@
-# stellarthing
+# Stellarthing
 
-a game about space things
+A game about space things
 
-made in a custom engine made with c++ and raylib
+# Starry Engine
 
-## how to run????????????
+starry is the next biggest ever replacement of unity unreal godot game maker cryengine frostbite source 2 rpg maker lumberyard defold panda3d flax monogame libgdx ogre bevy phaser armory gdevelop cocos2d renpy urho3d stride haxeflixel pygame blender game engine fucking idk
 
-### linux
+best game engine in the world awards 1921 winner
 
-install raylib and lua
+10th best game engine when it comes to usability awards 3000 BC winner
 
-then run `./scripts/run`
+## Epic features
+- Modern C# without being batshit insane
+- Only 2 dependencies: .net and raylib
 
-to compile to windows from linux you need to install mingw
+# How to build
+
+just install .net 8.
+
+to release:
+```sh
+dotnet publish --os win -c Release --sc
+dotnet publish --os linux -c Release --sc
+```
+
+it's somewhere in `stellarthing/bin/Release/` then the publish folder
+
+if you're using windows you can try [this tutorial](https://www.google.com/search?q=how+to+install+linux)
