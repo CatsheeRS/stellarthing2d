@@ -4,12 +4,21 @@ using Raylib_cs;
 namespace starry;
 
 public class Starry {
+    /// <summary>
+    /// starry settings
+    /// </summary>
     public static StarrySettings settings { get; set; }
+    /// <summary>
+    /// the engine version (semantic versioning)
+    /// </summary>
+    public static vec3i starryVersion => (2, 0, 0);
 
     public static async Task create(StarrySettings settings)
     {
         Starry.settings = settings;
-        Raylib.InitWindow(800, 480, "Hello World");
+        Raylib.InitWindow(800, 480,
+            // quite the mouthful
+            $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}");
 
         // modules :D
         await TestModule.create();

@@ -6,7 +6,9 @@ internal class Program {
     internal async static Task Main(string[] args)
     {
         await Starry.create(new StarrySettings {
-            startup = () => {}
+            startup = () => {},
+            gameName = "Stellarthing",
+            gameVersion = (0, 10, 0),
         });
     }
 }
