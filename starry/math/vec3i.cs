@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace starry;
 
 /// <summary>
-/// it's like vector3 but + 1
+/// it's like a vector3 but integer
 /// </summary>
 public struct vec3i(long x, long y, long z) {
     public long x { get; set; } = x;
