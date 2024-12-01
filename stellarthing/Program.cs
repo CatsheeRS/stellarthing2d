@@ -1,9 +1,12 @@
-﻿using starry;
+﻿using System.Threading.Tasks;
+using starry;
 namespace stellarthing;
 
 internal class Program {
-    internal static void Main(string[] args)
+    internal async static Task Main(string[] args)
     {
-        _ = new Starry();
+        await Starry.create(new StarrySettings {
+            startup = () => {}
+        });
     }
 }
