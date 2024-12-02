@@ -15,4 +15,5 @@ public struct StarrySettings() {
     public bool fullscreen { get; set; } = true;
     public vec2i windowSize { get; set; } = (1280, 720);
     public string assetPath { get; set; } = "";
+    public int frameRate { get; set; } = 60;
 }

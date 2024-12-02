@@ -1,11 +1,8 @@
 using System.Threading.Tasks;
 using Raylib_cs;
-
 namespace starry;
 
-public static class Graphics {
-    public static Font? defaultFont { get; set; }
-
+public static partial class Graphics {
     public static Task create()
     {
         return Task.CompletedTask;

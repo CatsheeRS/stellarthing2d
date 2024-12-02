@@ -30,7 +30,7 @@ public class Starry {
 
         while (!Window.isClosing()) {
             Graphics.clear(color.white);
-            Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
+            Graphics.drawText("ABCABC´aá´áá´", Graphics.defaultFont, (16, 16), color.black, 16);
             Graphics.endDrawing();
         }
 

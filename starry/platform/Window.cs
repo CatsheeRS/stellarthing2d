@@ -13,6 +13,16 @@ public static class Window {
     {
         // i hope you don't need a window of a size of 3 billion
         Raylib.InitWindow((int)size.x, (int)size.y, title);
+
+        // man
+        #if DEBUG
+        Raylib.SetExitKey(KeyboardKey.F8);
+        #else
+        Raylib.SetExitKey(KeyboardKey.Null);
+        #endif
+        
+        // more bullshit
+        Raylib.SetTextLineSpacing(16);
     }
 
     /// <summary>
@@ -46,4 +56,6 @@ public static class Window {
     /// the size of the window (considers hidpi)
     /// </summary>
     public static vec2i getSize() => (Raylib.GetRenderWidth(), Raylib.GetRenderHeight()); // TODO use GetWindowScaleDPI when making the renderer
+
+    public static void setFrameRate(int fps) => Raylib.SetTargetFPS(fps);
 }
