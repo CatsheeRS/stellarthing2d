@@ -12,4 +12,6 @@ public struct StarrySettings() {
     public required Action startup { get; set; }
     public string gameName { get; set; } = "Example project";
     public vec3i gameVersion { get; set; } = (0, 0, 1);
+    public bool fullscreen { get; set; } = true;
+    public vec2i windowSize { get; set; } = (1280, 720);
 }

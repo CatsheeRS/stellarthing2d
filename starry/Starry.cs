@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Raylib_cs;
 namespace starry;
@@ -11,30 +12,28 @@ public class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 0);
+    public static vec3i starryVersion => (2, 0, 1);
 
     public static async Task create(StarrySettings settings)
     {
         Starry.settings = settings;
-        Raylib.InitWindow(800, 480,
-            // quite the mouthful
-            $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}");
+        // if i call it "title" it becomes 122 characters so i have an entire line that's just ";
+        string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
+        // the size doesn't matter once you make it fullscreen
+        Window.create(el, settings.windowSize);
+        Window.setFullscreen(settings.fullscreen);
 
-        // modules :D
-        await TestModule.create();
+        // fccking kmodules
+        await Graphics.create();
 
-        while (!Raylib.WindowShouldClose()) {
-            // modules :D
-            await TestModule.update();
-
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.White);
+        while (!Window.isClosing()) {
+            Graphics.clear(color.white);
             Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
-            Raylib.EndDrawing();
+            Graphics.endDrawing();
         }
 
-        // modules :D
-        await TestModule.cleanup();
-        Raylib.CloseWindow();
+        // fccking kmodules
+        await Graphics.cleanup();
+        Window.cleanup();
     }
 }
