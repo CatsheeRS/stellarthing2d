@@ -14,4 +14,5 @@ public struct StarrySettings() {
     public vec3i gameVersion { get; set; } = (0, 0, 1);
     public bool fullscreen { get; set; } = true;
     public vec2i windowSize { get; set; } = (1280, 720);
+    public string assetPath { get; set; } = "";
 }

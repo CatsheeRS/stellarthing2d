@@ -4,6 +4,8 @@ using Raylib_cs;
 namespace starry;
 
 public static class Graphics {
+    public static Font? defaultFont { get; set; }
+
     public static Task create()
     {
         return Task.CompletedTask;

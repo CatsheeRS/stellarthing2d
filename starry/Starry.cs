@@ -26,6 +26,8 @@ public class Starry {
         // fccking kmodules
         await Graphics.create();
 
+        settings.startup();
+
         while (!Window.isClosing()) {
             Graphics.clear(color.white);
             Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
@@ -34,6 +36,12 @@ public class Starry {
 
         // fccking kmodules
         await Graphics.cleanup();
+        await Assets.cleanup();
         Window.cleanup();
     }
+
+    /// <summary>
+    /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk this is just Assets.load<T> lmao
+    /// </summary>
+    public static async Task<T> load<T>(string path) where T: IAsset, new() => await Assets.load<T>(path);
 }
