@@ -13,11 +13,8 @@ public record class Font: IAsset {
 
     public unsafe void load(string path)
     {
-        // fucking C
-        int[] fucking = [
-            41, 42, 43
-        ];
-        rl = Raylib.LoadFontEx(path, 32, fucking, 256);
+        Raylib.font
+        rl = Raylib.LoadFont(path);
     }
 
     public void cleanup() => Raylib.UnloadFont(rl);

@@ -29,8 +29,9 @@ public class Starry {
         settings.startup();
 
         while (!Window.isClosing()) {
-            Graphics.clear(color.white);
-            Graphics.drawText("ABCABC´aá´áá´", Graphics.defaultFont, (16, 16), color.black, 16);
+            Graphics.clear(color.black);
+            Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
+                Graphics.defaultFont, (16, 16), color.purple, 16);
             Graphics.endDrawing();
         }
 

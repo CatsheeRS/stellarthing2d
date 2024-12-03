@@ -9,7 +9,7 @@ internal class Program {
     {
         await create(new StarrySettings {
             startup = async () => {
-                Graphics.defaultFont = await Assets.load<Font>("fonts/pixel-unicode.ttf");
+                Graphics.defaultFont = await Assets.load<Font>("font/pixel-unicode.fnt");
             },
             gameName = "Stellarthing",
             gameVersion = (0, 10, 0),
