@@ -1,6 +1,3 @@
-using System.Linq;
-using Raylib_cs;
-
 namespace starry;
 
 public interface IAsset {

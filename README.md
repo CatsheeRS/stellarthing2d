@@ -12,7 +12,9 @@ best game engine in the world awards 1921 winner
 
 ## Epic features
 - Modern C# without being batshit insane
-- Only 2 dependencies: .net and raylib
+- Sick OpenGL renderer
+- Acceptable math structs
+- A lot of async await
 
 # How to build
 

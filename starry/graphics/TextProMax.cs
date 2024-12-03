@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Numerics;
-using Raylib_cs;
 namespace starry;
 
 public static partial class Graphics {
-    public static string defaultFont { get; set; } = "";
+    /*public static string defaultFont { get; set; } = "";
     // minimize this
     public static Dictionary<char, rect2> chars { get; set; } = new() {
         {'\0', (16, 0, 7, 16)}, // default
@@ -188,5 +187,5 @@ public static partial class Graphics {
     {
         Raylib.DrawTextEx(font.rl, text, new Vector2((float)pos.x, (float)pos.y), fontSize, 0,
             new Color(color.r, color.g, color.b, color.a));
-    }
+    }*/
 }
