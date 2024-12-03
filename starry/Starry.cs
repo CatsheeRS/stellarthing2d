@@ -97,4 +97,13 @@ public class Starry {
         str.Append('\n');
         Console.Write(str);
     }
+
+    public static bool isDebug()
+    {
+        #if DEBUG
+        return true;
+        #else
+        return false;
+        #endif
+    }
 }

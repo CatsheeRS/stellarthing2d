@@ -20,13 +20,13 @@ public static partial class Graphics {
 
     public static void clear(color color)
     {
-        /*Raylib.BeginDrawing();
-        Raylib.ClearBackground(new Color(color.r, color.g, color.b, color.a));*/
+        if (gl == null) return;
+        gl.Clear(ClearBufferMask.ColorBufferBit);
     }
 
-    public static void endDrawing()
+    public static unsafe void endDrawing()
     {
-        //Raylib.EndDrawing();
+        Window.glfw?.SwapBuffers(Window.window);
     }
 
     public static void cleanup() {}

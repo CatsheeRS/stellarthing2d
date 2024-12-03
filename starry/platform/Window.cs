@@ -63,9 +63,13 @@ public static unsafe class Window {
             VideoMode* mode = glfw.GetVideoMode(monitor);
             glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
                 mode->RefreshRate);
+            Starry.log("Window is now fullscreen");
         }
-        else glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
-            (int)Starry.settings.renderSize.y, Starry.settings.frameRate);
+        else {
+            glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
+               (int)Starry.settings.renderSize.y, Starry.settings.frameRate);
+            Starry.log("Windows is now windowed");
+        }
     }
 
     /// <summary>
@@ -76,7 +80,12 @@ public static unsafe class Window {
     /// <summary>
     /// if true the window is closing. convenient for making a main loop
     /// </summary>
-    public static bool isClosing() => glfw?.WindowShouldClose(window) ?? false;
+    public static bool isClosing()
+    {
+        if (glfw == null) return false;
+        glfw.PollEvents();
+        return glfw.WindowShouldClose(window);
+    }
 
     /// <summary>
     /// run at the end of the thing
@@ -87,6 +96,7 @@ public static unsafe class Window {
 
         glfw.DestroyWindow(window);
         glfw.Terminate();
+        Starry.log("🛑 ITS JOEVER");
     }
 
     /// <summary>
