@@ -8,7 +8,7 @@ public interface IAsset {
     public void cleanup();
 }
 
-public record class Font: IAsset {
+/*public record class Font: IAsset {
     internal Raylib_cs.Font rl;
 
     public unsafe void load(string path)
@@ -18,4 +18,4 @@ public record class Font: IAsset {
     }
 
     public void cleanup() => Raylib.UnloadFont(rl);
-}
+}*/
