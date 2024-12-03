@@ -12,7 +12,6 @@ internal class Program {
             gameName = "Stellarthing",
             gameVersion = (0, 10, 0),
             fullscreen = true,
-            frameRate = 144,
             assetPath = Path.GetFullPath("assets"),
         });
     }
