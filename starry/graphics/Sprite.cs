@@ -7,7 +7,7 @@ namespace starry;
 public record class Sprite: IAsset {
     public vec2i size { get; private set; }
     internal ImageResult stbimg = new();
-    internal uint id;
+    internal uint id = 0;
     internal GLEnum internalFormat = GLEnum.Rgb;
     internal GLEnum imageFormat = GLEnum.Rgb;
     internal GLEnum wraps = GLEnum.Repeat;
@@ -17,9 +17,14 @@ public record class Sprite: IAsset {
 
     public void load(string path)
     {
+        if (Graphics.gl == null) return;
+        GL gl = Graphics.gl;
+
         using var stream = File.OpenRead(path);
         stbimg = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
         size = (stbimg.Width, stbimg.Height);
+
+        gl.GenTextures(1, out id);
     }
 
     public void cleanup() {}

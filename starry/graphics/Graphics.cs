@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace starry;
 
 public static partial class Graphics {
     internal static GL? gl;
-    internal static Shader shader;
+    internal static Shader shader = new();
     internal static uint quadVao;
 
     public static unsafe void create()
@@ -52,6 +53,18 @@ public static partial class Graphics {
         gl.VertexAttribPointer(0, 4, GLEnum.Float, false, 4 * sizeof(float), null);
         gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);  
         gl.BindVertexArray(0);
+
+        // shade
+        shader.compile(
+            File.ReadAllText(Path.GetFullPath("assets/shaders/vertex.glsl")),
+            File.ReadAllText(Path.GetFullPath("assets/shaders/fragment.glsl"))
+        );
+        shader.use();
+        shader.setInt("image", 0);
+        Matrix4x4 proj = Starry.ortho(0, Starry.settings.renderSize.x, Starry.settings.renderSize.y,
+            0, -1, 1);
+        shader.setMat4("projection", MemoryMarshal.Cast<Matrix4x4, float>(
+            MemoryMarshal.CreateSpan(ref proj, 1)));
 
         Starry.log("Sprite renderer has been initialized");
     }

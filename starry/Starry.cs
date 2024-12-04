@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,8 +32,10 @@ public class Starry {
 
         settings.startup();
 
+        Sprite sprite = await load<Sprite>("stellarthing.png");
         while (!Window.isClosing()) {
             Graphics.clear(color.black);
+            Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
             //Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
             //    Graphics.defaultFont, (16, 16), color.purple, 16);
             Graphics.endDrawing();
@@ -105,5 +108,23 @@ public class Starry {
         #else
         return false;
         #endif
+    }
+
+    /// <summary>
+    /// the infamous glm::ortho
+    /// </summary>
+    public static Matrix4x4 ortho(float left, float right, float bottom, float top,
+    float near, float far)
+    {
+        float rl = 1.0f / (right - left);
+        float tb = 1.0f / (top - bottom);
+        float fn = 1.0f / (far - near);
+
+        return new Matrix4x4(
+            2.0f * rl,  0.0f,       0.0f,      -(right + left) * rl,
+            0.0f,       2.0f * tb,  0.0f,      -(top + bottom) * tb,
+            0.0f,       0.0f,      -2.0f * fn, -(far + near) * fn,
+            0.0f,       0.0f,       0.0f,       1.0f
+        );
     }
 }
