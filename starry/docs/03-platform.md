@@ -7,7 +7,7 @@ Here's some code examples
 ```cs
 // making a window
 Window.create("Starry 2©®©™®©®™©®©™©™®", (1280, 720));
-await Graphics.create();
+Graphics.create();
 
 while (!Window.isClosing()) {
     Graphics.clear(color.white);
@@ -15,6 +15,6 @@ while (!Window.isClosing()) {
     Graphics.endDrawing();
 }
 
-await Graphics.cleanup();
+Graphics.cleanup();
 Window.cleanup();
 ``

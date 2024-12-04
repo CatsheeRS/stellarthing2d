@@ -8,6 +8,8 @@ namespace starry;
 /// the game window. static since i don't think games need several of those
 /// </summary>
 public static unsafe class Window {
+    public static event ResizeEvent? onResize;
+
     internal static Glfw? glfw;
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
@@ -28,16 +30,12 @@ public static unsafe class Window {
         glfw.WindowHint(WindowHintInt.ContextVersionMajor, 3);
         glfw.WindowHint(WindowHintInt.ContextVersionMinor, 3);
         glfw.WindowHint(WindowHintInt.RefreshRate, Starry.settings.frameRate);
-
-        glfw.SetErrorCallback((error, description) => {
-            Starry.log($"OPENGL ERROR: {error}: {description}");
-        });
-
         Starry.log("GLFW has been initialized");
 
         // make the infamous window
         window = glfw.CreateWindow((int)Starry.settings.renderSize.x,
             (int)Starry.settings.renderSize.y, title, null, null);
+        
         if (window == null) {
             glfw.Terminate();
             throw new Exception("Couldn't create a window");
@@ -45,8 +43,24 @@ public static unsafe class Window {
         glfw.MakeContextCurrent(window);
         Starry.log("Created window");
 
+        // there's a lot of callbacks
+        setupCallbacks();
+
         // this setups up opengl
         Graphics.create();
+    }
+
+    static unsafe void setupCallbacks()
+    {
+        if (glfw == null) return;
+
+        glfw.SetErrorCallback((error, description) => {
+            Starry.log($"OPENGL ERROR: {error}: {description}");
+        });
+
+        glfw.SetFramebufferSizeCallback(window, (win, w, h) => {
+            onResize?.Invoke((w, h));
+        });
     }
 
     /// <summary>
@@ -63,11 +77,13 @@ public static unsafe class Window {
             VideoMode* mode = glfw.GetVideoMode(monitor);
             glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
                 mode->RefreshRate);
+            
             Starry.log("Window is now fullscreen");
         }
         else {
             glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
                (int)Starry.settings.renderSize.y, Starry.settings.frameRate);
+            
             Starry.log("Windows is now windowed");
         }
     }
@@ -108,4 +124,6 @@ public static unsafe class Window {
         glfw.GetWindowSize(window, out int width, out int height);
         return (width, height);
     }
+
+    public delegate void ResizeEvent(vec2i newSize);
 }

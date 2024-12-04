@@ -21,6 +21,7 @@ public static partial class Graphics {
     public static void clear(color color)
     {
         if (gl == null) return;
+        gl.ClearColor(color.r / 256, color.g / 256, color.b / 256, color.a / 256);
         gl.Clear(ClearBufferMask.ColorBufferBit);
     }
 
