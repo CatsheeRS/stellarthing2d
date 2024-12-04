@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Silk.NET.GLFW;
 using Silk.NET.OpenGL;
@@ -70,24 +72,33 @@ public static partial class Graphics {
 
     public static void drawSprite(Sprite sprite, rect2 rect, double rotation, color color)
     {
-        shader.Use();
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(position, 0.0f));  
+        if (gl == null) return;
+        shader.use();
 
-        model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); 
-        model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f)); 
-        model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+        // i'm in pain!
+        Matrix4x4 model = Matrix4x4.Identity;
+        model *= Matrix4x4.CreateTranslation((float)rect.x, (float)rect.y, 0);
 
-        model = glm::scale(model, glm::vec3(size, 1.0f)); 
+        model *= Matrix4x4.CreateTranslation(0.5f * (float)rect.w, 0.5f * (float)rect.h, 0);
+        model *= Matrix4x4.CreateRotationZ((float)rotation); // TODO degree to radian
+        model *= Matrix4x4.CreateScale(-0.5f * (float)rect.w, -0.5f * (float)rect.h, 0);
 
-        this->shader.SetMatrix4("model", model);
-        this->shader.SetVector3f("spriteColor", color);
+        model *= Matrix4x4.CreateScale((float)rect.w, (float)rect.h, 1);
 
-        glActiveTexture(GL_TEXTURE0);
-        texture.Bind();
+        // man
+        // M but S
+        ReadOnlySpan<float> mbuts =
+            MemoryMarshal.Cast<Matrix4x4, float>(MemoryMarshal.CreateSpan(ref model, 1));
+        
+        shader.setMat4("model", mbuts);
+        shader.setVec3("spriteColor", (color.r, color.g, color.b));
 
-        glBindVertexArray(this->quadVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
+        // homicide
+        gl.ActiveTexture(GLEnum.Texture0);
+        sprite.bind();
+
+        gl.BindVertexArray(quadVao);
+        gl.DrawArrays(GLEnum.Triangles, 0, 6);
+        gl.BindVertexArray(0);
     }
 }
