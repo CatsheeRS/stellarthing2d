@@ -20,6 +20,11 @@ best game engine in the world awards 1921 winner
 
 just install .net 8.
 
+there's these dependencies but i'm pretty sure nuget handles that
+- GLFW (through Silk.NET)
+- stb image (through StbImageSharp)
+- Newtonsoft.Json
+
 to release:
 ```sh
 dotnet publish --os win -c Release --sc
