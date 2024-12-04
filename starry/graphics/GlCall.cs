@@ -96,3 +96,17 @@ public class BindTextureCall(uint id): IGlCall {
         gl.BindTexture(GLEnum.Texture2D, id);
     }
 }
+
+public class ClearCall(color color): IGlCall {
+    // color
+    public color color { get; set; } = color;
+
+    public void run()
+    {
+        if (Graphics.gl == null) return;
+        GL gl = Graphics.gl;
+
+        gl.ClearColor(color.r / 256f, color.g / 256f, color.b / 256f, color.a / 256f);
+        gl.Clear(ClearBufferMask.ColorBufferBit);
+    }
+}

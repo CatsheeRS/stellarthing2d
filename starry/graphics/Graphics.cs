@@ -72,8 +72,7 @@ public static partial class Graphics {
     public static void clear(color color)
     {
         if (gl == null) return;
-        gl.ClearColor(color.r / 256f, color.g / 256f, color.b / 256f, color.a / 256f);
-        gl.Clear(ClearBufferMask.ColorBufferBit);
+        
     }
 
     public static unsafe void endDrawing()
@@ -81,8 +80,8 @@ public static partial class Graphics {
         if (gl == null) return;
 
         // we need to run shit at the end of the frame since opengl isn't multithreaded
-        foreach (IGlCall draw in drawCalls) {
-            draw.run();
+        while (drawCalls.Count > 0) {
+            drawCalls.Dequeue().run();
         }
 
         Window.glfw?.SwapBuffers(Window.window);

@@ -18,7 +18,7 @@ public class Starry {
     /// </summary>
     public static vec3i starryVersion => (2, 0, 1);
 
-    public static async Task create(StarrySettings settings)
+    public static void create(StarrySettings settings)
     {
         Starry.settings = settings;
         // if i call it "title" it becomes 122 characters so i have an entire line that's just ";
@@ -31,7 +31,7 @@ public class Starry {
 
         settings.startup();
 
-        Sprite sprite = await load<Sprite>("stellarthing.png");
+        Sprite sprite = Task.Run(() => load<Sprite>("stellarthing.png")).GetAwaiter().GetResult();
         while (!Window.isClosing()) {
             Graphics.clear(color.black);
             Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
@@ -41,7 +41,7 @@ public class Starry {
         }
 
         // fccking kmodules
-        await Assets.cleanup();
+        Task.Run(Assets.cleanup);
         Window.cleanup();
     }
 

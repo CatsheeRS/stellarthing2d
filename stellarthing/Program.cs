@@ -6,10 +6,10 @@ using static starry.Starry;
 namespace stellarthing;
 
 internal class Program {
-    internal async static Task Main(string[] args)
+    internal static void Main(string[] args)
     {
-        await create(new StarrySettings {
-            startup = () => {},
+        create(new StarrySettings {
+            startup = () => { },
             verbose = isDebug() || args.Contains("--verbose") || args.Contains("-v"),
             gameName = "Stellarthing",
             gameVersion = (0, 10, 0),
