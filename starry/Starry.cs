@@ -28,7 +28,6 @@ public class Starry {
         Window.setFullscreen(settings.fullscreen);
 
         // fccking kmodules
-        Graphics.create();
 
         settings.startup();
 
@@ -43,7 +42,6 @@ public class Starry {
 
         // fccking kmodules
         await Assets.cleanup();
-        Graphics.cleanup();
         Window.cleanup();
     }
 
@@ -127,4 +125,24 @@ public class Starry {
             0.0f,       0.0f,       0.0f,       1.0f
         );
     }
+
+    /// <summary>
+    /// takes a rect and rotation (in degrees) and turns it into a matrix
+    /// </summary>
+    public static Matrix4x4 transform2matrix(rect2 rect, double rotation)
+    {
+        Matrix4x4 model = Matrix4x4.Identity;
+        model *= Matrix4x4.CreateTranslation((float)rect.x, (float)rect.y, 0);
+
+        model *= Matrix4x4.CreateTranslation(0.5f * (float)rect.w, 0.5f * (float)rect.h, 0);
+        model *= Matrix4x4.CreateRotationZ((float)deg2rad(rotation));
+        model *= Matrix4x4.CreateScale(-0.5f * (float)rect.w, -0.5f * (float)rect.h, 0);
+
+        model *= Matrix4x4.CreateScale((float)rect.w, (float)rect.h, 1);
+
+        return model;
+    }
+
+    public static double deg2rad(double deg) => deg * (Math.PI / 180);
+    public static double rad2deg(double rad) => rad * (180 / Math.PI);
 }

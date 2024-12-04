@@ -24,38 +24,15 @@ public record class Sprite: IAsset {
         stbimg = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
         size = (stbimg.Width, stbimg.Height);
 
-        gl.GenTextures(1, out id);
+        MakeTextureCall lig = new(1);
+        lig.onSpriteGen += (id) => this.id = id;
+        Graphics.drawCalls.Enqueue(lig);
     }
 
     public void cleanup() {}
 
-    public unsafe void generate()
-    {
-        if (Graphics.gl == null) return;
-        GL gl = Graphics.gl;
+    public unsafe void generate() => Graphics.drawCalls.Enqueue(new GenSpriteCall(id, stbimg.Data,
+        size, internalFormat, imageFormat, wraps, wrapt, filterMin, filterMax));
 
-        // create texture
-        gl.BindTexture(GLEnum.Texture2D, id);
-        // i love that every opengl call is comically large
-        
-        fixed (void* ptr = stbimg.Data) {
-            gl.TexImage2D(GLEnum.Texture2D, 0, (int)internalFormat, (uint)size.x, (uint)size.y, 0,
-                imageFormat, GLEnum.UnsignedByte, ptr);
-        }
-
-        // set Texture wrap and filter modes
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureWrapS, (int)wraps);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureWrapT, (int)wrapt);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureMinFilter, (int)filterMin);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureMagFilter, (int)filterMax);
-        // unbind texture
-        gl.BindTexture(GLEnum.Texture2D, 0);
-    }
-
-    public void bind()
-    {
-        if (Graphics.gl == null) return;
-        GL gl = Graphics.gl;
-        gl.BindTexture(GLEnum.Texture2D, id);
-    }
+    public void bind() => Graphics.drawCalls.Enqueue(new BindTextureCall(id));
 }

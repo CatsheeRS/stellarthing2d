@@ -1,9 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Silk.NET.GLFW;
 using Silk.NET.OpenGL;
 namespace starry;
 
@@ -11,6 +10,7 @@ public static partial class Graphics {
     internal static GL? gl;
     internal static Shader shader = new();
     internal static uint quadVao;
+    internal static Queue<IGlCall> drawCalls = [];
 
     public static unsafe void create()
     {
@@ -72,12 +72,19 @@ public static partial class Graphics {
     public static void clear(color color)
     {
         if (gl == null) return;
-        gl.ClearColor(color.r / 256, color.g / 256, color.b / 256, color.a / 256);
+        gl.ClearColor(color.r / 256f, color.g / 256f, color.b / 256f, color.a / 256f);
         gl.Clear(ClearBufferMask.ColorBufferBit);
     }
 
     public static unsafe void endDrawing()
     {
+        if (gl == null) return;
+
+        // we need to run shit at the end of the frame since opengl isn't multithreaded
+        foreach (IGlCall draw in drawCalls) {
+            draw.run();
+        }
+
         Window.glfw?.SwapBuffers(Window.window);
     }
 
@@ -85,30 +92,28 @@ public static partial class Graphics {
 
     public static void drawSprite(Sprite sprite, rect2 rect, double rotation, color color)
     {
+        // quite the mouthful
+        drawCalls.Enqueue(new SpriteDrawCall(sprite, Starry.transform2matrix(rect, rotation), color));
+    }
+
+    internal static void batchRender(SpriteDrawCall draw)
+    {
         if (gl == null) return;
         shader.use();
 
-        // i'm in pain!
-        Matrix4x4 model = Matrix4x4.Identity;
-        model *= Matrix4x4.CreateTranslation((float)rect.x, (float)rect.y, 0);
-
-        model *= Matrix4x4.CreateTranslation(0.5f * (float)rect.w, 0.5f * (float)rect.h, 0);
-        model *= Matrix4x4.CreateRotationZ((float)rotation); // TODO degree to radian
-        model *= Matrix4x4.CreateScale(-0.5f * (float)rect.w, -0.5f * (float)rect.h, 0);
-
-        model *= Matrix4x4.CreateScale((float)rect.w, (float)rect.h, 1);
-
         // man
+        Matrix4x4 thisisbeginningtohurt = draw.transform;
         // M but S
-        ReadOnlySpan<float> mbuts =
-            MemoryMarshal.Cast<Matrix4x4, float>(MemoryMarshal.CreateSpan(ref model, 1));
+        ReadOnlySpan<float> silkdotnetdoesntletmepassamatrix =
+            MemoryMarshal.Cast<Matrix4x4, float>(MemoryMarshal.CreateSpan(
+            ref thisisbeginningtohurt, 1));
         
-        shader.setMat4("model", mbuts);
-        shader.setVec3("spriteColor", (color.r, color.g, color.b));
+        shader.setMat4("model", silkdotnetdoesntletmepassamatrix);
+        shader.setVec3("spriteColor", (draw.color.r, draw.color.g, draw.color.b));
 
         // homicide
         gl.ActiveTexture(GLEnum.Texture0);
-        sprite.bind();
+        draw.sprite.bind();
 
         gl.BindVertexArray(quadVao);
         gl.DrawArrays(GLEnum.Triangles, 0, 6);

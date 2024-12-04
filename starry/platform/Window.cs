@@ -110,6 +110,7 @@ public static unsafe class Window {
     {
         if (glfw == null) return;
 
+        Graphics.cleanup();
         glfw.DestroyWindow(window);
         glfw.Terminate();
         Starry.log("🛑 ITS JOEVER");
