@@ -7,7 +7,14 @@ namespace starry;
 /// the game window. static since i don't think games need several of those
 /// </summary>
 public static unsafe class Window {
+    /// <summary>
+    /// called when the window is resized
+    /// </summary>
     public static event ResizeEvent? onResize;
+    /// <summary>
+    /// called right before the engine starts cleaning up
+    /// </summary>
+    public static event EventHandler? onClose;
 
     internal static Glfw? glfw;
     internal static WindowHandle* window;
@@ -123,6 +130,11 @@ public static unsafe class Window {
         if (glfw == null) return (0, 0);
         glfw.GetWindowSize(window, out int width, out int height);
         return (width, height);
+    }
+
+    internal static void invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid()
+    {
+        onClose?.Invoke(null, EventArgs.Empty);
     }
 
     public delegate void ResizeEvent(vec2i newSize);

@@ -14,8 +14,11 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 2);
+    public static vec3i starryVersion => (2, 0, 3);
 
+    /// <summary>
+    /// sets up the engine
+    /// </summary>
     public static async Task create(StarrySettings settings)
     {
         Starry.settings = settings;
@@ -28,14 +31,16 @@ public static class Starry {
 
         settings.startup();
 
-        //Sprite sprite = await load<Sprite>("stellarthing.png");
+        Sprite sprite = await load<Sprite>("stellarthing.png");
         while (!Window.isClosing()) {
             Graphics.clear(color.purple);
-            //Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
+            Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
             //Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
             //    Graphics.defaultFont, (16, 16), color.purple, 16);
             Graphics.endDrawing();
         }
+
+        Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
         await Assets.cleanup();
@@ -48,6 +53,9 @@ public static class Starry {
     public static async Task<T> load<T>(string path) where T: IAsset, new() =>
         await Assets.load<T>(path);
 
+    /// <summary>
+    /// Console.WriteLine but cooler (it prints more types and has caller information)
+    /// </summary>
     public static void log(params object[] x)
     {
         if (!settings.verbose) return;
@@ -96,6 +104,9 @@ public static class Starry {
         Console.Write(str);
     }
 
+    /// <summary>
+    /// if true, the game is running in debug mode
+    /// </summary>
     public static bool isDebug()
     {
         #if DEBUG
@@ -106,40 +117,12 @@ public static class Starry {
     }
 
     /// <summary>
-    /// the infamous glm::ortho
+    /// degree to radian
     /// </summary>
-    public static Matrix4x4 ortho(float left, float right, float bottom, float top,
-    float near, float far)
-    {
-        float rl = 1.0f / (right - left);
-        float tb = 1.0f / (top - bottom);
-        float fn = 1.0f / (far - near);
-
-        return new Matrix4x4(
-            2.0f * rl,  0.0f,       0.0f,      -(right + left) * rl,
-            0.0f,       2.0f * tb,  0.0f,      -(top + bottom) * tb,
-            0.0f,       0.0f,      -2.0f * fn, -(far + near) * fn,
-            0.0f,       0.0f,       0.0f,       1.0f
-        );
-    }
+    public static double deg2rad(double deg) => deg * (Math.PI / 180);
 
     /// <summary>
-    /// takes a rect and rotation (in degrees) and turns it into a matrix
+    /// radian to degree
     /// </summary>
-    public static Matrix4x4 transform2matrix(rect2 rect, double rotation)
-    {
-        Matrix4x4 model = Matrix4x4.Identity;
-        model *= Matrix4x4.CreateTranslation((float)rect.x, (float)rect.y, 0);
-
-        model *= Matrix4x4.CreateTranslation(0.5f * (float)rect.w, 0.5f * (float)rect.h, 0);
-        model *= Matrix4x4.CreateRotationZ((float)deg2rad(rotation));
-        model *= Matrix4x4.CreateScale(-0.5f * (float)rect.w, -0.5f * (float)rect.h, 0);
-
-        model *= Matrix4x4.CreateScale((float)rect.w, (float)rect.h, 1);
-
-        return model;
-    }
-
-    public static double deg2rad(double deg) => deg * (Math.PI / 180);
     public static double rad2deg(double rad) => rad * (180 / Math.PI);
 }

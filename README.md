@@ -12,9 +12,10 @@ best game engine in the world awards 1921 winner
 
 ## Epic features
 - Modern C# without being batshit insane
-- Sick OpenGL renderer
+- Overkill graphics (it uses [skia](https://skia.org/) (but [the c# version](https://github.com/mono/SkiaSharp)))
 - Acceptable math structs
 - A lot of async await
+- Assets work
 
 # How to build
 
@@ -22,7 +23,7 @@ just install .net 8.
 
 there's these dependencies but i'm pretty sure nuget handles that
 - GLFW (through Silk.NET)
-- stb image (through StbImageSharp)
+- SkiaSharp
 - Newtonsoft.Json
 
 to release:

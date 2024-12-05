@@ -1,12 +1,15 @@
 using System;
-using Silk.NET.OpenGL;
 using SkiaSharp;
 namespace starry;
 
+/// <summary>
+/// the renderer. this is just skia lamo
+/// </summary>
 public static partial class Graphics {
     internal static SKCanvas? canvas;
     internal static SKSurface? surface;
     internal static GRContext? grContext;
+    internal static SKPaint? skpaint;
 
     public static void create()
     {
@@ -27,6 +30,12 @@ public static partial class Graphics {
 
         canvas = surface.Canvas;
 
+        // sick pain(t) stuff
+        skpaint = new SKPaint() {
+            Color = SKColors.White,
+            IsAntialias = false, // this is a pixel art game
+        };
+
         Starry.log("Skia has loaded");
     }
 
@@ -37,11 +46,18 @@ public static partial class Graphics {
         Starry.log("Skia has been annihilated");
     }
 
+    /// <summary>
+    /// clears screen. useful for when you don't want your game to look like you're on drugs
+    /// </summary>
+    /// <param name="color"></param>
     public static void clear(color color)
     {
         canvas?.Clear(new SKColor(color.r, color.g, color.b, color.a));
     }
 
+    /// <summary>
+    /// ends drawing. useful for when your game has graphics
+    /// </summary>
     public static unsafe void endDrawing()
     {
         canvas?.Flush();
@@ -49,6 +65,9 @@ public static partial class Graphics {
         Window.glfw?.SwapBuffers(Window.window);
     }
 
+    /// <summary>
+    /// draws a sprite. rect is in game render coordinates (no camera) and rotation is in degrees.
+    /// </summary>
     public static void drawSprite(Sprite sprite, rect2 rect, double rotation, color color)
     {
         //canvas?.DrawTexture()
