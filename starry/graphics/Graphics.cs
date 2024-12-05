@@ -5,7 +5,6 @@ namespace starry;
 
 public static partial class Graphics {
     internal static SKCanvas? canvas;
-    internal static GL? gl;
     internal static SKSurface? surface;
     internal static GRContext? grContext;
 
@@ -14,10 +13,8 @@ public static partial class Graphics {
         // shut up
         if (Window.glfw == null) return;
 
-        gl = GL.GetApi(Window.glfw.GetProcAddress);
-
         // setup fucking skia fucking sharp
-        var glInterface = GRGlInterface.Create();
+        var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
         grContext = GRContext.CreateGl(glInterface);
 
         vec2i winsize = Window.getSize();
@@ -29,17 +26,19 @@ public static partial class Graphics {
             SKColorType.Rgba8888);
 
         canvas = surface.Canvas;
+
+        Starry.log("Skia has loaded");
     }
 
     internal static void cleanup()
     {
         surface?.Dispose();
         grContext?.Dispose();
+        Starry.log("Skia has been annihilated");
     }
 
     public static void clear(color color)
     {
-        gl?.Clear(ClearBufferMask.ColorBufferBit);
         canvas?.Clear(new SKColor(color.r, color.g, color.b, color.a));
     }
 
