@@ -4,8 +4,6 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SimulationFramework;
-using SimulationFramework.Drawing;
 namespace starry;
 
 public static class Starry {
@@ -21,30 +19,27 @@ public static class Starry {
     public static async Task create(StarrySettings settings)
     {
         Starry.settings = settings;
-
-        Simulation s = Simulation.Create(startProgram, draw);
-        s.Run();
-
-        // the game is done running :D
-        await Assets.cleanup();
-    }
-
-    public static void startProgram()
-    {
         string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
-        Window.Title = el;
-        Window.Resize(new Vector2(settings.renderSize.x, settings.renderSize.y));
-        Window.EnterFullscreen();
+        // the size doesn't matter once you make it fullscreen
+        Window.create(el, settings.renderSize);
+        Window.setFullscreen(settings.fullscreen);
 
         // fccking kmodules
 
-        // the game should start running after the engine is done starting
         settings.startup();
-    }
 
-    public static void draw(ICanvas canvas)
-    {
-        
+        Sprite sprite = await load<Sprite>("stellarthing.png");
+        while (!Window.isClosing()) {
+            Graphics.clear(color.purple);
+            Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
+            //Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
+            //    Graphics.defaultFont, (16, 16), color.purple, 16);
+            Graphics.endDrawing();
+        }
+
+        // fccking kmodules
+        await Assets.cleanup();
+        Window.cleanup();
     }
 
     /// <summary>
