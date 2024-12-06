@@ -54,8 +54,9 @@ public static partial class Graphics {
         };
 
         // draw.
-        canvas?.DrawImage(sprite.skimg, SKRect.Create((float)pos.x, (float)pos.y, sprite.size.x, 
-            sprite.size.y), newpaint);
+        canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(pos.x * scale) + offset.x,
+            (float)(pos.y * scale) + offset.y, sprite.size.x * scale, sprite.size.y * scale),
+            newpaint);
         
         // reset the canvas for other shits
         canvas?.Restore();

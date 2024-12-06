@@ -12,7 +12,7 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 3);
+    public static vec3i starryVersion => (2, 0, 4);
 
     /// <summary>
     /// sets up the engine
@@ -29,11 +29,11 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite sprite = load<Sprite>("stellarthing.png");
+        Sprite sprite = load<Sprite>("restest.png");
         double rot = 0;
         while (!Window.isClosing()) {
             Graphics.clear(color.black);
-            Graphics.drawSprite(sprite, (100, 100), (0.5, 0.5), rot, color.red);
+            Graphics.drawSprite(sprite, (0, 0), (0.5, 0.5), 0, color.white);
             rot += 0.5;
             //Graphics.drawSpriteSuperior(
                 //sprite, (0, 0, 50, 50), (50, 50, 50, 100), (0.5, 0.5), 1.5, color.red

@@ -14,6 +14,7 @@ internal class Program {
             gameVersion = (0, 10, 0),
             fullscreen = true,
             assetPath = Path.GetFullPath("assets"),
+            renderSize = (320, 180),
         });
     }
 }

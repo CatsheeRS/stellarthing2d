@@ -20,6 +20,7 @@ public static class Assets {
         else {
             T tee = new();
             tee.load(Path.Combine(Starry.settings.assetPath, path));
+            assets.Add(path, tee);
             return tee;
         }
     }
@@ -27,6 +28,7 @@ public static class Assets {
     public static void cleanup()
     {
         foreach (var asse in assets) {
+            Starry.log($"Deleting {asse.Key}");
             asse.Value.cleanup();
         }
         assets.Clear();
