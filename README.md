@@ -14,7 +14,6 @@ best game engine in the world awards 1921 winner
 - Modern C# without being batshit insane
 - Overkill graphics (it uses [skia](https://skia.org/) (but [the c# version](https://github.com/mono/SkiaSharp)))
 - Acceptable math structs
-- A lot of async await
 - Assets work
 
 # How to build

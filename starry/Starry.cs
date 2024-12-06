@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 namespace starry;
 
@@ -19,7 +17,7 @@ public static class Starry {
     /// <summary>
     /// sets up the engine
     /// </summary>
-    public static async Task create(StarrySettings settings)
+    public static void create(StarrySettings settings)
     {
         Starry.settings = settings;
         string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
@@ -31,7 +29,7 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite sprite = await load<Sprite>("stellarthing.png");
+        Sprite sprite = load<Sprite>("stellarthing.png");
         while (!Window.isClosing()) {
             Graphics.clear(color.purple);
             Graphics.drawSpriteSuperior(
@@ -45,15 +43,14 @@ public static class Starry {
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
-        await Assets.cleanup();
+        Assets.cleanup();
         Window.cleanup();
     }
 
     /// <summary>
     /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk this is just Assets.load<T> lmao
     /// </summary>
-    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
-        await Assets.load<T>(path);
+    public static T load<T>(string path) where T: IAsset, new() => Assets.load<T>(path);
 
     /// <summary>
     /// Console.WriteLine but cooler (it prints more types and has caller information)
