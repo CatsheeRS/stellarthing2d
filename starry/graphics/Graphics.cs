@@ -60,16 +60,43 @@ public static partial class Graphics {
     /// </summary>
     public static unsafe void endDrawing()
     {
+        skpaint?.Dispose();
         canvas?.Flush();
         grContext?.Flush();
         Window.glfw?.SwapBuffers(Window.window);
     }
 
     /// <summary>
-    /// draws a sprite. rect is in game render coordinates (no camera) and rotation is in degrees.
+    /// draws a sprite. rects are in game render coordinates (no camera) and rotation is in degrees. src and dst are so you can draw a portion of the sprite. origin is from 0 to 1, with (0, 0) being the top left and (0.5, 0.5) being the center
     /// </summary>
-    public static void drawSprite(Sprite sprite, rect2 rect, double rotation, color color)
+    public static void drawSpriteSuperior(Sprite sprite, rect2 src, rect2 dst, vec2 origin,
+    double rotation, color tint)
     {
-        //canvas?.DrawTexture()
+        if (skpaint == null) return;
+        if (!sprite.isValid()) {
+            Starry.log($"Sprite at {sprite.path} is invalid; cannot draw");
+            return;
+        }
+
+        canvas?.Save();
+
+        // rotation :D
+        canvas?.Translate((float)(sprite.size.x * dst.x), (float)(sprite.size.y * dst.y));
+        canvas?.RotateDegrees((float)rotation);
+        canvas?.Translate(-(float)(sprite.size.x * dst.x), -(float)(sprite.size.y * dst.y));
+
+        // tint
+        skpaint.ColorFilter = SKColorFilter.CreateBlendMode(
+            new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Multiply);
+
+        // draw.
+        canvas?.DrawImage(sprite.skimg,
+            SKRect.Create((float)src.x, (float)src.y, (float)src.w, (float)src.h),
+            SKRect.Create((float)dst.x, (float)dst.y, (float)dst.w, (float)dst.h),
+            skpaint
+        );
+        
+        // reset the canvas for other shits
+        canvas?.Restore();
     }
 }

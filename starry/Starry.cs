@@ -34,7 +34,9 @@ public static class Starry {
         Sprite sprite = await load<Sprite>("stellarthing.png");
         while (!Window.isClosing()) {
             Graphics.clear(color.purple);
-            Graphics.drawSprite(sprite, (50, 50, 50, 50), 1.5, (1, 0, 0));
+            Graphics.drawSpriteSuperior(
+                sprite, (0, 0, 50, 50), (50, 50, 50, 100), (0.5, 0.5), 1.5, color.red
+            );
             //Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
             //    Graphics.defaultFont, (16, 16), color.purple, 16);
             Graphics.endDrawing();

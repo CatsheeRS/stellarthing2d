@@ -20,18 +20,43 @@ public interface IAsset {
 /// it's an image. supported formats are png, jpeg, gif, bpm, webm, wbmb, ico, pkm, ktx, astc, dng, heif, and avif. please note this is implemented through skia so if you want more formats complain to them instead. generally a good idea to only use png though
 /// </summary>
 public record class Sprite : IAsset {
+    /// <summary>
+    /// size in pixels
+    /// </summary>
+    public vec2i size { get; private set; } = (0, 0);
+    internal SKBitmap? skbmp;
+    internal SKImage? skimg;
+    /// <summary>
+    /// it's the path.
+    /// </summary>
+    public string path { get; private set; }= "";
+
     public void load(string path)
     {
-        SKBitmap bitmap = SKBitmap.Decode(path);
-        if (bitmap == null) {
-
+        skbmp = SKBitmap.Decode(path);
+        if (skbmp == null) {
+            Starry.log($"Couldn't load {path} as sprite");
+            return;
         }
+
+        skimg = SKImage.FromBitmap(skbmp);
+        size = (skbmp.Width, skbmp.Height);
+
+        Starry.log($"Loaded sprite at {path}");
+        this.path = path;
     }
 
     public void cleanup()
     {
-        throw new NotImplementedException();
+        skbmp?.Dispose();
+        skimg?.Dispose();
+        Starry.log($"Deleted sprite at {path}");
     }
+
+    /// <summary>
+    /// if true, the sprite is, in fact, valid
+    /// </summary>
+    public bool isValid() => skbmp != null && skimg != null;
 }
 
 /*public record class Font: IAsset {
