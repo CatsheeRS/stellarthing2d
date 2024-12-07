@@ -32,12 +32,17 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite sprite = load<Sprite>("stellarthing.png");
+        Sprite stellarballs = load<Sprite>("stellarthing.png");
+        Sprite crapbg = load<Sprite>("restest.png");
         double rot = 0;
         while (!Window.isClosing()) {
             Graphics.clear(color.black);
-            Graphics.drawSprite(sprite, (0, 0), (0.5, 0.5), rot, color.white);
-            rot += 1;
+            Graphics.drawSprite(crapbg, (0, 0, 320, 180), (0, 0), 0, (255, 255, 255, 127));
+            Graphics.drawSprite(stellarballs, (0, 0, 78 * 2, 32), (0.5, 0.5), 0, color.white);
+            Graphics.drawSprite(stellarballs, (320, 0, 78, 16), (0, 0), 90, color.red);
+            Graphics.drawSprite(stellarballs, (0, 180 - 32, 32, 32), (0.5, 0.5), 15, color.green);
+            Graphics.drawSprite(stellarballs, (320 - 78, 180 - 16, 78, 16), (0.5, 0.5), rot, color.blue);
+            rot += 5;
             //Graphics.drawSpriteSuperior(
                 //sprite, (0, 0, 50, 50), (50, 50, 50, 100), (0.5, 0.5), 1.5, color.red
             //);

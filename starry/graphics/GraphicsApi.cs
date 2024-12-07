@@ -17,7 +17,7 @@ public static partial class Graphics {
     /// <summary>
     /// draws a sprite. rects are in game render coordinates (no camera) and rotation is in degrees. src and dst are so you can draw a portion of the sprite. origin is from 0 to 1, with (0, 0) being the top left and (0.5, 0.5) being the center
     /// </summary>
-    public static void drawSprite(Sprite sprite, vec2 pos, vec2 origin, double rotation, color tint)
+    public static void drawSprite(Sprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
     {
         if (skpaint == null) return;
         if (!sprite.isValid()) {
@@ -28,8 +28,8 @@ public static partial class Graphics {
         canvas?.Save();
         
         // rotation
-        vec2 actualOrigin = ((sprite.size.x * origin.x * scale) + offset.x,
-                             (sprite.size.y * origin.y * scale) + offset.y);
+        vec2 actualOrigin = ((rect.w * origin.y + rect.x) * scale + offset.x,
+                             (rect.h * origin.x + rect.y) * scale + offset.y);
         
         canvas?.Translate((float)actualOrigin.x, (float)actualOrigin.y);
         canvas?.RotateDegrees((float)rotation);
@@ -45,8 +45,8 @@ public static partial class Graphics {
         };
 
         // draw.
-        canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(pos.x * scale) + offset.x,
-            (float)(pos.y * scale) + offset.y, sprite.size.x * scale, sprite.size.y * scale),
+        canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(rect.x * scale) + offset.x,
+            (float)(rect.y * scale) + offset.y, (float)(rect.w * scale), (float)(rect.h * scale)),
             newpaint);
         
         // reset the canvas for other shits
