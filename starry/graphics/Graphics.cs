@@ -47,7 +47,7 @@ public static partial class Graphics {
             // sick pain(t) stuff
             skpaint = new SKPaint() {
                 Color = SKColors.White,
-                IsAntialias = false, // this is a pixel art game
+                IsAntialias = Starry.settings.antiAliasing
             };
 
             calcScale(winsize);
