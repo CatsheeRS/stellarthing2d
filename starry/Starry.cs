@@ -87,7 +87,7 @@ public static class Starry {
         var method = frame?.GetMethod();
         var className = method?.DeclaringType?.Name;
         var methodName = method?.Name;
-        str.Append($"[{className ?? "unknown"}.{methodName ?? "unknown"}] ");
+        str.Append($"[{className ?? string.Empty}.{methodName ?? string.Empty}] ");
 
         foreach (var item in x) {
             // we optimize common types so the game doesn't explode
@@ -134,14 +134,4 @@ public static class Starry {
         return false;
         #endif
     }
-
-    /// <summary>
-    /// degree to radian
-    /// </summary>
-    public static double deg2rad(double deg) => deg * (Math.PI / 180);
-
-    /// <summary>
-    /// radian to degree
-    /// </summary>
-    public static double rad2deg(double rad) => rad * (180 / Math.PI);
 }

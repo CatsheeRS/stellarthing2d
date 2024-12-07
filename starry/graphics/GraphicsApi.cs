@@ -44,7 +44,7 @@ public static partial class Graphics {
                 new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Modulate);
             
             using var newpaint = new SKPaint() {
-                IsAntialias = false,
+                IsAntialias = Starry.settings.antiAliasing,
                 ColorFilter = colorfilter,
             };
 
