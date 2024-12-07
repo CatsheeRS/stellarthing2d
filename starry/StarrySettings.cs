@@ -10,8 +10,9 @@ public struct StarrySettings() {
     /// function ran when the game starts
     /// </summary>
     public required Action startup { get; set; }
-    public string gameName { get; set; } = "Example project";
+    public string gameName { get; set; } = "Starry Project";
     public vec3i gameVersion { get; set; } = (0, 0, 1);
+    public bool showVersion { get; set; } = true;
     public bool fullscreen { get; set; } = true;
     public vec2i renderSize { get; set; } = (200, 100);
     public bool antiAliasing { get; set; } = true;

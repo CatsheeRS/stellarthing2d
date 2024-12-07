@@ -5,7 +5,7 @@ namespace starry;
 /// <summary>
 /// now its time for everybodys favorite subject.. MATH answer the three questions correctly and you might get something special
 /// </summary>
-public class math
+public class maath
 {
     /// <summary>
     /// degree to radian

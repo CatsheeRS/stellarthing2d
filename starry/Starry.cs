@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,11 +32,12 @@ public static class Starry {
         };
         thread.Start();
 
-        string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
+        string title = $"{settings.gameName}";
+        if (settings.showVersion) title += $" v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
+        
         // the size doesn't matter once you make it fullscreen
-        Window.create(el, settings.renderSize);
+        Window.create(title, settings.renderSize);
         Window.setFullscreen(settings.fullscreen);
-
         // fccking kmodules
 
         settings.startup();
@@ -119,8 +121,7 @@ public static class Starry {
 
             if (x.Length > 1) str.Append(", ");
         }
-        str.Append('\n');
-        Console.Write(str);
+        Console.WriteLine(str);
     }
 
     /// <summary>
