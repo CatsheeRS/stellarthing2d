@@ -7,7 +7,6 @@ namespace starry;
 /// the renderer. this is just skia lamo
 /// </summary>
 public static partial class Graphics {
-    static readonly Dictionary<color, SKColorFilter> colorcache = new();
     static readonly SKPaint paint = new() {
         IsAntialias = Starry.settings.antiAliasing,
     };
@@ -39,20 +38,15 @@ public static partial class Graphics {
         
             // rotation
             vec2 actualOrigin = ((rect.w * origin.y + rect.x) * scale + offset.x,
-                (rect.h * origin.x + rect.y) * scale + offset.y);
+                                 (rect.h * origin.x + rect.y) * scale + offset.y);
         
             canvas?.Translate((float)actualOrigin.x, (float)actualOrigin.y);
             canvas?.RotateDegrees((float)rotation);
             canvas?.Translate(-(float)actualOrigin.x, -(float)actualOrigin.y);
             
-            //cacheeeeeeeeeeeeeeeeeeeeeeee
-            if (!colorcache.TryGetValue(tint, out SKColorFilter? colorfilter)) {
-                colorfilter = SKColorFilter.CreateBlendMode(
-                    new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Modulate);
-                colorcache[tint] = colorfilter;
-            }
-        
-            // Apply the color filter
+            // uitjekiopjteap4t6nmoaetgmai5ti3atneiatjgnmeikzvfgamgtjeatlhneaztijhgnkejzgnmekzgmjkxp;tgjmdzjjgkzl;fadlghnmdzlajdanmktglnadlthnakldthnoklahfnkal
+            var colorfilter = SKColorFilter.CreateBlendMode(
+                new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Modulate);
             paint.ColorFilter = colorfilter;
         
             // draw.

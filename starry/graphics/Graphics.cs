@@ -67,6 +67,7 @@ public static partial class Graphics {
     {
         actions.Enqueue(() => {
             skpaint?.Dispose();
+            paint?.Dispose();
             surface?.Dispose();
             grContext?.Dispose();
             Starry.log("Skia has been annihilated");
