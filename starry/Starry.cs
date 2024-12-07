@@ -19,7 +19,10 @@ public static class Starry {
     /// </summary>
     public static void create(StarrySettings settings)
     {
+        // funni
         Starry.settings = settings;
+        Console.WriteLine("Use --verbose if the game is broken.");
+
         string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
         // the size doesn't matter once you make it fullscreen
         Window.create(el, settings.renderSize);
@@ -29,12 +32,12 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite sprite = load<Sprite>("restest.png");
+        Sprite sprite = load<Sprite>("stellarthing.png");
         double rot = 0;
         while (!Window.isClosing()) {
             Graphics.clear(color.black);
-            Graphics.drawSprite(sprite, (0, 0), (0.5, 0.5), 0, color.white);
-            rot += 0.5;
+            Graphics.drawSprite(sprite, (0, 0), (0.5, 0.5), rot, color.white);
+            rot += 1;
             //Graphics.drawSpriteSuperior(
                 //sprite, (0, 0, 50, 50), (50, 50, 50, 100), (0.5, 0.5), 1.5, color.red
             //);

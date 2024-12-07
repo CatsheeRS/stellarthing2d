@@ -15,21 +15,9 @@ public static partial class Graphics {
     }
 
     /// <summary>
-    /// ends drawing. useful for when your game has graphics
-    /// </summary>
-    public static unsafe void endDrawing()
-    {
-        skpaint?.Dispose();
-        canvas?.Flush();
-        grContext?.Flush();
-        Window.glfw?.SwapBuffers(Window.window);
-    }
-
-    /// <summary>
     /// draws a sprite. rects are in game render coordinates (no camera) and rotation is in degrees. src and dst are so you can draw a portion of the sprite. origin is from 0 to 1, with (0, 0) being the top left and (0.5, 0.5) being the center
     /// </summary>
-    public static void drawSprite(Sprite sprite, vec2 pos, vec2 origin,
-    double rotation, color tint)
+    public static void drawSprite(Sprite sprite, vec2 pos, vec2 origin, double rotation, color tint)
     {
         if (skpaint == null) return;
         if (!sprite.isValid()) {
@@ -40,9 +28,12 @@ public static partial class Graphics {
         canvas?.Save();
         
         // rotation
-        canvas?.Translate((float)(sprite.size.x * origin.x), (float)(sprite.size.y * origin.y));
+        vec2 actualOrigin = ((sprite.size.x * origin.x * scale) + offset.x,
+                             (sprite.size.y * origin.y * scale) + offset.y);
+        
+        canvas?.Translate((float)actualOrigin.x, (float)actualOrigin.y);
         canvas?.RotateDegrees((float)rotation);
-        canvas?.Translate(-(float)(sprite.size.x * origin.x), -(float)(sprite.size.y * origin.y));
+        canvas?.Translate(-(float)actualOrigin.x, -(float)actualOrigin.y);
 
         // tint
         var colorfilter = SKColorFilter.CreateBlendMode(

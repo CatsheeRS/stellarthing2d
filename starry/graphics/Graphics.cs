@@ -47,11 +47,16 @@ public static partial class Graphics {
         Window.onResize += calcScale;
         Window.onResize += resizeTarget;
 
+        // why is it flipped ??
+        canvas?.Scale(1, -1);
+        canvas?.Translate(0, -winsize.y);
+
         Starry.log("Skia has loaded");
     }
 
     internal static void cleanup()
     {
+        skpaint?.Dispose();
         surface?.Dispose();
         grContext?.Dispose();
         Starry.log("Skia has been annihilated");
@@ -63,8 +68,6 @@ public static partial class Graphics {
             Starry.settings.renderSize.y);
         offset = ((size - (Starry.settings.renderSize * (vec2)(scale, scale))) *
             (0.5, 0.5)).round();
-        
-        Starry.log(size, offset, scale, Window.fullscreen);
     }
 
     internal static void resizeTarget(vec2i size)
@@ -80,5 +83,19 @@ public static partial class Graphics {
         surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
             SKColorType.Rgba8888);
         canvas = surface.Canvas;
+
+        // why is it flipped ??
+        canvas?.Scale(1, -1);
+        canvas?.Translate(0, -size.y);
+    }
+
+    /// <summary>
+    /// ends drawing. this must be called for skia stuff to actually happen
+    /// </summary>
+    public static unsafe void endDrawing()
+    {
+        canvas?.Flush();
+        grContext?.Flush();
+        Window.glfw?.SwapBuffers(Window.window);
     }
 }
