@@ -46,7 +46,7 @@ public struct vec2(double x, double y) {
         vec2 r = this;
         double l = x * x + y * y;
         if (l != 0) {
-            l = Math.Sqrt(l);
+            l = System.Math.Sqrt(l);
             r.x /= l;
             r.y /= l;
         }
@@ -68,7 +68,7 @@ public struct vec2(double x, double y) {
     /// <summary>
     /// it rounds the vector.
     /// </summary>
-    public readonly vec2i round() => new((int)Math.Round(x), (int)Math.Round(y));
+    public readonly vec2i round() => new((int)System.Math.Round(x), (int)System.Math.Round(y));
 
     public override readonly string ToString() => $"vec2({x}, {y})";
 }

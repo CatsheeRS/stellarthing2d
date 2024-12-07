@@ -7,6 +7,11 @@ namespace starry;
 /// the renderer. this is just skia lamo
 /// </summary>
 public static partial class Graphics {
+    static readonly Dictionary<color, SKColorFilter> colorcache = new();
+    static readonly SKPaint paint = new() {
+        IsAntialias = Starry.settings.antiAliasing,
+    };
+
     /// <summary>
     /// clears screen. useful for when you don't want your game to look like you're on drugs
     /// </summary>
@@ -21,12 +26,6 @@ public static partial class Graphics {
     /// <summary>
     /// draws a sprite. rects are in game render coordinates (no camera) and rotation is in degrees. src and dst are so you can draw a portion of the sprite. origin is from 0 to 1, with (0, 0) being the top left and (0.5, 0.5) being the center
     /// </summary>
-    private static readonly Dictionary<color, SKColorFilter> colorcache = new Dictionary<color, SKColorFilter>();
-    static readonly SKPaint paint = new SKPaint
-    {
-        IsAntialias = Starry.settings.antiAliasing,
-    };
-
     public static void drawSprite(Sprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
     {
         actions.Enqueue(() => {
@@ -66,7 +65,6 @@ public static partial class Graphics {
 
             // you fucking idiot
             colorfilter.Dispose();
-            newpaint.Dispose();
         });
         actionLoopEvent.Set();
     }

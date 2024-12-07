@@ -76,7 +76,7 @@ public static partial class Graphics {
 
     internal static void calcScale(vec2i size)
     {
-        scale = (int)Math.Min(size.x / Starry.settings.renderSize.x, size.y /
+        scale = (int)System.Math.Min(size.x / Starry.settings.renderSize.x, size.y /
             Starry.settings.renderSize.y);
         offset = ((size - (Starry.settings.renderSize * (vec2)(scale, scale))) *
             (0.5, 0.5)).round();
