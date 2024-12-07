@@ -10,6 +10,7 @@ public static partial class Graphics {
     internal static SKSurface? surface;
     internal static GRContext? grContext;
     internal static SKPaint? skpaint;
+    internal static GRBackendRenderTarget? renderTarget;
     /// <summary>
     /// the scale factor for the thingy
     /// </summary>
@@ -30,12 +31,10 @@ public static partial class Graphics {
 
         vec2i winsize = Window.getSize();
         GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
-        GRBackendRenderTarget renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8,
-            frameBufferInfo);
+        renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8, frameBufferInfo);
         
         surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
             SKColorType.Rgba8888);
-
         canvas = surface.Canvas;
 
         // sick pain(t) stuff
@@ -44,11 +43,9 @@ public static partial class Graphics {
             IsAntialias = false, // this is a pixel art game
         };
 
-        // calculate the scale stuff
-        scale = (int)Math.Min(winsize.x / Starry.settings.renderSize.x, winsize.y /
-            Starry.settings.renderSize.y);
-        offset = ((winsize - (Starry.settings.renderSize * (vec2)(scale, scale))) *
-            (0.5, 0.5)).round();
+        calcScale(winsize);
+        Window.onResize += calcScale;
+        Window.onResize += resizeTarget;
 
         Starry.log("Skia has loaded");
     }
@@ -58,5 +55,30 @@ public static partial class Graphics {
         surface?.Dispose();
         grContext?.Dispose();
         Starry.log("Skia has been annihilated");
+    }
+
+    internal static void calcScale(vec2i size)
+    {
+        scale = (int)Math.Min(size.x / Starry.settings.renderSize.x, size.y /
+            Starry.settings.renderSize.y);
+        offset = ((size - (Starry.settings.renderSize * (vec2)(scale, scale))) *
+            (0.5, 0.5)).round();
+        
+        Starry.log(size, offset, scale, Window.fullscreen);
+    }
+
+    internal static void resizeTarget(vec2i size)
+    {
+        // delete the old stuff
+        surface?.Dispose();
+        renderTarget?.Dispose();
+
+        // and make new shit
+        GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
+        renderTarget = new((int)size.x, (int)size.y, 0, 8, frameBufferInfo);
+        
+        surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
+            SKColorType.Rgba8888);
+        canvas = surface.Canvas;
     }
 }

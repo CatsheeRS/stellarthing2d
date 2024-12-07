@@ -19,6 +19,7 @@ public static unsafe class Window {
     internal static Glfw? glfw;
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
+    internal static vec2i screensize = (0, 0);
 
     /// <summary>
     /// creates the window :D
@@ -84,6 +85,8 @@ public static unsafe class Window {
             glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
                 mode->RefreshRate);
             
+            screensize = (mode->Width, mode->Height);
+            
             Starry.log("Window is now fullscreen");
         }
         else {
@@ -128,7 +131,8 @@ public static unsafe class Window {
     public static vec2i getSize()
     {
         if (glfw == null) return (0, 0);
-        glfw.GetWindowSize(window, out int width, out int height);
+
+        glfw.GetFramebufferSize(window, out int width, out int height);
         return (width, height);
     }
 
