@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
 using SkiaSharp;
 namespace starry;
 
@@ -11,6 +14,9 @@ public static partial class Graphics {
     internal static GRContext? grContext;
     internal static SKPaint? skpaint;
     internal static GRBackendRenderTarget? renderTarget;
+    internal static ConcurrentQueue<Action> actions = [];
+    internal static AutoResetEvent actionLoopEvent = new(false);
+
     /// <summary>
     /// the scale factor for the thingy
     /// </summary>
@@ -22,44 +28,50 @@ public static partial class Graphics {
 
     public static void create()
     {
-        // shut up
-        if (Window.glfw == null) return;
+        actions.Enqueue(async () => {
+            // shut up
+            if (Window.glfw == null) return;
 
-        // setup fucking skia fucking sharp
-        var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
-        grContext = GRContext.CreateGl(glInterface);
+            // setup fucking skia fucking sharp
+            var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
+            grContext = GRContext.CreateGl(glInterface);
 
-        vec2i winsize = Window.getSize();
-        GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
-        renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8, frameBufferInfo);
-        
-        surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
-            SKColorType.Rgba8888);
-        canvas = surface.Canvas;
+            vec2i winsize = await Window.getSize();
+            GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
+            renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8, frameBufferInfo);
+            
+            surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
+                SKColorType.Rgba8888);
+            canvas = surface.Canvas;
 
-        // sick pain(t) stuff
-        skpaint = new SKPaint() {
-            Color = SKColors.White,
-            IsAntialias = false, // this is a pixel art game
-        };
+            // sick pain(t) stuff
+            skpaint = new SKPaint() {
+                Color = SKColors.White,
+                IsAntialias = false, // this is a pixel art game
+            };
 
-        calcScale(winsize);
-        Window.onResize += calcScale;
-        Window.onResize += resizeTarget;
+            calcScale(winsize);
+            Window.onResize += calcScale;
+            Window.onResize += resizeTarget;
 
-        // why is it flipped ??
-        canvas?.Scale(1, -1);
-        canvas?.Translate(0, -winsize.y);
+            // why is it flipped ??
+            canvas?.Scale(1, -1);
+            canvas?.Translate(0, -winsize.y);
 
-        Starry.log("Skia has loaded");
+            Starry.log("Skia has loaded");
+        });
+        actionLoopEvent.Set();
     }
 
     internal static void cleanup()
     {
-        skpaint?.Dispose();
-        surface?.Dispose();
-        grContext?.Dispose();
-        Starry.log("Skia has been annihilated");
+        actions.Enqueue(() => {
+            skpaint?.Dispose();
+            surface?.Dispose();
+            grContext?.Dispose();
+            Starry.log("Skia has been annihilated");
+        });
+        actionLoopEvent.Set();
     }
 
     internal static void calcScale(vec2i size)
@@ -72,21 +84,24 @@ public static partial class Graphics {
 
     internal static void resizeTarget(vec2i size)
     {
-        // delete the old stuff
-        surface?.Dispose();
-        renderTarget?.Dispose();
+        actions.Enqueue(() => {
+            // delete the old stuff
+            surface?.Dispose();
+            renderTarget?.Dispose();
 
-        // and make new shit
-        GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
-        renderTarget = new((int)size.x, (int)size.y, 0, 8, frameBufferInfo);
-        
-        surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
-            SKColorType.Rgba8888);
-        canvas = surface.Canvas;
+            // and make new shit
+            GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
+            renderTarget = new((int)size.x, (int)size.y, 0, 8, frameBufferInfo);
+            
+            surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
+                SKColorType.Rgba8888);
+            canvas = surface.Canvas;
 
-        // why is it flipped ??
-        canvas?.Scale(1, -1);
-        canvas?.Translate(0, -size.y);
+            // why is it flipped ??
+            canvas?.Scale(1, -1);
+            canvas?.Translate(0, -size.y);
+        });
+        actionLoopEvent.Set();
     }
 
     /// <summary>
@@ -94,8 +109,24 @@ public static partial class Graphics {
     /// </summary>
     public static unsafe void endDrawing()
     {
-        canvas?.Flush();
-        grContext?.Flush();
-        Window.glfw?.SwapBuffers(Window.window);
+        actions.Enqueue(() => {
+            canvas?.Flush();
+            grContext?.Flush();
+            Window.glfw?.SwapBuffers(Window.window);
+        });
+        actionLoopEvent.Set();
+    }
+
+    /// <summary>
+    /// this manages opengl shit so it works with async/await multithreading all that crap
+    /// </summary>
+    internal static void glLoop()
+    {
+        while (true) {
+            actionLoopEvent.WaitOne();
+            while (actions.TryDequeue(out Action? man)) {
+                man();
+            }
+        }
     }
 }

@@ -33,24 +33,30 @@ public record class Sprite : IAsset {
 
     public void load(string path)
     {
-        skbmp = SKBitmap.Decode(path);
-        if (skbmp == null) {
-            Starry.log($"Couldn't load {path} as sprite");
-            return;
-        }
+        Graphics.actions.Enqueue(() => {
+            skbmp = SKBitmap.Decode(path);
+            if (skbmp == null) {
+                Starry.log($"Couldn't load {path} as sprite");
+                return;
+            }
 
-        skimg = SKImage.FromBitmap(skbmp);
-        size = (skbmp.Width, skbmp.Height);
+            skimg = SKImage.FromBitmap(skbmp);
+            size = (skbmp.Width, skbmp.Height);
 
-        Starry.log($"Loaded sprite at {path}");
-        this.path = path;
+            Starry.log($"Loaded sprite at {path}");
+            this.path = path;
+        });
+        Graphics.actionLoopEvent.Set();
     }
 
     public void cleanup()
     {
-        skbmp?.Dispose();
-        skimg?.Dispose();
-        Starry.log($"Deleted sprite at {path}");
+        Graphics.actions.Enqueue(() => {
+            skbmp?.Dispose();
+            skimg?.Dispose();
+            Starry.log($"Deleted sprite at {path}");
+        });
+        Graphics.actionLoopEvent.Set();
     }
 
     /// <summary>

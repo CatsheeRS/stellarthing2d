@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 namespace starry;
 
@@ -17,11 +19,17 @@ public static class Starry {
     /// <summary>
     /// sets up the engine
     /// </summary>
-    public static void create(StarrySettings settings)
+    public static async Task create(StarrySettings settings)
     {
         // funni
         Starry.settings = settings;
         Console.WriteLine("Use --verbose if the game is broken.");
+
+        // opengl thread lmao
+        Thread thread = new(Graphics.glLoop) {
+            IsBackground = true,
+        };
+        thread.Start();
 
         string el = $"{settings.gameName} v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
         // the size doesn't matter once you make it fullscreen
@@ -32,10 +40,10 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite stellarballs = load<Sprite>("stellarthing.png");
-        Sprite crapbg = load<Sprite>("restest.png");
+        Sprite stellarballs = await load<Sprite>("stellarthing.png");
+        Sprite crapbg = await load<Sprite>("restest.png");
         double rot = 0;
-        while (!Window.isClosing()) {
+        while (!await Window.isClosing()) {
             Graphics.clear(color.black);
             Graphics.drawSprite(crapbg, (0, 0, 320, 180), (0, 0), 0, (255, 255, 255, 127));
             Graphics.drawSprite(stellarballs, (0, 0, 78 * 2, 32), (0.5, 0.5), 0, color.white);
@@ -61,7 +69,8 @@ public static class Starry {
     /// <summary>
     /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk this is just Assets.load<T> lmao
     /// </summary>
-    public static T load<T>(string path) where T: IAsset, new() => Assets.load<T>(path);
+    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
+        await Assets.load<T>(path);
 
     /// <summary>
     /// Console.WriteLine but cooler (it prints more types and has caller information)

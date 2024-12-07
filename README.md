@@ -15,6 +15,13 @@ best game engine in the world awards 1921 winner
 - Overkill graphics (it uses [skia](https://skia.org/) (but [the c# version](https://github.com/mono/SkiaSharp)))
 - Acceptable math structs
 - Assets work
+- Async await everywhere
+- COMING SOON: Tilemap where you can jump
+- COMING SOON: Blazingly fast and very handsome entity system
+- COMING SOON: Sick sound effect and music system
+- COMING SOON: Multiplayer probably
+- COMING SOON: Acceptable UI
+- COMING SOON: Modding through lua
 
 # How to build
 

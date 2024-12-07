@@ -10,5 +10,6 @@ best game engine in the world awards 1921 winner
 
 ## Table of contents
 
-1. [Welcome to Starry](01-starry.md)
-2. [Starry core](02-starry-core.md)
+- [Welcome to Starry](starry.md)
+- [Starry core](starry-core.md)
+- [Graphics](graphics.md)

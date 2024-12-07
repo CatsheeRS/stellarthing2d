@@ -11,7 +11,10 @@ public static partial class Graphics {
     /// </summary>
     public static void clear(color color)
     {
-        canvas?.Clear(new SKColor(color.r, color.g, color.b, color.a));
+        actions.Enqueue(() => {
+            canvas?.Clear(new SKColor(color.r, color.g, color.b, color.a));
+        });
+        actionLoopEvent.Set();
     }
 
     /// <summary>
@@ -19,37 +22,40 @@ public static partial class Graphics {
     /// </summary>
     public static void drawSprite(Sprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
     {
-        if (skpaint == null) return;
-        if (!sprite.isValid()) {
-            Starry.log($"Sprite at {sprite.path} is invalid; cannot draw");
-            return;
-        }
-        
-        canvas?.Save();
-        
-        // rotation
-        vec2 actualOrigin = ((rect.w * origin.y + rect.x) * scale + offset.x,
-                             (rect.h * origin.x + rect.y) * scale + offset.y);
-        
-        canvas?.Translate((float)actualOrigin.x, (float)actualOrigin.y);
-        canvas?.RotateDegrees((float)rotation);
-        canvas?.Translate(-(float)actualOrigin.x, -(float)actualOrigin.y);
+        actions.Enqueue(() => {
+            if (skpaint == null) return;
+            if (!sprite.isValid()) {
+                Starry.log($"Sprite at {sprite.path} is invalid; cannot draw");
+                return;
+            }
+            
+            canvas?.Save();
+            
+            // rotation
+            vec2 actualOrigin = ((rect.w * origin.y + rect.x) * scale + offset.x,
+                                 (rect.h * origin.x + rect.y) * scale + offset.y);
+            
+            canvas?.Translate((float)actualOrigin.x, (float)actualOrigin.y);
+            canvas?.RotateDegrees((float)rotation);
+            canvas?.Translate(-(float)actualOrigin.x, -(float)actualOrigin.y);
 
-        // tint
-        var colorfilter = SKColorFilter.CreateBlendMode(
-            new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Modulate);
-        
-        using var newpaint = new SKPaint() {
-            IsAntialias = false,
-            ColorFilter = colorfilter,
-        };
+            // tint
+            var colorfilter = SKColorFilter.CreateBlendMode(
+                new SKColor(tint.r, tint.g, tint.b, tint.a), SKBlendMode.Modulate);
+            
+            using var newpaint = new SKPaint() {
+                IsAntialias = false,
+                ColorFilter = colorfilter,
+            };
 
-        // draw.
-        canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(rect.x * scale) + offset.x,
-            (float)(rect.y * scale) + offset.y, (float)(rect.w * scale), (float)(rect.h * scale)),
-            newpaint);
-        
-        // reset the canvas for other shits
-        canvas?.Restore();
+            // draw.
+            canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(rect.x * scale) + offset.x,
+                (float)(rect.y * scale) + offset.y, (float)(rect.w * scale),
+                (float)(rect.h * scale)), newpaint);
+            
+            // reset the canvas for other shits
+            canvas?.Restore();
+        });
+        actionLoopEvent.Set();
     }
 }

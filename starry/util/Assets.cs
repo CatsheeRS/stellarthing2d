@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 namespace starry;
 
 /// <summary>
@@ -11,18 +12,20 @@ public static class Assets {
     /// <summary>
     /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk
     /// </summary>
-    public static T load<T>(string path) where T: IAsset, new()
+    public static async Task<T> load<T>(string path) where T: IAsset, new()
     {
-        string locamiño = Path.Combine(Starry.settings.assetPath, path);
-        if (assets.ContainsKey(locamiño)) {
-            return (T)assets[locamiño];
-        }
-        else {
-            T tee = new();
-            tee.load(Path.Combine(Starry.settings.assetPath, path));
-            assets.Add(path, tee);
-            return tee;
-        }
+        return await Task.Run(() => {
+            string locamiño = Path.Combine(Starry.settings.assetPath, path);
+            if (assets.ContainsKey(locamiño)) {
+                return (T)assets[locamiño];
+            }
+            else {
+                T tee = new();
+                tee.load(Path.Combine(Starry.settings.assetPath, path));
+                assets.Add(path, tee);
+                return tee;
+            }
+        });
     }
 
     public static void cleanup()
