@@ -55,6 +55,10 @@ public static partial class Graphics {
             
             // reset the canvas for other shits
             canvas?.Restore();
+
+            // you fucking idiot
+            colorfilter.Dispose();
+            newpaint.Dispose();
         });
         actionLoopEvent.Set();
     }
