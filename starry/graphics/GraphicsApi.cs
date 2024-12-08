@@ -71,17 +71,18 @@ public static partial class Graphics {
     public static void drawText(string text, Font font, vec2 pos, color color)
     {
         actions.Enqueue(() => {
-            paint.Color = new SKColor(color.r, color.g, color.b, color.a);
+            if (skpaint == null) return; // shut
+            skpaint.Color = new SKColor(color.r, color.g, color.b, color.a);
 
             // shut up
             #pragma warning disable CS0618 // Type or member is obsolete
-            paint.TextSize = 16 * scale;
-            paint.Typeface = font.skfnt;
+            skpaint.TextSize = 16 * scale;
+            skpaint.Typeface = font.skfnt;
 
             canvas?.DrawText(text,
                 (float)(pos.x * scale) + offset.x,
                 (float)(pos.y * scale) + offset.y,
-            paint);
+            skpaint);
             #pragma warning restore CS0618 // Type or member is obsolete
         });
         actionLoopEvent.Set();

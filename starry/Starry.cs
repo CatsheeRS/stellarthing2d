@@ -15,7 +15,7 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 4);
+    public static vec3i starryVersion => (2, 0, 5);
 
     /// <summary>
     /// sets up the engine
@@ -42,6 +42,7 @@ public static class Starry {
         Window.setFullscreen(settings.fullscreen);
         
         // fccking kmodules
+        await DebugMode.create();
 
         settings.startup();
 
@@ -57,8 +58,11 @@ public static class Starry {
             Graphics.drawSprite(stellarballs, (0, 180 - 32, 32, 32), (0.5, 0.5), 15, color.green);
             Graphics.drawSprite(stellarballs, (320 - 78, 180 - 16, 78, 16), (0.5, 0.5), rot, color.blue);
             Graphics.drawText("¡Hola! ¿Cómo estás?", font, (50, 50), (255, 0, 255, 255));
-            Graphics.drawTextWordwrap("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (0, 66, 100, 100), color.skyBlue);
+            //Graphics.drawTextWordwrap("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (66, 66, 100, 100), color.skyBlue);
             rot += 5;
+
+            // stuff
+            await DebugMode.update();
             Graphics.endDrawing();
         }
 

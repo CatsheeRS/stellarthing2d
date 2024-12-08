@@ -15,9 +15,8 @@ public static class Assets {
     public static async Task<T> load<T>(string path) where T: IAsset, new()
     {
         return await Task.Run(() => {
-            string locamiño = Path.Combine(Starry.settings.assetPath, path);
-            if (assets.ContainsKey(locamiño)) {
-                return (T)assets[locamiño];
+            if (assets.ContainsKey(path)) {
+                return (T)assets[path];
             }
             else {
                 T tee = new();
