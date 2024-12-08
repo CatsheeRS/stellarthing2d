@@ -46,17 +46,18 @@ public static class Starry {
 
         settings.startup();
         
-        Audio reality = await load<Audio>("reality.mp3");
+        Audio reality = await load<Audio>("reality.wav");
         //method 1 (better)
         AudioManager audManager = new();
         audManager.play(reality);
-        audManager.setVolume(10);
+        audManager.setVolume(1);
         
         Sprite stellarballs = await load<Sprite>("stellarthing.png");
         Sprite crapbg = await load<Sprite>("restest.png");
         Font font = await load<Font>("font/pixel-unicode.ttf");
         double rot = 0;
         float angle = 0;
+        
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
             Graphics.drawSprite(crapbg, (0, 0, 320, 180), (0, 0), 0, (255, 255, 255, 127));
@@ -68,15 +69,15 @@ public static class Starry {
             Graphics.drawText(angle.ToString(), font, (50, 50), (255, 0, 255, 255));
             //Graphics.drawTextWordwrap("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (66, 66, 100, 100), color.skyBlue);
             
+            
             angle += 1;
             if (angle >= 360) angle = 0;
-
-            float l = MathF.Sin((float)Math.deg2rad(angle));
-            float r = MathF.Cos((float)Math.deg2rad(angle));
+            float radians = (float)Math.deg2rad(angle);
+            float l = MathF.Sin(radians);
+            float r = MathF.Cos(radians);
             
             l = (l + 1) / 2;
             r = (r + 1) / 2;
-            
             audManager.setPosition((l, r), vec2.zero);
             
             // stuff

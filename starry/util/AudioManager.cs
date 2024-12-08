@@ -1,38 +1,41 @@
 using System;
-using NAudio.Wave;
-
+using ManagedBass;
 namespace starry;
 
 public class AudioManager
 {
-    internal static WaveOutEvent defaultOut = new();
-
-    public WaveOutEvent audOut { get; private set; } = new();
     private Audio currentlyPlaying;
-    private WaveChannel32 channel;
-
-    public float volume { get; private set; }
-    public float pan { get; private set; }
-
-    public AudioManager()
-    {
-        volume = 1;
-        pan = 0;
-    }
+    private int currentStream = 0;
+    
+    public float volume { get; private set; } = 1;
+    public float pan { get; private set; } = 0;
     
     public void play(Audio aud)
     {
         Graphics.actions.Enqueue(() =>
         {
-            if (currentlyPlaying != null)
-                audOut.Stop();
-
-            channel = new(aud.audioreader, volume, pan);
-            audOut.Init(channel);
-
-            currentlyPlaying = aud;
-            audOut.Play();
+            if (Bass.Init())
+            {
+                currentStream = Bass.CreateStream(aud.path);
+                if (currentStream != 0)
+                {
+                    Bass.ChannelPlay(currentStream);
+                    currentlyPlaying = aud;
+                    
+                    setVolume(volume);
+                    setPan(pan);
+                }
+                else
+                {
+                    Starry.log(Bass.LastError);
+                }
+            }
+            else
+            {
+                Starry.log("no more bass");
+            }
         });
+
         Graphics.actionLoopEvent.Set();
     }
 
@@ -45,32 +48,77 @@ public class AudioManager
         float pan = System.Math.Clamp(deltaX / distance, -1.0f, 1.0f);
 
         this.pan = pan;
+        setPan(pan);
+        //setVolume(volume / (volume + distance));
+    }
 
-        if (channel != null)
+    public void pause()
+    {
+        if (currentStream != 0)
         {
-            channel.Pan = pan;
-            channel.Volume = volume / (volume + distance);
+            Bass.ChannelPause(currentStream);
         }
     }
-
+    
+    public void unpause()
+    {
+        if (currentStream != 0)
+        {
+            Bass.ChannelPlay(currentStream);
+        }
+    }
+    
+    public void stop()
+    {
+        if (currentStream != 0)
+        {
+            Bass.ChannelStop(currentStream);
+        }
+    }
+    
     public void cleanup()
     {
-        audOut.Dispose();
-        channel?.Dispose();
+        if (currentStream != 0)
+        {
+            Bass.StreamFree(currentStream);
+        }
     }
-
-    public void pause() => audOut.Pause();
-
-    public void stop() => audOut.Stop();
-
-    public void resume() => audOut.Play();
 
     public void setVolume(float volume)
     {
         this.volume = volume;
-        if (channel != null)
+        if (currentStream != 0)
         {
-            channel.Volume = volume;
+            Bass.ChannelSetAttribute(currentStream, ChannelAttribute.Volume, volume);
         }
+    }
+
+    public void setPan(float pan)
+    {
+        if (currentStream != 0)
+        {
+            Bass.ChannelSetAttribute(currentStream, ChannelAttribute.Pan, pan);
+        }
+    }
+
+    public static void setGlobalVolume(int volume)
+    {
+        Bass.GlobalStreamVolume = volume;
+    }
+    
+    public static void stopAllAudio(int volume)
+    {
+        Bass.Stop();
+    }
+    
+    public static void pauseAllAudio(int volume)
+    {
+        Bass.Pause();
+    }
+    
+
+    public static void restartAllAudio(int volume)
+    {
+        Bass.Start();
     }
 }

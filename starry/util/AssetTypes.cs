@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using NAudio.Wave;
+using ManagedBass;
 using SkiaSharp;
 namespace starry;
 
@@ -95,35 +95,14 @@ public record class Font: IAsset {
 public record class Audio : IAsset
 {
     public string path { get; private set; }= "";
-    internal AudioFileReader audioreader;
     
     public void load(string path)
-    {
-        Graphics.actions.Enqueue(() => {
-            this.path = path;
-            audioreader = new AudioFileReader(path);
-        });
-        Graphics.actionLoopEvent.Set();
+    { 
+        this.path = path;
     }
 
 
     public void cleanup()
     {
-        Graphics.actions.Enqueue(() => {
-            audioreader?.Dispose();
-        });
-        Graphics.actionLoopEvent.Set();
-    }
-
-    /// <summary>
-    /// plays audio (but its better to use an audiomanager)
-    /// </summary>
-    public void play()
-    {
-        Graphics.actions.Enqueue(() => {
-            AudioManager.defaultOut.Init(audioreader);
-            AudioManager.defaultOut.Play();
-        });
-        Graphics.actionLoopEvent.Set();
     }
 }
