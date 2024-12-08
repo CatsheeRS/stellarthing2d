@@ -28,8 +28,8 @@ public static class DebugMode {
             // i can't be bothered to make the lines not comically long
             // TODO add tilemap coordinates and delta time
             // TODO make it only show up with f3
-            Graphics.drawText($"Stellarthing {Starry.settings.gameVersion}", font, (0, 0), color.white);
-            Graphics.drawText($"Starry {Starry.starryVersion}", font, (0, 16), color.white);
+            Graphics.drawText($"Stellarthing {Starry.settings.gameVersion.asVersion()}", font, (0, 0), color.white);
+            Graphics.drawText($"Starry {Starry.starryVersion.asVersion()}", font, (0, 16), color.white);
             Graphics.drawText($"Running {Environment.OSVersion.VersionString}", font, (0, 32), color.white);
             Graphics.drawText($"Memory (.NET heap): {GC.GetTotalMemory(false) / 1024f / 1024f} MB", font, (0, 64), color.white);
             Graphics.drawText($"Memory (physical): {p.WorkingSet64 / 1024f / 1024f} MB", font, (0, 80), color.white);

@@ -31,10 +31,8 @@ public static class Starry {
         };
         thread.Start();
 
-        string title = $"{settings.gameName} ";
-        if (settings.showVersion) {
-            title += $"v{settings.gameVersion.x}.{settings.gameVersion.y}.{settings.gameVersion.z}";
-        }
+        string title = $"{settings.gameName}";
+        if (settings.showVersion) title += " " + settings.gameVersion.asVersion();
         
         // the size doesn't matter once you make it fullscreen
         Window.create(title, settings.renderSize);
