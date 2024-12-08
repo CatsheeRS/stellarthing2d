@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Silk.NET.GLFW;
+
 namespace starry;
 
 /// <summary>
@@ -10,15 +12,24 @@ public static class DebugMode {
     static Font font = new();
     static Sprite white = new();
 
+    static bool shown = false;
     public static async Task create()
     {
         font = await Starry.load<Font>("font/pixel-unicode.ttf");
         white = await Starry.load<Sprite>("white.png");
+        
+        Window.keyPress += (sender, args) =>
+        {
+            if (args.Key == Keys.F3) shown = !shown;
+        };
     }
 
     public static async Task update()
     {
-        await Task.Run(() => {
+        await Task.Run(() =>
+        {
+            if (!shown) return;
+            
             var p = Process.GetCurrentProcess();
 
             // i know

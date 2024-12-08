@@ -16,7 +16,13 @@ public static unsafe class Window {
     /// called right before the engine starts cleaning up
     /// </summary>
     public static event EventHandler? onClose;
-
+    
+    /// <summary>
+    /// called when key press ngl
+    /// </summary>
+    public static event EventHandler<KeyPressArgs>? keyPress;
+    public static event EventHandler<KeyPressArgs>? keyRelease;
+    
     internal static Glfw? glfw;
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
@@ -73,10 +79,21 @@ public static unsafe class Window {
             glfw.SetFramebufferSizeCallback(window, (win, w, h) => {
                 onResize?.Invoke((w, h));
             });
+            
+            glfw.SetKeyCallback(window, keypress);
         });
         Graphics.actionLoopEvent.Set();
     }
+    
+    private static void keypress(WindowHandle* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
+    {
+        if (action == InputAction.Press)
+            keyPress?.Invoke(null, new KeyPressArgs(key, action));   
 
+        if (action == InputAction.Release)
+            keyRelease?.Invoke(null, new KeyPressArgs(key, action));  
+    }
+    
     /// <summary>
     /// if true, the window is gonna be fullscreen
     /// </summary>
@@ -174,4 +191,16 @@ public static unsafe class Window {
     }
 
     public delegate void ResizeEvent(vec2i newSize);
+}
+
+public class KeyPressArgs : EventArgs
+{
+    public Keys Key { get; }
+    public InputAction Action { get; }
+
+    public KeyPressArgs(Keys key, InputAction action)
+    {
+        Key = key;
+        Action = action;
+    }
 }
