@@ -68,8 +68,8 @@ public static class Starry {
             //Graphics.drawText("¡Hola! ¿Cómo estás?", font, (50, 50), (255, 0, 255, 255));
             Graphics.drawText(angle.ToString(), font, (50, 50), (255, 0, 255, 255));
             //Graphics.drawTextWordwrap("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (66, 66, 100, 100), color.skyBlue);
-            
-            
+
+            rot += 5;
             angle += 1;
             if (angle >= 360) angle = 0;
             float radians = (float)Math.deg2rad(angle);

@@ -4,7 +4,7 @@ namespace starry;
 
 public class AudioManager
 {
-    private Audio currentlyPlaying;
+    private Audio? currentlyPlaying;
     private int currentStream = 0;
     
     public float volume { get; private set; } = 1;
@@ -48,7 +48,7 @@ public class AudioManager
         float pan = System.Math.Clamp(deltaX / distance, -1.0f, 1.0f);
 
         this.pan = pan;
-        setPan(pan);
+        //setPan(pan);
         //setVolume(volume / (volume + distance));
     }
 
@@ -81,6 +81,7 @@ public class AudioManager
         if (currentStream != 0)
         {
             Bass.StreamFree(currentStream);
+            Bass.Free();
         }
     }
 
