@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using SkiaSharp;
 namespace starry;
 
@@ -86,4 +87,50 @@ public record class Font: IAsset {
         });
         Graphics.actionLoopEvent.Set();
     }
+}
+
+/// <summary>
+/// it's a sprite but with multiple sides. the sprite must be a png (can't be bothered) with filenames ending with the side's letter ((l)eft, (r)ight, (t)op, (b)ottom)
+/// </summary>
+public record class TileSprite : IAsset {
+    /// <summary>
+    /// size in pixels
+    /// </summary>
+    public vec2i size { get; private set; } = (0, 0);
+    public Sprite left { get; private set; } = new();
+    public Sprite right { get; private set; } = new();
+    public Sprite top { get; private set; } = new();
+    public Sprite bottom { get; private set; } = new();
+
+    public async void load(string path)
+    {
+        string lpath = path.Replace(".png", "l.png");
+        string rpath = path.Replace(".png", "r.png");
+        string tpath = path.Replace(".png", "t.png");
+        string bpath = path.Replace(".png", "b.png");
+
+        // check stuff
+        if (!Path.Exists(lpath) || !Path.Exists(rpath) || !Path.Exists(tpath) || !Path.Exists(bpath)) {
+            Starry.log("you doofus you don't have all of the sides");
+        }
+
+        // then fucking
+        left = await Starry.load<Sprite>(lpath);
+        right = await Starry.load<Sprite>(rpath);
+        top = await Starry.load<Sprite>(tpath);
+        bottom = await Starry.load<Sprite>(bpath);
+    }
+
+    public void cleanup()
+    {
+        left.cleanup();
+        right.cleanup();
+        top.cleanup();
+        bottom.cleanup();
+    }
+
+    /// <summary>
+    /// if true, all of the sprites are, in fact, valid
+    /// </summary>
+    public bool isValid() => left.isValid() && right.isValid() && top.isValid() && bottom.isValid();
 }
