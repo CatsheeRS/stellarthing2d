@@ -65,14 +65,24 @@ public record class Sprite : IAsset {
     public bool isValid() => skbmp != null && skimg != null;
 }
 
-/*public record class Font: IAsset {
-    internal Raylib_cs.Font rl;
+/// <summary>
+/// font
+/// </summary>
+public record class Font: IAsset {
+    internal SKTypeface? skfnt;
 
-    public unsafe void load(string path)
+    public void load(string path)
     {
-        Raylib.font
-        rl = Raylib.LoadFont(path);
+        Graphics.actions.Enqueue(() => {
+            skfnt = SKTypeface.FromFile(path);
+        });
+        Graphics.actionLoopEvent.Set();
     }
 
-    public void cleanup() => Raylib.UnloadFont(rl);
-}*/
+    public void cleanup() {
+        Graphics.actions.Enqueue(() => {
+            skfnt?.Dispose();
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+}

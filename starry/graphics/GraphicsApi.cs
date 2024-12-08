@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SkiaSharp;
 namespace starry;
 
@@ -61,5 +62,45 @@ public static partial class Graphics {
             colorfilter.Dispose();
         });
         actionLoopEvent.Set();
+    }
+
+    /// <summary>
+    /// draws text :D
+    /// </summary>
+    public static void drawText(string text, Font font, vec2 pos, color color)
+    {
+        actions.Enqueue(() => {
+            paint.Color = new SKColor(color.r, color.g, color.b, color.a);
+
+            // shut up
+            #pragma warning disable CS0618 // Type or member is obsolete
+            paint.TextSize = 16 * scale;
+            paint.Typeface = font.skfnt;
+
+            canvas?.DrawText(text,
+                (float)(pos.x * scale) + offset.x,
+                (float)(pos.y * scale) + offset.y,
+            paint);
+            #pragma warning restore CS0618 // Type or member is obsolete
+        });
+        actionLoopEvent.Set();
+    }
+
+    /// <summary>
+    /// returns how many pixels wide the text is
+    /// </summary>
+    public static Task<double> getTextSize(string text, Font font)
+    {
+        TaskCompletionSource<double> tcs = new();
+        actions.Enqueue(() => {
+            // shit up
+            #pragma warning disable CS0618 // Type or member is obsolete
+            paint.Typeface = font.skfnt;
+            var jjjj = paint.MeasureText(text);
+            #pragma warning restore CS0618 // Type or member is obsolete
+            tcs.SetResult(jjjj);
+        });
+        actionLoopEvent.Set();
+        return tcs.Task;
     }
 }

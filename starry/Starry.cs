@@ -47,6 +47,7 @@ public static class Starry {
 
         Sprite stellarballs = await load<Sprite>("stellarthing.png");
         Sprite crapbg = await load<Sprite>("restest.png");
+        Font font = await load<Font>("font/pixel-unicode.ttf");
         double rot = 0;
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
@@ -55,12 +56,9 @@ public static class Starry {
             Graphics.drawSprite(stellarballs, (320, 0, 78, 16), (0, 0), 90, color.red);
             Graphics.drawSprite(stellarballs, (0, 180 - 32, 32, 32), (0.5, 0.5), 15, color.green);
             Graphics.drawSprite(stellarballs, (320 - 78, 180 - 16, 78, 16), (0.5, 0.5), rot, color.blue);
+            Graphics.drawText("¡Hola! ¿Cómo estás?", font, (50, 50), (255, 0, 255, 255));
+            Graphics.drawText("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (50, 100), (255, 0, 255, 255));
             rot += 5;
-            //Graphics.drawSpriteSuperior(
-                //sprite, (0, 0, 50, 50), (50, 50, 50, 100), (0.5, 0.5), 1.5, color.red
-            //);
-            //Graphics.drawText("Rewolucja przemysłowa i jej konsekwencje okazały się katastrofą dla rodzaju ludzkiego.",
-            //    Graphics.defaultFont, (16, 16), color.purple, 16);
             Graphics.endDrawing();
         }
 
