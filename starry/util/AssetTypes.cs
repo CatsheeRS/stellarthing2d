@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using ManagedBass;
 using SkiaSharp;
 namespace starry;
 
@@ -86,23 +85,5 @@ public record class Font: IAsset {
             skfnt?.Dispose();
         });
         Graphics.actionLoopEvent.Set();
-    }
-}
-
-/// <summary>
-/// audio
-/// </summary>
-public record class Audio : IAsset
-{
-    public string path { get; private set; }= "";
-    
-    public void load(string path)
-    { 
-        this.path = path;
-    }
-
-
-    public void cleanup()
-    {
     }
 }

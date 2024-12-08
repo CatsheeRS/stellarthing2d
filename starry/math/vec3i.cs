@@ -53,4 +53,9 @@ public struct vec3i(long x, long y, long z) {
     }
 
     public override readonly string ToString() => $"vec3i({x}, {y}, {z})";
+
+    /// <summary>
+    /// it's like ToString() but it formats it as a version
+    /// </summary>
+    public readonly string asVersion() => $"v{x}.{y}.{z}";
 }

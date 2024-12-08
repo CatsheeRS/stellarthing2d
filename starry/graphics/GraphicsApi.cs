@@ -81,7 +81,8 @@ public static partial class Graphics {
 
             canvas?.DrawText(text,
                 (float)(pos.x * scale) + offset.x,
-                (float)(pos.y * scale) + offset.y,
+                // it renders from the bottom left
+                (float)(pos.y * scale) + offset.y + (skpaint.FontSpacing / 2),
             skpaint);
             #pragma warning restore CS0618 // Type or member is obsolete
         });
@@ -104,68 +105,5 @@ public static partial class Graphics {
         });
         actionLoopEvent.Set();
         return tcs.Task;
-    }
-
-    /// <summary>
-    /// it's drawText() but with wordwrap. it also clips the text to fit the stuff
-    /// </summary>
-    public static void drawTextWordwrap(string text, Font font, rect2 rect, color color)
-    {
-        actions.Enqueue(() => {
-            // so it doesnt fucking die doing that every frame
-            List<string> man;
-            if (wrappedstrs.ContainsKey(text)) {
-                man = wrappedstrs[text];
-            }
-            else {
-                man = wrapLines(text, (float)rect.w);
-                wrappedstrs.Add(text, man);
-            }
-
-            // fuckign cl;ip
-            canvas?.Save();
-            //canvas?.ClipRect(
-            //    new SKRect((float)(rect.x * scale) + offset.x, (float)(rect.y * scale) + offset.y,
-            //    (float)rect.w * scale, (float)rect.h * scale));
-
-            vec2 g = (0, 0);
-            foreach (var line in man) {
-                drawText(line, font, g, color);
-                // shit up
-                #pragma warning disable CS0618 // Type or member is obsolete
-                g.y += 16;
-                #pragma warning restore CS0618 // Type or member is obsolete
-            }
-
-            canvas?.Restore();
-        });
-        actionLoopEvent.Set();
-    }
-
-    internal static List<string> wrapLines(string text, float width)
-    {
-        List<string> wrappedLines = [];
-        float len = 0f;
-        string line = "";
-
-        foreach (var word in text.Split(' ')) {
-            var wordWithSpace = word + " ";
-            // shut up
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var wordWithSpaceLength = paint.MeasureText(wordWithSpace);
-            #pragma warning restore CS0618 // Type or member is obsolete
-
-            if (len + wordWithSpaceLength > width) {
-                wrappedLines.Add(line);
-                line = "" + wordWithSpace;
-                len = wordWithSpaceLength;
-            }
-            else {
-                line += wordWithSpace;
-                len += wordWithSpaceLength;
-            }
-        }
-        wrappedLines.Add(line);
-        return wrappedLines;
     }
 }
