@@ -12,6 +12,7 @@
     <Nullable>enable</Nullable>
     <!-- so it doesn't have 5 billion files i don't even use -->
     <PublishTrimmed>true</PublishTrimmed>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
 
   <ItemGroup>
