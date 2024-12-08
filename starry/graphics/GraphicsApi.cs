@@ -81,7 +81,8 @@ public static partial class Graphics {
 
             canvas?.DrawText(text,
                 (float)(pos.x * scale) + offset.x,
-                (float)(pos.y * scale) + offset.y,
+                // it renders from the bottom left
+                (float)(pos.y * scale) + offset.y + (skpaint.FontSpacing / 2),
             skpaint);
             #pragma warning restore CS0618 // Type or member is obsolete
         });
