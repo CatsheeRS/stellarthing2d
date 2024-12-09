@@ -19,4 +19,8 @@ public struct StarrySettings() {
     public string assetPath { get; set; } = "";
     public int frameRate { get; set; } = 60;
     public bool verbose { get; set; } = false;
+    /// <summary>
+    /// the size of the tiles
+    /// </summary>
+    public vec2i tileSize { get; set; } = (0, 0);
 }

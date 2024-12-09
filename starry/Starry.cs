@@ -39,26 +39,17 @@ public static class Starry {
         Window.setFullscreen(settings.fullscreen);
         
         // fccking kmodules
+        await Task.Run(Tilemap.create);
         await DebugMode.create();
 
         settings.startup();
         
-        Sprite stellarballs = await load<Sprite>("stellarthing.png");
-        Sprite crapbg = await load<Sprite>("restest.png");
-        Font font = await load<Font>("font/pixel-unicode.ttf");
-        double rot = 0;
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
-            Graphics.drawSprite(crapbg, (0, 0, 320, 180), (0, 0), 0, (255, 255, 255, 127));
-            Graphics.drawSprite(stellarballs, (0, 0, 78 * 2, 32), (0.5, 0.5), 0, color.white);
-            Graphics.drawSprite(stellarballs, (320, 0, 78, 16), (0, 0), 90, color.red);
-            Graphics.drawSprite(stellarballs, (0, 180 - 32, 32, 32), (0.5, 0.5), 15, color.green);
-            Graphics.drawSprite(stellarballs, (320 - 78, 180 - 16, 78, 16), (0.5, 0.5), rot, color.blue);
-            Graphics.drawText("¡Hola! ¿Cómo estás?", font, (50, 50), (255, 0, 255, 255));
-            //Graphics.drawTextWordwrap("Промышленная революция и ее последствия стали катастрофой для человечества.", font, (66, 66, 100, 100), color.skyBlue);
             
             // stuff
             await DebugMode.update();
+            await Task.Run(Tilemap.update);
             Graphics.endDrawing();
         }
 

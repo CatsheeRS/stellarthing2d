@@ -3,15 +3,19 @@ namespace starry;
 /// <summary>
 /// it's a tile
 /// </summary>
-public class TileComp(Sprite sprite) {
+public class TileComp(TileSprite sprite) {
     /// <summary>
     /// it's a sprite
     /// </summary>
-    public Sprite sprite { get; set; } = sprite;
+    public TileSprite sprite { get; set; } = sprite;
     /// <summary>
-    /// position, each unit is a tile, not a pixel. (0, 0) is the top left, this means positive X is right and positive Y is down
+    /// position, each unit is a tile, not a pixel. (0, 0) is the top left, this means positive X is right and positive Y is down. Z is the layers, on a range of -128-512
     /// </summary>
-    public vec2 position { get; set; } = (0, 0);
+    public vec3 position { get; set; } = (0, 0, 0);
+    /// <summary>
+    /// the world the tile is located in. by default this is space or whatever
+    /// </summary>
+    public string world { get; set; } = "";
     /// <summary>
     /// the origin point, from the top left, from 0 to 1, (0.5, 0.5) is the center
     /// </summary>
