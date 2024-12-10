@@ -17,7 +17,6 @@ public struct StarrySettings() {
     public vec2i renderSize { get; set; } = (200, 100);
     public bool antiAliasing { get; set; } = true;
     public string assetPath { get; set; } = "";
-    public int frameRate { get; set; } = 60;
     public bool verbose { get; set; } = false;
     /// <summary>
     /// the size of the tiles

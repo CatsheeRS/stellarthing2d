@@ -16,6 +16,18 @@ public static unsafe class Window {
     /// called right before the engine starts cleaning up
     /// </summary>
     public static event EventHandler? onClose;
+    /// <summary>
+    /// delta time in seconds
+    /// </summary>
+    public static double deltaTime { get; private set; } = 0;
+    /// <summary>
+    /// time since the engine started, in seconds
+    /// </summary>
+    public static double elapsedTime { get; private set; } = 0;
+    /// <summary>
+    /// the fps the game is running on
+    /// </summary>
+    public static double fps { get; private set; } = 0;
 
     internal static Glfw? glfw;
     internal static WindowHandle* window;
@@ -38,7 +50,7 @@ public static unsafe class Window {
             // hints :D
             glfw.WindowHint(WindowHintInt.ContextVersionMajor, 3);
             glfw.WindowHint(WindowHintInt.ContextVersionMinor, 3);
-            glfw.WindowHint(WindowHintInt.RefreshRate, Starry.settings.frameRate);
+            glfw.WindowHint(WindowHintInt.RefreshRate, Glfw.DontCare);
             Starry.log("GLFW has been initialized");
 
             // make the infamous window
@@ -91,7 +103,7 @@ public static unsafe class Window {
                 if (monitor == null) return;
                 VideoMode* mode = glfw.GetVideoMode(monitor);
                 glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
-                    mode->RefreshRate);
+                    Glfw.DontCare);
                 
                 screensize = (mode->Width, mode->Height);
                 
@@ -99,7 +111,7 @@ public static unsafe class Window {
             }
             else {
                 glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
-                (int)Starry.settings.renderSize.y, Starry.settings.frameRate);
+                (int)Starry.settings.renderSize.y, Glfw.DontCare);
                 
                 Starry.log("Windows is now windowed");
             }
@@ -124,6 +136,13 @@ public static unsafe class Window {
                 return;
             }
             glfw.PollEvents();
+
+            // YOU UNDERSTAND MECHANCIAL HANDS ARE THE RULER OF EVERYTHING
+            double current = glfw.GetTime();
+            deltaTime = current - elapsedTime;
+            elapsedTime = current;
+            fps = 1.0 / deltaTime;
+
             tcs.SetResult(glfw.WindowShouldClose(window));
         });
         Graphics.actionLoopEvent.Set();
