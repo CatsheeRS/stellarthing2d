@@ -119,6 +119,9 @@ public record class TileSprite : IAsset {
         right = await Starry.load<Sprite>(rpath);
         top = await Starry.load<Sprite>(tpath);
         bottom = await Starry.load<Sprite>(bpath);
+
+        // don't have sides of different sides you fucking moron
+        size = left.size;
     }
 
     public void cleanup()

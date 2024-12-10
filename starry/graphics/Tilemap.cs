@@ -93,6 +93,7 @@ public static class Tilemap {
                 tile.rotation,
                 tile.tint
             );
+            Starry.log(tile.sprite.size, tile.scale, camScale, tile.sprite.size * tile.scale * camScale);
         }
     }
 }

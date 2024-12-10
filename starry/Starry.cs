@@ -43,9 +43,20 @@ public static class Starry {
         await DebugMode.create();
 
         settings.startup();
-        
+
+        Sprite s = await load<Sprite>("tiles/testl.png");
+        Console.WriteLine($"lololol, {s.size}");
+        TileComp kys = new(await load<TileSprite>("tiles/test.png")) {
+            position = (0, 0, 0),
+        };
+
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
+
+            Tilemap.pushTile(kys);
+            kys.position += (0.1, 0.1, 0);
+            kys.rotation += 5;
+            kys.side = kys.side.rotateClockwise();
             
             // stuff
             await DebugMode.update();
@@ -108,7 +119,7 @@ public static class Starry {
                 case vec3i wec3i: str.Append($"vec3i({wec3i.x}, {wec3i.y}, {wec3i.z})"); break;
                 case color coughlour: str.Append($"rgba({coughlour.r}, {coughlour.g}, {coughlour.b}, {coughlour.a})"); break;
                 case null: str.Append("null"); break;
-                default: str.Append(JsonConvert.SerializeObject(item, Formatting.Indented)); break;
+                default: str.Append(JsonConvert.SerializeObject(item)); break;
             }
 
             if (x.Length > 1) str.Append(", ");

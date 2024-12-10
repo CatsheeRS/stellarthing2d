@@ -1,3 +1,4 @@
+using System;
 namespace starry;
 
 /// <summary>
@@ -46,4 +47,35 @@ public enum TileSide {
     right,
     top,
     bottom,
+}
+
+static class TileSideExtensions
+{
+    /// <summary>
+    /// rotates the tile by 90 degrees
+    /// </summary>
+    public static TileSide rotateClockwise(this TileSide tile) 
+    {
+        return tile switch {
+            TileSide.left => TileSide.top,
+            TileSide.right => TileSide.bottom,
+            TileSide.top => TileSide.left,
+            TileSide.bottom => TileSide.right,
+            _ => throw new Exception("you fucking moron"),
+        };
+    }
+
+    /// <summary>
+    /// rotates the tile by -90 degrees
+    /// </summary>
+    public static TileSide rotateCounterClockwise(this TileSide tile) 
+    {
+        return tile switch {
+            TileSide.left => TileSide.bottom,
+            TileSide.right => TileSide.top,
+            TileSide.top => TileSide.right,
+            TileSide.bottom => TileSide.left,
+            _ => throw new Exception("you fucking moron"),
+        };
+    }
 }
