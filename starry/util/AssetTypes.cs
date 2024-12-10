@@ -32,6 +32,10 @@ public record class Sprite : IAsset {
     /// it's the path.
     /// </summary>
     public string path { get; private set; }= "";
+    /// <summary>
+    /// fucking race condition of like 5 zeptoseconds
+    /// </summary>
+    internal EventHandler? isready;
 
     public void load(string path)
     {
@@ -47,6 +51,7 @@ public record class Sprite : IAsset {
 
             Starry.log($"Loaded sprite at {path}");
             this.path = path;
+            isready?.Invoke(this, EventArgs.Empty);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -102,7 +107,7 @@ public record class TileSprite : IAsset {
     public Sprite top { get; private set; } = new();
     public Sprite bottom { get; private set; } = new();
 
-    public async void load(string path)
+    public void load(string path)
     {
         string lpath = path.Replace(".png", "l.png");
         string rpath = path.Replace(".png", "r.png");
@@ -115,13 +120,18 @@ public record class TileSprite : IAsset {
         }
 
         // then fucking
-        left = await Starry.load<Sprite>(lpath);
-        right = await Starry.load<Sprite>(rpath);
-        top = await Starry.load<Sprite>(tpath);
-        bottom = await Starry.load<Sprite>(bpath);
-
-        // don't have sides of different sides you fucking moron
-        size = left.size;
+        // we call the sprites instead of Assets to avoid await fuckery bcuz it breaks shit or smth
+        // Assets is gonna turn this async again anyway
+        left.load(lpath);
+        right.load(rpath);
+        top.load(tpath);
+        bottom.load(bpath);
+        
+        // fucking race condition of like 5 zeptoseconds
+        left.isready += (fuck, off) => {
+            // don't have sides of different sides you fucking moron
+            size = left.size;
+        };
     }
 
     public void cleanup()

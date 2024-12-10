@@ -16,7 +16,8 @@ internal class Program {
             fullscreen = true,
             assetPath = Path.GetFullPath("assets"),
             renderSize = (320, 180),
-            antiAliasing = false
+            antiAliasing = false,
+            tileSize = (16, 16),
         });
     }
 }

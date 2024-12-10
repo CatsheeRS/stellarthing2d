@@ -59,8 +59,8 @@ static class TileSideExtensions
         return tile switch {
             TileSide.left => TileSide.top,
             TileSide.right => TileSide.bottom,
-            TileSide.top => TileSide.left,
-            TileSide.bottom => TileSide.right,
+            TileSide.top => TileSide.right,
+            TileSide.bottom => TileSide.left,
             _ => throw new Exception("you fucking moron"),
         };
     }
@@ -73,8 +73,8 @@ static class TileSideExtensions
         return tile switch {
             TileSide.left => TileSide.bottom,
             TileSide.right => TileSide.top,
-            TileSide.top => TileSide.right,
-            TileSide.bottom => TileSide.left,
+            TileSide.top => TileSide.left,
+            TileSide.bottom => TileSide.right,
             _ => throw new Exception("you fucking moron"),
         };
     }

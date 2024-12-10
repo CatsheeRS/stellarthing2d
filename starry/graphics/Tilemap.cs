@@ -82,18 +82,17 @@ public static class Tilemap {
                 TileSide.right => tile.sprite.right,
                 TileSide.top => tile.sprite.top,
                 TileSide.bottom => tile.sprite.bottom,
-                _ => throw new Exception("shut up man"),
+                _ => throw new Exception("shut up marge shut up"),
             };
 
             Graphics.drawSprite(
                 sprite,
-                (tile.position.as2d() * Starry.settings.tileSize + camPosition + camOffset,
+                ((tile.position.as2d() * Starry.settings.tileSize) + camPosition + camOffset,
                 tile.sprite.size * tile.scale * camScale),
                 tile.origin,
                 tile.rotation,
                 tile.tint
             );
-            Starry.log(tile.sprite.size, tile.scale, camScale, tile.sprite.size * tile.scale * camScale);
         }
     }
 }

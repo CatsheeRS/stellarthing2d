@@ -44,23 +44,31 @@ public static class Starry {
 
         settings.startup();
 
-        Sprite s = await load<Sprite>("tiles/testl.png");
-        Console.WriteLine($"lololol, {s.size}");
         TileComp kys = new(await load<TileSprite>("tiles/test.png")) {
             position = (0, 0, 0),
         };
+        TileComp syk = new(await load<TileSprite>("tiles/test.png")) {
+            position = (1, 0, 0),
+        };
 
+        int fucker = 0;
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
 
             Tilemap.pushTile(kys);
-            kys.position += (0.1, 0.1, 0);
-            kys.rotation += 5;
-            kys.side = kys.side.rotateClockwise();
+            Tilemap.pushTile(syk);
+            kys.position -= (0.001, 0, 0);
+
+            // we dont have timers yet
+            fucker++;
+            if (fucker % 20 == 0) {
+                kys.side = kys.side.rotateClockwise();
+                fucker = 0;
+            }
             
             // stuff
-            await DebugMode.update();
             await Task.Run(Tilemap.update);
+            await DebugMode.update();
             Graphics.endDrawing();
         }
 
