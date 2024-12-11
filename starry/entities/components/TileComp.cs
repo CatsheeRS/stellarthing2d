@@ -49,8 +49,7 @@ public enum TileSide {
     bottom,
 }
 
-static class TileSideExtensions
-{
+public static class TileSideExtensions {
     /// <summary>
     /// rotates the tile by 90 degrees
     /// </summary>
