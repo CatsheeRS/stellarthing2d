@@ -48,11 +48,11 @@ public static class Starry {
             Graphics.clear(color.black);
             
             // stuff
-            // this being async has a small but non-zero chance of collapsing the space time continuum
-            Input.update();
             await Entities.update();
             await Task.Run(Tilemap.update);
             await DebugMode.update();
+            // this being async has a small but non-zero chance of collapsing the space time continuum
+            Input.update(Window.deltaTime);
 
             Graphics.endDrawing();
         }

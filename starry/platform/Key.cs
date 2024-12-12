@@ -84,7 +84,7 @@ public enum Key {
     end = 269,
     capsLock = 280,
     scrollLock = 281,
-    num_lock = 282,
+    numLock = 282,
     printScreen = 283,
     pause = 284,
     f1 = 290,
