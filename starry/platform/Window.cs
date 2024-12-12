@@ -86,7 +86,10 @@ public static unsafe class Window {
                 onResize?.Invoke((w, h));
             });
 
-            glfw.SetKeyCallback(window, Input.keyCallback);
+            glfw.SetKeyCallback(window, (just, fucking, kill, me, now) => {
+                // end the suffering
+                Input.setKeyState((Key)fucking, me);
+            });
             //glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {})
         });
         Graphics.actionLoopEvent.Set();
