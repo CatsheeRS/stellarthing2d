@@ -37,14 +37,14 @@ public static class DebugMode {
 
             // majestic!
             // i can't be bothered to make the lines not comically long
-            // TODO add tilemap coordinates and delta time
             // TODO make it only show up with f3
             Graphics.drawText($"Stellarthing {Starry.settings.gameVersion.asVersion()}", font, (0, 0), color.white);
             Graphics.drawText($"Starry {Starry.starryVersion.asVersion()}", font, (0, 16), color.white);
-            Graphics.drawText($"Running {Environment.OSVersion.VersionString}", font, (0, 32), color.white);
-            Graphics.drawText($"Memory (.NET heap): {GC.GetTotalMemory(false) / 1024f / 1024f} MB", font, (0, 64), color.white);
-            Graphics.drawText($"Memory (physical): {p.WorkingSet64 / 1024f / 1024f} MB", font, (0, 80), color.white);
-            Graphics.drawText($"Rendering queue: {Graphics.actions.Count} events", font, (0, 96), color.white);
+            Graphics.drawText($"Running {Environment.OSVersion.VersionString}", font, (0, 16 * 2), color.white);
+            Graphics.drawText($"{Window.fps:0} FPS", font, (0, 16 * 4), color.white);
+            Graphics.drawText($"Memory (.NET heap): {GC.GetTotalMemory(false) / 1024f / 1024f:0.0000} MB", font, (0, 16 * 5), color.white);
+            Graphics.drawText($"Memory (physical): {p.WorkingSet64 / 1024f / 1024f:0.0000} MB", font, (0, 16 * 6), color.white);
+            Graphics.drawText($"Tilemap: @ {Tilemap.camPosition}, world {Tilemap.currentWorld}, layer {Tilemap.currentLayers[Tilemap.currentWorld]}", font, (0, 16 * 8), color.white);
         });
     }
 }

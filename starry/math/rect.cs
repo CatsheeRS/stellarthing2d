@@ -15,6 +15,8 @@ public struct rect2(double x, double y, double w, double h) {
 
     public static implicit operator rect2((double, double, double, double) m) =>
         new(m.Item1, m.Item2, m.Item3, m.Item4);
+    public static implicit operator rect2((vec2, vec2) m) =>
+        new(m.Item1.x, m.Item1.y, m.Item2.x, m.Item2.y);
 
     public static rect2 zero { get => new(0, 0, 0, 0); }
 

@@ -54,9 +54,9 @@ public struct vec2(double x, double y) {
     }
 
     /// <summary>
-    /// adds a y component, which is used for layers by the top down renderer
+    /// adds a z component, which is used for layers by the top down renderer
     /// </summary>
-    public readonly vec3 as3d(double layer) => new(x, layer, y);
+    public readonly vec3 as3d(double layer) => new(x, y, layer);
 
     // for using vec2 in switch statements :D
     public readonly void Deconstruct(out double ecks, out double why)

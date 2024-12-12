@@ -16,13 +16,19 @@ public static unsafe class Window {
     /// called right before the engine starts cleaning up
     /// </summary>
     public static event EventHandler? onClose;
-    
     /// <summary>
-    /// called when key press ngl
+    /// delta time in seconds
     /// </summary>
-    public static event EventHandler<KeyPressArgs>? keyPress;
-    public static event EventHandler<KeyPressArgs>? keyRelease;
-    
+    public static double deltaTime { get; private set; } = 0;
+    /// <summary>
+    /// time since the engine started, in seconds
+    /// </summary>
+    public static double elapsedTime { get; private set; } = 0;
+    /// <summary>
+    /// the fps the game is running on
+    /// </summary>
+    public static double fps { get; private set; } = 0;
+
     internal static Glfw? glfw;
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
@@ -44,7 +50,7 @@ public static unsafe class Window {
             // hints :D
             glfw.WindowHint(WindowHintInt.ContextVersionMajor, 3);
             glfw.WindowHint(WindowHintInt.ContextVersionMinor, 3);
-            glfw.WindowHint(WindowHintInt.RefreshRate, Starry.settings.frameRate);
+            glfw.WindowHint(WindowHintInt.RefreshRate, Glfw.DontCare);
             Starry.log("GLFW has been initialized");
 
             // make the infamous window
@@ -79,21 +85,13 @@ public static unsafe class Window {
             glfw.SetFramebufferSizeCallback(window, (win, w, h) => {
                 onResize?.Invoke((w, h));
             });
-            
-            glfw.SetKeyCallback(window, keypress);
+
+            glfw.SetKeyCallback(window, Input.keyCallback);
+            //glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {})
         });
         Graphics.actionLoopEvent.Set();
     }
-    
-    private static void keypress(WindowHandle* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
-    {
-        if (action == InputAction.Press)
-            keyPress?.Invoke(null, new KeyPressArgs(key, action));   
 
-        if (action == InputAction.Release)
-            keyRelease?.Invoke(null, new KeyPressArgs(key, action));  
-    }
-    
     /// <summary>
     /// if true, the window is gonna be fullscreen
     /// </summary>
@@ -108,7 +106,7 @@ public static unsafe class Window {
                 if (monitor == null) return;
                 VideoMode* mode = glfw.GetVideoMode(monitor);
                 glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
-                    mode->RefreshRate);
+                    Glfw.DontCare);
                 
                 screensize = (mode->Width, mode->Height);
                 
@@ -116,7 +114,7 @@ public static unsafe class Window {
             }
             else {
                 glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
-                (int)Starry.settings.renderSize.y, Starry.settings.frameRate);
+                (int)Starry.settings.renderSize.y, Glfw.DontCare);
                 
                 Starry.log("Windows is now windowed");
             }
@@ -141,6 +139,13 @@ public static unsafe class Window {
                 return;
             }
             glfw.PollEvents();
+
+            // YOU UNDERSTAND MECHANCIAL HANDS ARE THE RULER OF EVERYTHING
+            double current = glfw.GetTime();
+            deltaTime = current - elapsedTime;
+            elapsedTime = current;
+            fps = 1.0 / deltaTime;
+
             tcs.SetResult(glfw.WindowShouldClose(window));
         });
         Graphics.actionLoopEvent.Set();
@@ -191,16 +196,4 @@ public static unsafe class Window {
     }
 
     public delegate void ResizeEvent(vec2i newSize);
-}
-
-public class KeyPressArgs : EventArgs
-{
-    public Keys Key { get; }
-    public InputAction Action { get; }
-
-    public KeyPressArgs(Keys key, InputAction action)
-    {
-        Key = key;
-        Action = action;
-    }
 }
