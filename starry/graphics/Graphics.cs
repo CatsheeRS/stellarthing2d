@@ -30,10 +30,16 @@ public static partial class Graphics {
     {
         actions.Enqueue(async () => {
             // shut up
-            if (Window.glfw == null) return;
+            if (Window.window == null) return;
 
             // setup fucking skia fucking sharp
-            var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
+            // why cant they just make a normal fucking binding
+            var glInterface = GRGlInterface.CreateOpenGl((gggg) => {
+                // i literally just checked idiot
+                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                return Window.window.GLContext.GetProcAddress(gggg);
+                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            });
             grContext = GRContext.CreateGl(glInterface);
 
             vec2i winsize = await Window.getSize();
@@ -77,7 +83,7 @@ public static partial class Graphics {
 
     internal static void calcScale(vec2i size)
     {
-        scale = (int)System.Math.Min(size.x / Starry.settings.renderSize.x, size.y /
+        scale = (int)Math.Min(size.x / Starry.settings.renderSize.x, size.y /
             Starry.settings.renderSize.y);
         offset = ((size - (Starry.settings.renderSize * (vec2)(scale, scale))) *
             (0.5, 0.5)).round();
@@ -113,15 +119,14 @@ public static partial class Graphics {
         actions.Enqueue(() => {
             canvas?.Flush();
             grContext?.Flush();
-            Window.glfw?.SwapBuffers(Window.window);
         });
         actionLoopEvent.Set();
     }
 
     /// <summary>
-    /// this manages opengl shit so it works with async/await multithreading all that crap
+    /// this manages opengl shit so it works with async/await multithreading all that crap. originally called glLoop until i realized gloop™ is funnier
     /// </summary>
-    internal static void glLoop()
+    internal static void GLOOPtm()
     {
         while (true) {
             actionLoopEvent.WaitOne();

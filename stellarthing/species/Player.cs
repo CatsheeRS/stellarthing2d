@@ -32,7 +32,7 @@ public class Player : IEntity {
             fucker = 0;
         }
 
-        log("is key held ", Input.isKeyHeld(Key.space), ", is key just pressed ", Input.isKeyJustPressed(Key.space), ", is key released ", Input.isKeyJustReleased(Key.space));
+        //log("is key held ", Input.isKeyHeld(Key.space), ", is key just pressed ", Input.isKeyJustPressed(Key.space), ", is key released ", Input.isKeyJustReleased(Key.space));
     }
 
     public void draw() => Tilemap.pushTile(tile!);

@@ -32,6 +32,10 @@ public struct StarrySettings() {
     /// </summary>
     public vec2i renderSize { get; set; } = (200, 100);
     /// <summary>
+    /// fucking target fps
+    /// </summary>
+    public int fps { get; set; } = 144;
+    /// <summary>
     /// livia forced me to add this
     /// </summary>
     public bool antiAliasing { get; set; } = true;

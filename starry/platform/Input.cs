@@ -6,7 +6,7 @@ using Silk.NET.GLFW;
 namespace starry;
 
 public static class Input {
-    public static vec2 mousePosition { get; internal set; }
+    /*public static vec2 mousePosition { get; internal set; }
     // you should minimize this
     internal static Dictionary<Key, KeyInfo> keyinfo { get; set; } = new() {
         { Key.space, new() },
@@ -225,7 +225,7 @@ public static class Input {
             }
         }
         return false;
-    }
+    }*/
 }
 
 internal struct KeyInfo() {
