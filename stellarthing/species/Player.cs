@@ -24,13 +24,15 @@ public class Player : IEntity {
     public void update(double delta)
     {
         tile!.position -= (0.005, 0, 0);
-
+        
         // we dont have timers yet
         fucker++;
         if (fucker % 10 == 0) {
             tile.side = tile.side.rotateClockwise();
             fucker = 0;
         }
+
+        log("is key held ", Input.isKeyHeld(Key.space), ", is key just pressed ", Input.isKeyJustPressed(Key.space), ", is key released ", Input.isKeyJustReleased(Key.space));
     }
 
     public void draw() => Tilemap.pushTile(tile!);

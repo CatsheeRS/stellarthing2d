@@ -85,6 +85,9 @@ public static unsafe class Window {
             glfw.SetFramebufferSizeCallback(window, (win, w, h) => {
                 onResize?.Invoke((w, h));
             });
+
+            glfw.SetKeyCallback(window, Input.keyCallback);
+            //glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {})
         });
         Graphics.actionLoopEvent.Set();
     }
