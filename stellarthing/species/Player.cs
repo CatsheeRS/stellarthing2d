@@ -18,6 +18,7 @@ public class Player : IEntity {
     {
         tile = new(await load<TileSprite>("tiles/test.png")) {
             position = (0, 0, 0),
+            tileSize = (16,16)
         };
     }
 

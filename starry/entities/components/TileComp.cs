@@ -37,6 +37,8 @@ public class TileComp(TileSprite sprite) {
     /// the tint of the tile (white uses the default colors)
     /// </summary>
     public color tint { get; set; } = color.white;
+    
+    public vec2i tileSize { get; set; } = (16, 16);
 }
 
 /// <summary>

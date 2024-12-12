@@ -17,19 +17,12 @@ public static class DebugMode {
     {
         font = await Starry.load<Font>("font/pixel-unicode.ttf");
         white = await Starry.load<Sprite>("white.png");
-        
-        Window.keyPress += (sender, args) =>
-        {
-            if (args.Key == Keys.F3) shown = !shown;
-        };
     }
 
     public static async Task update()
     {
         await Task.Run(() =>
         {
-            if (!shown) return;
-            
             var p = Process.GetCurrentProcess();
 
             // i know
