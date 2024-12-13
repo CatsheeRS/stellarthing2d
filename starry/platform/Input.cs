@@ -138,7 +138,6 @@ public static class Input {
         Stack<Key> released = [];
         foreach (Key key in pressed) {
             KeyInfo kinf = keyinfo[key];
-            // TODO: if you change the frame rate then you have to change how many frames are in a second
             // a key should only be in the just pressed or release for 1 frame
             if (kinf.framesPressed > 0 && kinf.state == KeypressState.justPressed) {
                 kinf.state = KeypressState.pressed;

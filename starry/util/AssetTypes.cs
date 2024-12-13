@@ -129,7 +129,7 @@ public record class TileSprite : IAsset {
         
         // fucking race condition of like 5 zeptoseconds
         left.isready += (fuck, off) => {
-            // don't have sides of different sides you fucking moron
+            // don't have sides of different sizes you fucking moron
             size = left.size;
         };
     }
