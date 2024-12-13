@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Silk.NET.GLFW;
-using Silk.NET.Windowing;
 
 namespace starry;
 
@@ -30,57 +29,68 @@ public static unsafe class Window {
     /// </summary>
     public static double fps { get; private set; } = 0;
 
-    internal static IWindow? window;
+    internal static Glfw? glfw;
+    internal static WindowHandle* window;
+    internal static bool fullscreen = false;
+    internal static vec2i screensize = (0, 0);
 
     /// <summary>
     /// creates the window :D
     /// </summary>
-    public static unsafe void create(string title, vec2i size, Action create, Action<double> update,
-    Action cleanup)
+    public static unsafe void create(string title, vec2i size)
     {
         Graphics.actions.Enqueue(() => {
-            window = Silk.NET.Windowing.Window.Create(new WindowOptions() {
-                // i dont even know anymore
-                Size = new Silk.NET.Maths.Vector2D<int>((int)Starry.settings.renderSize.x, (int)Starry.settings.renderSize.y),
-                Title = title,
-                FramesPerSecond = Starry.settings.fps,
-                UpdatesPerSecond = Starry.settings.fps,
-                WindowState = Starry.settings.fullscreen ? WindowState.Fullscreen : WindowState.Normal,
-                WindowBorder = WindowBorder.Resizable,
-            });
+            // first we need glfw
+            glfw = Glfw.GetApi();
+            if (!glfw.Init()) {
+                // crash because glfw is quite important
+                throw new Exception("Couldn't initialize GLFW");
+            }
 
-            // there's a lot of callbacks
-            window.Load += () => {
-                Graphics.create();
+            // hints :D
+            glfw.WindowHint(WindowHintInt.ContextVersionMajor, 3);
+            glfw.WindowHint(WindowHintInt.ContextVersionMinor, 3);
+            glfw.WindowHint(WindowHintInt.RefreshRate, Glfw.DontCare);
+            Starry.log("GLFW has been initialized");
 
-                create();
-            };
-
-            window.Render += (delta) => {
-                deltaTime = delta;
-                elapsedTime += delta;
-                fps = 1 / deltaTime;
-
-                update(delta);
-            };
-
-            window.Closing += () => {
-                onClose?.Invoke(null, EventArgs.Empty);
-
-                Graphics.cleanup();
-
-                cleanup();
-            };
-
-            window.FramebufferResize += why => {
-                onResize?.Invoke((why.X, why.Y));
-            };
-
+            // make the infamous window
+            window = glfw.CreateWindow((int)Starry.settings.renderSize.x,
+                (int)Starry.settings.renderSize.y, title, null, null);
+            
+            if (window == null) {
+                glfw.Terminate();
+                throw new Exception("Couldn't create a window");
+            }
+            glfw.MakeContextCurrent(window);
             Starry.log("Created window");
 
-            // why
-            window.Run();
-            window.Dispose();
+            // there's a lot of callbacks
+            setupCallbacks();
+
+            // this setups up opengl
+            Graphics.create();
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    static unsafe void setupCallbacks()
+    {
+        Graphics.actions.Enqueue(() => {
+            if (glfw == null) return;
+
+            glfw.SetErrorCallback((error, description) => {
+                Starry.log($"OPENGL ERROR: {error}: {description}");
+            });
+
+            glfw.SetFramebufferSizeCallback(window, (win, w, h) => {
+                onResize?.Invoke((w, h));
+            });
+
+            glfw.SetKeyCallback(window, (just, fucking, kill, me, now) => {
+                // end the suffering
+                Input.setKeyState((Key)fucking, me);
+            });
+            //glfw.SetMouseButtonCallback(window, (window, button, action, mods) => {})
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -91,10 +101,26 @@ public static unsafe class Window {
     public static void setFullscreen(bool fullscreen)
     {
         Graphics.actions.Enqueue(() => {
-            if (window == null) return;
-            window.WindowState = fullscreen ? WindowState.Fullscreen : WindowState.Normal;
-            if (fullscreen) Starry.log("Window is now fullscreen");
-            else Starry.log("Windows is now windowed");
+            if (glfw == null) return;
+            Window.fullscreen = fullscreen;
+
+            if (fullscreen) {
+                Monitor* monitor = glfw.GetPrimaryMonitor();
+                if (monitor == null) return;
+                VideoMode* mode = glfw.GetVideoMode(monitor);
+                glfw.SetWindowMonitor(window, monitor, 0, 0, mode->Width, mode->Height,
+                    Glfw.DontCare);
+                
+                screensize = (mode->Width, mode->Height);
+                
+                Starry.log("Window is now fullscreen");
+            }
+            else {
+                glfw.SetWindowMonitor(window, null, 40, 40, (int)Starry.settings.renderSize.x,
+                (int)Starry.settings.renderSize.y, Glfw.DontCare);
+                
+                Starry.log("Windows is now windowed");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -102,29 +128,74 @@ public static unsafe class Window {
     /// <summary>
     /// if true, the window is currently fullscreen
     /// </summary>
-    public static bool isFullscreen()
+    public static bool isFullscreen() => fullscreen;
+
+    /// <summary>
+    /// if true the window is closing. convenient for making a main loop
+    /// </summary>
+    public static Task<bool> isClosing()
     {
-        if (window == null) return false;
-        return window.WindowState == WindowState.Fullscreen;
+        TaskCompletionSource<bool> tcs = new();
+        Graphics.actions.Enqueue(() => {
+            if (glfw == null) {
+                tcs.SetResult(false);
+                return;
+            }
+            glfw.PollEvents();
+
+            // YOU UNDERSTAND MECHANCIAL HANDS ARE THE RULER OF EVERYTHING
+            double current = glfw.GetTime();
+            deltaTime = current - elapsedTime;
+            elapsedTime = current;
+            fps = 1.0 / deltaTime;
+
+            tcs.SetResult(glfw.WindowShouldClose(window));
+        });
+        Graphics.actionLoopEvent.Set();
+        return tcs.Task;
     }
 
     /// <summary>
-    /// the size of the framebuffer
+    /// run at the end of the thing
+    /// </summary>
+    public static void cleanup()
+    {
+        Graphics.actions.Enqueue(() => {
+            if (glfw == null) return;
+
+            Graphics.cleanup();
+            glfw.DestroyWindow(window);
+            glfw.Terminate();
+            Starry.log("🛑 ITS JOEVER");
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    /// <summary>
+    /// the size of the window
     /// </summary>
     public static Task<vec2i> getSize()
     {
         TaskCompletionSource<vec2i> tcs = new();
             Graphics.actions.Enqueue(() => {
-            if (window == null) {
+            if (glfw == null) {
                 tcs.SetResult((0, 0));
                 return;
             }
 
-            var aaaaaajjjj = window.FramebufferSize;
-            tcs.SetResult((aaaaaajjjj.X, aaaaaajjjj.Y));
+            glfw.GetFramebufferSize(window, out int width, out int height);
+            tcs.SetResult((width, height));
         });
         Graphics.actionLoopEvent.Set();
         return tcs.Task;
+    }
+
+    internal static void invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid()
+    {
+        Graphics.actions.Enqueue(() => {
+            onClose?.Invoke(null, EventArgs.Empty);
+        });
+        Graphics.actionLoopEvent.Set();
     }
 
     public delegate void ResizeEvent(vec2i newSize);

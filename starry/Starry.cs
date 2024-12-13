@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -19,50 +19,49 @@ public static class Starry {
     /// <summary>
     /// sets up the engine
     /// </summary>
-    public static void create(StarrySettings settings)
+    public static async Task create(StarrySettings settings)
     {
         // funni
         Starry.settings = settings;
         Console.WriteLine("Use --verbose if the game is broken.");
 
         // opengl thread lmao
-        Thread thread = new(Graphics.GLOOPtm) {
+        Thread thread = new(Graphics.glLoop) {
             IsBackground = true,
         };
         thread.Start();
 
         string title = $"{settings.gameName}";
         if (settings.showVersion) title += " " + settings.gameVersion.asVersion();
-
+        
         // the size doesn't matter once you make it fullscreen
-        Window.create(title, settings.renderSize, loadwin, updatewin, cleanwin);
-    }
-
-    internal static async void loadwin()
-    {
+        Window.create(title, settings.renderSize);
+        Window.setFullscreen(settings.fullscreen);
+        
         // fccking kmodules
         await Task.Run(Tilemap.create);
         await DebugMode.create();
 
         settings.startup();
-    }
-
-    internal static async void updatewin(double delta)
-    {
-        Graphics.clear(color.black);
+        
+        while (!await Window.isClosing()) {
+            Graphics.clear(color.black);
             
-        // stuff
-        await Entities.update();
-        await Task.Run(Tilemap.update);
-        await DebugMode.update();
+            // stuff
+            await Entities.update();
+            await Task.Run(Tilemap.update);
+            await DebugMode.update();
+            // this being async has a small but non-zero chance of collapsing the space time continuum
+            Input.update(Window.deltaTime);
 
-        Graphics.endDrawing();
-    }
+            Graphics.endDrawing();
+        }
 
-    internal static void cleanwin()
-    {
+        Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
+
         // fccking kmodules
         Assets.cleanup();
+        Window.cleanup();
     }
 
     /// <summary>

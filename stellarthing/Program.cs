@@ -6,9 +6,9 @@ using static starry.Starry;
 namespace stellarthing;
 
 internal class Program {
-    internal static void Main(string[] args)
+    internal static async Task Main(string[] args)
     {
-        create(new StarrySettings {
+        await create(new StarrySettings {
             startup = () => {
                 Entities.addEntity(new Player());
             },
