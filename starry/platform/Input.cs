@@ -140,17 +140,17 @@ public static class Input {
             KeyInfo kinf = keyinfo[key];
             // TODO: if you change the frame rate then you have to change how many frames are in a second
             // a key should only be in the just pressed or release for 1 frame
-            if (kinf.secondsPressed > (1 / Window.fps) && kinf.state == KeypressState.justPressed) {
+            if (kinf.framesPressed > 0 && kinf.state == KeypressState.justPressed) {
                 kinf.state = KeypressState.pressed;
             }
 
-            if (kinf.secondsPressed > (1 / Window.fps) && kinf.state == KeypressState.released) {
+            if (kinf.framesPressed > 0 && kinf.state == KeypressState.released) {
                 kinf.state = KeypressState.inactive;
                 // we can't just .Remove() in a foreach loop lmao
                 released.Push(key);
             }
 
-            kinf.secondsPressed += delta;
+            kinf.framesPressed++;
         }
 
         // we can't just .Remove() in a foreach loop lmao
@@ -228,8 +228,8 @@ public static class Input {
     }
 }
 
-internal struct KeyInfo() {
-    public double secondsPressed { get; set; } = 0;
+internal class KeyInfo() {
+    public int framesPressed { get; set; } = 0;
     public KeypressState state { get; set; } = KeypressState.inactive;
 }
 
