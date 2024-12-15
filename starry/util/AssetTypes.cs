@@ -101,11 +101,11 @@ public record class TileSprite : IAsset {
     /// <summary>
     /// size in pixels
     /// </summary>
-    public vec2i size { get; private set; } = (0, 0);
-    public Sprite left { get; private set; } = new();
-    public Sprite right { get; private set; } = new();
-    public Sprite top { get; private set; } = new();
-    public Sprite bottom { get; private set; } = new();
+    public vec2i size { get; internal set; } = (0, 0);
+    public Sprite left { get; internal set; } = new();
+    public Sprite right { get; internal set; } = new();
+    public Sprite top { get; internal set; } = new();
+    public Sprite bottom { get; internal set; } = new();
 
     public void load(string path)
     {

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -12,27 +13,35 @@ public class Player : IEntity {
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
     
     TileComp? tile;
-    int fucker = 0;
+    readonly int speed = 1;
 
     public async void create()
     {
-        tile = new(await load<TileSprite>("tiles/test.png")) {
+        tile = new(await load<Sprite>("species/bobdown1.png")) {
             position = (0, 0, 0),
         };
     }
 
-    public void update(double delta)
+    public async void update(double delta)
     {
-        tile!.position -= (0.005, 0, 0);
-        
-        // we dont have timers yet
-        fucker++;
-        if (fucker % 10 == 0) {
-            tile.side = tile.side.rotateClockwise();
-            fucker = 0;
-        }
+        vec2i dir = (0, 0);
+        // it's adding so you can move diagonally
+        if (Input.isKeymapHeld("move_left")) dir += (-1, 0);
+        if (Input.isKeymapHeld("move_right")) dir += (1, 0);
+        if (Input.isKeymapHeld("move_up")) dir += (0, -1);
+        if (Input.isKeymapHeld("move_down")) dir += (0, 1);
 
-        log("is key held ", Input.isKeyHeld(Key.space), ", is key just pressed ", Input.isKeyJustPressed(Key.space), ", is key released ", Input.isKeyJustReleased(Key.space));
+        // actually move
+        tile!.position += (dir * (speed, speed) * (vec2)(delta, delta)).as3d(tile.position.z);
+
+        // animation stuff
+        // my shitty pixel art is too shitty to make a left/right animation
+        // TODO actually fucking animate
+        if (dir.y < -0.5) tile.sprite = await load<Sprite>("species/bobup1.png");
+        else tile.sprite = await load<Sprite>("species/bobdown1.png");
+
+        // the famous camera
+        Tilemap.camPosition = tile.position.as2d();
     }
 
     public void draw() => Tilemap.pushTile(tile!);
