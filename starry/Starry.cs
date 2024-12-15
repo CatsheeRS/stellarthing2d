@@ -48,7 +48,9 @@ public static class Starry {
             Graphics.clear(color.black);
 
             // it's hardcoded into my brain
-            if (Input.isKeyJustPressed(Key.f8)) return;
+            if (isDebug()) {
+                if (Input.isKeyJustPressed(Key.f8)) return;
+            }
             
             // stuff
             await Entities.update();
