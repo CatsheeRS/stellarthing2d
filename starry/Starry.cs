@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -14,7 +14,7 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 5);
+    public static vec3i starryVersion => (2, 0, 6);
 
     /// <summary>
     /// sets up the engine
