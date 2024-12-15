@@ -46,6 +46,9 @@ public static class Starry {
         
         while (!await Window.isClosing()) {
             Graphics.clear(color.black);
+
+            // it's hardcoded into my brain
+            if (Input.isKeyJustPressed(Key.f8)) return;
             
             // stuff
             await Entities.update();

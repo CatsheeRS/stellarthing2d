@@ -87,7 +87,7 @@ public static class Tilemap {
 
             Graphics.drawSprite(
                 sprite,
-                (((tile.position.as2d() + camPosition) * Starry.settings.tileSize) + camOffset,
+                (((tile.position.as2d() - camPosition) * Starry.settings.tileSize) + camOffset,
                 tile.tileSprite.size * tile.scale * camScale),
                 tile.origin,
                 tile.rotation,

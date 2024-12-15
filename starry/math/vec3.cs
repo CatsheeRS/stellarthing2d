@@ -57,5 +57,5 @@ public struct vec3(double x, double y, double z) {
         zeezed = z;
     }
 
-    public override readonly string ToString() => $"vec3({x}, {y}, {z})";
+    public override readonly string ToString() => $"vec3({x:0.000}, {y:0.000}, {z:0.000})";
 }

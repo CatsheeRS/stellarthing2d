@@ -9,6 +9,7 @@ namespace starry;
 public static class DebugMode {
     static Font font = new();
     static Sprite white = new();
+    static bool showing = false;
 
     public static async Task create()
     {
@@ -19,14 +20,16 @@ public static class DebugMode {
     public static async Task update()
     {
         await Task.Run(() => {
+            if (Input.isKeyJustPressed(Key.f3)) showing = !showing;
+            if (!showing) return;
+
             var p = Process.GetCurrentProcess();
 
             // i know
-            Graphics.drawSprite(white, (0, 0, Starry.settings.renderSize.x, Starry.settings.renderSize.y), (0, 0), 0, (0, 0, 0, 80));
+            Graphics.drawSprite(white, (0, 0, Starry.settings.renderSize.x, Starry.settings.renderSize.y), (0, 0), 0, (0, 0, 0, 40));
 
             // majestic!
             // i can't be bothered to make the lines not comically long
-            // TODO make it only show up with f3
             Graphics.drawText($"Stellarthing {Starry.settings.gameVersion.asVersion()}", font, (0, 0), color.white);
             Graphics.drawText($"Starry {Starry.starryVersion.asVersion()}", font, (0, 16), color.white);
             Graphics.drawText($"Running {Environment.OSVersion.VersionString}", font, (0, 16 * 2), color.white);
