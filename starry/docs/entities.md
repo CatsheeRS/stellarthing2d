@@ -24,4 +24,10 @@ Entities have quite a few types ran in this order:
 
 Game world entities never runs in paused mode, while managers and UI can run in pause mode so there is any way for the user to unpause stuff.
 
+There's groups.
+
+Doing group stuff is probably fast since it's hash based and stuff.
+
 Also entities are async against your will
+
+See the `Entities` class
