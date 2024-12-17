@@ -24,6 +24,11 @@ public class Player : IEntity {
         lol = new(await load<TileSprite>("tiles/test.png")) {
             position = (1, 2, 0),
         };
+        Timer timer = new(1, true);
+        timer.start();
+        timer.timeout += () => {
+            log("lmao");
+        };
     }
 
     public async void update(double delta)

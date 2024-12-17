@@ -54,6 +54,7 @@ public static class Starry {
             
             // stuff
             await Entities.update();
+            await Task.Run(Timer.update);
             await Task.Run(Tilemap.update);
             await DebugMode.update();
             // this being async has a small but non-zero chance of collapsing the space time continuum
