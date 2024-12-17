@@ -14,7 +14,7 @@ internal class Program {
             },
             verbose = isDebug() || args.Contains("--verbose") || args.Contains("-v"),
             gameName = "Stellarthing",
-            gameVersion = (0, 10, 0),
+            gameVersion = (0, 11, 0),
             fullscreen = true,
             assetPath = Path.GetFullPath("assets"),
             renderSize = (320, 180),

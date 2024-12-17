@@ -14,7 +14,7 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 6);
+    public static vec3i starryVersion => (2, 1, 0);
 
     /// <summary>
     /// sets up the engine
