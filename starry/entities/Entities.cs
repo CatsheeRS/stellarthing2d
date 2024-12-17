@@ -95,7 +95,7 @@ public static class Entities {
             // i know
             await Parallel.ForEachAsync(getGroup(PAUSED_MANAGER_GROUP), async (entity, ct) => {
                 await Task.Run(() => entity.update(Window.deltaTime), CancellationToken.None);
-                await Task.Run(entity.draw, CancellationToken.None);
+                //await Task.Run(entity.draw, CancellationToken.None);
             });
 
             await Parallel.ForEachAsync(getGroup(PAUSED_UI_GROUP), async (entity, ct) => {
@@ -106,7 +106,7 @@ public static class Entities {
         else {
             await Parallel.ForEachAsync(getGroup(MANAGER_GROUP), async (entity, ct) => {
                 await Task.Run(() => entity.update(Window.deltaTime), CancellationToken.None);
-                await Task.Run(entity.draw, CancellationToken.None);
+                //await Task.Run(entity.draw, CancellationToken.None);
             });
 
             await Parallel.ForEachAsync(getGroup(UI_GROUP), async (entity, ct) => {

@@ -14,3 +14,4 @@ best game engine in the world awards 1921 winner
 - [Starry core](starry-core.md)
 - [Graphics](graphics.md)
 - [Tilemap](tilemap.md)
+- [Entities](entities.md)
