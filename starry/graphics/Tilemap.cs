@@ -77,7 +77,7 @@ public static class Tilemap {
             bloodyTiles.TryDequeue(out TileComp? tile);
             if (tile == null) continue;
 
-            Sprite sprite = tile.side switch {
+            ISprite sprite = tile.side switch {
                 TileSide.left => tile.tileSprite.left,
                 TileSide.right => tile.tileSprite.right,
                 TileSide.top => tile.tileSprite.top,
@@ -88,7 +88,7 @@ public static class Tilemap {
             Graphics.drawSprite(
                 sprite,
                 (((tile.position.as2d() - camPosition) * Starry.settings.tileSize) + camOffset,
-                tile.tileSprite.size * tile.scale * camScale),
+                tile.tileSprite.getSize() * tile.scale * camScale),
                 tile.origin,
                 tile.rotation,
                 tile.tint

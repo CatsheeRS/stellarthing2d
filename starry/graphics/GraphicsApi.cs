@@ -27,12 +27,12 @@ public static partial class Graphics {
     /// <summary>
     /// draws a sprite. rects are in game render coordinates (no camera) and rotation is in degrees. src and dst are so you can draw a portion of the sprite. origin is from 0 to 1, with (0, 0) being the top left and (0.5, 0.5) being the center
     /// </summary>
-    public static void drawSprite(Sprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
+    public static void drawSprite(ISprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
     {
         actions.Enqueue(() => {
             if (skpaint == null) return;
-            if (!sprite.isValid()) {
-                Starry.log($"Sprite at {sprite.path} is invalid; cannot draw");
+            if (!sprite.isInternalValid()) {
+                Starry.log($"Sprite is invalid; cannot draw");
                 return;
             }
         
@@ -52,7 +52,8 @@ public static partial class Graphics {
             paint.ColorFilter = colorfilter;
         
             // draw.
-            canvas?.DrawImage(sprite.skimg, SKRect.Create((float)(rect.x * scale) + offset.x,
+            canvas?.DrawImage(sprite.getInternalImage(),
+                SKRect.Create((float)(rect.x * scale) + offset.x,
                 (float)(rect.y * scale) + offset.y, (float)(rect.w * scale),
                 (float)(rect.h * scale)), paint);
         

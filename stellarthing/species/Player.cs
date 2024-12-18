@@ -18,20 +18,26 @@ public class Player : IEntity {
 
     public async void create()
     {
-        tile = new(await load<Sprite>("species/bobdown2.png")) {
+        tile = new(await load<Sprite>("species/bobdown1.png"),
+            await load<Sprite>("species/bobdown1.png"),
+            await load<Sprite>("species/bobup1.png"),
+            await load<Sprite>("species/bobdown1.png")) {
             position = (0, 0, 0),
         };
-        lol = new(await load<TileSprite>("tiles/test.png")) {
+        lol = new(await load<Sprite>("tiles/testl.png"),
+            await load<Sprite>("tiles/testr.png"),
+            await load<Sprite>("tiles/testt.png"),
+            await load<Sprite>("tiles/testb.png")) {
             position = (1, 2, 0),
         };
         Timer timer = new(1, true);
-        timer.start();
         timer.timeout += () => {
             log("lmao");
         };
+        timer.start();
     }
 
-    public async void update(double delta)
+    public void update(double delta)
     {
         vec2i dir = (0, 0);
         // it's adding so you can move diagonally
@@ -46,8 +52,8 @@ public class Player : IEntity {
         // animation stuff
         // my shitty pixel art is too shitty to make a left/right animation
         // TODO actually fucking animate
-        if (dir.y < -0.5) tile.sprite = await load<Sprite>("species/bobup2.png");
-        else tile.sprite = await load<Sprite>("species/bobdown2.png");
+        if (dir.y < -0.5) tile.side = TileSide.top;
+        else tile.side = TileSide.bottom;
 
         // the famous camera
         Tilemap.camPosition = tile.position.as2d();
