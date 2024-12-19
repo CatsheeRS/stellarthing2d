@@ -64,7 +64,7 @@ public class Player : IEntity {
 
         // animation stuff
         // it shouldn't go back to looking down when you didn't press anything
-        if (dir > (0, 0)) {
+        if (dir != (0, 0)) {
             tile.side = dir switch {
                 (1, 0) => TileSide.right,
                 (-1, 0) => TileSide.left,
