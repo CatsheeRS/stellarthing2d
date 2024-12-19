@@ -22,7 +22,7 @@ public interface ISprite {
     /// <summary>
     /// frees the internal image
     /// </summary>
-    public void cleanupInternal();
+    public void cleanupImage();
 }
 
 /// <summary>
@@ -63,7 +63,7 @@ public record class Sprite: IAsset, ISprite {
         Graphics.actionLoopEvent.Set();
     }
 
-    public void cleanupInternal() => cleanup();
+    public void cleanupImage() => cleanup();
     public bool isInternalValid() => skbmp != null && skimg != null;
     public SKImage? getInternalImage() => skimg;
     public vec2i getSize() => (skbmp?.Width ?? 0, skbmp?.Height ?? 0);
@@ -90,15 +90,14 @@ public record class TileSprite: ISprite {
         this.bottom = bottom;
     }
 
-    public void cleanup()
+    public void cleanupImage()
     {
-        left.cleanupInternal();
-        right.cleanupInternal();
-        top.cleanupInternal();
-        bottom.cleanupInternal();
+        left.cleanupImage();
+        right.cleanupImage();
+        top.cleanupImage();
+        bottom.cleanupImage();
     }
 
-    public void cleanupInternal() => cleanup();
     public bool isInternalValid() => left.isInternalValid() && right.isInternalValid() &&
                                      top.isInternalValid() && bottom.isInternalValid();
     public vec2i getSize() => left.getSize();
@@ -112,4 +111,53 @@ public record class TileSprite: ISprite {
             _ => throw new Exception("moron"),
         }).getInternalImage();
     }
+}
+
+/// <summary>
+/// it's a sprite but animated lmao
+/// </summary>
+public record class AnimationSprite: ISprite {
+    public uint currentFrame { get; set; } = 0;
+    public ISprite[] frames { get; set; } = [];
+    public double frameDuration { get => timer.duration; set => timer.duration = value; }
+    public bool playing { get => timer.playing; }
+    Timer timer;
+
+    /// <summary>
+    /// frame duration is in seconds
+    /// </summary>
+    public AnimationSprite(double frameDuration, params ISprite[] frames)
+    {
+        this.frames = frames;
+        timer = new(frameDuration, true);
+        timer.timeout += () => {
+            currentFrame++;
+            if (currentFrame == this.frames.Length) currentFrame = 0;
+        };
+    }
+
+    /// <summary>
+    /// starts the animation.
+    /// </summary>
+    public void start() => timer.start();
+    public void stop() => timer.stop();
+
+    public void cleanupImage()
+    {
+        foreach (ISprite sprite in frames) {
+            sprite.cleanupImage();
+        }
+    }
+
+    public bool isInternalValid()
+    {
+        int invalids = 0;
+        foreach (ISprite sprite in frames) {
+            if (!sprite.isInternalValid()) invalids++;
+        }
+        return invalids == 0;
+    }
+
+    public vec2i getSize() => frames[currentFrame].getSize();
+    public SKImage? getInternalImage() => frames[currentFrame].getInternalImage();
 }

@@ -17,6 +17,7 @@ public class Timer(double duration, bool loop) {
     /// how much is left for the timer to end, in seconds
     /// </summary>
     public double timeLeft { get; internal set; } = duration;
+    public bool playing { get; internal set; } = false;
     public delegate void TimeoutEvent();
     /// <summary>
     /// invoked when the timer ends
@@ -28,12 +29,20 @@ public class Timer(double duration, bool loop) {
     /// <summary>
     /// starts the timer :)
     /// </summary>
-    public void start() => timers.Add(this);
+    public void start()
+    {
+        timers.Add(this);
+        playing = true;
+    }
 
     /// <summary>
     /// stops the timer :)
     /// </summary>
-    public void stop() => timers.Remove(this);
+    public void stop()
+    {
+        timers.Remove(this);
+        playing = false;
+    }
 
     internal static void update()
     {

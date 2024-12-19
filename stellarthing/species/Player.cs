@@ -14,14 +14,27 @@ public class Player : IEntity {
     
     TileComp? tile;
     TileComp? lol;
+    AnimationSprite? walkDown;
+    AnimationSprite? walkUp;
     readonly double speed = 3.5;
 
     public async void create()
     {
-        tile = new(await load<Sprite>("species/bobdown1.png"),
+        walkDown = new(0.25,
             await load<Sprite>("species/bobdown1.png"),
+            await load<Sprite>("species/bobdown2.png"),
+            await load<Sprite>("species/bobdown3.png"),
+            await load<Sprite>("species/bobdown4.png")
+        );
+        walkUp = new(0.25,
             await load<Sprite>("species/bobup1.png"),
-            await load<Sprite>("species/bobdown1.png")) {
+            await load<Sprite>("species/bobup2.png"),
+            await load<Sprite>("species/bobup3.png"),
+            await load<Sprite>("species/bobup4.png")
+        );
+
+        // my shitty pixel art is too shitty to make a left/right animation
+        tile = new(walkDown, walkDown, walkUp, walkDown) {
             position = (0, 0, 0),
         };
         lol = new(await load<Sprite>("tiles/testl.png"),
@@ -50,10 +63,23 @@ public class Player : IEntity {
         tile!.position += (dir * (vec2)(speed, speed) * (vec2)(delta, delta)).as3d(tile.position.z);
 
         // animation stuff
-        // my shitty pixel art is too shitty to make a left/right animation
-        // TODO actually fucking animate
-        if (dir.y < -0.5) tile.side = TileSide.top;
-        else tile.side = TileSide.bottom;
+        // it shouldn't go back to looking down when you didn't press anything
+        if (dir > (0, 0)) {
+            tile.side = dir switch {
+                (1, 0) => TileSide.right,
+                (-1, 0) => TileSide.left,
+                (0, 1) => TileSide.bottom,
+                (0, -1) => TileSide.top,
+                _ => tile.side
+            };
+
+            if (!walkDown!.playing) walkDown.start();
+            if (!walkUp!.playing) walkUp.start();
+        }
+        else {
+            walkDown!.stop();
+            walkUp!.stop();
+        }
 
         // the famous camera
         Tilemap.camPosition = tile.position.as2d();

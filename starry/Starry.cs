@@ -45,7 +45,7 @@ public static class Starry {
         settings.startup();
         
         while (!await Window.isClosing()) {
-            Graphics.clear(color.black);
+            Graphics.clear(color.darkPurple);
 
             // it's hardcoded into my brain
             if (isDebug()) {
