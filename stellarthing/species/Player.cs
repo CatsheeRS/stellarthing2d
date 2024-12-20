@@ -16,6 +16,8 @@ public class Player : IEntity {
     TileComp? lol;
     AnimationSprite? walkDown;
     AnimationSprite? walkUp;
+    AnimationSprite? walkRight;
+    AnimationSprite? walkLeft;
     readonly double speed = 3.5;
 
     public async void create()
@@ -32,9 +34,21 @@ public class Player : IEntity {
             await load<Sprite>("species/bobup3.png"),
             await load<Sprite>("species/bobup4.png")
         );
+        walkRight = new(0.25,
+            await load<Sprite>("species/bobright1.png"),
+            await load<Sprite>("species/bobright2.png"),
+            await load<Sprite>("species/bobright3.png"),
+            await load<Sprite>("species/bobright4.png")
+        );
+        walkLeft = new(0.25,
+            await load<Sprite>("species/bobleft1.png"),
+            await load<Sprite>("species/bobleft2.png"),
+            await load<Sprite>("species/bobleft3.png"),
+            await load<Sprite>("species/bobleft4.png")
+        );
 
         // my shitty pixel art is too shitty to make a left/right animation
-        tile = new(walkDown, walkDown, walkUp, walkDown) {
+        tile = new(walkLeft, walkRight, walkUp, walkDown) {
             position = (0, 0, 0),
         };
         lol = new(await load<Sprite>("tiles/testl.png"),
@@ -43,14 +57,9 @@ public class Player : IEntity {
             await load<Sprite>("tiles/testb.png")) {
             position = (1, 2, 0),
         };
-        Timer timer = new(1, true);
-        timer.timeout += () => {
-            log("lmao");
-        };
-        timer.start();
     }
 
-    public void update(double delta)
+    public async void update(double delta)
     {
         vec2i dir = (0, 0);
         // it's adding so you can move diagonally
@@ -73,12 +82,24 @@ public class Player : IEntity {
                 _ => tile.side
             };
 
+            // haha
+            tile.tileSprite.bottom = walkDown!;
             if (!walkDown!.playing) walkDown.start();
             if (!walkUp!.playing) walkUp.start();
+            if (!walkLeft!.playing) walkLeft.start();
+            if (!walkRight!.playing) walkRight.start();
         }
         else {
+            // haha
+            tile.tileSprite.bottom = await load<Sprite>("species/bobdown0.png");
             walkDown!.stop();
             walkUp!.stop();
+            walkLeft!.stop();
+            walkRight!.stop();
+            walkDown.currentFrame = 0;
+            walkUp.currentFrame = 0;
+            walkLeft.currentFrame = 0;
+            walkRight.currentFrame = 0;
         }
 
         // the famous camera

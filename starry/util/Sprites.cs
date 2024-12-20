@@ -73,10 +73,10 @@ public record class Sprite: IAsset, ISprite {
 /// it's a sprite but with multiple sides. the sprite must be a png (can't be bothered) with filenames ending with the side's letter ((l)eft, (r)ight, (t)op, (b)ottom)
 /// </summary>
 public record class TileSprite: ISprite {
-    public ISprite left { get; internal set; }
-    public ISprite right { get; internal set; }
-    public ISprite top { get; internal set; }
-    public ISprite bottom { get; internal set; }
+    public ISprite left { get; set; }
+    public ISprite right { get; set; }
+    public ISprite top { get; set; }
+    public ISprite bottom { get; set; }
     /// <summary>
     /// side.
     /// </summary>
