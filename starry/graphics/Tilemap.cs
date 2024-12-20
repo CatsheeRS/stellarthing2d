@@ -18,7 +18,7 @@ public static class Tilemap {
     /// <summary>
     /// dictionary of worlds, list of layers, queue of tiles
     /// </summary>
-    internal static ConcurrentDictionary<string, ConcurrentDictionary<int, ConcurrentQueue<TileComp>>> worlds = new();
+    internal static ConcurrentDictionary<string, ConcurrentDictionary<int, ConcurrentQueue<Tile>>> worlds = new();
 
     /// <summary>
     /// the current layers of each world
@@ -49,7 +49,7 @@ public static class Tilemap {
     /// <summary>
     /// adds a tile to the stuff
     /// </summary>
-    public static void pushTile(TileComp tile)
+    public static void pushTile(Tile tile)
     {
         // yesterday i went outside with my mama's mason jar caught a lovely butterfly when i woke up today looked in on my fairy pet she had withered all away no more sighing in her breast i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away smell you on my hand for days i can't wash away your scent if i'm a dog then you're a bitch i guess you're as real as me maybe i can live with that maybe i need fantasy life of chasing butterfly i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away i told you i would return when the robin makes his nest but i ain't never coming back i'm sorry i'm sorry i'm sorry
         worlds[tile.world][(int)Math.Round(tile.position.z)].Enqueue(tile);
@@ -60,7 +60,7 @@ public static class Tilemap {
     /// </summary>
     public static void createWorld(string name)
     {
-        ConcurrentDictionary<int, ConcurrentQueue<TileComp>> world = new();
+        ConcurrentDictionary<int, ConcurrentQueue<Tile>> world = new();
         for (int i = MIN_LAYER; i < MAX_LAYER; i++) {
             world.TryAdd(i, []);
         }
@@ -70,11 +70,11 @@ public static class Tilemap {
 
     public static void update()
     {
-        ConcurrentQueue<TileComp> bloodyTiles = worlds[currentWorld][currentLayers[currentWorld]];
+        ConcurrentQueue<Tile> bloodyTiles = worlds[currentWorld][currentLayers[currentWorld]];
 
         // hell
         while (!bloodyTiles.IsEmpty) {
-            bloodyTiles.TryDequeue(out TileComp? tile);
+            bloodyTiles.TryDequeue(out Tile? tile);
             if (tile == null) continue;
 
             ISprite sprite = tile.side switch {

@@ -13,4 +13,24 @@ Layers range from -128 to 512:
 - 0: the ground
 - 1 to 512: just space for more building
 
+Tiles can have multiple sides for some reason.
+
+To use tiles in your epic entities you can use the `Tile` class
+
+```cs
+Tile? tile;
+public async void create()
+{
+    tile = new(
+        await load<Sprite>("left"),
+        await load<Sprite>("right"),
+        await load<Sprite>("top"),
+        await load<Sprite>("bottom")) {
+        position = (0, 0, 0),
+    };
+}
+```
+
+You can also use [animations](animation.md) with `Tile`
+
 See the `Tilemap` class.

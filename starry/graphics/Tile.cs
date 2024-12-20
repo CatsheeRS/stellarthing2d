@@ -4,16 +4,11 @@ namespace starry;
 /// <summary>
 /// it's a tile
 /// </summary>
-public class TileComp {
-    public TileComp(ISprite left, ISprite right, ISprite top, ISprite bottom)
-    {
-        tileSprite = new(left, right, top, bottom);
-    }
-
+public class Tile(ISprite left, ISprite right, ISprite top, ISprite bottom){
     /// <summary>
     /// it's a sprite
     /// </summary>
-    public TileSprite tileSprite { get; set; }
+    public TileSprite tileSprite { get; set; } = new(left, right, top, bottom);
     /// <summary>
     /// position, each unit is a tile, not a pixel. (0, 0) is the top left, this means positive X is right and positive Y is down. Z is the layers, on a range of -128-512
     /// </summary>

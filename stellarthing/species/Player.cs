@@ -12,8 +12,8 @@ public class Player : IEntity {
     public string[] getInitGroups() =>
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
     
-    TileComp? tile;
-    TileComp? lol;
+    Tile? tile;
+    Tile? lol;
     AnimationSprite? walkDown;
     AnimationSprite? walkUp;
     AnimationSprite? walkRight;

@@ -15,3 +15,4 @@ best game engine in the world awards 1921 winner
 - [Graphics](graphics.md)
 - [Tilemap](tilemap.md)
 - [Entities](entities.md)
+- [Animation](animation.md)
