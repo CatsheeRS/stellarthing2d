@@ -18,6 +18,9 @@ public class TileComp {
     /// position, each unit is a tile, not a pixel. (0, 0) is the top left, this means positive X is right and positive Y is down. Z is the layers, on a range of -128-512
     /// </summary>
     public vec3 position { get; set; } = (0, 0, 0);
+    /// <summary>
+    /// position in the actual screen stuff
+    /// </summary>
     public vec2 globalPosition { get =>
         ((position.as2d() - Tilemap.camPosition) * Starry.settings.tileSize) + Tilemap.camOffset; }
     /// <summary>
