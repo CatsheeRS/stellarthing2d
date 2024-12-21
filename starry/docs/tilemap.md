@@ -22,10 +22,10 @@ Tile? tile;
 public async void create()
 {
     tile = new(
-        await load<Sprite>("left"),
-        await load<Sprite>("right"),
-        await load<Sprite>("top"),
-        await load<Sprite>("bottom")) {
+        await Starry.load<Sprite>("left"),
+        await Starry.load<Sprite>("right"),
+        await Starry.load<Sprite>("top"),
+        await Starry.load<Sprite>("bottom")) {
         position = (0, 0, 0),
     };
 }

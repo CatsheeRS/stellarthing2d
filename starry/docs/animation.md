@@ -4,10 +4,10 @@ To make an animation you can use `AnimationSprite`
 
 ```cs
 AnimationSprite spr = new(duration,
-    await load<Sprite>("frame1"),
-    await load<Sprite>("frame2"),
-    await load<Sprite>("frame3"),
-    await load<Sprite>("frame4")
+    await Starry.load<Sprite>("frame1"),
+    await Starry.load<Sprite>("frame2"),
+    await Starry.load<Sprite>("frame3"),
+    await Starry.load<Sprite>("frame4")
     // more frames here
 );
 ```
