@@ -18,6 +18,8 @@ public class Player : IEntity {
     AnimationSprite? walkUp;
     AnimationSprite? walkRight;
     AnimationSprite? walkLeft;
+    Particles? lasparticulas;
+
     readonly double speed = 3.5;
 
     public async void create()
@@ -56,6 +58,18 @@ public class Player : IEntity {
             await load<Sprite>("tiles/testt.png"),
             await load<Sprite>("tiles/testb.png")) {
             position = (1, 2, 0),
+        };
+
+        lasparticulas = new() {
+            particle = await load<Sprite>("white.png"),
+            amountFunc = () => (uint)StMath.randint(200, 6000),
+            durationFunc = () => StMath.randfloat(1, 5),
+            positionStartFunc = () => tile.globalPosition,
+            positionEndFunc = () => StMath.randvec2((-200, -200), (200, 200)),
+            rotationStartFunc = () => 0,
+            rotationEndFunc = () => StMath.randfloat(-360, 360),
+            colorStartFunc = () => color.white,
+            colorEndFunc = () => (255, 255, 255, 0),
         };
     }
 
@@ -104,11 +118,17 @@ public class Player : IEntity {
 
         // the famous camera
         Tilemap.camPosition = tile.position.as2d();
+
+        // why though
+        if (Input.isKeyJustPressed(Key.space)) {
+            lasparticulas!.emit();
+        }
     }
 
     public void draw()
     {
         Tilemap.pushTile(lol!);
         Tilemap.pushTile(tile!);
+        lasparticulas!.draw();
     }
 }
