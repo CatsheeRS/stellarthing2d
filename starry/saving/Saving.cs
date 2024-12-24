@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
@@ -92,6 +93,7 @@ public static partial class Saving {
                 saveNumber(str, obj);
                 break;
             
+            case IDictionary theshits: saveDictionary(str, theshits); break;
             case IEnumerable thefucks: saveCollection(str, thefucks); break;
             case Enum laenumeración: saveEnum(str, laenumeración); break;
             default: saveObject(str, obj); break;
@@ -114,7 +116,6 @@ public static partial class Saving {
             // so recursive!
             figureOutType(str, prop.GetValue(obj));
 
-            // objects end in `,}`, not }
             str.Append(',');
         }
 
@@ -153,10 +154,21 @@ public static partial class Saving {
         str.Append('[');
         foreach (object lasigma in thefucks) {
             figureOutType(str, lasigma);
-            // collections end in `,]`, not `]`
             str.Append(',');
         }
         str.Append(']');
+    }
+
+    static void saveDictionary(StringBuilder str, IDictionary thefucks)
+    {
+        str.Append('{');
+        foreach (DictionaryEntry lasigma in thefucks) {
+            figureOutType(str, lasigma.Key);
+            str.Append('=');
+            figureOutType(str, lasigma.Value);
+            str.Append(',');
+        }
+        str.Append('}');
     }
 
     static void saveEnum(StringBuilder str, Enum laenumeración)
