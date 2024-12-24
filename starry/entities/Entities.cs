@@ -34,10 +34,9 @@ public static class Entities {
     /// if true, the game is paused. not all entities get paused, see EntityType
     /// </summary>
     public static bool paused { get; set; } = false;
-
-    internal static ConcurrentBag<IEntity> entities = [];
-    // the byte is there because there's no ConcurrentHashSet<T> lmao
-    internal static ConcurrentDictionary<string, ConcurrentHashSet<IEntity>> groups = [];
+    
+    public static ConcurrentHashSet<IEntity> entities { get; set; }= [];
+    public static ConcurrentDictionary<string, ConcurrentHashSet<IEntity>> groups { get; set; }= [];
 
     /// <summary>
     /// adds an entity.

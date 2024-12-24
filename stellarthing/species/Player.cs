@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Newtonsoft.Json;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -69,8 +71,12 @@ public class Player : IEntity {
             colorStartFunc = () => color.white,
             colorEndFunc = () => (255, 255, 255, 0),
         };
+
         // test saving
-        log("fucker", Saving.saveObj(tile));
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        string f = Saving.saveStatic(typeof(Entities));
+        stopwatch.Stop();
+        log("fucker", f, stopwatch.ElapsedMilliseconds);
     }
 
     public async void update(double delta)

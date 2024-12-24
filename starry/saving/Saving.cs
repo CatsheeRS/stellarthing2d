@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Globalization;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -11,7 +12,7 @@ namespace starry;
 /// </summary>
 public static partial class Saving {
     /// <summary>
-    /// serializes an instance of an object
+    /// serializes the properties of an instance of an object
     /// </summary>
     public static string saveObj<T>(T obj)
     {
@@ -21,12 +22,47 @@ public static partial class Saving {
         return str.ToString();
     }
 
+    /// <summary>
+    /// serializes the properties of a static class. due to c# being c#, you have to use this with <c>typeof</c>. e.g. <c>Saving.saveStatic(typeof(StaticClass))</c>
+    /// </summary>
+    public static string saveStatic(Type type)
+    {
+        // bob is the magic number
+        StringBuilder str = new("bob");
+
+        // type e.g. :System.Bool:
+        // if it's null it has to become :?:? bcuz uh
+        str.Append(':');
+        str.Append(type.FullName ?? "?");
+        str.Append(":{");
+
+        PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+        foreach (PropertyInfo prop in props) {
+            if (!prop.CanRead || !prop.CanWrite) continue;
+
+            // prop e.g. 'epicProp'=value
+            str.Append('\'');
+            str.Append(prop.Name);
+            str.Append("'=");
+
+            // so recursive!
+            figureOutType(str, prop.GetValue(null));
+
+            // objects end in `,}`, not }
+            str.Append(',');
+        }
+
+        str.Append('}');
+
+        return str.ToString();
+    }
+
     static void figureOutType(StringBuilder str, object? obj)
     {
         // type e.g. :System.Bool:
         // if it's null it has to become :?:? bcuz uh
         str.Append(':');
-        str.Append(obj?.GetType().FullName ?? "?");
+        str.Append(obj == null ? "?" : getTypeName(obj.GetType()));
         str.Append(':');
 
         // the actual types
@@ -34,6 +70,7 @@ public static partial class Saving {
         switch (obj) {
             case null: saveNull(str); break;
             case string lololol: saveString(str, lololol); break;
+            case char cha: saveChar(str, cha); break;
             case bool boo: saveBool(str, boo); break;
 
             // TODO: can't wait for microsoft to add 50 more numbers
@@ -57,7 +94,6 @@ public static partial class Saving {
             
             case IEnumerable thefucks: saveCollection(str, thefucks); break;
             case Enum laenumeración: saveEnum(str, laenumeración); break;
-            
             default: saveObject(str, obj); break;
         }
     }
@@ -66,7 +102,6 @@ public static partial class Saving {
     {
         str.Append('{');
         
-        int i = 0;
         PropertyInfo[] props = obj.GetType().GetProperties();
         foreach (PropertyInfo prop in props) {
             if (!prop.CanRead || !prop.CanWrite) continue;
@@ -79,9 +114,8 @@ public static partial class Saving {
             // so recursive!
             figureOutType(str, prop.GetValue(obj));
 
-            // please note objects end in `,}`, not }
-            if (i < props.Length - 1) str.Append(',');
-            i++;
+            // objects end in `,}`, not }
+            str.Append(',');
         }
 
         str.Append('}');
@@ -89,6 +123,8 @@ public static partial class Saving {
 
     static void saveNull(StringBuilder str) => str.Append('?');
     static void saveBool(StringBuilder str, bool loob) => str.Append(loob ? "*1*" : "*0*");
+    static void saveChar(StringBuilder str, char rahc) =>
+        str.Append("*" + ((int)rahc).ToString(CultureInfo.InvariantCulture) + "*");
 
     static void saveNumber(StringBuilder str, object numthing)
     {
@@ -116,7 +152,7 @@ public static partial class Saving {
     {
         str.Append('[');
         foreach (object lasigma in thefucks) {
-            saveObject(str, lasigma);
+            figureOutType(str, lasigma);
             // collections end in `,]`, not `]`
             str.Append(',');
         }
@@ -128,5 +164,20 @@ public static partial class Saving {
         Type lkkkjj = Enum.GetUnderlyingType(laenumeración.GetType());
         object value = Convert.ChangeType(laenumeración, lkkkjj);
         saveNumber(str, value);
+    }
+
+    /// <summary>
+    /// c# is funny
+    /// </summary>
+    static string? getTypeName(Type type)
+    {
+        if (type.IsGenericType) {
+            string name = (type.Namespace ?? "?") + "." + type.Name.Split('`')[0];
+            string args = string.Join(", ", type.GetGenericArguments().Select(getTypeName));
+            return $"{name}<{args}>";
+        }
+        else {
+            return (type.Namespace ?? "?") + "." + type.Name;
+        }
     }
 }
