@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -48,8 +47,7 @@ public class Player : IEntity {
             await load<Sprite>("species/bobleft3.png"),
             await load<Sprite>("species/bobleft4.png")
         );
-
-        // my shitty pixel art is too shitty to make a left/right animation
+        
         tile = new(walkLeft, walkRight, walkUp, walkDown) {
             position = (0, 0, 0),
         };
@@ -71,6 +69,8 @@ public class Player : IEntity {
             colorStartFunc = () => color.white,
             colorEndFunc = () => (255, 255, 255, 0),
         };
+        // test saving
+        log("fucker", Saving.saveObj(tile));
     }
 
     public async void update(double delta)
