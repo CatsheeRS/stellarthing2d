@@ -40,6 +40,8 @@ public static partial class Saving {
         PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
         foreach (PropertyInfo prop in props) {
             if (!prop.CanRead || !prop.CanWrite) continue;
+            // bobignore
+            if (Attribute.IsDefined(prop, typeof(BobIgnoreAttribute))) continue;
 
             // prop e.g. 'epicProp'=value
             str.Append('\'');
@@ -107,6 +109,8 @@ public static partial class Saving {
         PropertyInfo[] props = obj.GetType().GetProperties();
         foreach (PropertyInfo prop in props) {
             if (!prop.CanRead || !prop.CanWrite) continue;
+            // bobignore
+            if (Attribute.IsDefined(prop, typeof(BobIgnoreAttribute))) continue;
 
             // prop e.g. 'epicProp'=value
             str.Append('\'');

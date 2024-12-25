@@ -8,15 +8,22 @@ public class Timer(double duration, bool loop) {
     /// <summary>
     /// how long the timer lasts, in seconds
     /// </summary>
+    [BobIgnore]
     public double duration { get; set; } = duration;
     /// <summary>
     /// if true the timer loops
     /// </summary>
+    [BobIgnore]
     public bool loop { get; set; } = loop;
     /// <summary>
     /// how much is left for the timer to end, in seconds
     /// </summary>
+    [BobIgnore]
     public double timeLeft { get; internal set; } = duration;
+    /// <summary>
+    /// if true, the timer is currently timing
+    /// </summary>
+    [BobIgnore]
     public bool playing { get; internal set; } = false;
     public delegate void TimeoutEvent();
     /// <summary>

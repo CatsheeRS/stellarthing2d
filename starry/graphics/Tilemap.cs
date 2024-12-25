@@ -78,17 +78,17 @@ public static class Tilemap {
             if (tile == null) continue;
 
             ISprite sprite = tile.side switch {
-                TileSide.left => tile.tileSprite.left,
-                TileSide.right => tile.tileSprite.right,
-                TileSide.top => tile.tileSprite.top,
-                TileSide.bottom => tile.tileSprite.bottom,
+                TileSide.left => tile.sprite.left,
+                TileSide.right => tile.sprite.right,
+                TileSide.top => tile.sprite.top,
+                TileSide.bottom => tile.sprite.bottom,
                 _ => throw new Exception("shut up marge shut up"),
             };
 
             Graphics.drawSprite(
                 sprite,
                 (((tile.position.as2d() - camPosition) * Starry.settings.tileSize) + camOffset,
-                tile.tileSprite.getSize() * tile.scale * camScale),
+                tile.sprite.getSize() * tile.scale * camScale),
                 tile.origin,
                 tile.rotation,
                 tile.tint

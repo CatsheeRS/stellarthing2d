@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace starry;
 
 /// <summary>
@@ -33,8 +32,9 @@ public static class Entities {
     /// <summary>
     /// if true, the game is paused. not all entities get paused, see EntityType
     /// </summary>
+    [BobIgnore]
     public static bool paused { get; set; } = false;
-    
+
     public static ConcurrentHashSet<IEntity> entities { get; set; }= [];
     public static ConcurrentDictionary<string, ConcurrentHashSet<IEntity>> groups { get; set; }= [];
 

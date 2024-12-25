@@ -13,7 +13,7 @@ public class Player : IEntity {
     public string[] getInitGroups() =>
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
     
-    Tile? tile;
+    public Tile? tile { get; set; }
     Tile? lol;
     AnimationSprite? walkDown;
     AnimationSprite? walkUp;
@@ -103,7 +103,7 @@ public class Player : IEntity {
             };
 
             // haha
-            tile.tileSprite.bottom = walkDown!;
+            tile.sprite.bottom = walkDown!;
             if (!walkDown!.playing) walkDown.start();
             if (!walkUp!.playing) walkUp.start();
             if (!walkLeft!.playing) walkLeft.start();
@@ -111,7 +111,7 @@ public class Player : IEntity {
         }
         else {
             // haha
-            tile.tileSprite.bottom = await load<Sprite>("species/bobdown0.png");
+            tile.sprite.bottom = await load<Sprite>("species/bobdown0.png");
             walkDown!.stop();
             walkUp!.stop();
             walkLeft!.stop();
