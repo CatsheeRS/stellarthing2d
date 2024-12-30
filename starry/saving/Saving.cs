@@ -17,8 +17,7 @@ public static partial class Saving {
     /// </summary>
     public static string saveObj<T>(T obj)
     {
-        // bob is the magic number
-        StringBuilder str = new("bob");
+        StringBuilder str = new();
         figureOutType(str, obj);
         return str.ToString();
     }
@@ -28,8 +27,7 @@ public static partial class Saving {
     /// </summary>
     public static string saveStatic(Type type)
     {
-        // bob is the magic number
-        StringBuilder str = new("bob");
+        StringBuilder str = new();
 
         // type e.g. :System.Bool:
         // if it's null it has to become :?:? bcuz uh
@@ -190,10 +188,11 @@ public static partial class Saving {
         if (type.IsGenericType) {
             string name = (type.Namespace ?? "?") + "." + type.Name.Split('`')[0];
             string args = string.Join(", ", type.GetGenericArguments().Select(getTypeName));
-            return $"{name}<{args}>";
+            return $"{name}<{args}>".Replace("System.", "$.").Replace("starry.", "@.");
         }
         else {
-            return (type.Namespace ?? "?") + "." + type.Name;
+            return ((type.Namespace ?? "?") + "." + type.Name)
+                .Replace("System.", "$.").Replace("starry.", "@.");
         }
     }
 }

@@ -36,7 +36,7 @@ public static class Entities {
     public static bool paused { get; set; } = false;
 
     public static ConcurrentHashSet<IEntity> entities { get; set; }= [];
-    public static ConcurrentDictionary<string, ConcurrentHashSet<IEntity>> groups { get; set; }= [];
+    public static ConcurrentDictionary<string, ConcurrentHashSet<IEntity>> groups { get; set; } = [];
 
     /// <summary>
     /// adds an entity.
