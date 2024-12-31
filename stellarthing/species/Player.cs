@@ -74,7 +74,8 @@ public class Player : IEntity {
 
         // test saving
         Stopwatch stopwatch = Stopwatch.StartNew();
-        string f = Saving.saveStatic(typeof(Entities));
+        string f = Saving.saveObj(tile);
+        Tile lltile = Saving.load<Tile>(f);
         stopwatch.Stop();
         log("fucker", f, stopwatch.ElapsedMilliseconds);
     }
