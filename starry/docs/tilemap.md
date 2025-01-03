@@ -17,18 +17,31 @@ Tiles can have multiple sides for some reason.
 
 To use tiles in your epic entities you can use the `Tile` class
 
+You can just use the [component](entities.md#components)
+
 ```cs
-Tile? tile;
-public async void create()
-{
-    tile = new(
-        await Starry.load<Sprite>("left"),
-        await Starry.load<Sprite>("right"),
-        await Starry.load<Sprite>("top"),
-        await Starry.load<Sprite>("bottom")) {
-        position = (0, 0, 0),
-    };
-}
+var tile = Entities.addComponent<Tile>(this);
+tile.sprite = new TileSprite(
+    await load<Sprite>("left"),
+    await load<Sprite>("right"),
+    await load<Sprite>("top"),
+    await load<Sprite>("bottom"),
+);
+```
+
+Or make a new tile and manually make it render
+
+```csharp
+tile = new Tile();
+tile.sprite = new TileSprite(
+    await load<Sprite>("left"),
+    await load<Sprite>("right"),
+    await load<Sprite>("top"),
+    await load<Sprite>("bottom"),
+);
+
+// put this in your draw function
+Tilemap.pushTile(tile);
 ```
 
 You can also use [animations](animation.md) with `Tile`

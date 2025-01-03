@@ -4,12 +4,11 @@ namespace starry;
 /// <summary>
 /// it's a tile
 /// </summary>
-public class Tile(ISprite left, ISprite right, ISprite top, ISprite bottom){
+public class Tile : IComponent {
     /// <summary>
     /// it's a sprite
     /// </summary>
-    [BobIgnore]
-    public TileSprite sprite { get; set; } = new(left, right, top, bottom);
+    public TileSprite? sprite { get; set; }
     /// <summary>
     /// position, each unit is a tile, not a pixel. (0, 0) is the top left, this means positive X is right and positive Y is down. Z is the layers, on a range of -128-512
     /// </summary>
@@ -17,9 +16,8 @@ public class Tile(ISprite left, ISprite right, ISprite top, ISprite bottom){
     /// <summary>
     /// position in the actual screen stuff
     /// </summary>
-    [BobIgnore]
-    public vec2 globalPosition { get =>
-        ((position.as2d() - Tilemap.camPosition) * Starry.settings.tileSize) + Tilemap.camOffset; }
+    public vec2 globalPosition =>
+        ((position.as2d() - Tilemap.camPosition) * Starry.settings.tileSize) + Tilemap.camOffset;
     /// <summary>
     /// the world the tile is located in. by default this is space or whatever
     /// </summary>
@@ -35,7 +33,12 @@ public class Tile(ISprite left, ISprite right, ISprite top, ISprite bottom){
     /// <summary>
     /// sprites can have several sides because why not. each side's sprite filename must end with the side's starting letter. (l, r, t, b)
     /// </summary>
-    public TileSide side { get => sprite.side; set => sprite.side = value; }
+    public TileSide? side {
+        get => sprite?.side;
+        set {
+            if (sprite != null && value != null) sprite.side = (TileSide)value!;
+        }
+    }
     /// <summary>
     /// scale (multiplier)
     /// </summary>
@@ -44,6 +47,11 @@ public class Tile(ISprite left, ISprite right, ISprite top, ISprite bottom){
     /// the tint of the tile (white uses the default colors)
     /// </summary>
     public color tint { get; set; } = color.white;
+
+    public void draw(IEntity entity)
+    {
+        if (sprite != null) Tilemap.pushTile(this);
+    }
 }
 
 /// <summary>

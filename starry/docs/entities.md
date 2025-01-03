@@ -6,9 +6,9 @@ To make an entity you can implement the IEntity interface. (only `getEntityType(
 
 ```cs
 public class Example : IEntity {
-    public EntityType getEntityType() => EntityType.gameWorld;
-    public string getName() => "Example©®™©™®©®™©™";
-    public string[] getInitGroups() => [];
+    public EntityType entityType => EntityType.gameWorld;
+    public string name => "Example©®™©™®©®™©™";
+    public string[] initGroups => [];
 
     public void create() {}
     public void update(double delta) {}
@@ -28,6 +28,30 @@ There's groups.
 
 Doing group stuff is probably fast since it's hash based and stuff.
 
-Also entities are async against your will
+Also entities are async against your will.
 
 See the `Entities` class
+
+## Components
+
+Components are important if you want your entities to like, do anything.
+
+Any class that implements `IComponent` can be used with entities:
+
+```cs
+// add it to this entity
+var comp = Entities.addComponent<Component>(this);
+
+// get or add components from other entities
+var comp = Entities.getComponent<Component>(entity);
+```
+
+You can make your own components too:
+
+```csharp
+public class MyComponent: IComponent {
+    public void create(IEntity entity) {}
+    public void update(IEntity entity, double delta) {}
+    public void draw(IEntity entity) {}
+}
+```

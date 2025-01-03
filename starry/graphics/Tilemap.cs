@@ -75,7 +75,7 @@ public static class Tilemap {
         // hell
         while (!bloodyTiles.IsEmpty) {
             bloodyTiles.TryDequeue(out Tile? tile);
-            if (tile == null) continue;
+            if (tile == null || tile.sprite == null) continue;
 
             ISprite sprite = tile.side switch {
                 TileSide.left => tile.sprite.left,

@@ -24,24 +24,14 @@ public class Particles {
     /// <summary>
     /// sprite used for the particles
     /// </summary>
-    // really no reason to save any particle stuff
-    [BobIgnore]
     public required ISprite particle { get; set; }
-    [BobIgnore]
     public required Func<uint> amountFunc { get; set; }
-    [BobIgnore]
     public required Func<double> durationFunc { get; set; }
-    [BobIgnore]
     public required Func<vec2> positionStartFunc { get; set; }
-    [BobIgnore]
     public required Func<vec2> positionEndFunc { get; set; }
-    [BobIgnore]
     public required Func<double> rotationStartFunc { get; set; }
-    [BobIgnore]
     public required Func<double> rotationEndFunc { get; set; }
-    [BobIgnore]
     public required Func<color> colorStartFunc { get; set; }
-    [BobIgnore]
     public required Func<color> colorEndFunc { get; set; }
 
     ConcurrentHashSet<Particle> particles = [];

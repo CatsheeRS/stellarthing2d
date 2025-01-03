@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using Newtonsoft.Json;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -8,12 +6,12 @@ namespace stellarthing;
 /// player
 /// </summary>
 public class Player : IEntity {
-    public EntityType getEntityType() => EntityType.gameWorld;
-    public string getName() => "Player";
-    public string[] getInitGroups() =>
+    public EntityType entityType => EntityType.gameWorld;
+    public string name => "Player";
+    public string[] initGroups =>
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
     
-    public Tile? tile { get; set; }
+    Tile? tile;
     Tile? lol;
     AnimationSprite? walkDown;
     AnimationSprite? walkUp;
@@ -25,38 +23,39 @@ public class Player : IEntity {
 
     public async void create()
     {
-        walkDown = new(0.25,
+        walkDown = new AnimationSprite(0.25,
             await load<Sprite>("species/bobdown1.png"),
             await load<Sprite>("species/bobdown2.png"),
             await load<Sprite>("species/bobdown3.png"),
             await load<Sprite>("species/bobdown4.png")
         );
-        walkUp = new(0.25,
+        walkUp = new AnimationSprite(0.25,
             await load<Sprite>("species/bobup1.png"),
             await load<Sprite>("species/bobup2.png"),
             await load<Sprite>("species/bobup3.png"),
             await load<Sprite>("species/bobup4.png")
         );
-        walkRight = new(0.25,
+        walkRight = new AnimationSprite(0.25,
             await load<Sprite>("species/bobright1.png"),
             await load<Sprite>("species/bobright2.png"),
             await load<Sprite>("species/bobright3.png"),
             await load<Sprite>("species/bobright4.png")
         );
-        walkLeft = new(0.25,
+        walkLeft = new AnimationSprite(0.25,
             await load<Sprite>("species/bobleft1.png"),
             await load<Sprite>("species/bobleft2.png"),
             await load<Sprite>("species/bobleft3.png"),
             await load<Sprite>("species/bobleft4.png")
         );
         
-        tile = new(walkLeft, walkRight, walkUp, walkDown) {
-            position = (0, 0, 0),
-        };
-        lol = new(await load<Sprite>("tiles/testl.png"),
-            await load<Sprite>("tiles/testr.png"),
-            await load<Sprite>("tiles/testt.png"),
-            await load<Sprite>("tiles/testb.png")) {
+        tile = Entities.addComponent<Tile>(this);
+        tile.sprite = new TileSprite(walkLeft, walkRight, walkUp, walkDown);
+        
+        lol = new() {
+            sprite = new(await load<Sprite>("tiles/testl.png"),
+                         await load<Sprite>("tiles/testr.png"),
+                         await load<Sprite>("tiles/testt.png"),
+                         await load<Sprite>("tiles/testb.png")),
             position = (1, 2, 0),
         };
 
@@ -71,13 +70,6 @@ public class Player : IEntity {
             colorStartFunc = () => color.white,
             colorEndFunc = () => (255, 255, 255, 0),
         };
-
-        // test saving
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        string f = Saving.saveObj(tile);
-        Tile lltile = Saving.load<Tile>(f);
-        stopwatch.Stop();
-        log("fucker", f, stopwatch.ElapsedMilliseconds);
     }
 
     public async void update(double delta)
@@ -104,7 +96,7 @@ public class Player : IEntity {
             };
 
             // haha
-            tile.sprite.bottom = walkDown!;
+            tile.sprite!.bottom = walkDown!;
             if (!walkDown!.playing) walkDown.start();
             if (!walkUp!.playing) walkUp.start();
             if (!walkLeft!.playing) walkLeft.start();
@@ -112,7 +104,7 @@ public class Player : IEntity {
         }
         else {
             // haha
-            tile.sprite.bottom = await load<Sprite>("species/bobdown0.png");
+            tile.sprite!.bottom = await load<Sprite>("species/bobdown0.png");
             walkDown!.stop();
             walkUp!.stop();
             walkLeft!.stop();
@@ -135,7 +127,6 @@ public class Player : IEntity {
     public void draw()
     {
         Tilemap.pushTile(lol!);
-        Tilemap.pushTile(tile!);
         lasparticulas!.draw();
     }
 }
