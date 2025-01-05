@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-
 namespace starry;
 
 /// <summary>
@@ -58,4 +57,9 @@ public struct vec3(double x, double y, double z) {
     }
 
     public override readonly string ToString() => $"vec3({x:0.000}, {y:0.000}, {z:0.000})";
+
+    /// <summary>
+    /// rounds the components :)
+    /// </summary>
+    public readonly vec3i round() => new((long)Math.Round(x), (long)Math.Round(y), (long)Math.Round(z));
 }

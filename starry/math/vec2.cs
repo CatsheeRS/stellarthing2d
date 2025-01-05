@@ -19,8 +19,9 @@ public struct vec2(double x, double y) {
     public static bool operator <(vec2 a, vec2 b) => a.x < b.x && a.x < b.x;
     public static bool operator >=(vec2 a, vec2 b) => a.x >= b.x && a.x >= b.x;
     public static bool operator <=(vec2 a, vec2 b) => a.x <= b.x && a.x <= b.x;
+    public static vec2 operator -(vec2 a) => new(-a.x, -a.y);
 
-    public static vec2 zero { get => new(0, 0); }
+    public static vec2 zero => new(0, 0);
 
     public override readonly bool Equals([NotNullWhen(true)] object? obj)
     {

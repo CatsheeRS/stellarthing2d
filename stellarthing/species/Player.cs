@@ -17,7 +17,7 @@ public class Player : IEntity {
     AnimationSprite? walkUp;
     AnimationSprite? walkRight;
     AnimationSprite? walkLeft;
-    Particles? lasparticulas;
+    TileParticles? lasparticulas;
 
     readonly double speed = 3.5;
 
@@ -63,8 +63,8 @@ public class Player : IEntity {
             particle = await load<Sprite>("white.png"),
             amountFunc = () => (uint)StMath.randint(200, 6000),
             durationFunc = () => StMath.randfloat(1, 5),
-            positionStartFunc = () => tile.globalPosition,
-            positionEndFunc = () => StMath.randvec2((-200, -200), (200, 200)),
+            positionStartFunc = () => tile.position,
+            positionEndFunc = () => StMath.randvec2((-10, -10), (10, 10)).as3d(tile.position.z),
             rotationStartFunc = () => 0,
             rotationEndFunc = () => StMath.randfloat(-360, 360),
             colorStartFunc = () => color.white,

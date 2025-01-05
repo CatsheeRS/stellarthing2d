@@ -20,9 +20,10 @@ public struct vec2i(long x, long y) {
     public static bool operator <(vec2i a, vec2i b) => a.x < b.x && a.x < b.x;
     public static bool operator >=(vec2i a, vec2i b) => a.x >= b.x && a.x >= b.x;
     public static bool operator <=(vec2i a, vec2i b) => a.x <= b.x && a.x <= b.x;
+    public static vec2i operator -(vec2i a) => new(-a.x, -a.y);
     public static implicit operator vec2(vec2i a) => new(a.x, a.y);
 
-    public static vec2i zero { get => new(0, 0); }
+    public static vec2i zero => new(0, 0);
 
     public override readonly bool Equals([NotNullWhen(true)] object? obj)
     {
