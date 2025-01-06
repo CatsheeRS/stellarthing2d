@@ -70,6 +70,12 @@ public class Player : IEntity {
             colorStartFunc = () => color.white,
             colorEndFunc = () => (255, 255, 255, 0),
         };
+
+        int mmm = Entities.getMeta(ent2ref(this), "fucker.com", 0);
+        log(mmm);
+        Entities.setMeta(ent2ref(this), "fucker.com", mmm + 6952);
+        log(mmm);
+        log(Entities.meta);
     }
 
     public async void update(double delta)

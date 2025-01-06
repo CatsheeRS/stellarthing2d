@@ -35,9 +35,10 @@ public static class Entities {
     public static bool paused { get; set; } = false;
 
     public static ConcurrentDictionary<string, IEntity> entities { get; internal set; } = new();
-    internal static ConcurrentDictionary<int, string> entrefs = new();
+    public static ConcurrentDictionary<int, string> entrefs { get; internal set; } = new();
     public static ConcurrentDictionary<string, ConcurrentHashSet<string>> groups { get; internal set; } = new();
     public static ConcurrentDictionary<string, ConcurrentHashSet<IComponent>> components { get; internal set; } = new();
+    public static ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> meta { get; internal set; } = new();
 
     /// <summary>
     /// adds an entity.
@@ -48,6 +49,7 @@ public static class Entities {
         string regh = StMath.randomBase64(10);
         entities.TryAdd(regh, entity);
         entrefs.TryAdd(entity.GetHashCode(), regh);
+        meta.TryAdd(regh, new());
 
         string elgrupo = entity.entityType switch {
             EntityType.gameWorld => GAME_WORLD_GROUP,
@@ -136,8 +138,6 @@ public static class Entities {
     public static T addComponent<T>(string entity) where T: class, IComponent, new()
     {
         T tee = new();
-        Starry.log(components);
-        Starry.log(components.First());
         components[entity].Add(tee);
         tee.create(ref2ent(entity));
         return tee;
@@ -169,4 +169,22 @@ public static class Entities {
     /// gets an entity from a reference thingy
     /// </summary>
     public static IEntity ref2ent(string entref) => entities[entref];
+
+    /// <summary>
+    /// adds or a sets a key in the entity's metadata
+    /// </summary>
+    public static void setMeta(string entref, string key, object value)
+        => meta[entref].AddOrUpdate(key, value, (ma, te) => value);
+    
+    /// <summary>
+    /// if the key exists, returns the value, otherwise it sets the value to the defaultval parameter. keep in mind the metadata system isn't guaranteed to be type-safe, it's just casting from object
+    /// </summary>
+    public static T? getMeta<T>(string entref, string key, T? defaultval)
+    {
+        if (meta[entref].ContainsKey(key)) return (T?)meta[entref][key];
+        else {
+            meta[entref].TryAdd(key, defaultval);
+            return defaultval;
+        }
+    }
 }
