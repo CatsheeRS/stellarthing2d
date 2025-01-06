@@ -71,12 +71,6 @@ public static class Starry {
     }
 
     /// <summary>
-    /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk this is just Assets.load<T> lmao
-    /// </summary>
-    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
-        await Assets.load<T>(path);
-
-    /// <summary>
     /// Console.WriteLine but cooler (it prints more types and has caller information)
     /// </summary>
     public static void log(params object[] x)
@@ -137,4 +131,21 @@ public static class Starry {
         return false;
         #endif
     }
+
+    // shorthands, youre supposed to use starry statically using static starry.Starry;
+    /// <summary>
+    /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk
+    /// </summary>
+    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
+        await Assets.load<T>(path);
+    
+    /// <summary>
+    /// gets the reference thingy for an entity
+    /// </summary>
+    public static string ent2ref(IEntity entity) => Entities.entrefs[entity.GetHashCode()];
+
+    /// <summary>
+    /// gets an entity from a reference thingy
+    /// </summary>
+    public static IEntity ref2ent(string entref) => Entities.entities[entref];
 }

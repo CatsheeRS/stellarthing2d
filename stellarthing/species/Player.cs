@@ -48,7 +48,7 @@ public class Player : IEntity {
             await load<Sprite>("species/bobleft4.png")
         );
         
-        tile = Entities.addComponent<Tile>(this);
+        tile = Entities.addComponent<Tile>(ent2ref(this));
         tile.sprite = new TileSprite(walkLeft, walkRight, walkUp, walkDown);
         
         lol = new() {
