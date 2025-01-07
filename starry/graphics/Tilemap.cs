@@ -14,20 +14,28 @@ public static class Tilemap {
     /// the last overworld layer
     /// </summary>
     public const int MAX_LAYER = 512;
+    /// <summary>
+    /// dimension of the chunks in amount of tiles (they're square)
+    /// </summary>
+    public const int CHUNK_DIMENSIONS = 25;
 
     /// <summary>
-    /// dictionary of worlds, list of layers, queue of tiles
+    /// dictionary of worlds, dictionary of chunks, list of layers, queue of tiles
     /// </summary>
-    internal static ConcurrentDictionary<string, ConcurrentDictionary<int, ConcurrentQueue<Tile>>> worlds = new();
+    internal static ConcurrentDictionary<string, ConcurrentDictionary<vec2i, ConcurrentDictionary<int, ConcurrentQueue<Tile>>>> worlds = new();
 
     /// <summary>
     /// the current layers of each world
     /// </summary>
-    public static ConcurrentDictionary<string, int> currentLayers { get; set; }= new();
+    public static ConcurrentDictionary<string, int> currentLayers { get; set; } = new();
     /// <summary>
     /// the current world. "" is space
     /// </summary>
     public static string currentWorld { get; set; } = "";
+    /// <summary>
+    /// the current chunks of each world
+    /// </summary>
+    public static ConcurrentDictionary<string, vec2i> currentChunks { get; set; } = new();
     /// <summary>
     /// the position of the camera (in tile coordinates)
     /// </summary>
@@ -52,7 +60,7 @@ public static class Tilemap {
     public static void pushTile(Tile tile)
     {
         // yesterday i went outside with my mama's mason jar caught a lovely butterfly when i woke up today looked in on my fairy pet she had withered all away no more sighing in her breast i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away smell you on my hand for days i can't wash away your scent if i'm a dog then you're a bitch i guess you're as real as me maybe i can live with that maybe i need fantasy life of chasing butterfly i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away i told you i would return when the robin makes his nest but i ain't never coming back i'm sorry i'm sorry i'm sorry
-        worlds[tile.world][(int)Math.Round(tile.position.z)].Enqueue(tile);
+        worlds[tile.world][(tile.position.as2d() / (CHUNK_DIMENSIONS, CHUNK_DIMENSIONS)).floor()][(int)Math.Round(tile.position.z)].Enqueue(tile);
     }
 
     /// <summary>
@@ -60,17 +68,20 @@ public static class Tilemap {
     /// </summary>
     public static void createWorld(string name)
     {
-        ConcurrentDictionary<int, ConcurrentQueue<Tile>> world = new();
+        ConcurrentDictionary<vec2i, ConcurrentDictionary<int, ConcurrentQueue<Tile>>> world = new();
+        world.TryAdd((0, 0), new());
         for (int i = MIN_LAYER; i < MAX_LAYER; i++) {
-            world.TryAdd(i, []);
+            world[(0, 0)].TryAdd(i, []);
         }
         worlds.TryAdd(name, world);
         currentLayers.TryAdd(name, 0);
+        currentChunks.TryAdd(name, (0, 0));
     }
 
     public static void update()
     {
-        ConcurrentQueue<Tile> bloodyTiles = worlds[currentWorld][currentLayers[currentWorld]];
+        ConcurrentQueue<Tile> bloodyTiles =
+            worlds[currentWorld][currentChunks[currentWorld]][currentLayers[currentWorld]];
 
         // hell
         while (!bloodyTiles.IsEmpty) {
