@@ -36,10 +36,29 @@ public static class Tilemap {
     /// the current chunks of each world
     /// </summary>
     public static ConcurrentDictionary<string, vec2i> currentChunks { get; set; } = new();
+    static vec2 laposiciondelacamera = (0, 0);
     /// <summary>
     /// the position of the camera (in tile coordinates)
     /// </summary>
-    public static vec2 camPosition { get; set; } = (0, 0);
+    public static vec2 camPosition {
+        get => laposiciondelacamera;
+        set {
+            laposiciondelacamera = value;
+
+            // without this, if you move to another chunk you stop being rendered and processed and as such
+            // you're stuck there forever :)
+            vec2i chunk = (value / (CHUNK_DIMENSIONS, CHUNK_DIMENSIONS)).floor();
+            // generate new chunks :))
+            if (!worlds[currentWorld].ContainsKey(chunk)) {
+                ConcurrentDictionary<int, ConcurrentQueue<Tile>> man = new();
+                worlds[currentWorld].TryAdd(chunk, man);
+                for (int i = MIN_LAYER; i < MAX_LAYER; i++) {
+                    man.TryAdd(i, []);
+                }
+            }
+            currentChunks[currentWorld] = chunk;
+        }
+    }
     /// <summary>
     /// the camera offset (in pixels)
     /// </summary>
@@ -59,8 +78,18 @@ public static class Tilemap {
     /// </summary>
     public static void pushTile(Tile tile)
     {
+        vec2i chunk = (tile.position.as2d() / (CHUNK_DIMENSIONS, CHUNK_DIMENSIONS)).floor();
+        // FUCKER
+        if (!worlds[tile.world].ContainsKey(chunk)) {
+            ConcurrentDictionary<int, ConcurrentQueue<Tile>> man = new();
+            worlds[tile.world].TryAdd(chunk, man);
+            for (int i = MIN_LAYER; i < MAX_LAYER; i++) {
+                man.TryAdd(i, []);
+            }
+        }
+
         // yesterday i went outside with my mama's mason jar caught a lovely butterfly when i woke up today looked in on my fairy pet she had withered all away no more sighing in her breast i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away smell you on my hand for days i can't wash away your scent if i'm a dog then you're a bitch i guess you're as real as me maybe i can live with that maybe i need fantasy life of chasing butterfly i'm sorry for what i did i did what my body told me to i didn't mean to do you harm every time i pin down what i think i want it slips away the ghost slips away i told you i would return when the robin makes his nest but i ain't never coming back i'm sorry i'm sorry i'm sorry
-        worlds[tile.world][(tile.position.as2d() / (CHUNK_DIMENSIONS, CHUNK_DIMENSIONS)).floor()][(int)Math.Round(tile.position.z)].Enqueue(tile);
+        worlds[tile.world][chunk][(int)Math.Round(tile.position.z)].Enqueue(tile);
     }
 
     /// <summary>
