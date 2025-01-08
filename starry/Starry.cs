@@ -14,7 +14,7 @@ public static class Starry {
     /// <summary>
     /// the engine version (semantic versioning)
     /// </summary>
-    public static vec3i starryVersion => (2, 0, 6);
+    public static vec3i starryVersion => (2, 1, 0);
 
     /// <summary>
     /// sets up the engine
@@ -45,10 +45,16 @@ public static class Starry {
         settings.startup();
         
         while (!await Window.isClosing()) {
-            Graphics.clear(color.black);
+            Graphics.clear(color.darkGreen);
+
+            // it's hardcoded into my brain
+            if (isDebug()) {
+                if (Input.isKeyJustPressed(Key.f8)) return;
+            }
             
             // stuff
             await Entities.update();
+            await Task.Run(Timer.update);
             await Task.Run(Tilemap.update);
             await DebugMode.update();
             // this being async has a small but non-zero chance of collapsing the space time continuum
@@ -63,12 +69,6 @@ public static class Starry {
         Assets.cleanup();
         Window.cleanup();
     }
-
-    /// <summary>
-    /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk this is just Assets.load<T> lmao
-    /// </summary>
-    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
-        await Assets.load<T>(path);
 
     /// <summary>
     /// Console.WriteLine but cooler (it prints more types and has caller information)
@@ -131,4 +131,21 @@ public static class Starry {
         return false;
         #endif
     }
+
+    // shorthands, youre supposed to use starry statically using static starry.Starry;
+    /// <summary>
+    /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk
+    /// </summary>
+    public static async Task<T> load<T>(string path) where T: IAsset, new() =>
+        await Assets.load<T>(path);
+    
+    /// <summary>
+    /// gets the reference thingy for an entity
+    /// </summary>
+    public static string ent2ref(IEntity entity) => Entities.entrefs[entity.GetHashCode()];
+
+    /// <summary>
+    /// gets an entity from a reference thingy
+    /// </summary>
+    public static IEntity ref2ent(string entref) => Entities.entities[entref];
 }

@@ -14,11 +14,18 @@ internal class Program {
             },
             verbose = isDebug() || args.Contains("--verbose") || args.Contains("-v"),
             gameName = "Stellarthing",
-            gameVersion = (0, 10, 0),
+            gameVersion = (0, 11, 0),
             fullscreen = true,
             assetPath = Path.GetFullPath("assets"),
             renderSize = (320, 180),
             antiAliasing = false,
+            tileSize = (16, 16),
+            keymap = new() {
+                {"move_left", [Key.a, Key.left]},
+                {"move_right", [Key.d, Key.right]},
+                {"move_up", [Key.w, Key.up]},
+                {"move_down", [Key.s, Key.down]},
+            }
         });
     }
 }

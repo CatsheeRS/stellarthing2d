@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using SkiaSharp;
 namespace starry;
@@ -66,6 +65,7 @@ public static partial class Graphics {
     internal static void cleanup()
     {
         actions.Enqueue(() => {
+            Starry.log("Annihilating Skia");
             skpaint?.Dispose();
             paint?.Dispose();
             surface?.Dispose();
@@ -77,7 +77,7 @@ public static partial class Graphics {
 
     internal static void calcScale(vec2i size)
     {
-        scale = (int)System.Math.Min(size.x / Starry.settings.renderSize.x, size.y /
+        scale = (int)Math.Min(size.x / Starry.settings.renderSize.x, size.y /
             Starry.settings.renderSize.y);
         offset = ((size - (Starry.settings.renderSize * (vec2)(scale, scale))) *
             (0.5, 0.5)).round();

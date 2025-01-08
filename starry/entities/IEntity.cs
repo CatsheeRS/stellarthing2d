@@ -21,15 +21,15 @@ public interface IEntity {
     /// <summary>
     /// returns the entity type what did you expect
     /// </summary>
-    public EntityType getEntityType();
+    public EntityType entityType { get; }
     /// <summary>
     /// returns the name what did you expect. idk why this exists but the game's actual behavior shouldn't depend on this
     /// </summary>
-    public string getName() => "Untitled entity";
+    public string name { get; }
     /// <summary>
     /// groups the entity is assigned to when created. you should use constants so there's any ide support ever
     /// </summary>
-    public string[] getInitGroups() => [];
+    public string[] initGroups { get; }
 }
 
 /// <summary>

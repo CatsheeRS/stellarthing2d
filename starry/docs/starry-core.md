@@ -21,3 +21,9 @@ They also support math operators
 ```cs
 pos += (1, 0, 0);
 ```
+
+## Logging
+
+You can use `Starry.log()` to print stuff
+
+Please note that if you run it at the update loop it's gonna run at 10 FPS, but it only runs on debug mode or when verbose mode is enabled
