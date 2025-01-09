@@ -2,6 +2,8 @@
 
 The fundamentals of this handsome engine.
 
+It's recommended to include `using static starry.Starry;` at your files to make common functions shorter. If you don't know where a function comes from, it's probably from `Starry`.
+
 ## Math stuff
 
 Use the following structs:
@@ -10,6 +12,7 @@ Use the following structs:
 - vec3: 3D position, OpenGL-style with Y being up
 - vec3i: vec3 but with integers
 - color: 24-bit colors with an alpha parameter as well
+- rect: Rectangle
 
 You can use tuple syntax to initialize those because why not
 
@@ -21,6 +24,8 @@ They also support math operators
 ```cs
 pos += (1, 0, 0);
 ```
+
+There's some stuff at `StMath` too.
 
 ## Logging
 
