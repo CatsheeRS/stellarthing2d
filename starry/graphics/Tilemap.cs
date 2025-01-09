@@ -17,7 +17,7 @@ public static class Tilemap {
     /// <summary>
     /// dimension of the chunks in amount of tiles (they're square)
     /// </summary>
-    public const int CHUNK_DIMENSIONS = 25;
+    public const int CHUNK_DIMENSIONS = 32;
 
     /// <summary>
     /// dictionary of worlds, dictionary of chunks, list of layers, queue of tiles
@@ -109,30 +109,39 @@ public static class Tilemap {
 
     public static void update()
     {
-        ConcurrentQueue<Tile> bloodyTiles =
-            worlds[currentWorld][currentChunks[currentWorld]][currentLayers[currentWorld]];
+        // the render distance is every chunk around the current one (so 9)
+        // having a variable render distance would be too much work lmao
+        for (int y = -1; y < 2; y++) {
+            for (int x = -1; x < 2; x++) {
+                // you can't render a chunk if it doesn't exist
+                if (!worlds[currentWorld].ContainsKey(currentChunks[currentWorld] + (x, y))) continue;
 
-        // hell
-        while (!bloodyTiles.IsEmpty) {
-            bloodyTiles.TryDequeue(out Tile? tile);
-            if (tile == null || tile.sprite == null) continue;
+                ConcurrentQueue<Tile> bloodyTiles =
+                    worlds[currentWorld][currentChunks[currentWorld] + (x, y)][currentLayers[currentWorld]];
 
-            ISprite sprite = tile.side switch {
-                TileSide.left => tile.sprite.left,
-                TileSide.right => tile.sprite.right,
-                TileSide.top => tile.sprite.top,
-                TileSide.bottom => tile.sprite.bottom,
-                _ => throw new Exception("shut up marge shut up"),
-            };
+                // hell
+                while (!bloodyTiles.IsEmpty) {
+                    bloodyTiles.TryDequeue(out Tile? tile);
+                    if (tile == null || tile.sprite == null) continue;
 
-            Graphics.drawSprite(
-                sprite,
-                (((tile.position.as2d() - camPosition) * Starry.settings.tileSize) + camOffset,
-                tile.sprite.getSize() * tile.scale * camScale),
-                tile.origin,
-                tile.rotation,
-                tile.tint
-            );
+                    ISprite sprite = tile.side switch {
+                        TileSide.left => tile.sprite.left,
+                        TileSide.right => tile.sprite.right,
+                        TileSide.top => tile.sprite.top,
+                        TileSide.bottom => tile.sprite.bottom,
+                        _ => throw new Exception("shut up marge shut up"),
+                    };
+
+                    Graphics.drawSprite(
+                        sprite,
+                        (((tile.position.as2d() - camPosition) * Starry.settings.tileSize) + camOffset,
+                        tile.sprite.getSize() * tile.scale * camScale),
+                        tile.origin,
+                        tile.rotation,
+                        tile.tint
+                    );
+                }
+            }
         }
     }
 }
