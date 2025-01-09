@@ -24,6 +24,7 @@ public static class Starry {
         // funni
         Starry.settings = settings;
         Console.WriteLine("Use --verbose if the game is broken.");
+        Console.WriteLine("Use --headless to enable headless mode.");
 
         // opengl thread lmao
         Thread thread = new(Graphics.glLoop) {

@@ -26,6 +26,8 @@ public record class Font: IAsset {
 
     public void load(string path)
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             skfnt = SKTypeface.FromFile(path);
         });
@@ -33,6 +35,8 @@ public record class Font: IAsset {
     }
 
     public void cleanup() {
+        if (Starry.settings.headless) return;
+        
         Graphics.actions.Enqueue(() => {
             skfnt?.Dispose();
         });

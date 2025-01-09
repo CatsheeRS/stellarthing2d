@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Silk.NET.GLFW;
-
 namespace starry;
 
 /// <summary>
@@ -39,6 +38,8 @@ public static unsafe class Window {
     /// </summary>
     public static unsafe void create(string title, vec2i size)
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             // first we need glfw
             glfw = Glfw.GetApi();
@@ -75,6 +76,8 @@ public static unsafe class Window {
 
     static unsafe void setupCallbacks()
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
 
@@ -100,6 +103,8 @@ public static unsafe class Window {
     /// </summary>
     public static void setFullscreen(bool fullscreen)
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
             Window.fullscreen = fullscreen;
@@ -135,6 +140,8 @@ public static unsafe class Window {
     /// </summary>
     public static Task<bool> isClosing()
     {
+        if (Starry.settings.headless) return new TaskCompletionSource<bool>(false).Task;
+
         TaskCompletionSource<bool> tcs = new();
         Graphics.actions.Enqueue(() => {
             if (glfw == null) {
@@ -160,6 +167,8 @@ public static unsafe class Window {
     /// </summary>
     public static void cleanup()
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
 
@@ -176,6 +185,8 @@ public static unsafe class Window {
     /// </summary>
     public static Task<vec2i> getSize()
     {
+        if (Starry.settings.headless) return new TaskCompletionSource<vec2i>((0, 0)).Task;
+
         TaskCompletionSource<vec2i> tcs = new();
             Graphics.actions.Enqueue(() => {
             if (glfw == null) {
@@ -192,6 +203,8 @@ public static unsafe class Window {
 
     internal static void invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid()
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             onClose?.Invoke(null, EventArgs.Empty);
         });
