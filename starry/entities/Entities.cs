@@ -13,6 +13,10 @@ public static class Entities {
     /// </summary>
     public const string GAME_WORLD_GROUP = "starry.Entities.WORLD_GROUP";
     /// <summary>
+    /// entities of the always running type
+    /// </summary>
+    public const string ALWAYS_RUNNING_GROUP = "starry.Entities.ALWAYS_GROUP";
+    /// <summary>
     /// entities of the ui type
     /// </summary>
     public const string UI_GROUP = "starry.Entities.UI_GROUP";
@@ -53,6 +57,7 @@ public static class Entities {
 
         string elgrupo = entity.entityType switch {
             EntityType.gameWorld => GAME_WORLD_GROUP,
+            EntityType.alwaysRunning => ALWAYS_RUNNING_GROUP,
             EntityType.ui => UI_GROUP,
             EntityType.pausedUi => PAUSED_UI_GROUP,
             EntityType.manager => MANAGER_GROUP,
@@ -123,6 +128,10 @@ public static class Entities {
             });
 
             await Parallel.ForEachAsync(getGroup(UI_GROUP), async (entity, ct) => {
+                await Task.Run(() => mate(ref2ent(entity)));
+            });
+
+            await Parallel.ForEachAsync(getGroup(ALWAYS_RUNNING_GROUP), async (entity, ct) => {
                 await Task.Run(() => mate(ref2ent(entity)));
             });
             
