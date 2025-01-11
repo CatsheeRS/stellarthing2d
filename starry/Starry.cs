@@ -40,6 +40,7 @@ public static class Starry {
         Window.setFullscreen(settings.fullscreen);
         
         // fccking kmodules
+        Audio.create(); // can't multithread that
         await Task.Run(Tilemap.create);
         await DebugMode.create();
 
@@ -67,6 +68,7 @@ public static class Starry {
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
+        Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
         Assets.cleanup();
         Window.cleanup();
     }

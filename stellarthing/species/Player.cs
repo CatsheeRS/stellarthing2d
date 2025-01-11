@@ -70,6 +70,9 @@ public class Player : IEntity {
             colorStartFunc = () => color.white,
             colorEndFunc = () => (255, 255, 255, 0),
         };
+
+        var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
+        aaa.play();
     }
 
     public async void update(double delta)
