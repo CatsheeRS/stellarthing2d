@@ -28,6 +28,10 @@ public struct StarrySettings() {
     /// </summary>
     public bool fullscreen { get; set; } = true;
     /// <summary>
+    /// headless
+    /// </summary>
+    public bool headless { get; set; } = false;
+    /// <summary>
     /// the resolution the game is rendered at (it gets scaled to become the actual resolution)
     /// </summary>
     public vec2i renderSize { get; set; } = (200, 100);

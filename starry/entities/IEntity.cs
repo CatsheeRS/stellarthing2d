@@ -33,7 +33,7 @@ public interface IEntity {
 }
 
 /// <summary>
-/// type of the entity; affects rendering, input, and pausing. update functions are called in this order: pausable/paused manager -> pausable/pause ui -> game world
+/// type of the entity; affects rendering, input, and pausing. update functions are called in this order: pausable/paused manager -> pausable/pause ui -> always running -> game world
 /// </summary>
 public enum EntityType {
     /// <summary>
@@ -56,4 +56,8 @@ public enum EntityType {
     /// entity that isn't rendered or interacted with (doesn't receive input) and just manages stuff, only rendered on pause
     /// </summary>
     pausedManager,
+    /// <summary>
+    /// similar to <c>gameWorld</c> but it's always running no matter the chunk or world. convenient for factories, as forcing players to fit factories in a single chunk and then stay there for the factory to work would be very stupid. note that this actually can be paused, so it's not always running
+    /// </summary>
+    alwaysRunning,
 }

@@ -47,3 +47,9 @@ Tilemap.pushTile(tile);
 You can also use [animations](animation.md) with `Tile`
 
 See the `Tilemap` class.
+
+## Chunks
+
+As most players do not own the IBM mainframe, the tilemap splits your world into parts of 32x32 tiles.
+
+Only the current chunk and chunks surrounding it (8, for the 4 sides and the 4 corners) are rendered, and only the current chunk is updated, unless they have entities of the [always running type](entities.md)

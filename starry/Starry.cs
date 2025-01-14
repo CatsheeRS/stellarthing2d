@@ -24,6 +24,7 @@ public static class Starry {
         // funni
         Starry.settings = settings;
         Console.WriteLine("Use --verbose if the game is broken.");
+        Console.WriteLine("Use --headless to enable headless mode.");
 
         // opengl thread lmao
         Thread thread = new(Graphics.glLoop) {
@@ -39,6 +40,7 @@ public static class Starry {
         Window.setFullscreen(settings.fullscreen);
         
         // fccking kmodules
+        Audio.create(); // can't multithread that
         await Task.Run(Tilemap.create);
         await DebugMode.create();
 
@@ -66,6 +68,7 @@ public static class Starry {
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
+        Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
         Assets.cleanup();
         Window.cleanup();
     }

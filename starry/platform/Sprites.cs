@@ -26,7 +26,7 @@ public interface ISprite {
 }
 
 /// <summary>
-/// it's an image. supported formats are png, jpeg, gif, bpm, webm, wbmb, ico, pkm, ktx, astc, dng, heif, and avif. please note this is implemented through skia so if you want more formats complain to them instead. generally a good idea to only use png though
+/// it's an image. supported formats are png, jpeg, NOT GIF, bpm, webm, wbmb, ico, pkm, ktx, astc, dng, heif, and avif. please note this is implemented through skia so if you want more formats complain to them instead. generally a good idea to only use png though
 /// </summary>
 public record class Sprite: IAsset, ISprite {
     internal SKBitmap? skbmp;
@@ -38,6 +38,8 @@ public record class Sprite: IAsset, ISprite {
 
     public void load(string path)
     {
+        if (Starry.settings.headless) return;
+
         Graphics.actions.Enqueue(() => {
             skbmp = SKBitmap.Decode(path);
             if (skbmp == null) {
@@ -55,6 +57,8 @@ public record class Sprite: IAsset, ISprite {
 
     public void cleanup()
     {
+        if (Starry.settings.headless) return;
+        
         Graphics.actions.Enqueue(() => {
             skbmp?.Dispose();
             skimg?.Dispose();
