@@ -6,7 +6,7 @@ namespace stellarthing;
 /// player
 /// </summary>
 public class Player : IEntity {
-    public EntityType entityType => EntityType.gameWorld;
+    public EntityType entityType => EntityType.GAME_WORLD;
     public string name => "Player";
     public string[] initGroups =>
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
@@ -91,10 +91,10 @@ public class Player : IEntity {
         // it shouldn't go back to looking down when you didn't press anything
         if (dir != (0, 0)) {
             tile.side = dir switch {
-                (1, 0) => TileSide.right,
-                (-1, 0) => TileSide.left,
-                (0, 1) => TileSide.bottom,
-                (0, -1) => TileSide.top,
+                (1, 0) => TileSide.RIGHT,
+                (-1, 0) => TileSide.LEFT,
+                (0, 1) => TileSide.BOTTOM,
+                (0, -1) => TileSide.TOP,
                 _ => tile.side
             };
 
@@ -122,7 +122,7 @@ public class Player : IEntity {
         Tilemap.camPosition = tile.position.as2d();
 
         // why though
-        if (Input.isKeyJustPressed(Key.space)) {
+        if (Input.isKeyJustPressed(Key.SPACE)) {
             lasparticulas!.emit();
         }
     }

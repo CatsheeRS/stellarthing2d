@@ -51,7 +51,7 @@ public static class Starry {
 
             // it's hardcoded into my brain
             if (isDebug()) {
-                if (Input.isKeyJustPressed(Key.f8)) return;
+                if (Input.isKeyJustPressed(Key.F8)) return;
             }
             
             // stuff

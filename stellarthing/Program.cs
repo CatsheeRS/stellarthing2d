@@ -22,10 +22,10 @@ internal class Program {
             antiAliasing = false,
             tileSize = (16, 16),
             keymap = new() {
-                {"move_left", [Key.a, Key.left]},
-                {"move_right", [Key.d, Key.right]},
-                {"move_up", [Key.w, Key.up]},
-                {"move_down", [Key.s, Key.down]},
+                {"move_left", [Key.A, Key.LEFT]},
+                {"move_right", [Key.D, Key.RIGHT]},
+                {"move_up", [Key.W, Key.UP]},
+                {"move_down", [Key.S, Key.DOWN]},
             }
         });
     }

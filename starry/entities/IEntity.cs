@@ -39,25 +39,25 @@ public enum EntityType {
     /// <summary>
     /// pausable 3d-ish object
     /// </summary>
-    gameWorld,
+    GAME_WORLD,
     /// <summary>
     /// pausable 2d interface
     /// </summary>
-    ui,
+    UI,
     /// <summary>
     /// 2d interface only ran when paused
     /// </summary>
-    pausedUi,
+    PAUSED_UI,
     /// <summary>
     /// entity that isn't rendered or interacted with (doesn't receive input) and just manages stuff, can be paused
     /// </summary>
-    manager,
+    MANAGER,
     /// <summary>
     /// entity that isn't rendered or interacted with (doesn't receive input) and just manages stuff, only rendered on pause
     /// </summary>
-    pausedManager,
+    PAUSED_MANAGER,
     /// <summary>
     /// similar to <c>gameWorld</c> but it's always running no matter the chunk or world. convenient for factories, as forcing players to fit factories in a single chunk and then stay there for the factory to work would be very stupid. note that this actually can be paused, so it's not always running
     /// </summary>
-    alwaysRunning,
+    ALWAYS_RUNNING,
 }

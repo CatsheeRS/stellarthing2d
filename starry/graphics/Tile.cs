@@ -58,10 +58,10 @@ public class Tile : IComponent {
 /// sprites can have several sides because why not. each side's sprite filename must end with the side's starting letter. (l, r, t, b)
 /// </summary>
 public enum TileSide {
-    left,
-    right,
-    top,
-    bottom,
+    LEFT,
+    RIGHT,
+    TOP,
+    BOTTOM,
 }
 
 public static class TileSideExtensions {
@@ -71,10 +71,10 @@ public static class TileSideExtensions {
     public static TileSide rotateClockwise(this TileSide tile) 
     {
         return tile switch {
-            TileSide.left => TileSide.top,
-            TileSide.right => TileSide.bottom,
-            TileSide.top => TileSide.right,
-            TileSide.bottom => TileSide.left,
+            TileSide.LEFT => TileSide.TOP,
+            TileSide.RIGHT => TileSide.BOTTOM,
+            TileSide.TOP => TileSide.RIGHT,
+            TileSide.BOTTOM => TileSide.LEFT,
             _ => throw new Exception("you fucking moron"),
         };
     }
@@ -85,10 +85,10 @@ public static class TileSideExtensions {
     public static TileSide rotateCounterClockwise(this TileSide tile) 
     {
         return tile switch {
-            TileSide.left => TileSide.bottom,
-            TileSide.right => TileSide.top,
-            TileSide.top => TileSide.left,
-            TileSide.bottom => TileSide.right,
+            TileSide.LEFT => TileSide.BOTTOM,
+            TileSide.RIGHT => TileSide.TOP,
+            TileSide.TOP => TileSide.LEFT,
+            TileSide.BOTTOM => TileSide.RIGHT,
             _ => throw new Exception("you fucking moron"),
         };
     }

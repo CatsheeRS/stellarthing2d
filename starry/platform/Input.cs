@@ -9,126 +9,126 @@ public static class Input {
     public static vec2 mousePosition { get; internal set; }
     // you should minimize this
     internal static Dictionary<Key, KeyInfo> keyinfo { get; set; } = new() {
-        { Key.space, new() },
-        { Key.apostrophe, new() },
-        { Key.comma, new() },
-        { Key.minus, new() },
-        { Key.period, new() },
-        { Key.slash, new() },
-        { Key.num0, new() },
-        { Key.num1, new() },
-        { Key.num2, new() },
-        { Key.num3, new() },
-        { Key.num4, new() },
-        { Key.num5, new() },
-        { Key.num6, new() },
-        { Key.num7, new() },
-        { Key.num8, new() },
-        { Key.num9, new() },
-        { Key.semicolon, new() },
-        { Key.equal, new() },
-        { Key.a, new() },
-        { Key.b, new() },
-        { Key.c, new() },
-        { Key.d, new() },
-        { Key.e, new() },
-        { Key.f, new() },
-        { Key.g, new() },
-        { Key.h, new() },
-        { Key.i, new() },
-        { Key.j, new() },
-        { Key.k, new() },
-        { Key.l, new() },
-        { Key.m, new() },
-        { Key.n, new() },
-        { Key.o, new() },
-        { Key.p, new() },
-        { Key.q, new() },
-        { Key.r, new() },
-        { Key.s, new() },
-        { Key.t, new() },
-        { Key.u, new() },
-        { Key.v, new() },
-        { Key.w, new() },
-        { Key.x, new() },
-        { Key.y, new() },
-        { Key.z, new() },
-        { Key.leftBracket, new() },
-        { Key.backslash, new() },
-        { Key.rightBracket, new() },
-        { Key.graveAccent, new() },
-        { Key.international1, new() },
-        { Key.international2, new() },
-        { Key.escape, new() },
-        { Key.enter, new() },
-        { Key.tab, new() },
-        { Key.backspace, new() },
-        { Key.insert, new() },
-        { Key.delete, new() },
-        { Key.right, new() },
-        { Key.left, new() },
-        { Key.down, new() },
-        { Key.up, new() },
-        { Key.pageUp, new() },
-        { Key.pageDown, new() },
-        { Key.home, new() },
-        { Key.end, new() },
-        { Key.capsLock, new() },
-        { Key.scrollLock, new() },
-        { Key.numLock, new() },
-        { Key.printScreen, new() },
-        { Key.pause, new() },
-        { Key.f1, new() },
-        { Key.f2, new() },
-        { Key.f3, new() },
-        { Key.f4, new() },
-        { Key.f5, new() },
-        { Key.f6, new() },
-        { Key.f7, new() },
-        { Key.f8, new() },
-        { Key.f9, new() },
-        { Key.f10, new() },
-        { Key.f11, new() },
-        { Key.f12, new() },
-        { Key.f13, new() },
-        { Key.f14, new() },
-        { Key.f15, new() },
-        { Key.f16, new() },
-        { Key.f17, new() },
-        { Key.f18, new() },
-        { Key.f19, new() },
-        { Key.f20, new() },
-        { Key.f21, new() },
-        { Key.f22, new() },
-        { Key.f23, new() },
-        { Key.f24, new() },
-        { Key.f25, new() },
-        { Key.kp0, new() },
-        { Key.kp1, new() },
-        { Key.kp2, new() },
-        { Key.kp3, new() },
-        { Key.kp4, new() },
-        { Key.kp5, new() },
-        { Key.kp6, new() },
-        { Key.kp7, new() },
-        { Key.kp8, new() },
-        { Key.kp9, new() },
-        { Key.kpDecimal, new() },
-        { Key.kpDivide, new() },
-        { Key.kpMultiply, new() },
-        { Key.kpSubtract, new() },
-        { Key.kpAdd, new() },
-        { Key.kpEnter, new() },
-        { Key.kpEqual, new() },
-        { Key.leftShift, new() },
-        { Key.leftControl, new() },
-        { Key.leftAlt, new() },
-        { Key.leftSuper, new() },
-        { Key.rightShift, new() },
-        { Key.rightControl, new() },
-        { Key.rightAlt, new() },
-        { Key.rightSuper, new() },
-        { Key.menu, new() },
+        { Key.SPACE, new() },
+        { Key.APOSTROPHE, new() },
+        { Key.COMMA, new() },
+        { Key.MINUS, new() },
+        { Key.PERIOD, new() },
+        { Key.SLASH, new() },
+        { Key.NUM_0, new() },
+        { Key.NUM_1, new() },
+        { Key.NUM_2, new() },
+        { Key.NUM_3, new() },
+        { Key.NUM_4, new() },
+        { Key.NUM_5, new() },
+        { Key.NUM_6, new() },
+        { Key.NUM_7, new() },
+        { Key.NUM_8, new() },
+        { Key.NUM_9, new() },
+        { Key.SEMICOLON, new() },
+        { Key.EQUAL, new() },
+        { Key.A, new() },
+        { Key.B, new() },
+        { Key.C, new() },
+        { Key.D, new() },
+        { Key.E, new() },
+        { Key.F, new() },
+        { Key.G, new() },
+        { Key.H, new() },
+        { Key.I, new() },
+        { Key.J, new() },
+        { Key.K, new() },
+        { Key.L, new() },
+        { Key.M, new() },
+        { Key.N, new() },
+        { Key.O, new() },
+        { Key.P, new() },
+        { Key.Q, new() },
+        { Key.R, new() },
+        { Key.S, new() },
+        { Key.T, new() },
+        { Key.U, new() },
+        { Key.V, new() },
+        { Key.W, new() },
+        { Key.X, new() },
+        { Key.Y, new() },
+        { Key.Z, new() },
+        { Key.LEFT_BRACKET, new() },
+        { Key.BACKSLASH, new() },
+        { Key.RIGHT_BRACKET, new() },
+        { Key.GRAVE_ACCENT, new() },
+        { Key.INTERNATIONAL_1, new() },
+        { Key.INTERNATIONAL_2, new() },
+        { Key.ESCAPE, new() },
+        { Key.ENTER, new() },
+        { Key.TAB, new() },
+        { Key.BACKSPACE, new() },
+        { Key.INSERT, new() },
+        { Key.DELETE, new() },
+        { Key.RIGHT, new() },
+        { Key.LEFT, new() },
+        { Key.DOWN, new() },
+        { Key.UP, new() },
+        { Key.PAGE_UP, new() },
+        { Key.PAGE_DOWN, new() },
+        { Key.HOME, new() },
+        { Key.END, new() },
+        { Key.CAPS_LOCK, new() },
+        { Key.SCROLL_LOCK, new() },
+        { Key.NUM_LOCK, new() },
+        { Key.PRINT_SCREEN, new() },
+        { Key.PAUSE, new() },
+        { Key.F1, new() },
+        { Key.F2, new() },
+        { Key.F3, new() },
+        { Key.F4, new() },
+        { Key.F5, new() },
+        { Key.F6, new() },
+        { Key.F7, new() },
+        { Key.F8, new() },
+        { Key.F9, new() },
+        { Key.F10, new() },
+        { Key.F11, new() },
+        { Key.F12, new() },
+        { Key.F13, new() },
+        { Key.F14, new() },
+        { Key.F15, new() },
+        { Key.F16, new() },
+        { Key.F17, new() },
+        { Key.F18, new() },
+        { Key.F19, new() },
+        { Key.F20, new() },
+        { Key.F21, new() },
+        { Key.F22, new() },
+        { Key.F23, new() },
+        { Key.F24, new() },
+        { Key.F25, new() },
+        { Key.KP_0, new() },
+        { Key.KP_1, new() },
+        { Key.KP_2, new() },
+        { Key.KP_3, new() },
+        { Key.KP_4, new() },
+        { Key.KP_5, new() },
+        { Key.KP_6, new() },
+        { Key.KP_7, new() },
+        { Key.KP_8, new() },
+        { Key.KP_9, new() },
+        { Key.KP_DECIMAL, new() },
+        { Key.KP_DIVIDE, new() },
+        { Key.KP_MULTIPLY, new() },
+        { Key.KP_SUBTRACT, new() },
+        { Key.KP_ADD, new() },
+        { Key.KP_ENTER, new() },
+        { Key.KP_EQUAL, new() },
+        { Key.LEFT_SHIFT, new() },
+        { Key.LEFT_CONTROL, new() },
+        { Key.LEFT_ALT, new() },
+        { Key.LEFT_SUPER, new() },
+        { Key.RIGHT_SHIFT, new() },
+        { Key.RIGHT_CONTROL, new() },
+        { Key.RIGHT_ALT, new() },
+        { Key.RIGHT_SUPER, new() },
+        { Key.MENU, new() },
     };
     internal static List<Key> pressed { get; set; } = [];
 
@@ -141,12 +141,12 @@ public static class Input {
         foreach (Key key in pressed) {
             KeyInfo kinf = keyinfo[key];
             // a key should only be in the just pressed or release for 1 frame
-            if (kinf.framesPressed > 0 && kinf.state == KeypressState.justPressed) {
-                kinf.state = KeypressState.pressed;
+            if (kinf.framesPressed > 0 && kinf.state == KeypressState.JUST_PRESSED) {
+                kinf.state = KeypressState.PRESSED;
             }
 
-            if (kinf.framesPressed > 0 && kinf.state == KeypressState.released) {
-                kinf.state = KeypressState.inactive;
+            if (kinf.framesPressed > 0 && kinf.state == KeypressState.RELEASED) {
+                kinf.state = KeypressState.INACTIVE;
                 // we can't just .Remove() in a foreach loop lmao
                 released.Push(key);
             }
@@ -165,12 +165,12 @@ public static class Input {
         if (Starry.settings.headless) return;
         
         KeypressState systate = state switch {
-            InputAction.Press => KeypressState.justPressed,
-            InputAction.Release => KeypressState.released,
-            InputAction.Repeat => KeypressState.pressed,
+            InputAction.Press => KeypressState.JUST_PRESSED,
+            InputAction.Release => KeypressState.RELEASED,
+            InputAction.Repeat => KeypressState.PRESSED,
             _ => throw new Exception("c# shut up"),
         };
-        if (systate == KeypressState.justPressed) {
+        if (systate == KeypressState.JUST_PRESSED) {
             pressed.Add(key);
         }
         var hola = keyinfo[key];
@@ -181,15 +181,15 @@ public static class Input {
     /// <summary>
     /// self explanatory
     /// </summary>
-    public static bool isKeyHeld(Key key) => keyinfo[key].state != KeypressState.inactive;
+    public static bool isKeyHeld(Key key) => keyinfo[key].state != KeypressState.INACTIVE;
     /// <summary>
     /// self explanatory
     /// </summary>
-    public static bool isKeyJustPressed(Key key) => keyinfo[key].state == KeypressState.justPressed;
+    public static bool isKeyJustPressed(Key key) => keyinfo[key].state == KeypressState.JUST_PRESSED;
     /// <summary>
     /// self explanatory
     /// </summary>
-    public static bool isKeyJustReleased(Key key) => keyinfo[key].state == KeypressState.released;
+    public static bool isKeyJustReleased(Key key) => keyinfo[key].state == KeypressState.RELEASED;
 
     /// <summary>
     /// self explanatory
@@ -197,7 +197,7 @@ public static class Input {
     public static bool isKeymapHeld(string keymap)
     {
         foreach (var elmierda in Starry.settings.keymap[keymap]) {
-            if (keyinfo[elmierda].state != KeypressState.inactive) {
+            if (keyinfo[elmierda].state != KeypressState.INACTIVE) {
                 return true;
             }
         }
@@ -210,7 +210,7 @@ public static class Input {
     public static bool isKeymapJustPressed(string keymap)
     {
         foreach (var elmierda in Starry.settings.keymap[keymap]) {
-            if (keyinfo[elmierda].state == KeypressState.justPressed) {
+            if (keyinfo[elmierda].state == KeypressState.JUST_PRESSED) {
                 return true;
             }
         }
@@ -223,7 +223,7 @@ public static class Input {
     public static bool isKeymapJustReleased(string keymap)
     {
         foreach (var elmierda in Starry.settings.keymap[keymap]) {
-            if (keyinfo[elmierda].state == KeypressState.released) {
+            if (keyinfo[elmierda].state == KeypressState.RELEASED) {
                 return true;
             }
         }
@@ -233,13 +233,13 @@ public static class Input {
 
 internal class KeyInfo() {
     public int framesPressed { get; set; } = 0;
-    public KeypressState state { get; set; } = KeypressState.inactive;
+    public KeypressState state { get; set; } = KeypressState.INACTIVE;
 }
 
 internal enum KeypressState
 {
-    pressed,
-    released,
-    justPressed,
-    inactive,
+    PRESSED,
+    RELEASED,
+    JUST_PRESSED,
+    INACTIVE,
 }

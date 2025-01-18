@@ -56,12 +56,12 @@ public static class Entities {
         meta.TryAdd(regh, new());
 
         string elgrupo = entity.entityType switch {
-            EntityType.gameWorld => GAME_WORLD_GROUP,
-            EntityType.alwaysRunning => ALWAYS_RUNNING_GROUP,
-            EntityType.ui => UI_GROUP,
-            EntityType.pausedUi => PAUSED_UI_GROUP,
-            EntityType.manager => MANAGER_GROUP,
-            EntityType.pausedManager => PAUSED_MANAGER_GROUP,
+            EntityType.GAME_WORLD => GAME_WORLD_GROUP,
+            EntityType.ALWAYS_RUNNING => ALWAYS_RUNNING_GROUP,
+            EntityType.UI => UI_GROUP,
+            EntityType.PAUSED_UI => PAUSED_UI_GROUP,
+            EntityType.MANAGER => MANAGER_GROUP,
+            EntityType.PAUSED_MANAGER => PAUSED_MANAGER_GROUP,
             _ => throw new Exception("man"),
         };
         addToGroup(elgrupo, ent2ref(entity));

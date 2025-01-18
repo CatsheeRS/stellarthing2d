@@ -127,10 +127,10 @@ public static class Tilemap {
                     if (tile == null || tile.sprite == null) continue;
 
                     ISprite sprite = tile.side switch {
-                        TileSide.left => tile.sprite.left,
-                        TileSide.right => tile.sprite.right,
-                        TileSide.top => tile.sprite.top,
-                        TileSide.bottom => tile.sprite.bottom,
+                        TileSide.LEFT => tile.sprite.left,
+                        TileSide.RIGHT => tile.sprite.right,
+                        TileSide.TOP => tile.sprite.top,
+                        TileSide.BOTTOM => tile.sprite.bottom,
                         _ => throw new Exception("shut up marge shut up"),
                     };
 

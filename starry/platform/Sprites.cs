@@ -108,10 +108,10 @@ public record class TileSprite: ISprite {
     public SKImage? getInternalImage()
     {
         return (side switch {
-            TileSide.left => left,
-            TileSide.right => right,
-            TileSide.top => top,
-            TileSide.bottom => bottom,
+            TileSide.LEFT => left,
+            TileSide.RIGHT => right,
+            TileSide.TOP => top,
+            TileSide.BOTTOM => bottom,
             _ => throw new Exception("moron"),
         }).getInternalImage();
     }
