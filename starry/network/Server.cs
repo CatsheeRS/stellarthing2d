@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SimpleTCP;
@@ -28,7 +30,7 @@ public static class Server {
         isAdmin = true,
     };
 
-    static ConcurrentHashSet<Client> clients = [];
+    static ConcurrentDictionary<string, Client> clients = new();
 
     /// <summary>
     /// starts an epic awesome cool handsome server. returns true if it succeeded
@@ -44,18 +46,23 @@ public static class Server {
 
             // we can't have 5 gazillion players in the same server
             if (playersConnected > maxPlayers) {
-                kickPlayer(dummyClient, client);
+                kickPlayer(dummyClient, client.id);
                 Starry.log($"Client {client.username} ({client.id}) can't connect, server is full");
+                return;
             }
+
+            clients.TryAdd(client.id, client);
         };
 
         onPlayerDisconnected += (client) => {
             playersConnected -= 1;
+            clients.TryRemove(client.id, out _);
             Starry.log($"Client {client.username} ({client.id}) disconnected!");
         };
 
         server.DataReceived += (mate, msg) => {
-            string[] data = msg.MessageString.Split('=');
+            string msgmsg = Encoding.UTF8.GetString(msg.Data);
+            string[] data = msgmsg.Split('=', 2);
             onDataReceived?.Invoke(data[0], data[1]);
         };
 
@@ -70,39 +77,79 @@ public static class Server {
     {
         client.tcpClient = new SimpleTcpClient();
         client.tcpClient.Connect(ip, port);
-        upload(client, client, "starry.CLIENT_CONNECTED");
         Starry.log($"Connected {client.username} ({client.id}) to {ip}:{port}");
         return true;
     }
 
     /// <summary>
-    /// stops the server. the client is for authentication
+    /// disconnects from a server :)
+    /// </summary>
+    public static void disconnect(Client client)
+    {
+        client.tcpClient?.Disconnect();
+        Starry.log($"Disconnected {client.username} ({client.id})");
+    }
+
+    /// <summary>
+    /// stops the server. the client is for authentication. returns true if it succeeded.
     /// </summary>
     public static bool cleanup(Client client)
     {
-        
+        if (!client.isAdmin) {
+            Starry.log("Can't stop server; must be an admin to stop the server.");
+            return false;
+        }
+
+        server?.Stop();
+        Starry.log("Stopped server.");
+        return true;
     }
 
     /// <summary>
     /// sends a object to a client. the id is a 4 character long base64 string (16.7 million possibilities). whatever you send is gonna be serialized in json. the type is used for clients to deserialize it back
-    public static void sendToPlayer(string id, object obj, string type) {}
+    public static void sendToPlayer(string id, object obj, string type)
+    {
+        // TODO: don't.
+        // this will probably be horrible when you have more than a couple players
+        server?.BroadcastLine(serializeData(
+            new SpecificClientMessage() {
+                clientId = id,
+                data = obj,
+            },
+            type
+        ));
+    }
 
     /// <summary>
     /// sends an object to every client. whatever you send is gonna be serialized in json. the type is used for clients to deserialize it back
     /// </summary>
-    public static void sendToAll(object obj, string type) {}
+    public static void sendToAll(object obj, string type)
+    {
+        server?.BroadcastLine(serializeData(obj, type));
+    }
 
     /// <summary>
-    /// kicks a player. the kicker has to be an admin for this to work
+    /// kicks a player from its ID. the kicker has to be an admin for this to work. returns true if it succeeded.
     /// </summary>
-    public static void kickPlayer(Client kicker, Client kicked) {}
+    public static bool kickPlayer(Client kicker, string kicked)
+    {
+        Client kickedd = clients[kicked];
+        if (!kicker.isAdmin) {
+            Starry.log($"Can't kick {kickedd.username} ({kickedd.id}), {kicker.username} {kicker.id} must be an admin.");
+            return false;
+        }
+
+        kickedd.tcpClient?.Disconnect();
+        Starry.log($"Player {kicker.username} ({kicker.id}) kicked {kickedd.username} ({kickedd.id})");
+        return true;
+    }
 
     /// <summary>
     /// uploads something to the server. whatever you send is gonna be serialized in json. the type is used by the server to deserialize it back
     /// </summary>
     public static void upload(Client sender, object obj, string type)
     {
-        sender.tcpClient?.Write($"{type}={JsonConvert.SerializeObject(obj)}");
+        sender.tcpClient?.WriteLine(serializeData(obj, type));
     }
 
     /// <summary>
@@ -113,8 +160,7 @@ public static class Server {
         return await Task.Run(() => {
             if (sender.tcpClient == null) return ("", "");
 
-            Message msg = sender.tcpClient.WriteAndGetReply(
-                $"{type}={JsonConvert.SerializeObject(obj)}");
+            Message msg = sender.tcpClient.WriteAndGetReply(serializeData(obj, type));
             
             string[] sigming = msg.MessageString.Split('=');
             return (sigming[0], sigming[1]);
@@ -126,12 +172,15 @@ public static class Server {
     /// </summary>
     internal static void update()
     {
-        onUpdate?.Invoke(Window.deltaTime)
+        onUpdate?.Invoke(Window.deltaTime);
     }
+
+    internal static string serializeData(object obj, string type) => 
+        $"{type}={JsonConvert.SerializeObject(obj)}";
 
     // delegates
     public delegate void UpdateLoop(double delta);
     public delegate void PlayerConnected(Client client);
     public delegate void PlayerDisconnected(Client client);
-    public delegate void DataReceived(string type, string obj);
+    public delegate void DataReceived(string obj, string type);
 }

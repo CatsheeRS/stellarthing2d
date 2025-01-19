@@ -61,6 +61,7 @@ public static class Starry {
             await DebugMode.update();
             // this being async has a small but non-zero chance of collapsing the space time continuum
             Input.update(Window.deltaTime);
+            await Task.Run(Server.update);
 
             Graphics.endDrawing();
         }
