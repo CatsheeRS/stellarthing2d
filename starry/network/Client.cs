@@ -37,4 +37,7 @@ public class Client {
     internal SimpleTcpClient? tcpClient;
 
     public delegate void OnDataReceived(string data, string type);
+
+    internal void gmsjgjsjgjrjsjgjjisrjigjjisrj(string data, string type) =>
+        onDataReceived?.Invoke(data, type);
 }

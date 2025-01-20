@@ -78,6 +78,8 @@ public static class Starry {
     /// </summary>
     public static void log(params object[] x)
     {
+        Console.WriteLine(string.Join(", ", x));
+        return;
         Console.WriteLine("mate");
         if (!settings.verbose) return;
 

@@ -86,6 +86,14 @@ public static class Server {
     {
         client.tcpClient = new SimpleTcpClient();
         client.tcpClient.Connect(ip, port);
+
+        // mate
+        client.tcpClient.DataReceived += (a, msg) => {
+            string msgmsg = Encoding.UTF8.GetString(msg.Data);
+            string[] data = msgmsg.Split('=', 2);
+            client.gmsjgjsjgjrjsjgjjisrjigjjisrj(data[0], data[1]);
+        };
+
         Starry.log($"Connected {client.username} ({client.id}) to {ip}:{port}");
         return true;
     }
