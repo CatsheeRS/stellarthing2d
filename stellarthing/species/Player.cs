@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -73,6 +76,51 @@ public class Player : IEntity {
 
         var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
         aaa.play();
+
+        Client? mrpeepeepoopoo = null;
+        async Task networkTest()
+        {
+            mrpeepeepoopoo = new() {
+                username = "Mr Peepeepoopoo",
+            };
+            mrpeepeepoopoo.onDataReceived += (data, type) => log($"mr peepeepoopoo received {type}: {data}");
+            Client johncrimes = new() {
+                username = "John Crimes",
+            };
+            johncrimes.onDataReceived += (data, type) => log($"john crimes received {type}: {data}");
+            Client mrbreast = new() {
+                username = "MrBreast",
+            };
+            mrbreast.onDataReceived += (data, type) => log($"mrbreast received {type}: {data}");
+            Client melonmusk = new() {
+                username = "Melon Musk",
+            };
+            melonmusk.onDataReceived += (data, type) => log($"melon musk received {type}: {data}");
+
+            Server.create(3, mrpeepeepoopoo);
+            Server.connect("127.0.0.1", Server.GAME_PORT, mrpeepeepoopoo);
+            Server.connect("127.0.0.1", Server.GAME_PORT, johncrimes);
+            Server.connect("127.0.0.1", Server.GAME_PORT, mrbreast);
+            Server.connect("127.0.0.1", Server.GAME_PORT, melonmusk);
+
+            Server.onDataReceived += (data, type) => {
+                if (type == "DO YOU LIKE BEANS?!?!??!!?") {
+                    Server.sendToPlayer(JsonConvert.DeserializeObject<Client>(data)!.id, "yes.", "I DO LIKE BEANS");
+                }
+            };
+
+            await Server.ask(johncrimes, johncrimes, "DO YOU LIKE BEANS?!?!??!!?");
+
+            Server.onUpdate += delta => {
+                log("server is being updated :)))");
+            };
+
+            Server.sendToAll("lol", "ATTENTION: BEANS");
+            Server.sendToPlayer(mrbreast.id, "$5 billion dollars.", "give mem oney");
+        }
+        await networkTest();
+        var timer = new Timer(5, false);
+        timer.timeout += () => Server.cleanup(mrpeepeepoopoo!);
     }
 
     public async void update(double delta)

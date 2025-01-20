@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using SimpleTCP;
 
 namespace starry;
@@ -7,7 +8,7 @@ namespace starry;
 /// client :)
 /// </summary>
 public class Client {
-    public static Client thisClient = new();
+    public static Client thisClient { get; set; } = new();
 
     public Client()
     {
@@ -32,7 +33,7 @@ public class Client {
     /// <summary>
     /// called when the server sends data to the client
     /// </summary>
-    public OnDataReceived? onDataReceived { get; set; }
+    public event OnDataReceived? onDataReceived;
     internal SimpleTcpClient? tcpClient;
 
     public delegate void OnDataReceived(string data, string type);

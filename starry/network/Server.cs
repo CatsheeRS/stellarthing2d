@@ -14,13 +14,18 @@ public static class Server {
     /// port i randomly chose to use specifically for stellarthing. if you're using this game engine for your own game for some reason, you should probably choose another port
     /// </summary>
     public const int GAME_PORT = 41885;
-    public static UpdateLoop? onUpdate;
-    public static PlayerConnected? onPlayerConnected;
-    public static PlayerDisconnected? onPlayerDisconnected;
-    public static DataReceived? onDataReceived;
+    /// <summary>
+    /// how many times per second the server updates. it's 20 because minecraft uses 20
+    /// </summary>
+    public const int TICK_RATE = 20;
+    public static event UpdateLoop? onUpdate;
+    public static event PlayerConnected? onPlayerConnected;
+    public static event PlayerDisconnected? onPlayerDisconnected;
+    public static event DataReceived? onDataReceived;
     public static uint playersConnected { get; private set; } = 0;
 
     static SimpleTcpServer? server;
+    static Timer serverTick = new(1 / TICK_RATE, true);
 
     /// <summary>
     /// used by the server to run functions that require authentication
@@ -33,9 +38,9 @@ public static class Server {
     static ConcurrentDictionary<string, Client> clients = new();
 
     /// <summary>
-    /// starts an epic awesome cool handsome server. returns true if it succeeded
+    /// starts an epic awesome cool handsome server. the host will become an admin but won't be connected automatically. returns true if it succeeded
     /// </summary>
-    public static bool create(uint maxPlayers)
+    public static bool create(uint maxPlayers, Client? host)
     {
         server = new SimpleTcpServer();
         server.Start(GAME_PORT);
@@ -66,6 +71,10 @@ public static class Server {
             onDataReceived?.Invoke(data[0], data[1]);
         };
 
+        serverTick.start();
+        serverTick.timeout += () => onUpdate?.Invoke(Window.deltaTime);
+
+        if (host != null) host.isAdmin = true;
         Starry.log("Server created!");
         return true;
     }
@@ -100,6 +109,7 @@ public static class Server {
             return false;
         }
 
+        serverTick.stop();
         server?.Stop();
         Starry.log("Stopped server.");
         return true;
@@ -167,16 +177,11 @@ public static class Server {
         });
     }
 
-    /// <summary>
-    /// called by the engine
-    /// </summary>
-    internal static void update()
-    {
-        onUpdate?.Invoke(Window.deltaTime);
-    }
-
     internal static string serializeData(object obj, string type) => 
-        $"{type}={JsonConvert.SerializeObject(obj)}";
+        $"{type}={JsonConvert.SerializeObject(obj, new JsonSerializerSettings {
+            // shut up marge shut up
+            //ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+        })}";
 
     // delegates
     public delegate void UpdateLoop(double delta);
