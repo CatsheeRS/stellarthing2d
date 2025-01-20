@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -36,6 +37,10 @@ public static class Server {
     };
 
     static ConcurrentDictionary<string, Client> clients = new();
+    /// <summary>
+    /// i sincerely apologize
+    /// </summary>
+    static ConcurrentDictionary<TcpClient, string> clientClients = new();
 
     /// <summary>
     /// starts an epic awesome cool handsome server. the host will become an admin but won't be connected automatically. returns true if it succeeded
@@ -45,9 +50,18 @@ public static class Server {
         server = new SimpleTcpServer();
         server.Start(GAME_PORT);
 
-        onPlayerConnected += (client) => {
+        server.DataReceived += (mate, msg) => {
+            string msgmsg = Encoding.UTF8.GetString(msg.Data);
+            string[] data = msgmsg.Split('=', 2);
+            onDataReceived?.Invoke(data[0], data[1]);
+        };
+
+        onDataReceived += (data, type) => {
+            if (type != "starry.CLIENT_CONNECT") return;
+            Client? client = JsonConvert.DeserializeObject<Client>(data);
+            if (client == null) return;
+
             playersConnected += 1;
-            Starry.log($"Client {client.username} ({client.id}) connected!");
 
             // we can't have 5 gazillion players in the same server
             if (playersConnected > maxPlayers) {
@@ -57,18 +71,19 @@ public static class Server {
             }
 
             clients.TryAdd(client.id, client);
+            // i know
+            clientClients.TryAdd(client.tcpClient!.TcpClient, client.id);
+
+            Starry.log($"Client {client.username} ({client.id}) connected!");
+            onPlayerConnected?.Invoke(client);
         };
 
-        onPlayerDisconnected += (client) => {
+        server.ClientDisconnected += (m, client) => {
             playersConnected -= 1;
-            clients.TryRemove(client.id, out _);
-            Starry.log($"Client {client.username} ({client.id}) disconnected!");
-        };
-
-        server.DataReceived += (mate, msg) => {
-            string msgmsg = Encoding.UTF8.GetString(msg.Data);
-            string[] data = msgmsg.Split('=', 2);
-            onDataReceived?.Invoke(data[0], data[1]);
+            var lecliente = clients[clientClients[client]];
+            clients.TryRemove(lecliente.id, out _);
+            Starry.log($"Client {lecliente.username} ({lecliente.id}) disconnected!");
+            onPlayerDisconnected?.Invoke(lecliente);
         };
 
         serverTick.start();
@@ -93,6 +108,9 @@ public static class Server {
             string[] data = msgmsg.Split('=', 2);
             client.gmsjgjsjgjrjsjgjjisrjigjjisrj(data[0], data[1]);
         };
+
+        // so the server runs connecting logic with the client
+        upload(client, client, "starry.CLIENT_CONNECTED");
 
         Starry.log($"Connected {client.username} ({client.id}) to {ip}:{port}");
         return true;
