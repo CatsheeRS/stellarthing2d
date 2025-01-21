@@ -32,6 +32,15 @@ public static class Starry {
         };
         thread.Start();
 
+        // funni server repl thingy
+        // Console.ReadLine() would usually stop everything i think???????/? idfk
+        if (settings.headless) {
+            Thread threadma = new(replThingy) {
+                IsBackground = true,
+            };
+            threadma.Start();
+        }
+
         string title = $"{settings.gameName}";
         if (settings.showVersion) title += " " + settings.gameVersion.asVersion();
         
@@ -65,9 +74,12 @@ public static class Starry {
             Graphics.endDrawing();
         }
 
+        log("Starry is closing...");
+
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
+        Server.cleanup(Server.dummyClient);
         Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
         Assets.cleanup();
         Window.cleanup();
@@ -133,6 +145,24 @@ public static class Starry {
         #else
         return false;
         #endif
+    }
+
+    static void replThingy()
+    {
+        while (true) {
+            string? stringma = Console.ReadLine();
+            if (!string.IsNullOrEmpty(stringma)) {
+                string[] cmd = stringma.Split(' ');
+
+                // commands :)
+                if (cmd.Length >= 1) {
+                    if (cmd[0] == "stop") {
+                        Window.close();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     // shorthands, youre supposed to use starry statically using static starry.Starry;

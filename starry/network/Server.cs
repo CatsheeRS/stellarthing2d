@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Text;
@@ -31,7 +32,7 @@ public static class Server {
     /// <summary>
     /// used by the server to run functions that require authentication
     /// </summary>
-    static Client dummyClient = new() {
+    internal static Client dummyClient = new() {
         username = "STELLARTHING_SERVER",
         isAdmin = true,
     };
@@ -198,7 +199,7 @@ public static class Server {
 
             Message msg = sender.tcpClient.WriteAndGetReply(serializeData(obj, type));
             
-            string[] sigming = msg.MessageString.Split('=');
+            string[] sigming = Encoding.UTF8.GetString(msg.Data).Split('=');
             return (sigming[0], sigming[1]);
         });
     }

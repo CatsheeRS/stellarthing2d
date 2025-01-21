@@ -32,6 +32,7 @@ public static unsafe class Window {
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
     internal static vec2i screensize = (0, 0);
+    internal static bool closing = false;
 
     /// <summary>
     /// creates the window :D
@@ -140,7 +141,7 @@ public static unsafe class Window {
     /// </summary>
     public static Task<bool> isClosing()
     {
-        if (Starry.settings.headless) return new TaskCompletionSource<bool>(false).Task;
+        if (Starry.settings.headless) return new TaskCompletionSource<bool>(closing).Task;
 
         TaskCompletionSource<bool> tcs = new();
         Graphics.actions.Enqueue(() => {
@@ -156,7 +157,7 @@ public static unsafe class Window {
             elapsedTime = current;
             fps = 1.0 / deltaTime;
 
-            tcs.SetResult(glfw.WindowShouldClose(window));
+            tcs.SetResult(glfw.WindowShouldClose(window) || closing);
         });
         Graphics.actionLoopEvent.Set();
         return tcs.Task;
@@ -210,6 +211,11 @@ public static unsafe class Window {
         });
         Graphics.actionLoopEvent.Set();
     }
+
+    /// <summary>
+    /// closes the window :) (it's actualy gonna close on the next frame)
+    /// </summary>
+    public static void close() => closing = true;
 
     public delegate void ResizeEvent(vec2i newSize);
 }
