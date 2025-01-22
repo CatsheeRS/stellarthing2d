@@ -38,7 +38,7 @@ public record class Sprite: IAsset, ISprite {
 
     public void load(string path)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             skbmp = SKBitmap.Decode(path);
@@ -57,7 +57,7 @@ public record class Sprite: IAsset, ISprite {
 
     public void cleanup()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         Graphics.actions.Enqueue(() => {
             skbmp?.Dispose();

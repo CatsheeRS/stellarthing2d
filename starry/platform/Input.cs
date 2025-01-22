@@ -135,7 +135,7 @@ public static class Input {
     // called every frame to do some check stuff
     internal static void update(double delta)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Stack<Key> released = [];
         foreach (Key key in pressed) {
@@ -162,7 +162,7 @@ public static class Input {
 
     internal static void setKeyState(Key key, InputAction state)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         KeypressState systate = state switch {
             InputAction.Press => KeypressState.JUST_PRESSED,

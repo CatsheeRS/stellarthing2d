@@ -27,7 +27,7 @@ public static partial class Graphics {
 
     public static void create()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(async () => {
             // shut up
@@ -66,7 +66,7 @@ public static partial class Graphics {
 
     internal static void cleanup()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             Starry.log("Annihilating Skia");
@@ -89,7 +89,7 @@ public static partial class Graphics {
 
     internal static void resizeTarget(vec2i size)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             // delete the old stuff
@@ -116,7 +116,7 @@ public static partial class Graphics {
     /// </summary>
     public static unsafe void endDrawing()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             canvas?.Flush();
@@ -131,7 +131,7 @@ public static partial class Graphics {
     /// </summary>
     internal static void glLoop()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         while (true) {
             actionLoopEvent.WaitOne();

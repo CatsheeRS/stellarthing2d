@@ -41,7 +41,7 @@ public class Particles: IParticles {
     /// </summary>
     public void emit()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         uint amount = amountFunc();
         for (int i = 0; i < amount; i++) {
@@ -70,7 +70,7 @@ public class Particles: IParticles {
     /// </summary>
     public void draw()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         Queue<Particle> queuedForAnnihilation = [];
         foreach (Particle article in particles) {

@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Concurrent;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SimpleTCP;
 
 namespace starry;
 
@@ -26,7 +22,6 @@ public static class Server {
     public static event DataReceived? onDataReceived;
     public static uint playersConnected { get; private set; } = 0;
 
-    static SimpleTcpServer? server;
     static Timer serverTick = new(1 / TICK_RATE, true);
 
     /// <summary>
@@ -37,62 +32,11 @@ public static class Server {
         isAdmin = true,
     };
 
-    static ConcurrentDictionary<string, Client> clients = new();
-    /// <summary>
-    /// i sincerely apologize
-    /// </summary>
-    static ConcurrentDictionary<TcpClient, string> clientClients = new();
-
     /// <summary>
     /// starts an epic awesome cool handsome server. the host will become an admin but won't be connected automatically. returns true if it succeeded
     /// </summary>
     public static bool create(uint maxPlayers, Client? host)
     {
-        server = new SimpleTcpServer();
-        server.Start(GAME_PORT);
-
-        server.DataReceived += (mate, msg) => {
-            string msgmsg = Encoding.UTF8.GetString(msg.Data);
-            string[] data = msgmsg.Split('=', 2);
-            onDataReceived?.Invoke(data[0], data[1]);
-        };
-
-        onDataReceived += (data, type) => {
-            if (type != "starry.CLIENT_CONNECT") return;
-            Client? client = JsonConvert.DeserializeObject<Client>(data);
-            if (client == null) return;
-
-            playersConnected += 1;
-
-            // we can't have 5 gazillion players in the same server
-            if (playersConnected > maxPlayers) {
-                kickPlayer(dummyClient, client.id);
-                Starry.log($"Client {client.username} ({client.id}) can't connect, server is full");
-                return;
-            }
-
-            clients.TryAdd(client.id, client);
-            // i know
-            clientClients.TryAdd(client.tcpClient!.TcpClient, client.id);
-
-            Starry.log($"Client {client.username} ({client.id}) connected!");
-            onPlayerConnected?.Invoke(client);
-        };
-
-        server.ClientDisconnected += (m, client) => {
-            playersConnected -= 1;
-            var lecliente = clients[clientClients[client]];
-            clients.TryRemove(lecliente.id, out _);
-            Starry.log($"Client {lecliente.username} ({lecliente.id}) disconnected!");
-            onPlayerDisconnected?.Invoke(lecliente);
-        };
-
-        serverTick.start();
-        serverTick.timeout += () => onUpdate?.Invoke(Window.deltaTime);
-
-        if (host != null) host.isAdmin = true;
-        Starry.log("Server created!");
-        return true;
     }
 
     /// <summary>
@@ -100,21 +44,7 @@ public static class Server {
     /// </summary>
     public static bool connect(string ip, int port, Client client)
     {
-        client.tcpClient = new SimpleTcpClient();
-        client.tcpClient.Connect(ip, port);
-
-        // mate
-        client.tcpClient.DataReceived += (a, msg) => {
-            string msgmsg = Encoding.UTF8.GetString(msg.Data);
-            string[] data = msgmsg.Split('=', 2);
-            client.gmsjgjsjgjrjsjgjjisrjigjjisrj(data[0], data[1]);
-        };
-
-        // so the server runs connecting logic with the client
-        upload(client, client, "starry.CLIENT_CONNECTED");
-
-        Starry.log($"Connected {client.username} ({client.id}) to {ip}:{port}");
-        return true;
+        
     }
 
     /// <summary>
@@ -122,8 +52,7 @@ public static class Server {
     /// </summary>
     public static void disconnect(Client client)
     {
-        client.tcpClient?.Disconnect();
-        Starry.log($"Disconnected {client.username} ({client.id})");
+        
     }
 
     /// <summary>
@@ -131,30 +60,14 @@ public static class Server {
     /// </summary>
     public static bool cleanup(Client client)
     {
-        if (!client.isAdmin) {
-            Starry.log("Can't stop server; must be an admin to stop the server.");
-            return false;
-        }
 
-        serverTick.stop();
-        server?.Stop();
-        Starry.log("Stopped server.");
-        return true;
     }
 
     /// <summary>
     /// sends a object to a client. the id is a 4 character long base64 string (16.7 million possibilities). whatever you send is gonna be serialized in json. the type is used for clients to deserialize it back
     public static void sendToPlayer(string id, object obj, string type)
     {
-        // TODO: don't.
-        // this will probably be horrible when you have more than a couple players
-        server?.BroadcastLine(serializeData(
-            new SpecificClientMessage() {
-                clientId = id,
-                data = obj,
-            },
-            type
-        ));
+        
     }
 
     /// <summary>
@@ -162,7 +75,7 @@ public static class Server {
     /// </summary>
     public static void sendToAll(object obj, string type)
     {
-        server?.BroadcastLine(serializeData(obj, type));
+        
     }
 
     /// <summary>
@@ -170,15 +83,7 @@ public static class Server {
     /// </summary>
     public static bool kickPlayer(Client kicker, string kicked)
     {
-        Client kickedd = clients[kicked];
-        if (!kicker.isAdmin) {
-            Starry.log($"Can't kick {kickedd.username} ({kickedd.id}), {kicker.username} {kicker.id} must be an admin.");
-            return false;
-        }
-
-        kickedd.tcpClient?.Disconnect();
-        Starry.log($"Player {kicker.username} ({kicker.id}) kicked {kickedd.username} ({kickedd.id})");
-        return true;
+        
     }
 
     /// <summary>
@@ -186,7 +91,7 @@ public static class Server {
     /// </summary>
     public static void upload(Client sender, object obj, string type)
     {
-        sender.tcpClient?.WriteLine(serializeData(obj, type));
+        
     }
 
     /// <summary>
@@ -194,17 +99,13 @@ public static class Server {
     /// </summary>
     public static async Task<(string, string)> ask(Client sender, object obj, string type)
     {
-        return await Task.Run(() => {
-            if (sender.tcpClient == null) return ("", "");
-
-            Message msg = sender.tcpClient.WriteAndGetReply(serializeData(obj, type));
-            
-            string[] sigming = Encoding.UTF8.GetString(msg.Data).Split('=');
-            return (sigming[0], sigming[1]);
-        });
+        
     }
 
-    internal static string serializeData(object obj, string type) => 
+    /// <summary>
+    /// it serializes data. this is just used by the networking API for communicating what type the json they're sending even is.
+    /// </summary>
+    public static string serializeData(object obj, string type) => 
         $"{type}={JsonConvert.SerializeObject(obj, new JsonSerializerSettings {
             // shut up marge shut up
             //ReferenceLoopHandling = ReferenceLoopHandling.Serialize,

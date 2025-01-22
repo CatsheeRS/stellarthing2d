@@ -23,8 +23,9 @@ public static class Starry {
     {
         // funni
         Starry.settings = settings;
+        Console.WriteLine($"{settings.gameName} {settings.gameVersion.asVersion()} - Starry {starryVersion.asVersion()}");
         Console.WriteLine("Use --verbose if the game is broken.");
-        Console.WriteLine("Use --headless to enable headless mode.");
+        Console.WriteLine("Use --server to enable server mode.");
 
         // opengl thread lmao
         Thread thread = new(Graphics.glLoop) {
@@ -34,7 +35,7 @@ public static class Starry {
 
         // funni server repl thingy
         // Console.ReadLine() would usually stop everything i think???????/? idfk
-        if (settings.headless) {
+        if (settings.server) {
             Thread threadma = new(replThingy) {
                 IsBackground = true,
             };
@@ -68,8 +69,7 @@ public static class Starry {
             await Task.Run(Timer.update);
             await Task.Run(Tilemap.update);
             await DebugMode.update();
-            // this being async has a small but non-zero chance of collapsing the space time continuum
-            Input.update(Window.deltaTime);
+            await Task.Run(() => Input.update(Window.deltaTime));
 
             Graphics.endDrawing();
         }

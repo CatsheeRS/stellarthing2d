@@ -1,7 +1,5 @@
 using System;
 using Newtonsoft.Json;
-using SimpleTCP;
-
 namespace starry;
 
 /// <summary>
@@ -34,7 +32,6 @@ public class Client {
     /// called when the server sends data to the client
     /// </summary>
     public event OnDataReceived? onDataReceived;
-    internal SimpleTcpClient? tcpClient;
 
     public delegate void OnDataReceived(string data, string type);
 

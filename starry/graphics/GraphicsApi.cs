@@ -18,7 +18,7 @@ public static partial class Graphics {
     /// </summary>
     public static void clear(color color)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             canvas?.Clear(new SKColor(color.r, color.g, color.b, color.a));
@@ -31,7 +31,7 @@ public static partial class Graphics {
     /// </summary>
     public static void drawSprite(ISprite sprite, rect2 rect, vec2 origin, double rotation, color tint)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             if (skpaint == null) return;
@@ -75,7 +75,7 @@ public static partial class Graphics {
     /// </summary>
     public static void drawText(string text, Font font, vec2 pos, color color)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         actions.Enqueue(() => {
             if (skpaint == null) return; // shut
@@ -101,7 +101,7 @@ public static partial class Graphics {
     /// </summary>
     public static Task<double> getTextSize(string text, Font font)
     {
-        if (Starry.settings.headless) return new TaskCompletionSource<double>(0).Task;
+        if (Starry.settings.server) return new TaskCompletionSource<double>(0).Task;
 
         TaskCompletionSource<double> tcs = new();
         actions.Enqueue(() => {

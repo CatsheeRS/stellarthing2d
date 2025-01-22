@@ -109,7 +109,7 @@ public static class Tilemap {
 
     public static void update()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         // the render distance is every chunk around the current one (so 9)
         // having a variable render distance would be too much work lmao
