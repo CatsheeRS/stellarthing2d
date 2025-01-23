@@ -1,16 +1,26 @@
 using System;
+using System.Net.Sockets;
 using Newtonsoft.Json;
 namespace starry;
 
 /// <summary>
-/// client :)
+/// this is what clients use to talk to the server
 /// </summary>
-public class Client {
-    public static Client thisClient { get; set; } = new();
+public static class Client
+{
+    /// <summary>
+    /// info for the current client
+    /// </summary>
+    public static ClientInfo thisClient { get; internal set; } = new();
+}
 
-    public Client()
+/// <summary>
+/// client info :)
+/// </summary>
+public struct ClientInfo {
+    public ClientInfo()
     {
-        thisClient = this;
+        Client.thisClient = this;
 
         // placeholder username
         if (username == "") username = $"player_{id}";
@@ -28,13 +38,6 @@ public class Client {
     /// if true the client can do things like kicking people and stuff
     /// </summary>
     public bool isAdmin { get; internal set; } = false;
-    /// <summary>
-    /// called when the server sends data to the client
-    /// </summary>
-    public event OnDataReceived? onDataReceived;
 
-    public delegate void OnDataReceived(string data, string type);
-
-    internal void gmsjgjsjgjrjsjgjjisrjigjjisrj(string data, string type) =>
-        onDataReceived?.Invoke(data, type);
+    internal NetworkStream? stream;
 }
