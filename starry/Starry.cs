@@ -79,7 +79,7 @@ public static class Starry {
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
-        Server.cleanup(Server.dummyClient);
+        Server.cleanup();
         Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
         Assets.cleanup();
         Window.cleanup();
