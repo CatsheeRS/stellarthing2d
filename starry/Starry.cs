@@ -23,14 +23,24 @@ public static class Starry {
     {
         // funni
         Starry.settings = settings;
+        Console.WriteLine($"{settings.gameName} {settings.gameVersion.asVersion()} - Starry {starryVersion.asVersion()}");
         Console.WriteLine("Use --verbose if the game is broken.");
-        Console.WriteLine("Use --headless to enable headless mode.");
+        Console.WriteLine("Use --server to enable server mode.");
 
         // opengl thread lmao
         Thread thread = new(Graphics.glLoop) {
             IsBackground = true,
         };
         thread.Start();
+
+        // funni server repl thingy
+        // Console.ReadLine() would usually stop everything i think???????/? idfk
+        if (settings.server) {
+            Thread threadma = new(replThingy) {
+                IsBackground = true,
+            };
+            threadma.Start();
+        }
 
         string title = $"{settings.gameName}";
         if (settings.showVersion) title += " " + settings.gameVersion.asVersion();
@@ -51,7 +61,7 @@ public static class Starry {
 
             // it's hardcoded into my brain
             if (isDebug()) {
-                if (Input.isKeyJustPressed(Key.f8)) return;
+                if (Input.isKeyJustPressed(Key.F8)) return;
             }
             
             // stuff
@@ -59,15 +69,17 @@ public static class Starry {
             await Task.Run(Timer.update);
             await Task.Run(Tilemap.update);
             await DebugMode.update();
-            // this being async has a small but non-zero chance of collapsing the space time continuum
-            Input.update(Window.deltaTime);
+            await Task.Run(() => Input.update(Window.deltaTime));
 
             Graphics.endDrawing();
         }
 
+        log("Starry is closing...");
+
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
+        Server.cleanup();
         Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
         Assets.cleanup();
         Window.cleanup();
@@ -133,6 +145,24 @@ public static class Starry {
         #else
         return false;
         #endif
+    }
+
+    static void replThingy()
+    {
+        while (true) {
+            string? stringma = Console.ReadLine();
+            if (!string.IsNullOrEmpty(stringma)) {
+                string[] cmd = stringma.Split(' ');
+
+                // commands :)
+                if (cmd.Length >= 1) {
+                    if (cmd[0] == "stop") {
+                        Window.close();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     // shorthands, youre supposed to use starry statically using static starry.Starry;

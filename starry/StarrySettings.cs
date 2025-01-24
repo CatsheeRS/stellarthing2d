@@ -28,9 +28,9 @@ public struct StarrySettings() {
     /// </summary>
     public bool fullscreen { get; set; } = true;
     /// <summary>
-    /// headless
+    /// enable this if you're putting the game on a dedicated server. this disables rendering and does some other stuff
     /// </summary>
-    public bool headless { get; set; } = false;
+    public bool server { get; set; } = false;
     /// <summary>
     /// the resolution the game is rendered at (it gets scaled to become the actual resolution)
     /// </summary>

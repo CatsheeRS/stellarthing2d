@@ -1,3 +1,7 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
@@ -6,7 +10,7 @@ namespace stellarthing;
 /// player
 /// </summary>
 public class Player : IEntity {
-    public EntityType entityType => EntityType.gameWorld;
+    public EntityType entityType => EntityType.GAME_WORLD;
     public string name => "Player";
     public string[] initGroups =>
         [Groups.PLAYER_GROUP, Groups.HUMAN_GROUP, Groups.SPECIES_GROUP];
@@ -23,34 +27,14 @@ public class Player : IEntity {
 
     public async void create()
     {
-        walkDown = new AnimationSprite(0.25,
-            await load<Sprite>("species/bobdown1.png"),
-            await load<Sprite>("species/bobdown2.png"),
-            await load<Sprite>("species/bobdown3.png"),
-            await load<Sprite>("species/bobdown4.png")
-        );
-        walkUp = new AnimationSprite(0.25,
-            await load<Sprite>("species/bobup1.png"),
-            await load<Sprite>("species/bobup2.png"),
-            await load<Sprite>("species/bobup3.png"),
-            await load<Sprite>("species/bobup4.png")
-        );
-        walkRight = new AnimationSprite(0.25,
-            await load<Sprite>("species/bobright1.png"),
-            await load<Sprite>("species/bobright2.png"),
-            await load<Sprite>("species/bobright3.png"),
-            await load<Sprite>("species/bobright4.png")
-        );
-        walkLeft = new AnimationSprite(0.25,
-            await load<Sprite>("species/bobleft1.png"),
-            await load<Sprite>("species/bobleft2.png"),
-            await load<Sprite>("species/bobleft3.png"),
-            await load<Sprite>("species/bobleft4.png")
-        );
+        walkDown = new AnimationSprite(0.25, "species/bobdown");
+        walkUp = new AnimationSprite(0.25, "species/bobup");
+        walkRight = new AnimationSprite(0.25, "species/bobright");
+        walkLeft = new AnimationSprite(0.25, "species/bobleft");
         
         tile = Entities.addComponent<Tile>(ent2ref(this));
         tile.sprite = new TileSprite(walkLeft, walkRight, walkUp, walkDown);
-        
+            
         lol = new() {
             sprite = new(await load<Sprite>("tiles/testl.png"),
                          await load<Sprite>("tiles/testr.png"),
@@ -73,6 +57,22 @@ public class Player : IEntity {
 
         var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
         aaa.play();
+
+        if (settings.server) {
+            await Server.create();
+
+            Server.onDataReceived += async (client, sender, type, obj) => {
+                log("does this even work??????");
+                if (type == "DO YOU LIKE BEANS ??") {
+                    log("Holy guacamole!");
+                    await Server.sendToPlayer(sender, "I do enjoy beans.", "h");
+                }
+            };
+        }
+        else {
+            ClientInfo mrpeepeepoopoo = new("Mr Peepeepoopoo");
+            await Client.connect("127.0.0.1", Server.GAME_PORT);
+        }
     }
 
     public async void update(double delta)
@@ -91,10 +91,10 @@ public class Player : IEntity {
         // it shouldn't go back to looking down when you didn't press anything
         if (dir != (0, 0)) {
             tile.side = dir switch {
-                (1, 0) => TileSide.right,
-                (-1, 0) => TileSide.left,
-                (0, 1) => TileSide.bottom,
-                (0, -1) => TileSide.top,
+                (1, 0) => TileSide.RIGHT,
+                (-1, 0) => TileSide.LEFT,
+                (0, 1) => TileSide.BOTTOM,
+                (0, -1) => TileSide.TOP,
                 _ => tile.side
             };
 
@@ -122,8 +122,12 @@ public class Player : IEntity {
         Tilemap.camPosition = tile.position.as2d();
 
         // why though
-        if (Input.isKeyJustPressed(Key.space)) {
+        if (Input.isKeyJustPressed(Key.SPACE)) {
             lasparticulas!.emit();
+        }
+
+        if (!settings.server && Input.isKeyJustPressed(Key.F9)) {
+            await Client.upload("DO YOU LIKE BEANS ??", "This is very important.");
         }
     }
 

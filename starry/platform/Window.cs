@@ -32,13 +32,14 @@ public static unsafe class Window {
     internal static WindowHandle* window;
     internal static bool fullscreen = false;
     internal static vec2i screensize = (0, 0);
+    internal static bool closing = false;
 
     /// <summary>
     /// creates the window :D
     /// </summary>
     public static unsafe void create(string title, vec2i size)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             // first we need glfw
@@ -76,7 +77,7 @@ public static unsafe class Window {
 
     static unsafe void setupCallbacks()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
@@ -103,7 +104,7 @@ public static unsafe class Window {
     /// </summary>
     public static void setFullscreen(bool fullscreen)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
@@ -140,7 +141,7 @@ public static unsafe class Window {
     /// </summary>
     public static Task<bool> isClosing()
     {
-        if (Starry.settings.headless) return new TaskCompletionSource<bool>(false).Task;
+        if (Starry.settings.server) return new TaskCompletionSource<bool>(closing).Task;
 
         TaskCompletionSource<bool> tcs = new();
         Graphics.actions.Enqueue(() => {
@@ -156,7 +157,7 @@ public static unsafe class Window {
             elapsedTime = current;
             fps = 1.0 / deltaTime;
 
-            tcs.SetResult(glfw.WindowShouldClose(window));
+            tcs.SetResult(glfw.WindowShouldClose(window) || closing);
         });
         Graphics.actionLoopEvent.Set();
         return tcs.Task;
@@ -167,7 +168,7 @@ public static unsafe class Window {
     /// </summary>
     public static void cleanup()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             if (glfw == null) return;
@@ -185,7 +186,7 @@ public static unsafe class Window {
     /// </summary>
     public static Task<vec2i> getSize()
     {
-        if (Starry.settings.headless) return new TaskCompletionSource<vec2i>((0, 0)).Task;
+        if (Starry.settings.server) return new TaskCompletionSource<vec2i>((0, 0)).Task;
 
         TaskCompletionSource<vec2i> tcs = new();
             Graphics.actions.Enqueue(() => {
@@ -203,13 +204,18 @@ public static unsafe class Window {
 
     internal static void invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             onClose?.Invoke(null, EventArgs.Empty);
         });
         Graphics.actionLoopEvent.Set();
     }
+
+    /// <summary>
+    /// closes the window :) (it's actualy gonna close on the next frame)
+    /// </summary>
+    public static void close() => closing = true;
 
     public delegate void ResizeEvent(vec2i newSize);
 }

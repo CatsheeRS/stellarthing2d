@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using SkiaSharp;
 namespace starry;
@@ -38,7 +39,7 @@ public record class Sprite: IAsset, ISprite {
 
     public void load(string path)
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
 
         Graphics.actions.Enqueue(() => {
             skbmp = SKBitmap.Decode(path);
@@ -57,7 +58,7 @@ public record class Sprite: IAsset, ISprite {
 
     public void cleanup()
     {
-        if (Starry.settings.headless) return;
+        if (Starry.settings.server) return;
         
         Graphics.actions.Enqueue(() => {
             skbmp?.Dispose();
@@ -108,10 +109,10 @@ public record class TileSprite: ISprite {
     public SKImage? getInternalImage()
     {
         return (side switch {
-            TileSide.left => left,
-            TileSide.right => right,
-            TileSide.top => top,
-            TileSide.bottom => bottom,
+            TileSide.LEFT => left,
+            TileSide.RIGHT => right,
+            TileSide.TOP => top,
+            TileSide.BOTTOM => bottom,
             _ => throw new Exception("moron"),
         }).getInternalImage();
     }
@@ -130,9 +131,44 @@ public record class AnimationSprite: ISprite {
     /// <summary>
     /// frame duration is in seconds
     /// </summary>
+    [Obsolete("Use the new framesPrefix method instead")]
     public AnimationSprite(double frameDuration, params ISprite[] frames)
     {
         this.frames = frames;
+        timer = new(frameDuration, true);
+        timer.timeout += () => {
+            currentFrame++;
+            if (currentFrame == this.frames.Length) currentFrame = 0;
+        };
+    }
+    
+    /// <summary>
+    /// frame duration is in seconds, framesPrefix will start at 1 (e.g if its "anims/walk_" it will find "anims/walk_1" first) because LUA 🎸
+    /// </summary>
+    public AnimationSprite(double frameDuration, string framesPrefix, string fileExtension = ".png")
+    {
+        Graphics.actions.Enqueue(async () =>
+        {
+            List<ISprite> foundFrames = new();
+            int currIndex = 1;
+            while (true)
+            {
+                if (File.Exists(Path.Combine(Starry.settings.assetPath, framesPrefix + currIndex + fileExtension)))
+                {
+                    Sprite spr = await Assets.load<Sprite>(framesPrefix + currIndex + fileExtension);
+                    foundFrames.Add(spr);
+
+                    currIndex++;
+                    continue;
+                }
+
+                break;
+            }
+
+            frames = foundFrames.ToArray();
+        });
+        Graphics.actionLoopEvent.Set();
+        
         timer = new(frameDuration, true);
         timer.timeout += () => {
             currentFrame++;
