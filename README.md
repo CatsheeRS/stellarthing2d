@@ -11,33 +11,40 @@ best game engine in the world awards 1921 winner
 10th best game engine when it comes to usability awards 3000 BC winner
 
 ## Epic features
-- Modern C# without being batshit insane
+- Modern C#
 - Overkill graphics (it uses [skia](https://skia.org/) (but [the c# version](https://github.com/mono/SkiaSharp)))
 - Acceptable math structs
 - Assets work
 - Async await everywhere
-- Tilemap.
+- Esoteric tilemap
 - Blazingly fast and very handsome entity system
 - COMING SOON: Sick sound effect and music system
-- COMING SOON: Multiplayer probably
 - COMING SOON: Acceptable UI
 - COMING SOON: Modding through lua
 
 # How to build
 
-just install .net 8.
+First you need the .NET 8 SDK
 
-there's these dependencies but i'm pretty sure nuget handles that
-- GLFW (through Silk.NET)
-- SkiaSharp
-- Newtonsoft.Json
+On Linux you're gonna have to install some libraries
 
-to release:
+Ubuntu:
 ```sh
+sudo apt install libvlc-dev -y
+```
+
+Fedora:
+```sh
+sudo dnf install vlc-devel -y
+```
+
+To release:
+```sh
+# idk how it goes on windows
 dotnet publish --os win -c Release --sc
 dotnet publish --os linux -c Release --sc
 ```
 
-it's somewhere in `stellarthing/bin/Release/` then the publish folder
+It's somewhere in `stellarthing/bin/Release/` then the publish folder
 
-if you're using windows you can try [this tutorial](https://www.google.com/search?q=how+to+install+linux)
+If you're using windows you can try [this tutorial](https://www.google.com/search?q=how+to+install+linux)
