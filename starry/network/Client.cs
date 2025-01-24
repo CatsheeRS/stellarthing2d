@@ -29,7 +29,13 @@ public static class Client
         try {
             running = true;
             client = new TcpClient(address, port);
+            thisClient = thisClient with {
+                stream = client.GetStream(),
+            };
             Starry.log($"Client {thisClient.username} ({thisClient.id}) connected to {address}:{port}");
+
+            // send client info to the server :)
+            await upload("starry.CLIENT_CONNECTED", thisClient);
 
             await handleConnection(client.GetStream());
 
@@ -43,11 +49,15 @@ public static class Client
 
     static async Task handleConnection(NetworkStream stream)
     {
-        while (true) {
+        while (running) {
             byte[] reply = new byte[Server.BUFFER_SIZE];
             int bytesRead = await stream.ReadAsync(reply, 0, reply.Length);
             
             string msg = Encoding.UTF8.GetString(reply, 0, bytesRead);
+            
+            // TODO don't.
+            Starry.log($"Client received message: {msg}");
+
             var parsed = Server.deserializeData(msg);
             onDataReceived?.Invoke(parsed.Item1, parsed.Item2, parsed.Item3);
         }
@@ -81,12 +91,16 @@ public static class Client
 /// client info :)
 /// </summary>
 public struct ClientInfo {
+    public ClientInfo(string username)
+    {
+        Client.thisClient = this;
+        this.username = username;
+    }
+
     public ClientInfo()
     {
         Client.thisClient = this;
-
-        // placeholder username
-        if (username == "") username = $"player_{id}";
+        username = $"player_{id}";
     }
 
     /// <summary>

@@ -34,7 +34,8 @@ public static class Server {
     static bool running = false;
     static TcpListener? server;
     static ConcurrentDictionary<string, ClientInfo> clients = new();
-    static ConcurrentDictionary<string, bool> admins = new();
+    // this is just for the player disconnected event
+    static ConcurrentDictionary<string, string> ipIds = new();
 
     /// <summary>
     /// used by the server to run functions that require authentication
@@ -47,22 +48,38 @@ public static class Server {
     /// <summary>
     /// starts an epic awesome cool handsome server. the host will become an admin but won't be connected automatically.
     /// </summary>
-    public static async Task create(ClientInfo? host)
+    public static async Task create()
     {
         running = true;
         server = new TcpListener(IPAddress.Any, GAME_PORT);
         server.Start();
 
-        // make the fuckinmg host a fucking admin
-        if (host != null) {
-            admins[host.Value.id] = true;
-        }
+        // update crap :)
+        serverTick.start();
+        serverTick.timeout += () => onUpdate?.Invoke(Window.deltaTime);
+
+        // the player connected event has client info, we have to wait for the client to send
+        // such info
+        onDataReceived += (client, type, obj) => {
+            if (type != "starry.CLIENT_CONNECTED") return;
+
+            var info = JsonConvert.DeserializeObject<ClientInfo>(obj);
+            clients.TryAdd(client, info);
+            if (info.stream != null) {
+                // quite the mouthful (that's just getting the ip so it can use that as the key)
+                ipIds.TryAdd(info.stream.Socket.RemoteEndPoint?.ToString() ?? "", client);
+            }
+            
+            onPlayerConnected?.Invoke(client, info.username);
+            Starry.log($"Player {info.username} ({info.id}) connected!");
+        };
 
         Starry.log($"Server has started! Listening on port {GAME_PORT}");
 
         // loop for receiving stuff :)
         while (running) {
             TcpClient client = await server.AcceptTcpClientAsync();
+            Starry.log($"Client {client.Client.RemoteEndPoint?.ToString() ?? "unknown ip"} connected, waiting for client information");
             await handleClient(client);
         }
     }
@@ -77,12 +94,19 @@ public static class Server {
                 int bytesRead = await streamma.ReadAsync(buffer, 0, buffer.Length);
 
                 // client disconnected
-                if (bytesRead == 0) break;
+                if (bytesRead == 0) {
+                    // quite the mouthful (that's just getting the ip so it can use that as the key)
+                    ClientInfo info = clients[ipIds[
+                        streamma.Socket.RemoteEndPoint?.ToString() ?? ""]];
+                    onPlayerDisconnected?.Invoke(info.id, info.username);
+                    Starry.log($"Player {info.username} ({info.id}) disconnected!");
+                    break;
+                }
 
                 string msg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
                 // TODO remove this because the whole point of a server is receiving messages
-                Starry.log("Message received ", msg);
+                Starry.log($"Message received {msg}");
 
                 var parsed = deserializeData(msg);
                 onDataReceived?.Invoke(parsed.Item1, parsed.Item2, parsed.Item3);
@@ -103,6 +127,7 @@ public static class Server {
         // this is gonna stop the loop thing
         running = false;
         server?.Stop();
+        Starry.log("Server stopped.");
     }
 
     /// <summary>
@@ -134,10 +159,7 @@ public static class Server {
     /// </summary>
     public static string serializeData(string clientId, string type, object obj)
     {
-        return $"{clientId}&{type}&{JsonConvert.SerializeObject(obj, new JsonSerializerSettings() {
-            // references are cool :)
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-        })}";
+        return $"{clientId}&{type}&{JsonConvert.SerializeObject(obj)}";
     }
 
     /// <summary>
