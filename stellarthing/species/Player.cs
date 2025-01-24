@@ -76,22 +76,6 @@ public class Player : IEntity {
 
         var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
         aaa.play();
-
-        if (settings.server) {
-            await Server.create();
-
-            Server.onDataReceived += async (client, sender, type, obj) => {
-                log("does this even work??????");
-                if (type == "DO YOU LIKE BEANS ??") {
-                    log("Holy guacamole!");
-                    await Server.sendToPlayer(sender, "I do enjoy beans.", "h");
-                }
-            };
-        }
-        else {
-            ClientInfo mrpeepeepoopoo = new("Mr Peepeepoopoo");
-            await Client.connect("127.0.0.1", Server.GAME_PORT);
-        }
     }
 
     public async void update(double delta)

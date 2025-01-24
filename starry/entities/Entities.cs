@@ -71,8 +71,8 @@ public static class Entities {
             addToGroup(group, ent2ref(entity));
         }
 
-        entity.create();
         components.TryAdd(ent2ref(entity), []);
+        entity.create();
     }
 
     /// <summary>
