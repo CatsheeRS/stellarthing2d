@@ -80,9 +80,11 @@ public class Player : IEntity {
         if (settings.server) {
             await Server.create();
 
-            Server.onDataReceived += async (client, type, obj) => {
-                if (type == "DO YOU LIKE BEANS??????????????????") {
-                    await Server.sendToPlayer(client, "I do enjoy beans.", "h");
+            Server.onDataReceived += async (client, sender, type, obj) => {
+                log("does this even work??????");
+                if (type == "DO YOU LIKE BEANS ??") {
+                    log("Holy guacamole!");
+                    await Server.sendToPlayer(sender, "I do enjoy beans.", "h");
                 }
             };
         }
@@ -144,7 +146,7 @@ public class Player : IEntity {
         }
 
         if (!settings.server && Input.isKeyJustPressed(Key.F9)) {
-            await Client.upload("DO YOU LIKE BEANS??????????????????", "This is very important.");
+            await Client.upload("DO YOU LIKE BEANS ??", "This is very important.");
         }
     }
 

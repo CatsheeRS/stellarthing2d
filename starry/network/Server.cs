@@ -60,17 +60,14 @@ public static class Server {
 
         // the player connected event has client info, we have to wait for the client to send
         // such info
-        onDataReceived += (client, type, obj) => {
+        onDataReceived += (client, sender, type, obj) => {
             if (type != "starry.CLIENT_CONNECTED") return;
 
             var info = JsonConvert.DeserializeObject<ClientInfo>(obj);
-            clients.TryAdd(client, info);
-            if (info.stream != null) {
-                // quite the mouthful (that's just getting the ip so it can use that as the key)
-                ipIds.TryAdd(info.stream.Socket.RemoteEndPoint?.ToString() ?? "", client);
-            }
-            
-            onPlayerConnected?.Invoke(client, info.username);
+            clients.TryAdd(sender, info);
+            ipIds.TryAdd(client.Client.RemoteEndPoint?.ToString() ?? "", sender);
+
+            onPlayerConnected?.Invoke(sender, info.username);
             Starry.log($"Player {info.username} ({info.id}) connected!");
         };
 
@@ -109,7 +106,7 @@ public static class Server {
                 Starry.log($"Message received {msg}");
 
                 var parsed = deserializeData(msg);
-                onDataReceived?.Invoke(parsed.Item1, parsed.Item2, parsed.Item3);
+                onDataReceived?.Invoke(client, parsed.Item1, parsed.Item2, parsed.Item3);
             }
         }
         catch (Exception e) {
@@ -185,5 +182,5 @@ public static class Server {
     public delegate void UpdateLoop(double delta);
     public delegate void PlayerConnected(string id, string username);
     public delegate void PlayerDisconnected(string id, string username);
-    public delegate void DataReceived(string senderId, string type, string obj);
+    public delegate void DataReceived(TcpClient client, string senderId, string type, string obj);
 }

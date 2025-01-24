@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,36 +87,4 @@ public static class Client
     }
 
     public delegate void OnDataReceived(string senderId, string type, string obj);
-}
-
-/// <summary>
-/// client info :)
-/// </summary>
-public struct ClientInfo {
-    public ClientInfo(string username)
-    {
-        Client.thisClient = this;
-        this.username = username;
-    }
-
-    public ClientInfo()
-    {
-        Client.thisClient = this;
-        username = $"player_{id}";
-    }
-
-    /// <summary>
-    /// its the username :)
-    /// </summary>
-    public string username { get; set; } = "";
-    /// <summary>
-    /// random 4 characters long base64 string (enough for 16.7 million players)
-    /// </summary>
-    public string id { get; } = StMath.randomBase64(4);
-    /// <summary>
-    /// if true the client can do things like kicking people and stuff
-    /// </summary>
-    public bool isAdmin { get; internal set; } = false;
-
-    internal NetworkStream? stream;
 }
