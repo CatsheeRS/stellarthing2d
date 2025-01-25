@@ -1,11 +1,15 @@
 using System;
-using LibVLCSharp.Shared;
+using SDL2;
 namespace starry;
 
 /// <summary>
-/// it's audio. powered by libvlc so it supports pretty much every format you can open with VLC.
+/// it's audio. supported formats are wav, mp3, ogg, and flac. powered by sdl2.
 /// </summary>
 public record class Audio: IAsset {
+    bool iswav = false;
+    nint sdlwav;
+    nint sdlmus;
+
     vec3? pos = null;
     /// <summary>
     /// the posiiton of the audio. setting it turns your audio into spatial audio, if you want it to go back for some reason just set it to null
@@ -19,15 +23,12 @@ public record class Audio: IAsset {
 
     double vol = 0;
     /// <summary>
-    /// volume multiplier. 1 is the normal volume
+    /// volume multiplier. 1 is the normal volume. this can't go above 300%
     /// </summary>
     public double volume {
         get => vol;
         set {
-            vol = value;
-            if (lplayer == null || rplayer == null) return;
-            lplayer.Volume = (int)(vol * 100 * (1 - Math.Max(0, pain)));
-            rplayer.Volume = (int)(vol * 100 * (1 + Math.Max(0, pain)));
+            vol = Math.Clamp(value, 0, 3);
         }
     }
 
@@ -39,9 +40,6 @@ public record class Audio: IAsset {
         get => pain;
         set {
             pain = Math.Clamp(value, 0, 1);
-            if (lplayer == null || rplayer == null) return;
-            lplayer.Volume = (int)(vol * 100 * (1 - Math.Max(0, pain)));
-            rplayer.Volume = (int)(vol * 100 * (1 + Math.Max(0, pain)));
         }
     }
 
@@ -53,31 +51,27 @@ public record class Audio: IAsset {
         get => elpauso;
         set {
             elpauso = value;
-            lplayer?.SetPause(!value);
-            rplayer?.SetPause(!value);
         }
     }
-    MediaPlayer? lplayer;
-    MediaPlayer? rplayer;
-    Media? media;
-
-    public static LibVLC? vlc;
 
     public void load(string path)
     {
         Graphics.actions.Enqueue(() => {
-            if (vlc == null) {
-                Starry.log("Can't load audio file; libvlc hasn't been initialized yet");
-                return;
+            // i fucking hate sdl
+            if (path.EndsWith(".wav")) {
+                sdlwav = SDL_mixer.Mix_LoadWAV(path);
+                if (sdlwav == 0) {
+                    Starry.log($"Couldn't load {path}: {SDL_mixer.Mix_GetError()}");
+                    return;
+                }
             }
-
-            // vlc doesn't have this fancy panning so we have to make 2 media players
-            lplayer = new MediaPlayer(vlc);
-            rplayer = new MediaPlayer(vlc);
-            lplayer.SetChannel(AudioOutputChannel.Left);
-            rplayer.SetChannel(AudioOutputChannel.Right);
-
-            media = new Media(vlc, path);
+            else {
+                sdlmus = SDL_mixer.Mix_LoadMUS(path);
+                if (sdlmus == 0) {
+                    Starry.log($"Couldn't load {path}: {SDL_mixer.Mix_GetError()}");
+                    return;
+                }
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -85,9 +79,8 @@ public record class Audio: IAsset {
     public void cleanup()
     {
         Graphics.actions.Enqueue(() => {
-            lplayer?.Dispose();
-            rplayer?.Dispose();
-            media?.Dispose();
+            if (iswav) SDL_mixer.Mix_FreeChunk(sdlwav);
+            else SDL_mixer.Mix_FreeMusic(sdlmus);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -98,9 +91,8 @@ public record class Audio: IAsset {
     public void play()
     {
         Graphics.actions.Enqueue(() => {
-            if (lplayer == null || rplayer == null || media == null) return;
-            lplayer.Play(media);
-            rplayer.Play(media);
+            if (iswav) SDL_mixer.Mix_PlayChannel(-1, sdlwav, 0);
+            else SDL_mixer.Mix_PlayMusic(sdlmus, 0);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -110,8 +102,8 @@ public record class Audio: IAsset {
     /// </summary>
     public void stop() {
         Graphics.actions.Enqueue(() => {
-            lplayer?.Stop();
-            rplayer?.Stop();
+            if (iswav)
+            SDL_mixer.Mix_HaltMusic()
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -119,15 +111,14 @@ public record class Audio: IAsset {
     // engine stuff
     public static unsafe void create()
     {
-        // i'm not sure if libvlc requires that but im using this just in case
         Graphics.actions.Enqueue(() => {
-            Core.Initialize();
+            if (SDL.SDL_Init(SDL.SDL_INIT_AUDIO) < 0) {
+                throw new Exception($"Couldn't initialize SDL2 audio: {SDL.SDL_GetError()}");
+            }
 
-            vlc = new LibVLC();
-            // this fills your console with pointless crap
-            //vlc.Log += (sender, e) => Starry.log($"[{e.Level}] {e.Module}:{e.Message}");
-
-            Starry.log("Initialized audio");
+            if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+                throw new Exception($"Couldn't initialize SDL2 mixer: {SDL_mixer.Mix_GetError()}");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -135,7 +126,9 @@ public record class Audio: IAsset {
     public static unsafe void cleanupButAtTheEndBecauseItCleansUpTheBackend()
     {
         Graphics.actions.Enqueue(() => {
-            vlc?.Dispose();
+            SDL_mixer.Mix_HaltChannel(-1);
+            SDL_mixer.Mix_CloseAudio();
+            SDL.SDL_Quit();
         });
         Graphics.actionLoopEvent.Set();
     }
