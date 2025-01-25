@@ -28,15 +28,17 @@ First you need the .NET 8 SDK
 
 On Linux you're gonna have to install some libraries
 
-Ubuntu:
+Ubuntu: (untested)
 ```sh
 sudo apt install libvlc-dev -y
 ```
 
 Fedora:
 ```sh
-sudo dnf install vlc-devel -y
+sudo dnf install vlc-devel vlc-cli vlc-libs -y
 ```
+
+If that doesn't work you can also try installing `vlc`
 
 To release:
 ```sh

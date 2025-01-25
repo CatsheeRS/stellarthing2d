@@ -1,178 +1,93 @@
 using System;
-using System.Buffers.Binary;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Silk.NET.OpenAL;
+using LibVLCSharp.Shared;
 namespace starry;
 
 /// <summary>
-/// it's audio. please note only .ogg is supported
+/// it's audio. powered by libvlc so it supports pretty much every format you can open with VLC.
 /// </summary>
 public record class Audio: IAsset {
-    uint source = 0;
-    uint buffer = 0;
-    internal static AL? al;
-    internal static ALContext? alc;
-    internal static unsafe Device* device;
-    internal static unsafe Context* context;
-
-    public static unsafe void create()
-    {
-        Graphics.actions.Enqueue(() => {
-            alc = ALContext.GetApi();
-            al = AL.GetApi();
-            device = alc.OpenDevice("");
-            if (device == null) {
-                Starry.log("Couldn't create device");
-                return;
-            }
-
-            context = alc.CreateContext(device, null);
-            alc.MakeContextCurrent(context);
-            al.GetError();
-
-            Starry.log("OpenAL has been initialized");
-        });
-        Graphics.actionLoopEvent.Set();
-    }
-
+    vec3? pos = null;
     /// <summary>
-    /// there's no good library for this lmao
+    /// the posiiton of the audio. setting it turns your audio into spatial audio, if you want it to go back for some reason just set it to null
     /// </summary>
-    internal static unsafe Task<(uint, uint)> parsewav(string path)
+    public vec3? position {
+        get => pos;
+        set {
+            pos = value;
+        }
+    }
+
+    double vol = 0;
+    /// <summary>
+    /// volume multiplier. 1 is the normal volume
+    /// </summary>
+    public double volume {
+        get => vol;
+        set {
+            vol = value;
+            if (lplayer == null || rplayer == null) return;
+            lplayer.Volume = (int)(vol * 100 * (1 - Math.Max(0, pain)));
+            rplayer.Volume = (int)(vol * 100 * (1 + Math.Max(0, pain)));
+        }
+    }
+
+    double pain = 0;
+    /// <summary>
+    /// the stereo panning, -1 is completely on the left and 1 is completely on the right
+    /// </summary>
+    public double pan {
+        get => pain;
+        set {
+            pain = Math.Clamp(value, 0, 1);
+            if (lplayer == null || rplayer == null) return;
+            lplayer.Volume = (int)(vol * 100 * (1 - Math.Max(0, pain)));
+            rplayer.Volume = (int)(vol * 100 * (1 + Math.Max(0, pain)));
+        }
+    }
+
+    bool elpauso = false;
+    /// <summary>
+    /// if true, the audio is paused.
+    /// </summary>
+    public bool paused {
+        get => elpauso;
+        set {
+            elpauso = value;
+            lplayer?.SetPause(!value);
+            rplayer?.SetPause(!value);
+        }
+    }
+    MediaPlayer? lplayer;
+    MediaPlayer? rplayer;
+    Media? media;
+
+    public static LibVLC? vlc;
+
+    public void load(string path)
     {
-        TaskCompletionSource<(uint, uint)> mate = new();
         Graphics.actions.Enqueue(() => {
-            // stolen from https://github.com/dotnet/Silk.NET/blob/main/examples/CSharp/OpenAL%20Demos/WavePlayer/Program.cs
-            // im not smart
-            ReadOnlySpan<byte> file = File.ReadAllBytes(path);
-            int i = 0;
-            if (file[i++] != 'R' || file[i++] != 'I' || file[i++] != 'F' || file[i++] != 'F') {
-                Starry.log($"{path} is not in RIFF format");
-                mate.SetResult((0, 0));
+            if (vlc == null) {
+                Starry.log("Can't load audio file; libvlc hasn't been initialized yet");
                 return;
             }
 
-            var chunkSize = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i,  4));
-            i += 4;
+            // vlc doesn't have this fancy panning so we have to make 2 media players
+            lplayer = new MediaPlayer(vlc);
+            rplayer = new MediaPlayer(vlc);
+            lplayer.SetChannel(AudioOutputChannel.Left);
+            rplayer.SetChannel(AudioOutputChannel.Right);
 
-            if (file[i++] != 'W' || file[i++] != 'A' || file[i++] != 'V' || file[i++] != 'E') {
-                Starry.log($"{path} is not in WAVE format");
-                mate.SetResult((0, 0));
-                return;
-            }
-
-            short numChannels = -1;
-            int sampleRate = -1;
-            int byteRate = -1;
-            short blockAlign = -1;
-            short bitsPerSample = -1;
-            BufferFormat format = 0;
-            
-            var source = al!.GenSource();
-            var buffer = al.GenBuffer();
-            al.SetSourceProperty(source, SourceBoolean.Looping, true);
-
-            while (i + 4 < file.Length) {
-                var identifier = "" + (char)file[i++] + (char)file[i++] + (char)file[i++] + (char)file[i++];
-                var size = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                i += 4;
-                if (identifier == "fmt ") {
-                    if (size != 16) {
-                        Starry.log($"Unknown Audio Format with subchunk1 size {size}");
-                    }
-                    else {
-                        var audioFormat = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                        i += 2;
-                        if (audioFormat != 1) {
-                            Starry.log($"Unknown Audio Format with ID {audioFormat}");
-                        }
-                        else {
-                            numChannels = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                            sampleRate = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                            i += 4;
-                            byteRate = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                            i += 4;
-                            blockAlign = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                            bitsPerSample = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                    
-                            if (numChannels == 1) {
-                                if (bitsPerSample == 8) format = BufferFormat.Mono8;
-                                else if (bitsPerSample == 16) format = BufferFormat.Mono16;
-                                else {
-                                    Starry.log($"Can't Play mono {bitsPerSample} sound.");
-                                }
-                            }
-                            else if (numChannels == 2) {
-                                if (bitsPerSample == 8) format = BufferFormat.Stereo8;
-                                else if (bitsPerSample == 16) format = BufferFormat.Stereo16;
-                                else {
-                                    Starry.log($"Can't Play stereo {bitsPerSample} sound.");
-                                }
-                            }
-                            else {
-                                Starry.log($"Can't play audio with {numChannels} sound");
-                            }
-                        }
-                    }
-                } 
-                else if (identifier == "data") {
-                    var data = file.Slice(i, size);
-                    i += size;
-                    
-                    fixed (byte* pData = data) {
-                        al.BufferData(buffer, format, pData, size, sampleRate);
-                    }
-                    //Starry.log($"Read {size} bytes Data");
-                }
-                else if (identifier == "JUNK") {
-                    // this exists to align things
-                    i += size;
-                }
-                else if (identifier == "iXML") {
-                    var v = file.Slice(i, size);
-                    var str = Encoding.ASCII.GetString(v);
-                    //Starry.log($"iXML Chunk: {str}");
-                    i += size;
-                }
-                else {
-                    //Starry.log($"Unknown Section: {identifier}");
-                    i += size;
-                }
-            }
-
-            /*Starry.log (
-                $"Success. Detected RIFF-WAVE audio file, PCM encoding. {numChannels} Channels, {sampleRate} Sample Rate, {byteRate} Byte Rate, {blockAlign} Block Align, {bitsPerSample} Bits per Sample"
-            );*/
-
-            mate.SetResult((source, buffer));
-        });
-        Graphics.actionLoopEvent.Set();
-        return mate.Task;
-    }
-
-    public static unsafe void cleanupButAtTheEndBecauseItCleansUpOpenAl()
-    {
-        Graphics.actions.Enqueue(() => {
-            alc!.DestroyContext(context);
-            alc.CloseDevice(device);
-            al!.Dispose();
-            alc.Dispose();
+            media = new Media(vlc, path);
         });
         Graphics.actionLoopEvent.Set();
     }
-
-    public async void load(string path) => (source, buffer) = await parsewav(path);
 
     public void cleanup()
     {
         Graphics.actions.Enqueue(() => {
-            al!.DeleteSource(source);
-            al.DeleteBuffer(buffer);
+            lplayer?.Dispose();
+            rplayer?.Dispose();
+            media?.Dispose();
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -183,20 +98,9 @@ public record class Audio: IAsset {
     public void play()
     {
         Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourcePlay(source);
-        });
-        Graphics.actionLoopEvent.Set();
-    }
-
-    /// <summary>
-    /// pauses the audio. you can resume the audio with <c>play()</c>
-    /// </summary>
-    public void pause()
-    {
-        Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourcePause(source);
+            if (lplayer == null || rplayer == null || media == null) return;
+            lplayer.Play(media);
+            rplayer.Play(media);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -206,8 +110,32 @@ public record class Audio: IAsset {
     /// </summary>
     public void stop() {
         Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourceStop(source);
+            lplayer?.Stop();
+            rplayer?.Stop();
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    // engine stuff
+    public static unsafe void create()
+    {
+        // i'm not sure if libvlc requires that but im using this just in case
+        Graphics.actions.Enqueue(() => {
+            Core.Initialize();
+
+            vlc = new LibVLC();
+            // this fills your console with pointless crap
+            //vlc.Log += (sender, e) => Starry.log($"[{e.Level}] {e.Module}:{e.Message}");
+
+            Starry.log("Initialized audio");
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    public static unsafe void cleanupButAtTheEndBecauseItCleansUpTheBackend()
+    {
+        Graphics.actions.Enqueue(() => {
+            vlc?.Dispose();
         });
         Graphics.actionLoopEvent.Set();
     }

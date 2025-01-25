@@ -74,7 +74,7 @@ public class Player : IEntity {
             colorEndFunc = () => (255, 255, 255, 0),
         };
 
-        var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
+        var aaa = await load<Audio>("music/Legacy Menu.ogg");
         aaa.play();
     }
 
@@ -127,10 +127,6 @@ public class Player : IEntity {
         // why though
         if (Input.isKeyJustPressed(Key.SPACE)) {
             lasparticulas!.emit();
-        }
-
-        if (!settings.server && Input.isKeyJustPressed(Key.F9)) {
-            await Client.upload("DO YOU LIKE BEANS ??", "This is very important.");
         }
     }
 
