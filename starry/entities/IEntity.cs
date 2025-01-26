@@ -13,6 +13,16 @@ public interface IEntity {
     /// ran every frame
     /// </summary
     public void update(double delta) {}
+    
+    /// <summary>
+    /// ran every frame (if server)
+    /// </summary
+    public void serverUpdate(double delta) {}
+    /// <summary>
+    /// ran every frame (if client)
+    /// </summary
+    public void clientUpdate(double delta) {}
+    
     /// <summary>
     /// also ran every frame but youre supposed to draw stuff here
     /// </summary>

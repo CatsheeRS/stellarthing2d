@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using starry;
@@ -27,14 +26,34 @@ public class Player : IEntity {
 
     public async void create()
     {
-        walkDown = new AnimationSprite(0.25, "species/bobdown");
-        walkUp = new AnimationSprite(0.25, "species/bobup");
-        walkRight = new AnimationSprite(0.25, "species/bobright");
-        walkLeft = new AnimationSprite(0.25, "species/bobleft");
+        walkDown = new AnimationSprite(0.25,
+            await load<Sprite>("species/bobdown1.png"),
+            await load<Sprite>("species/bobdown2.png"),
+            await load<Sprite>("species/bobdown3.png"),
+            await load<Sprite>("species/bobdown4.png")
+        );
+        walkUp = new AnimationSprite(0.25,
+            await load<Sprite>("species/bobup1.png"),
+            await load<Sprite>("species/bobup2.png"),
+            await load<Sprite>("species/bobup3.png"),
+            await load<Sprite>("species/bobup4.png")
+        );
+        walkRight = new AnimationSprite(0.25,
+            await load<Sprite>("species/bobright1.png"),
+            await load<Sprite>("species/bobright2.png"),
+            await load<Sprite>("species/bobright3.png"),
+            await load<Sprite>("species/bobright4.png")
+        );
+        walkLeft = new AnimationSprite(0.25,
+            await load<Sprite>("species/bobleft1.png"),
+            await load<Sprite>("species/bobleft2.png"),
+            await load<Sprite>("species/bobleft3.png"),
+            await load<Sprite>("species/bobleft4.png")
+        );
         
         tile = Entities.addComponent<Tile>(ent2ref(this));
         tile.sprite = new TileSprite(walkLeft, walkRight, walkUp, walkDown);
-            
+        
         lol = new() {
             sprite = new(await load<Sprite>("tiles/testl.png"),
                          await load<Sprite>("tiles/testr.png"),

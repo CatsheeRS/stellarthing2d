@@ -16,7 +16,7 @@ internal class Program {
             server = args.Contains("--server"),
             gameName = "Stellarthing",
             gameVersion = (0, 11, 0),
-            fullscreen = true,
+            fullscreen = false,
             assetPath = Path.GetFullPath("assets"),
             renderSize = (320, 180),
             antiAliasing = false,

@@ -106,8 +106,20 @@ public static class Entities {
         static void mate(IEntity entity) {
             entity.update(Window.deltaTime);
             entity.draw();
+
+            if (Starry.settings.server)
+                entity.serverUpdate(Window.deltaTime);
+            else
+                entity.clientUpdate(Window.deltaTime);
+            
             foreach (IComponent component in components[ent2ref(entity)]) {
                 component.update(entity, Window.deltaTime);
+                
+                if (Starry.settings.server)
+                    component.serverUpdate(entity, Window.deltaTime);
+                else
+                    component.clientUpdate(entity, Window.deltaTime);
+                
                 component.draw(entity);
             }
         }
