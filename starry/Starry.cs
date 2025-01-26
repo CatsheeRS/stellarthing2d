@@ -33,15 +33,6 @@ public static class Starry {
         };
         thread.Start();
 
-        // funni server repl thingy
-        // Console.ReadLine() would usually stop everything i think???????/? idfk
-        if (settings.server) {
-            Thread threadma = new(replThingy) {
-                IsBackground = true,
-            };
-            threadma.Start();
-        }
-
         string title = $"{settings.gameName}";
         if (settings.showVersion) title += " " + settings.gameVersion.asVersion();
         
@@ -79,8 +70,7 @@ public static class Starry {
         Window.invokeTheInfamousCloseEventBecauseCeeHashtagIsStupid();
 
         // fccking kmodules
-        Server.cleanup();
-        Audio.cleanupButAtTheEndBecauseItCleansUpOpenAl();
+        Audio.cleanupButAtTheEndBecauseItCleansUpTheBackend();
         Assets.cleanup();
         Window.cleanup();
     }
@@ -147,24 +137,19 @@ public static class Starry {
         #endif
     }
 
-    static void replThingy()
+    /// <summary>
+    /// the miniaudio bindings i'm using doesn't convert strings to c strings lmao
+    /// </summary>
+    public static unsafe sbyte* string2sbytePtr(string str)
     {
-        while (true) {
-            string? stringma = Console.ReadLine();
-            if (!string.IsNullOrEmpty(stringma)) {
-                string[] cmd = stringma.Split(' ');
-
-                // commands :)
-                if (cmd.Length >= 1) {
-                    if (cmd[0] == "stop") {
-                        Window.close();
-                        break;
-                    }
-                }
-            }
+        byte[] bytes = Encoding.ASCII.GetBytes(str);
+        sbyte* mate;
+        fixed (byte* ptr = bytes) {
+            mate = (sbyte*)ptr;
         }
+        return mate;
     }
-
+    
     // shorthands, youre supposed to use starry statically using static starry.Starry;
     /// <summary>
     /// loads the assets and then puts it in a handsome dictionary of stuff so its blazingly fast or smth idfk

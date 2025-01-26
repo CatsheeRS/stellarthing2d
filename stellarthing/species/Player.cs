@@ -55,24 +55,8 @@ public class Player : IEntity {
             colorEndFunc = () => (255, 255, 255, 0),
         };
 
-        var aaa = await load<Audio>("mrbeastification-killer-3000.wav");
+        var aaa = await load<Audio>("music/Legacy Menu.mp3");
         aaa.play();
-
-        if (settings.server) {
-            await Server.create();
-
-            Server.onDataReceived += async (client, sender, type, obj) => {
-                log("does this even work??????");
-                if (type == "DO YOU LIKE BEANS ??") {
-                    log("Holy guacamole!");
-                    await Server.sendToPlayer(sender, "I do enjoy beans.", "h");
-                }
-            };
-        }
-        else {
-            ClientInfo mrpeepeepoopoo = new("Mr Peepeepoopoo");
-            await Client.connect("127.0.0.1", Server.GAME_PORT);
-        }
     }
 
     public async void update(double delta)
@@ -124,10 +108,6 @@ public class Player : IEntity {
         // why though
         if (Input.isKeyJustPressed(Key.SPACE)) {
             lasparticulas!.emit();
-        }
-
-        if (!settings.server && Input.isKeyJustPressed(Key.F9)) {
-            await Client.upload("DO YOU LIKE BEANS ??", "This is very important.");
         }
     }
 

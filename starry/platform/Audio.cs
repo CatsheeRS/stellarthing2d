@@ -1,178 +1,77 @@
 using System;
-using System.Buffers.Binary;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Silk.NET.OpenAL;
+using MiniaudioSharp;
 namespace starry;
 
 /// <summary>
-/// it's audio. please note only .ogg is supported
+/// it's audio. supported formats are wav, mp3, and flac. i would support ogg but this is just using miniaudio and i'm too stupid to add ogg support
 /// </summary>
-public record class Audio: IAsset {
-    uint source = 0;
-    uint buffer = 0;
-    internal static AL? al;
-    internal static ALContext? alc;
-    internal static unsafe Device* device;
-    internal static unsafe Context* context;
-
-    public static unsafe void create()
-    {
-        Graphics.actions.Enqueue(() => {
-            alc = ALContext.GetApi();
-            al = AL.GetApi();
-            device = alc.OpenDevice("");
-            if (device == null) {
-                Starry.log("Couldn't create device");
-                return;
-            }
-
-            context = alc.CreateContext(device, null);
-            alc.MakeContextCurrent(context);
-            al.GetError();
-
-            Starry.log("OpenAL has been initialized");
-        });
-        Graphics.actionLoopEvent.Set();
-    }
-
+public class Audio: IAsset {
+    // Field 'Audio.engine' is never assigned to, and will always have its default value 
+    // shut the fuck up
+    unsafe static ma_engine* engine;
+    unsafe ma_sound* snd;
+    vec3? pos = null;
     /// <summary>
-    /// there's no good library for this lmao
+    /// the posiiton of the audio. setting it turns your audio into spatial audio, if you want it to go back for some reason just set it to null
     /// </summary>
-    internal static unsafe Task<(uint, uint)> parsewav(string path)
-    {
-        TaskCompletionSource<(uint, uint)> mate = new();
-        Graphics.actions.Enqueue(() => {
-            // stolen from https://github.com/dotnet/Silk.NET/blob/main/examples/CSharp/OpenAL%20Demos/WavePlayer/Program.cs
-            // im not smart
-            ReadOnlySpan<byte> file = File.ReadAllBytes(path);
-            int i = 0;
-            if (file[i++] != 'R' || file[i++] != 'I' || file[i++] != 'F' || file[i++] != 'F') {
-                Starry.log($"{path} is not in RIFF format");
-                mate.SetResult((0, 0));
-                return;
-            }
-
-            var chunkSize = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i,  4));
-            i += 4;
-
-            if (file[i++] != 'W' || file[i++] != 'A' || file[i++] != 'V' || file[i++] != 'E') {
-                Starry.log($"{path} is not in WAVE format");
-                mate.SetResult((0, 0));
-                return;
-            }
-
-            short numChannels = -1;
-            int sampleRate = -1;
-            int byteRate = -1;
-            short blockAlign = -1;
-            short bitsPerSample = -1;
-            BufferFormat format = 0;
-            
-            var source = al!.GenSource();
-            var buffer = al.GenBuffer();
-            al.SetSourceProperty(source, SourceBoolean.Looping, true);
-
-            while (i + 4 < file.Length) {
-                var identifier = "" + (char)file[i++] + (char)file[i++] + (char)file[i++] + (char)file[i++];
-                var size = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                i += 4;
-                if (identifier == "fmt ") {
-                    if (size != 16) {
-                        Starry.log($"Unknown Audio Format with subchunk1 size {size}");
-                    }
-                    else {
-                        var audioFormat = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                        i += 2;
-                        if (audioFormat != 1) {
-                            Starry.log($"Unknown Audio Format with ID {audioFormat}");
-                        }
-                        else {
-                            numChannels = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                            sampleRate = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                            i += 4;
-                            byteRate = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(i, 4));
-                            i += 4;
-                            blockAlign = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                            bitsPerSample = BinaryPrimitives.ReadInt16LittleEndian(file.Slice(i, 2));
-                            i += 2;
-                    
-                            if (numChannels == 1) {
-                                if (bitsPerSample == 8) format = BufferFormat.Mono8;
-                                else if (bitsPerSample == 16) format = BufferFormat.Mono16;
-                                else {
-                                    Starry.log($"Can't Play mono {bitsPerSample} sound.");
-                                }
-                            }
-                            else if (numChannels == 2) {
-                                if (bitsPerSample == 8) format = BufferFormat.Stereo8;
-                                else if (bitsPerSample == 16) format = BufferFormat.Stereo16;
-                                else {
-                                    Starry.log($"Can't Play stereo {bitsPerSample} sound.");
-                                }
-                            }
-                            else {
-                                Starry.log($"Can't play audio with {numChannels} sound");
-                            }
-                        }
-                    }
-                } 
-                else if (identifier == "data") {
-                    var data = file.Slice(i, size);
-                    i += size;
-                    
-                    fixed (byte* pData = data) {
-                        al.BufferData(buffer, format, pData, size, sampleRate);
-                    }
-                    //Starry.log($"Read {size} bytes Data");
-                }
-                else if (identifier == "JUNK") {
-                    // this exists to align things
-                    i += size;
-                }
-                else if (identifier == "iXML") {
-                    var v = file.Slice(i, size);
-                    var str = Encoding.ASCII.GetString(v);
-                    //Starry.log($"iXML Chunk: {str}");
-                    i += size;
-                }
-                else {
-                    //Starry.log($"Unknown Section: {identifier}");
-                    i += size;
-                }
-            }
-
-            /*Starry.log (
-                $"Success. Detected RIFF-WAVE audio file, PCM encoding. {numChannels} Channels, {sampleRate} Sample Rate, {byteRate} Byte Rate, {blockAlign} Block Align, {bitsPerSample} Bits per Sample"
-            );*/
-
-            mate.SetResult((source, buffer));
-        });
-        Graphics.actionLoopEvent.Set();
-        return mate.Task;
+    public vec3? position {
+        get => pos;
+        set {
+            pos = value;
+        }
     }
 
-    public static unsafe void cleanupButAtTheEndBecauseItCleansUpOpenAl()
+    double vol = 0;
+    /// <summary>
+    /// volume multiplier. 1 is the normal volume. this can't go above 300%
+    /// </summary>
+    public double volume {
+        get => vol;
+        set {
+            vol = Math.Clamp(value, 0, 3);
+            iCantMakeAnUnsafeSetter1(vol);
+        }
+    }
+
+    double pain = 0;
+    /// <summary>
+    /// the stereo panning, -1 is completely on the left and 1 is completely on the right
+    /// </summary>
+    public double pan {
+        get => pain;
+        set {
+            pain = Math.Clamp(value, 0, 1);
+            iCantMakeAnUnsafeSetter2(pain);
+        }
+    }
+
+    bool elpauso = false;
+    /// <summary>
+    /// if true, the audio is paused.
+    /// </summary>
+    public bool paused {
+        get => elpauso;
+        set {
+            elpauso = value;
+        }
+    }
+
+    public unsafe void load(string path)
     {
         Graphics.actions.Enqueue(() => {
-            alc!.DestroyContext(context);
-            alc.CloseDevice(device);
-            al!.Dispose();
-            alc.Dispose();
+            // i know
+            if (Miniaudio.ma_sound_init_from_file(engine, Starry.string2sbytePtr(path),
+            (uint)ma_sound_flags.MA_SOUND_FLAG_STREAM, null, null, snd) != ma_result.MA_SUCCESS) {
+                Starry.log($"Couldn't load {path}.");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
 
-    public async void load(string path) => (source, buffer) = await parsewav(path);
-
-    public void cleanup()
+    public unsafe void cleanup()
     {
         Graphics.actions.Enqueue(() => {
-            al!.DeleteSource(source);
-            al.DeleteBuffer(buffer);
+            Miniaudio.ma_sound_uninit(snd);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -180,23 +79,12 @@ public record class Audio: IAsset {
     /// <summary>
     /// it plays audio :)
     /// </summary>
-    public void play()
+    public unsafe void play()
     {
         Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourcePlay(source);
-        });
-        Graphics.actionLoopEvent.Set();
-    }
-
-    /// <summary>
-    /// pauses the audio. you can resume the audio with <c>play()</c>
-    /// </summary>
-    public void pause()
-    {
-        Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourcePause(source);
+            if (Miniaudio.ma_sound_start(snd) != ma_result.MA_SUCCESS) {
+                Starry.log("Couldn't play audio.");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -204,11 +92,44 @@ public record class Audio: IAsset {
     /// <summary>
     /// it stops the audio :)
     /// </summary>
-    public void stop() {
+    public unsafe void stop() {
         Graphics.actions.Enqueue(() => {
-            al!.SetSourceProperty(source, SourceInteger.Buffer, buffer);
-            al.SourceStop(source);
+            if (Miniaudio.ma_sound_stop(snd) != ma_result.MA_SUCCESS) {
+                Starry.log("It seems audio is busted.");
+            }
         });
         Graphics.actionLoopEvent.Set();
+    }
+
+    // engine stuff
+    public static unsafe void create()
+    {
+        Graphics.actions.Enqueue(() => {
+            if (Miniaudio.ma_engine_init(null, engine) != ma_result.MA_SUCCESS) {
+                throw new Exception("Couldn't initialize audio engine (Miniaudio)");
+            }
+
+            Starry.log("Initialized Miniaudio");
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    public static unsafe void cleanupButAtTheEndBecauseItCleansUpTheBackend()
+    {
+        Graphics.actions.Enqueue(() => {
+            Miniaudio.ma_engine_uninit(engine);
+            Starry.log("Cleaned up Miniaudio");
+        });
+        Graphics.actionLoopEvent.Set();
+    }
+
+    unsafe void iCantMakeAnUnsafeSetter1(double vol) {
+        if (snd == null) return;
+        Miniaudio.ma_sound_set_volume(snd, (float)vol);
+    }
+
+    unsafe void iCantMakeAnUnsafeSetter2(double pan) {
+        if (snd == null) return;
+        Miniaudio.ma_sound_set_pan(snd, (float)pan);
     }
 }
