@@ -136,6 +136,19 @@ public static class Starry {
         return false;
         #endif
     }
+
+    /// <summary>
+    /// the miniaudio bindings i'm using doesn't convert strings to c strings lmao
+    /// </summary>
+    public static unsafe sbyte* string2sbytePtr(string str)
+    {
+        byte[] bytes = Encoding.ASCII.GetBytes(str);
+        sbyte* mate;
+        fixed (byte* ptr = bytes) {
+            mate = (sbyte*)ptr;
+        }
+        return mate;
+    }
     
     // shorthands, youre supposed to use starry statically using static starry.Starry;
     /// <summary>

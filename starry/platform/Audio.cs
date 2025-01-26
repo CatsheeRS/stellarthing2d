@@ -1,15 +1,15 @@
 using System;
-using SDL2;
+using MiniaudioSharp;
 namespace starry;
 
 /// <summary>
-/// it's audio. supported formats are wav, mp3, ogg, and flac. powered by sdl2.
+/// it's audio. supported formats are wav, mp3, and flac. i would support ogg but this is just using miniaudio and i'm too stupid to add ogg support
 /// </summary>
-public record class Audio: IAsset {
-    bool iswav = false;
-    nint sdlwav;
-    nint sdlmus;
-
+public class Audio: IAsset {
+    // Field 'Audio.engine' is never assigned to, and will always have its default value 
+    // shut the fuck up
+    unsafe static ma_engine* engine;
+    unsafe ma_sound* snd;
     vec3? pos = null;
     /// <summary>
     /// the posiiton of the audio. setting it turns your audio into spatial audio, if you want it to go back for some reason just set it to null
@@ -29,6 +29,7 @@ public record class Audio: IAsset {
         get => vol;
         set {
             vol = Math.Clamp(value, 0, 3);
+            iCantMakeAnUnsafeSetter1(vol);
         }
     }
 
@@ -40,6 +41,7 @@ public record class Audio: IAsset {
         get => pain;
         set {
             pain = Math.Clamp(value, 0, 1);
+            iCantMakeAnUnsafeSetter2(pain);
         }
     }
 
@@ -54,33 +56,22 @@ public record class Audio: IAsset {
         }
     }
 
-    public void load(string path)
+    public unsafe void load(string path)
     {
         Graphics.actions.Enqueue(() => {
-            // i fucking hate sdl
-            if (path.EndsWith(".wav")) {
-                sdlwav = SDL_mixer.Mix_LoadWAV(path);
-                if (sdlwav == 0) {
-                    Starry.log($"Couldn't load {path}: {SDL_mixer.Mix_GetError()}");
-                    return;
-                }
-            }
-            else {
-                sdlmus = SDL_mixer.Mix_LoadMUS(path);
-                if (sdlmus == 0) {
-                    Starry.log($"Couldn't load {path}: {SDL_mixer.Mix_GetError()}");
-                    return;
-                }
+            // i know
+            if (Miniaudio.ma_sound_init_from_file(engine, Starry.string2sbytePtr(path),
+            (uint)ma_sound_flags.MA_SOUND_FLAG_STREAM, null, null, snd) != ma_result.MA_SUCCESS) {
+                Starry.log($"Couldn't load {path}.");
             }
         });
         Graphics.actionLoopEvent.Set();
     }
 
-    public void cleanup()
+    public unsafe void cleanup()
     {
         Graphics.actions.Enqueue(() => {
-            if (iswav) SDL_mixer.Mix_FreeChunk(sdlwav);
-            else SDL_mixer.Mix_FreeMusic(sdlmus);
+            Miniaudio.ma_sound_uninit(snd);
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -88,11 +79,12 @@ public record class Audio: IAsset {
     /// <summary>
     /// it plays audio :)
     /// </summary>
-    public void play()
+    public unsafe void play()
     {
         Graphics.actions.Enqueue(() => {
-            if (iswav) SDL_mixer.Mix_PlayChannel(-1, sdlwav, 0);
-            else SDL_mixer.Mix_PlayMusic(sdlmus, 0);
+            if (Miniaudio.ma_sound_start(snd) != ma_result.MA_SUCCESS) {
+                Starry.log("Couldn't play audio.");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -100,10 +92,11 @@ public record class Audio: IAsset {
     /// <summary>
     /// it stops the audio :)
     /// </summary>
-    public void stop() {
+    public unsafe void stop() {
         Graphics.actions.Enqueue(() => {
-            if (iswav)
-            SDL_mixer.Mix_HaltMusic()
+            if (Miniaudio.ma_sound_stop(snd) != ma_result.MA_SUCCESS) {
+                Starry.log("It seems audio is busted.");
+            }
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -112,13 +105,11 @@ public record class Audio: IAsset {
     public static unsafe void create()
     {
         Graphics.actions.Enqueue(() => {
-            if (SDL.SDL_Init(SDL.SDL_INIT_AUDIO) < 0) {
-                throw new Exception($"Couldn't initialize SDL2 audio: {SDL.SDL_GetError()}");
+            if (Miniaudio.ma_engine_init(null, engine) != ma_result.MA_SUCCESS) {
+                throw new Exception("Couldn't initialize audio engine (Miniaudio)");
             }
 
-            if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-                throw new Exception($"Couldn't initialize SDL2 mixer: {SDL_mixer.Mix_GetError()}");
-            }
+            Starry.log("Initialized Miniaudio");
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -126,10 +117,19 @@ public record class Audio: IAsset {
     public static unsafe void cleanupButAtTheEndBecauseItCleansUpTheBackend()
     {
         Graphics.actions.Enqueue(() => {
-            SDL_mixer.Mix_HaltChannel(-1);
-            SDL_mixer.Mix_CloseAudio();
-            SDL.SDL_Quit();
+            Miniaudio.ma_engine_uninit(engine);
+            Starry.log("Cleaned up Miniaudio");
         });
         Graphics.actionLoopEvent.Set();
+    }
+
+    unsafe void iCantMakeAnUnsafeSetter1(double vol) {
+        if (snd == null) return;
+        Miniaudio.ma_sound_set_volume(snd, (float)vol);
+    }
+
+    unsafe void iCantMakeAnUnsafeSetter2(double pan) {
+        if (snd == null) return;
+        Miniaudio.ma_sound_set_pan(snd, (float)pan);
     }
 }

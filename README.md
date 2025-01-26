@@ -28,17 +28,15 @@ First you need the .NET 8 SDK
 
 On Linux you're gonna have to install some libraries
 
-Ubuntu: (untested)
+Ubuntu:
 ```sh
-sudo apt install libvlc-dev -y
+sudo apt install libminiaudio-dev -y
 ```
 
 Fedora:
 ```sh
-sudo dnf install vlc-devel vlc-cli vlc-libs -y
+sudo dnf install libminiaudio -y
 ```
-
-If that doesn't work you can also try installing `vlc`
 
 To release:
 ```sh
