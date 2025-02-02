@@ -156,6 +156,15 @@ public class Server
                     
         if (s.EndsWith("\""))
             s = s.Remove(s.Length-1);
+        
+        return s;
+        
+        s = s.Replace("\\", "");
+        if (s.StartsWith("\""))
+            s = s.Substring(1);
+                    
+        if (s.EndsWith("\""))
+            s = s.Remove(s.Length-1);
 
         return s;
     }

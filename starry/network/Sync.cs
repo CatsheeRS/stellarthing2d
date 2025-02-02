@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace starry;
 
@@ -31,20 +32,31 @@ public class Sync<T>
 
     public Sync(T? data)
     {
+        string json = "{\"x\":0.0,\"y\":0.05158870500000001,\"z\":0.0}";
+        var vector = JsonConvert.DeserializeObject<T>(json);
+        Console.WriteLine(vector);
+        
         _data = data;
         owner = new StackTrace().GetFrame(1)?.GetMethod()?.DeclaringType?.Name ?? "Invalid";
         Client.onDataReceived += (sender, type, dataObj) =>
         {
             if (type != $"{owner}_{_data.GetType()}_Update" || sender.id != networkOwner?.id) return;
             
+                        
+            Console.WriteLine("-SYNC-----------");
             dataObj = Server.arrayifyArray(dataObj);
+            Console.WriteLine($"[SYNC] Pre arrayification is {dataObj}");
             var deserialized = JsonConvert.DeserializeObject<T>(dataObj, new JsonSerializerSettings
             {
-                MissingMemberHandling = MissingMemberHandling.Ignore
+                Error = delegate(object sender, ErrorEventArgs args)
+                {
+                    Console.WriteLine(args.ErrorContext.Error.Message);
+                    args.ErrorContext.Handled = true;
+                },
             });
-            
-            Console.WriteLine("-SYNC-----------");
-            Console.WriteLine($"[SYNC] Updating {sender.username} with pre update: {deserialized}");
+
+            Console.WriteLine($"[SYNC] Pre deserialization is {dataObj}");
+            Console.WriteLine($"[SYNC] Updating {sender.username} with pre update: {_data}");
             _data = deserialized;
             Console.WriteLine($"[SYNC] Updating {sender.username} with post update: {_data}");
         };

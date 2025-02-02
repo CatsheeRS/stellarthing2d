@@ -156,6 +156,7 @@ public class Player : IEntity {
             Client.connect(ip, Server.GAME_PORT);
             Client.onDataReceived += (sender, type, s) =>
             {  
+                log(type);
                 if (type == "augh")
                 {
                     log("recieved augh");
@@ -217,7 +218,7 @@ public class Player : IEntity {
                 pos.data = (orig.x, orig.y, orig.z);
             }
         }
-
+        
         if (pos.data != tile!.position)
         {
             tile!.position = pos.data;
@@ -273,7 +274,7 @@ public class Player : IEntity {
             Client.sendMessage("DO YOU LIKE BEANS ?????", "h");
         }
 
-        if (Input.isKeyJustPressed(Key.E) && !doooooone)
+        if (Input.isKeyJustPressed(Key.E) && doooooone)
         {
             doooooone = true;
             Player newPlayer = new Player();
@@ -304,7 +305,6 @@ public class Player : IEntity {
 
                 vec2 initialPos = plyr.tile.globalPosition;
                 initialPos.y -= 10;
-                initialPos.x -= 12.5;
                 
                 Graphics.drawText(plyr.networkOwner.username, ft, initialPos, color.white);   
             }
