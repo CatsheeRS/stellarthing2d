@@ -21,7 +21,12 @@ public static class Assets {
             else {
                 T tee = new();
                 tee.load(Path.Combine(Starry.settings.assetPath, path));
-                assets.Add(path, tee);
+
+                if (!assets.ContainsKey(path))
+                {
+                    assets.Add(path, tee);
+                }
+                
                 return tee;
             }
         });

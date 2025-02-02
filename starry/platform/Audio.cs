@@ -58,6 +58,7 @@ public class Audio: IAsset {
 
     public unsafe void load(string path)
     {
+        return;
         Graphics.actions.Enqueue(() => {
             // i know
             if (Miniaudio.ma_sound_init_from_file(engine, Starry.string2sbytePtr(path),
@@ -70,6 +71,7 @@ public class Audio: IAsset {
 
     public unsafe void cleanup()
     {
+        return;
         Graphics.actions.Enqueue(() => {
             Miniaudio.ma_sound_uninit(snd);
         });
@@ -81,6 +83,7 @@ public class Audio: IAsset {
     /// </summary>
     public unsafe void play()
     {
+        return;
         Graphics.actions.Enqueue(() => {
             if (Miniaudio.ma_sound_start(snd) != ma_result.MA_SUCCESS) {
                 Starry.log("Couldn't play audio.");
@@ -93,6 +96,7 @@ public class Audio: IAsset {
     /// it stops the audio :)
     /// </summary>
     public unsafe void stop() {
+        return;
         Graphics.actions.Enqueue(() => {
             if (Miniaudio.ma_sound_stop(snd) != ma_result.MA_SUCCESS) {
                 Starry.log("It seems audio is busted.");
@@ -104,6 +108,7 @@ public class Audio: IAsset {
     // engine stuff
     public static unsafe void create()
     {
+        return;
         Graphics.actions.Enqueue(() => {
             if (Miniaudio.ma_engine_init(null, engine) != ma_result.MA_SUCCESS) {
                 throw new Exception("Couldn't initialize audio engine (Miniaudio)");
@@ -116,6 +121,7 @@ public class Audio: IAsset {
 
     public static unsafe void cleanupButAtTheEndBecauseItCleansUpTheBackend()
     {
+        return;
         Graphics.actions.Enqueue(() => {
             Miniaudio.ma_engine_uninit(engine);
             Starry.log("Cleaned up Miniaudio");

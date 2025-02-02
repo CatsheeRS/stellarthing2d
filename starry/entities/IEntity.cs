@@ -4,42 +4,62 @@ namespace starry;
 /// <summary>
 /// its an entity lmao
 /// </summary>
-public interface IEntity {
+public abstract class IEntity
+{
     /// <summary>
     /// ran when the bloody entity is bloody created bloody hell mate. this is ran right after the entity is added to the entities stuffs
     /// </summary>
-    public void create() {}
+    public virtual void create() {}
+
     /// <summary>
     /// ran every frame
     /// </summary
-    public void update(double delta) {}
-    
+    public virtual void update(double delta) {}
+
     /// <summary>
     /// ran every frame (if server)
     /// </summary
     public void serverUpdate(double delta) {}
+
     /// <summary>
     /// ran every frame (if client)
     /// </summary
     public void clientUpdate(double delta) {}
-    
+
     /// <summary>
     /// also ran every frame but youre supposed to draw stuff here
     /// </summary>
-    public void draw() {}
+    public virtual void draw() {}
 
     /// <summary>
     /// returns the entity type what did you expect
     /// </summary>
-    public EntityType entityType { get; }
+    public abstract EntityType entityType { get; }
+
     /// <summary>
     /// returns the name what did you expect. idk why this exists but the game's actual behavior shouldn't depend on this
     /// </summary>
-    public string name { get; }
+    public abstract string name { get; }
+
     /// <summary>
     /// groups the entity is assigned to when created. you should use constants so there's any ide support ever
     /// </summary>
-    public string[] initGroups { get; }
+    public abstract string[] initGroups { get; }
+    
+    /// <summary>
+    /// state of the entity
+    /// </summary>
+    public EntityState state = EntityState.BIRTHING;
+}
+
+/// <summary>
+/// the circle of life
+/// </summary>
+public enum EntityState
+{
+    BIRTHING,
+    LIVING,
+    DYING
 }
 
 /// <summary>

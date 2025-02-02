@@ -43,6 +43,7 @@ public static class Entities {
     public static ConcurrentDictionary<string, ConcurrentHashSet<string>> groups { get; internal set; } = new();
     public static ConcurrentDictionary<string, ConcurrentHashSet<IComponent>> components { get; internal set; } = new();
     public static ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> meta { get; internal set; } = new();
+    public static ConcurrentDictionary<string, ConcurrentHashSet<string>> entgroups { get; set; } = new();
 
     /// <summary>
     /// adds an entity.
@@ -54,6 +55,7 @@ public static class Entities {
         entities.TryAdd(regh, entity);
         entrefs.TryAdd(entity.GetHashCode(), regh);
         meta.TryAdd(regh, new());
+        entgroups.TryAdd(regh, []);
 
         string elgrupo = entity.entityType switch {
             EntityType.GAME_WORLD => GAME_WORLD_GROUP,
@@ -72,7 +74,9 @@ public static class Entities {
         }
 
         components.TryAdd(ent2ref(entity), []);
+        
         entity.create();
+        entity.state = EntityState.LIVING;
     }
 
     /// <summary>
@@ -87,6 +91,7 @@ public static class Entities {
     {
         var jjj = groups.GetOrAdd(group, []);
         jjj.Add(entity);
+        entgroups[entity].Add(group);
     }
 
     /// <summary>
@@ -104,22 +109,12 @@ public static class Entities {
     public static async Task update()
     {
         static void mate(IEntity entity) {
+            if (entity.state != EntityState.LIVING) return;
+            
             entity.update(Window.deltaTime);
             entity.draw();
-
-            if (Starry.settings.server)
-                entity.serverUpdate(Window.deltaTime);
-            else
-                entity.clientUpdate(Window.deltaTime);
-            
             foreach (IComponent component in components[ent2ref(entity)]) {
                 component.update(entity, Window.deltaTime);
-                
-                if (Starry.settings.server)
-                    component.serverUpdate(entity, Window.deltaTime);
-                else
-                    component.clientUpdate(entity, Window.deltaTime);
-                
                 component.draw(entity);
             }
         }
@@ -153,7 +148,7 @@ public static class Entities {
                 if (hasComponent<Tile>(entity)) {
                     Tile tile = getComponent<Tile>(entity);
                     vec2i chunk = (tile.position.as2d() / (Tilemap.CHUNK_DIMENSIONS, Tilemap.CHUNK_DIMENSIONS)).floor();
-                    if (chunk != Tilemap.currentChunks[Tilemap.currentWorld]) return;
+                    //if (chunk != Tilemap.currentChunks[Tilemap.currentWorld]) return;
                 }
                 await Task.Run(() => mate(ref2ent(entity)));
             });
@@ -214,5 +209,23 @@ public static class Entities {
             meta[entref].TryAdd(key, defaultval);
             return defaultval;
         }
+    }
+
+    /// <summary>
+    /// it fucking removes a fucking entity
+    /// </summary>
+    public static void removeEntity(string entref)
+    {
+        entrefs.TryRemove(entities[entref].GetHashCode(), out _);
+        meta.TryRemove(entref, out _);
+        components.TryRemove(entref, out _);
+        
+        foreach (string losgrupos in entgroups[entref]) {
+            groups[losgrupos].Remove(entref);
+        }
+        
+        entgroups.TryRemove(entref, out _);
+        entities.TryRemove(entref, out IEntity ent);
+        ent.state = EntityState.DYING;
     }
 }

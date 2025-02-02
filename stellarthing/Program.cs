@@ -9,7 +9,8 @@ internal class Program {
     internal static async Task Main(string[] args)
     {
         await create(new StarrySettings {
-            startup = () => {
+            startup = () =>
+            {
                 Entities.addEntity(new Player());
             },
             verbose = isDebug() || args.Contains("--verbose") || args.Contains("-v"),
