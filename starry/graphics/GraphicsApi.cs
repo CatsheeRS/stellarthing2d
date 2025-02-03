@@ -85,36 +85,13 @@ public static partial class Graphics {
             #pragma warning disable CS0618 // Type or member is obsolete
             skpaint.TextSize = 16 * scale;
             skpaint.Typeface = font.skfnt;
-
+            
             canvas?.DrawText(text,
                 (float)(pos.x * scale) + offset.x,
                 // it renders from the bottom left
                 (float)(pos.y * scale) + offset.y + (skpaint.FontSpacing / 2),
             skpaint);
             #pragma warning restore CS0618 // Type or member is obsolete
-        });
-        actionLoopEvent.Set();
-    }
-    
-    public static void drawTextWorldSpace(string text, Font font, vec2 pos, color color)
-    {
-        if (Starry.settings.server) return;
-
-        actions.Enqueue(() => {
-            if (skpaint == null) return; // shut
-            skpaint.Color = new SKColor(color.r, color.g, color.b, color.a);
-
-            // shut up
-#pragma warning disable CS0618 // Type or member is obsolete
-            skpaint.TextSize = 16 * scale;
-            skpaint.Typeface = font.skfnt;
-
-            canvas?.DrawText(text,
-                (float)(pos.x) + offset.x,
-                // it renders from the bottom left
-                (float)(pos.y) + offset.y + (skpaint.FontSpacing / 2),
-                skpaint);
-#pragma warning restore CS0618 // Type or member is obsolete
         });
         actionLoopEvent.Set();
     }

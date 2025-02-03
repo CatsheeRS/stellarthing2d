@@ -20,7 +20,12 @@ public class Sync<T>
         set
         {
             if (networkOwner == null) return;
-
+            if (!Client.connected)
+            {
+                _data = value;
+                return;
+            }
+            
             if (networkOwner?.id == Client.currClient.id)
             {
                 Console.WriteLine($"[SYNC] Set request from {networkOwner?.username}");

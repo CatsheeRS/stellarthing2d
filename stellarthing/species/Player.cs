@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SkiaSharp;
 using starry;
 using static starry.Starry;
 namespace stellarthing;
