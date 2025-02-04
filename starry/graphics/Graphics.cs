@@ -60,6 +60,7 @@ public static partial class Graphics {
             canvas?.Translate(0, -winsize.y);
 
             Starry.log("Skia has loaded");
+            Window.ready = true;
         });
         actionLoopEvent.Set();
     }

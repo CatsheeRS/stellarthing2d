@@ -39,6 +39,10 @@ public static class Starry {
         // the size doesn't matter once you make it fullscreen
         Window.create(title, settings.renderSize);
         Window.setFullscreen(settings.fullscreen);
+
+        while (!Window.ready && !settings.server)
+        {
+        }
         
         // fccking kmodules
         Audio.create(); // can't multithread that

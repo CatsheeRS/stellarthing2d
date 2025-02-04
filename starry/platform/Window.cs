@@ -33,7 +33,8 @@ public static unsafe class Window {
     internal static bool fullscreen = false;
     internal static vec2i screensize = (0, 0);
     internal static bool closing = false;
-
+    internal static bool ready = false;
+    
     /// <summary>
     /// creates the window :D
     /// </summary>
