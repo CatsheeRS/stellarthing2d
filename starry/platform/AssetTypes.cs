@@ -25,9 +25,11 @@ public record class Font: IAsset {
     public void load(string path)
     {
         if (Starry.settings.server) return;
-
+    
         Graphics.actions.Enqueue(() => {
+            Starry.log("I YTHOUGHT ONLY IGERLS HAD HAIR");
             skfnt = SKTypeface.FromFile(path);
+            Starry.log("MY BRAIN IS WORKING OVERTIME (FONT LOADED)");
         });
         Graphics.actionLoopEvent.Set();
     }
@@ -36,7 +38,9 @@ public record class Font: IAsset {
         if (Starry.settings.server) return;
         
         Graphics.actions.Enqueue(() => {
+            Starry.log("MY BRAIN WAS WORKING OVERTIME (FONT DISPOSING)");
             skfnt?.Dispose();
+            Starry.log("MY BRAIN IS NO LONGER WORKING OVERTIME (FONT DISPOSED)");
         });
         Graphics.actionLoopEvent.Set();
     }
