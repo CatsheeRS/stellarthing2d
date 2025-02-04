@@ -79,6 +79,24 @@ public static class Starry {
         Window.cleanup();
     }
 
+    private static string clearString(string s)
+    {
+        s = s.Replace("<", "");
+        s = s.Replace(">", "");
+        s = s.Replace("c__", "");
+        s = s.Replace("__", "");
+        s = s.Replace("b0", "");
+        s = s.Replace("b15", "");
+        s = s.Replace("24_0", "");
+        s = s.Replace("0d", "");
+        s = s.Replace("8_0", "");
+        s = s.Replace("d7", "");
+        s = s.Replace("3_0", "");
+        s = s.Replace("26_0", "");
+        s = s.Replace("_", "");
+        return s;
+    }
+    
     /// <summary>
     /// Console.WriteLine but cooler (it prints more types and has caller information)
     /// </summary>
@@ -94,8 +112,12 @@ public static class Starry {
         var method = frame?.GetMethod();
         var className = method?.DeclaringType?.Name;
         var methodName = method?.Name;
-        str.Append($"[{className ?? string.Empty}.{methodName ?? string.Empty}] ");
 
+        className = clearString(className);
+        methodName = clearString(methodName);
+        str.Append($"[{className ?? string.Empty}.{methodName ?? string.Empty}] ");
+        
+        
         foreach (var item in x) {
             // we optimize common types so the game doesn't explode
             switch (item) {

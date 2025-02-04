@@ -30,49 +30,60 @@ public static partial class Graphics {
         if (Starry.settings.server) return;
 
         actions.Enqueue(async () => {
-            // shut up
-            if (Window.glfw == null) return;
+            try
+            {
+                // shut up
+                if (Window.glfw == null) return;
 
-            // setup fucking skia fucking sharp
-            Starry.log("creating glInterface");
-            var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
-            grContext = GRContext.CreateGl(glInterface);
-            
-            vec2i winsize = await Window.getSize();
-            
-            Starry.log("creating frame buffer");
-            
-            GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
-            
-            Starry.log("creating render target");
-            renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8, frameBufferInfo);
-            
-            Starry.log("creating surface");
-            surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
-                SKColorType.Rgba8888);
-            canvas = surface.Canvas;
-            
-            Starry.log("creating paint");
-            // sick pain(t) stuff
-            skpaint = new SKPaint() {
-                Color = SKColors.White,
-                IsAntialias = Starry.settings.antiAliasing
-            };
-            
-            Starry.log("calculating scale");
-            calcScale(winsize);
-            
-            Starry.log("creating events");
-            Window.onResize += calcScale;
-            Window.onResize += resizeTarget;
-            
-            Starry.log("handling flip");
-            // why is it flipped ??
-            canvas?.Scale(1, -1);
-            canvas?.Translate(0, -winsize.y);
+                // setup fucking skia fucking sharp
+                Starry.log("creating opengl");
+                var glInterface = GRGlInterface.CreateOpenGl(Window.glfw.GetProcAddress);
+                
+                Starry.log("creating grcontext");
+                grContext = GRContext.CreateGl(glInterface);
 
-            Starry.log("Skia has loaded");
-            Window.ready = true;
+                Starry.log("getting size");
+                vec2i winsize = await Window.getSize();
+
+                Starry.log("creating frame buffer");
+
+                GRGlFramebufferInfo frameBufferInfo = new(0, SKColorType.Rgba8888.ToGlSizedFormat());
+
+                Starry.log("creating render target");
+                renderTarget = new((int)winsize.x, (int)winsize.y, 0, 8, frameBufferInfo);
+
+                Starry.log("creating surface");
+                surface = SKSurface.Create(grContext, renderTarget, GRSurfaceOrigin.TopLeft,
+                    SKColorType.Rgba8888);
+                canvas = surface.Canvas;
+
+                Starry.log("creating paint");
+                // sick pain(t) stuff
+                skpaint = new SKPaint()
+                {
+                    Color = SKColors.White,
+                    IsAntialias = Starry.settings.antiAliasing
+                };
+
+                Starry.log("calculating scale");
+                calcScale(winsize);
+
+                Starry.log("creating events");
+                Window.onResize += calcScale;
+                Window.onResize += resizeTarget;
+
+                Starry.log("handling flip");
+                // why is it flipped ??
+                canvas?.Scale(1, -1);
+                canvas?.Translate(0, -winsize.y);
+
+                Starry.log("Skia has loaded");
+                Window.ready = true;
+            }
+            catch (Exception e)
+            {
+                Starry.log(e.ToString());
+            }
         });
         actionLoopEvent.Set();
     }
