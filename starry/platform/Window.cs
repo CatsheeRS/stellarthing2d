@@ -66,12 +66,13 @@ public static unsafe class Window {
             }
             glfw.MakeContextCurrent(window);
             Starry.log("Created window");
-
-            // there's a lot of callbacks
-            setupCallbacks();
-
+            
             // this setups up opengl
             Graphics.create();
+            
+            
+            // there's a lot of callbacks
+            setupCallbacks();
         });
         Graphics.actionLoopEvent.Set();
     }
